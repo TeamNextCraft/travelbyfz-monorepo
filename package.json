@@ -1,0 +1,23 @@
+{
+  "name": "travelbyfz-monorepo",
+  "version": "1.0.0",
+  "description": "Tours and Travels Platform",
+  "main": "index.js",
+  "author": "nerdboi008 (Moin Malek)",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.16",
+    "turbo": "^2.10.5"
+  }
+}
