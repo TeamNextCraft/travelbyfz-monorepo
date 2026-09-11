@@ -1,751 +1,3 @@
-// import { createFileRoute } from "@tanstack/react-router";
-// import {
-//   ArrowRight,
-//   Bus,
-//   CalendarDays,
-//   Check,
-//   ChevronRight,
-//   Clock3,
-//   Filter,
-//   Heart,
-//   MapPinned,
-//   Phone,
-//   Search,
-//   ShieldCheck,
-//   Sparkles,
-//   Star,
-//   UsersRound,
-// } from "lucide-react";
-// import { useState } from "react";
-// import {
-//   Accordion,
-//   AccordionContent,
-//   AccordionItem,
-//   AccordionTrigger,
-// } from "#/components/ui/accordion";
-// import { Badge } from "#/components/ui/badge";
-// import { Button, buttonVariants } from "#/components/ui/button";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "#/components/ui/card";
-// import { Input } from "#/components/ui/input";
-// import { Label } from "#/components/ui/label";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "#/components/ui/select";
-// import { Separator } from "#/components/ui/separator";
-// import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
-// import {
-//   Tooltip,
-//   TooltipContent,
-//   TooltipProvider,
-//   TooltipTrigger,
-// } from "#/components/ui/tooltip";
-// import { Navbar } from "#/components/common/domestic/nav-bar";
-
-// export const Route = createFileRoute("/domestic/")({
-//   component: DomesticTours,
-// });
-
-// const destinations = [
-//   {
-//     name: "Kashmir Valley",
-//     duration: "5D / 4N",
-//     price: "From ₹18,999",
-//     image:
-//       "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Family", "Snow", "Houseboat"],
-//     category: "family",
-//     rating: 4.8,
-//   },
-//   {
-//     name: "Kerala Backwaters",
-//     duration: "4D / 3N",
-//     price: "From ₹15,499",
-//     image:
-//       "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Couples", "Nature", "Resort"],
-//     category: "couples",
-//     rating: 4.7,
-//   },
-//   {
-//     name: "Goa Getaway",
-//     duration: "3D / 2N",
-//     price: "From ₹9,999",
-//     image:
-//       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Friends", "Beach", "Weekend"],
-//     category: "weekend",
-//     rating: 4.6,
-//   },
-//   {
-//     name: "Rajasthan Heritage",
-//     duration: "6D / 5N",
-//     price: "From ₹21,999",
-//     image:
-//       "https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Culture", "Desert", "Luxury"],
-//     category: "culture",
-//     rating: 4.9,
-//   },
-//   {
-//     name: "Manali Adventure",
-//     duration: "4D / 3N",
-//     price: "From ₹12,999",
-//     image:
-//       "https://images.unsplash.com/photo-1626010448982-4d629b6b5fd2?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Adventure", "Snow", "Trekking"],
-//     category: "adventure",
-//     rating: 4.5,
-//   },
-//   {
-//     name: "Andaman Islands",
-//     duration: "5D / 4N",
-//     price: "From ₹24,999",
-//     image:
-//       "https://images.unsplash.com/photo-1544144433-d50aff500b91?auto=format&fit=crop&w=900&q=80",
-//     tags: ["Beach", "Diving", "Honeymoon"],
-//     category: "couples",
-//     rating: 4.8,
-//   },
-// ];
-
-// const packageTypes = [
-//   {
-//     title: "Weekend Escapes",
-//     description:
-//       "Short trips for nearby hill stations, beaches, and city breaks. Perfect for quick rejuvenation.",
-//     icon: Clock3,
-//     features: ["2-3 Days", "Nearby Destinations", "Budget Friendly"],
-//   },
-//   {
-//     title: "Family Holidays",
-//     description:
-//       "Hotel, transport, sightseeing, and relaxed schedules designed for families with all age groups.",
-//     icon: UsersRound,
-//     features: ["Kid Friendly", "Safe Hotels", "Flexible Timing"],
-//   },
-//   {
-//     title: "Group Tours",
-//     description:
-//       "Fixed departures and custom plans for schools, offices, and clubs with dedicated coordinators.",
-//     icon: Bus,
-//     features: ["Bulk Discounts", "Dedicated Guide", "Custom Routes"],
-//   },
-// ];
-
-// const inclusions = [
-//   "Pickup and drop coordination",
-//   "Hotel options by budget",
-//   "Cab, tempo traveller, or bus support",
-//   "Day-wise sightseeing plan",
-//   "Meal plan guidance",
-//   "On-trip assistance",
-// ];
-
-// const starLevels = [1, 2, 3, 4, 5];
-
-// const faqs = [
-//   {
-//     question: "How do I book a domestic tour package?",
-//     answer:
-//       "Simply fill out the trip request form with your destination, travel dates, and group size. Our team will call you back within 2 hours with a customized quote and itinerary.",
-//   },
-//   {
-//     question: "Can I customize the itinerary?",
-//     answer:
-//       "Absolutely. All our domestic packages are fully customizable. You can add or remove destinations, change hotels, modify meal plans, and adjust the duration as per your preference.",
-//   },
-//   {
-//     question: "What is the cancellation policy?",
-//     answer:
-//       "Cancellations made 15 days before departure receive a 90% refund. 7-14 days before gets 70% refund. Less than 7 days gets 50% refund. No refund for same-day cancellations.",
-//   },
-//   {
-//     question: "Are the hotels and transport safe for families?",
-//     answer:
-//       "Yes, we only partner with verified hotels and licensed transport operators. All vehicles are insured and drivers are background-verified. Family safety is our top priority.",
-//   },
-// ];
-
-// const testimonials = [
-//   {
-//     name: "Priya Sharma",
-//     location: "Delhi",
-//     text: "Our Kashmir trip was perfectly organized. The houseboat stay in Dal Lake was magical. Highly recommended!",
-//     rating: 5,
-//     trip: "Kashmir Valley",
-//   },
-//   {
-//     name: "Rahul Mehta",
-//     location: "Mumbai",
-//     text: "Booked a Goa weekend for our college reunion. Everything from transport to hotel was seamless. Great value for money.",
-//     rating: 5,
-//     trip: "Goa Getaway",
-//   },
-//   {
-//     name: "Anita Desai",
-//     location: "Bangalore",
-//     text: "The Kerala backwaters tour was exactly what we needed for our anniversary. The resort was beautiful and the staff was very helpful.",
-//     rating: 4,
-//     trip: "Kerala Backwaters",
-//   },
-// ];
-
-// const stats = [
-//   { value: "120+", label: "Local trips planned" },
-//   { value: "24/7", label: "Trip assistance" },
-//   { value: "Custom", label: "Itinerary support" },
-// ];
-
-// function DomesticTours() {
-//   const [activeCategory, setActiveCategory] = useState("all");
-
-//   const filteredDestinations =
-//     activeCategory === "all"
-//       ? destinations
-//       : destinations.filter((d) => d.category === activeCategory);
-
-//   const scrollToSection = (id: string) => {
-//     const el = document.getElementById(id);
-//     if (el) {
-//       el.scrollIntoView({ behavior: "smooth", block: "start" });
-//     }
-//   };
-
-//   const categories = [
-//     { value: "all", label: "All" },
-//     { value: "family", label: "Family" },
-//     { value: "couples", label: "Couples" },
-//     { value: "weekend", label: "Weekend" },
-//     { value: "culture", label: "Culture" },
-//     { value: "adventure", label: "Adventure" },
-//   ];
-
-//   return (
-//     <main className="min-h-screen bg-[linear-gradient(180deg,rgba(243,250,245,0.82)_0%,rgba(231,243,236,0.94)_48%,rgba(243,250,245,1)_100%)] ">
-//       <Navbar />
-//       <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 pt-5">
-//         {/* Hero + Form */}
-//         <section className="grid gap-5 lg:grid-cols-[1.16fr_0.84fr] lg:items-stretch">
-//           <div className="relative min-h-[560px] overflow-hidden rounded-lg border border-white/55 shadow-[0_24px_70px_rgba(23,58,64,0.18)]">
-//             <img
-//               src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1500&q=80"
-//               alt="Scenic mountain landscape"
-//               className="absolute inset-0 h-full w-full object-cover"
-//             />
-//             <div className="absolute inset-0 bg-linear-to-r from-[#0e3036]/92 via-[#0e3036]/58 to-[#0e3036]/16" />
-//             <div className="relative flex min-h-[560px] flex-col justify-between p-6 text-white sm:p-8 lg:p-10">
-//               <div>
-//                 <Badge
-//                   variant="secondary"
-//                   className="bg-white/20 text-white border-white/30 backdrop-blur-sm hover:bg-white/30"
-//                 >
-//                   <Sparkles size={12} className="mr-1" />
-//                   Domestic tours
-//                 </Badge>
-//                 <h1 className="display-title mt-4 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-//                   Local trips planned around real dates, budgets, and group
-//                   sizes.
-//                 </h1>
-//                 <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
-//                   Book family holidays, weekend getaways, student tours, office
-//                   trips, and custom sightseeing plans with transport and stay
-//                   options handled together.
-//                 </p>
-//               </div>
-
-//               <div className="mt-8 grid gap-3 sm:grid-cols-3">
-//                 {stats.map(({ value, label }) => (
-//                   <div
-//                     key={label}
-//                     className="rounded-lg border border-white/20 bg-white/14 p-4 backdrop-blur-sm"
-//                   >
-//                     <p className="text-2xl font-extrabold">{value}</p>
-//                     <p className="mt-1 text-xs font-bold uppercase text-white/72">
-//                       {label}
-//                     </p>
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-
-//           <Card
-//             id="request"
-//             className="island-shell rounded-lg bg-transparent p-5"
-//           >
-//             <CardHeader className="px-0 pb-4">
-//               <Badge
-//                 variant="outline"
-//                 className="w-fit mb-2 border-[var(--line)] text-[var(--sea-ink-soft)]"
-//               >
-//                 Plan a local trip
-//               </Badge>
-//               <CardTitle className="display-title text-3xl">
-//                 Get a quick package estimate
-//               </CardTitle>
-//               <CardDescription className="leading-6 text-[var(--sea-ink-soft)]">
-//                 Capture the details the client needs before quoting a domestic
-//                 tour.
-//               </CardDescription>
-//             </CardHeader>
-
-//             <CardContent className="grid gap-4 px-0">
-//               <div className="grid gap-2">
-//                 <Label
-//                   htmlFor="destination"
-//                   className="text-sm font-bold text-[var(--sea-ink)]"
-//                 >
-//                   Where do you want to go?
-//                 </Label>
-//                 <div className="relative">
-//                   <Search
-//                     size={17}
-//                     aria-hidden="true"
-//                     className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-//                   />
-//                   <Input
-//                     id="destination"
-//                     className="pl-10 rounded-lg border-[var(--line)] bg-white/72 placeholder:text-[var(--sea-ink-soft)]"
-//                     placeholder="Kashmir, Goa, Kerala..."
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="grid gap-4 sm:grid-cols-2">
-//                 <div className="grid gap-2">
-//                   <Label
-//                     htmlFor="travel-date"
-//                     className="text-sm font-bold text-[var(--sea-ink)]"
-//                   >
-//                     Travel date
-//                   </Label>
-//                   <div className="relative">
-//                     <CalendarDays
-//                       size={17}
-//                       aria-hidden="true"
-//                       className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-//                     />
-//                     <Input
-//                       id="travel-date"
-//                       type="date"
-//                       className="pl-10 rounded-lg border-[var(--line)] bg-white/72"
-//                     />
-//                   </div>
-//                 </div>
-
-//                 <div className="grid gap-2">
-//                   <Label
-//                     htmlFor="travellers"
-//                     className="text-sm font-bold text-[var(--sea-ink)]"
-//                   >
-//                     Travellers
-//                   </Label>
-//                   <div className="relative">
-//                     <UsersRound
-//                       size={17}
-//                       aria-hidden="true"
-//                       className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-//                     />
-//                     <Input
-//                       id="travellers"
-//                       type="number"
-//                       min="1"
-//                       className="pl-10 rounded-lg border-[var(--line)] bg-white/72"
-//                       placeholder="4"
-//                     />
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <div className="grid gap-2">
-//                 <Label
-//                   htmlFor="trip-type"
-//                   className="text-sm font-bold text-[var(--sea-ink)]"
-//                 >
-//                   Trip type
-//                 </Label>
-//                 <Select defaultValue="family">
-//                   <SelectTrigger className="rounded-lg border-[var(--line)] bg-white/72">
-//                     <SelectValue placeholder="Select trip type" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="family">Family holiday</SelectItem>
-//                     <SelectItem value="weekend">Weekend getaway</SelectItem>
-//                     <SelectItem value="group">Group tour</SelectItem>
-//                     <SelectItem value="custom">Custom sightseeing</SelectItem>
-//                     <SelectItem value="honeymoon">Honeymoon</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-
-//               <div className="grid gap-2">
-//                 <Label
-//                   htmlFor="budget"
-//                   className="text-sm font-bold text-[var(--sea-ink)]"
-//                 >
-//                   Budget range (per person)
-//                 </Label>
-//                 <Select defaultValue="any">
-//                   <SelectTrigger className="rounded-lg border-[var(--line)] bg-white/72">
-//                     <SelectValue placeholder="Select budget" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="any">Any budget</SelectItem>
-//                     <SelectItem value="under10k">Under ₹10,000</SelectItem>
-//                     <SelectItem value="10to20k">₹10,000 - ₹20,000</SelectItem>
-//                     <SelectItem value="20to30k">₹20,000 - ₹30,000</SelectItem>
-//                     <SelectItem value="above30k">Above ₹30,000</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-
-//               <TooltipProvider>
-//                 <Tooltip>
-//                   <TooltipTrigger asChild>
-//                     <a
-//                       href="tel:+919000000000"
-//                       className={buttonVariants({
-//                         className:
-//                           "mt-1 h-11 w-full font-extrabold no-underline gap-2",
-//                       })}
-//                     >
-//                       <Phone size={17} aria-hidden="true" />
-//                       Request callback
-//                     </a>
-//                   </TooltipTrigger>
-//                   <TooltipContent>
-//                     <p>We will call you within 2 hours</p>
-//                   </TooltipContent>
-//                 </Tooltip>
-//               </TooltipProvider>
-
-//               <p className="text-center text-xs text-[var(--sea-ink-soft)]">
-//                 Or WhatsApp us at{" "}
-//                 <a
-//                   href="https://wa.me/919000000000"
-//                   className="underline underline-offset-2 hover:text-[var(--sea-ink)]"
-//                 >
-//                   +91 90000 00000
-//                 </a>
-//               </p>
-//             </CardContent>
-//           </Card>
-//         </section>
-
-//         {/* Destinations */}
-//         <section id="destinations" className="py-6">
-//           <div className="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-//             <div>
-//               <Badge
-//                 variant="outline"
-//                 className="mb-2 border-[var(--line)] text-[var(--sea-ink-soft)]"
-//               >
-//                 <Filter size={12} className="mr-1" />
-//                 Popular local spots
-//               </Badge>
-//               <h2 className="display-title mt-2 text-3xl font-bold text-[var(--sea-ink)]">
-//                 Domestic destinations ready to quote
-//               </h2>
-//             </div>
-//             <Button
-//               variant="outline"
-//               className="w-fit bg-white/78 font-bold gap-2"
-//               onClick={() => scrollToSection("request")}
-//             >
-//               Build custom trip
-//               <ArrowRight size={16} />
-//             </Button>
-//           </div>
-
-//           <Tabs
-//             defaultValue="all"
-//             className="mb-6"
-//             onValueChange={setActiveCategory}
-//           >
-//             <TabsList className="bg-white/60 h-auto flex-wrap gap-1 p-1">
-//               {categories.map((cat) => (
-//                 <TabsTrigger
-//                   key={cat.value}
-//                   value={cat.value}
-//                   className="text-xs font-bold data-[state=active]:bg-[var(--palm)] data-[state=active]:text-white"
-//                 >
-//                   {cat.label}
-//                 </TabsTrigger>
-//               ))}
-//             </TabsList>
-//           </Tabs>
-
-//           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-//             {filteredDestinations.map((destination) => (
-//               <Card
-//                 key={destination.name}
-//                 className="feature-card gap-0 overflow-hidden rounded-lg border-[var(--line)] py-0 group"
-//               >
-//                 <div className="aspect-[4/3] overflow-hidden relative">
-//                   <img
-//                     src={destination.image}
-//                     alt={destination.name}
-//                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-//                   />
-//                   <div className="absolute top-3 right-3">
-//                     <Badge
-//                       variant="secondary"
-//                       className="bg-white/90 text-[var(--sea-ink)] font-bold backdrop-blur-sm"
-//                     >
-//                       <Star
-//                         size={12}
-//                         className="mr-1 fill-yellow-400 text-yellow-400"
-//                       />
-//                       {destination.rating}
-//                     </Badge>
-//                   </div>
-//                   <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-3">
-//                     <p className="text-white font-bold text-sm">
-//                       {destination.duration}
-//                     </p>
-//                   </div>
-//                 </div>
-//                 <CardContent className="p-4">
-//                   <div className="mb-3 flex items-center justify-between gap-2">
-//                     <span className="inline-flex items-center gap-1 text-xs font-extrabold text-[var(--palm)]">
-//                       <MapPinned size={14} aria-hidden="true" />
-//                       {destination.duration}
-//                     </span>
-//                     <span className="text-sm font-extrabold text-[var(--sea-ink)]">
-//                       {destination.price}
-//                     </span>
-//                   </div>
-//                   <CardTitle className="text-xl font-extrabold text-[var(--sea-ink)]">
-//                     {destination.name}
-//                   </CardTitle>
-//                   <div className="mt-4 flex flex-wrap gap-2">
-//                     {destination.tags.map((tag) => (
-//                       <Badge
-//                         key={tag}
-//                         variant="outline"
-//                         className="rounded-md border-[var(--chip-line)] bg-white/70 px-2 py-1 text-xs font-bold text-[var(--sea-ink-soft)] hover:bg-white"
-//                       >
-//                         {tag}
-//                       </Badge>
-//                     ))}
-//                   </div>
-//                   <Button
-//                     variant="ghost"
-//                     className="mt-4 w-full font-bold text-[var(--palm)] hover:text-[var(--palm)] hover:bg-[rgba(79,184,178,0.1)] gap-1"
-//                     onClick={() => scrollToSection("request")}
-//                   >
-//                     Get quote
-//                     <ChevronRight size={16} />
-//                   </Button>
-//                 </CardContent>
-//               </Card>
-//             ))}
-//           </div>
-//         </section>
-
-//         {/* Packages + Inclusions */}
-//         <section
-//           id="packages"
-//           className="grid gap-5 py-6 lg:grid-cols-[0.82fr_1.18fr]"
-//         >
-//           <Card className="island-shell rounded-lg bg-transparent p-5">
-//             <CardHeader className="px-0 pb-4">
-//               <Badge
-//                 variant="outline"
-//                 className="mb-2 w-fit border-[var(--line)] text-[var(--sea-ink-soft)]"
-//               >
-//                 What is included
-//               </Badge>
-//               <CardTitle className="display-title text-3xl">
-//                 Everything needed for a clean domestic booking flow
-//               </CardTitle>
-//             </CardHeader>
-//             <CardContent className="grid gap-3 px-0">
-//               {inclusions.map((item) => (
-//                 <div
-//                   key={item}
-//                   className="flex items-center gap-3 rounded-lg border border-[var(--line)] bg-white/62 p-3 text-sm font-bold text-[var(--sea-ink)] transition-colors hover:bg-white/80"
-//                 >
-//                   <span className="grid size-7 place-items-center rounded-md bg-[var(--palm)] text-white shrink-0">
-//                     <Check size={16} aria-hidden="true" />
-//                   </span>
-//                   {item}
-//                 </div>
-//               ))}
-//             </CardContent>
-//           </Card>
-
-//           <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-//             {packageTypes.map((item) => {
-//               const Icon = item.icon;
-
-//               return (
-//                 <Card
-//                   key={item.title}
-//                   className="feature-card rounded-lg border-[var(--line)] p-5 hover:shadow-md transition-shadow"
-//                 >
-//                   <CardContent className="px-0">
-//                     <div className="grid size-11 place-items-center rounded-lg bg-[rgba(79,184,178,0.16)] text-[var(--sea-ink)]">
-//                       <Icon size={22} aria-hidden="true" />
-//                     </div>
-//                     <CardTitle className="mt-5 text-xl font-extrabold text-[var(--sea-ink)]">
-//                       {item.title}
-//                     </CardTitle>
-//                     <CardDescription className="mt-3 leading-6 text-[var(--sea-ink-soft)]">
-//                       {item.description}
-//                     </CardDescription>
-//                     <div className="mt-4 flex flex-wrap gap-2">
-//                       {item.features.map((feature) => (
-//                         <Badge
-//                           key={feature}
-//                           variant="secondary"
-//                           className="bg-[rgba(79,184,178,0.12)] text-[var(--palm)] font-bold text-xs"
-//                         >
-//                           {feature}
-//                         </Badge>
-//                       ))}
-//                     </div>
-//                   </CardContent>
-//                 </Card>
-//               );
-//             })}
-//           </div>
-//         </section>
-
-//         {/* Testimonials */}
-//         <section className="py-6">
-//           <div className="mb-5">
-//             <Badge
-//               variant="outline"
-//               className="mb-2 border-[var(--line)] text-[var(--sea-ink-soft)]"
-//             >
-//               <Heart size={12} className="mr-1" />
-//               Customer stories
-//             </Badge>
-//             <h2 className="display-title text-3xl font-bold text-[var(--sea-ink)]">
-//               What travellers say about us
-//             </h2>
-//           </div>
-//           <div className="grid gap-4 md:grid-cols-3">
-//             {testimonials.map((t) => (
-//               <Card
-//                 key={t.name}
-//                 className="feature-card rounded-lg border-[var(--line)] p-5"
-//               >
-//                 <CardContent className="px-0">
-//                   <div className="flex gap-1 mb-3">
-//                     {starLevels.map((starLevel) => (
-//                       <Star
-//                         key={`${t.name}-star-${starLevel}`}
-//                         size={14}
-//                         className={
-//                           starLevel <= t.rating
-//                             ? "fill-yellow-400 text-yellow-400"
-//                             : "text-gray-300"
-//                         }
-//                       />
-//                     ))}
-//                   </div>
-//                   <p className="text-sm leading-6 text-[var(--sea-ink)] mb-4">
-//                     "{t.text}"
-//                   </p>
-//                   <Separator className="mb-4" />
-//                   <div className="flex items-center justify-between">
-//                     <div>
-//                       <p className="font-bold text-sm text-[var(--sea-ink)]">
-//                         {t.name}
-//                       </p>
-//                       <p className="text-xs text-[var(--sea-ink-soft)]">
-//                         {t.location}
-//                       </p>
-//                     </div>
-//                     <Badge
-//                       variant="outline"
-//                       className="text-xs border-[var(--chip-line)]"
-//                     >
-//                       {t.trip}
-//                     </Badge>
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             ))}
-//           </div>
-//         </section>
-
-//         {/* FAQ */}
-//         <section id="faq" className="py-6">
-//           <div className="mb-5">
-//             <Badge
-//               variant="outline"
-//               className="mb-2 border-[var(--line)] text-[var(--sea-ink-soft)]"
-//             >
-//               Common questions
-//             </Badge>
-//             <h2 className="display-title text-3xl font-bold text-[var(--sea-ink)]">
-//               Frequently asked questions
-//             </h2>
-//           </div>
-//           <Accordion type="single" collapsible className="w-full">
-//             {faqs.map((faq, index) => (
-//               <AccordionItem
-//                 key={faq.question}
-//                 value={`item-${index}`}
-//                 className="border-[var(--line)] bg-white/40 rounded-lg px-4 mb-2"
-//               >
-//                 <AccordionTrigger className="text-sm font-bold text-[var(--sea-ink)] hover:no-underline">
-//                   {faq.question}
-//                 </AccordionTrigger>
-//                 <AccordionContent className="text-sm leading-6 text-[var(--sea-ink-soft)] pb-4">
-//                   {faq.answer}
-//                 </AccordionContent>
-//               </AccordionItem>
-//             ))}
-//           </Accordion>
-//         </section>
-
-//         {/* Trust badges */}
-//         <section className="grid gap-4 pb-8 md:grid-cols-3">
-//           {[
-//             ["Trusted vendors", ShieldCheck],
-//             ["Rated itineraries", Star],
-//             ["Flexible planning", CalendarDays],
-//           ].map(([label, Icon]) => (
-//             <Card
-//               key={label as string}
-//               className="island-shell rounded-lg bg-transparent p-5 hover:shadow-sm transition-shadow"
-//             >
-//               <CardContent className="flex items-center gap-4 px-0">
-//                 <div className="grid size-11 place-items-center rounded-lg bg-white/70">
-//                   <Icon size={22} aria-hidden="true" />
-//                 </div>
-//                 <div>
-//                   <p className="font-extrabold text-[var(--sea-ink)]">
-//                     {label as string}
-//                   </p>
-//                   <p className="mt-1 text-sm text-[var(--sea-ink-soft)]">
-//                     Useful for quote confidence and repeat customers.
-//                   </p>
-//                 </div>
-//               </CardContent>
-//             </Card>
-//           ))}
-//         </section>
-//       </div>
-//     </main>
-//   );
-// }
-
-// src/routes/index.tsx
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -793,6 +45,7 @@ import {
   SelectValue,
 } from "#/components/ui/select";
 import { cn } from "#/lib/utils";
+import { COMPANY_CONTACT } from "#/lib/constants";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -869,19 +122,6 @@ const FEATURED_TOURS: Tour[] = [
     tag: "New",
   },
   {
-    id: "char-dham",
-    title: "Char Dham Yatra",
-    destination: "Badrinath · Kedarnath · Gangotri · Yamunotri",
-    state: "Uttarakhand",
-    duration: "12 Days / 11 Nights",
-    price: 42000,
-    rating: 4.9,
-    reviewCount: 421,
-    category: "Religious",
-    image: "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80",
-    tag: "Best Seller",
-  },
-  {
     id: "coorg-retreat",
     title: "Coorg Coffee & Nature Retreat",
     destination: "Madikeri",
@@ -924,14 +164,6 @@ const TESTIMONIALS: Testimonial[] = [
     text: "The Kerala backwaters trip was absolutely magical. Every detail was taken care of — the houseboat stay, local cuisine, and the sunset views were beyond our expectations.",
     tour: "Kerala Backwaters & Spice Trail",
     avatar: "PM",
-  },
-  {
-    name: "Rajan & Sunita Iyer",
-    location: "Bangalore, Karnataka",
-    rating: 5,
-    text: "First time doing Char Dham Yatra and we couldn't have asked for a better experience. The team handled everything from transport to temple darshan queues perfectly.",
-    tour: "Char Dham Yatra",
-    avatar: "RI",
   },
   {
     name: "Arjun Sharma",
@@ -1018,7 +250,7 @@ function HeroSection() {
     document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="relative min-h-[92dvh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[94dvh] flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -1037,7 +269,7 @@ function HeroSection() {
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-4xl px-4 text-center text-white">
         <Badge className="mb-5 bg-white/15 text-white border-white/20 backdrop-blur-sm hover:bg-white/20">
-          ✈️ 500+ Domestic Tours Across India
+          ✈️ 100+ Domestic Tours Across India
         </Badge>
 
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-4">
@@ -1078,7 +310,7 @@ function HeroSection() {
         {/* Popular tags */}
         <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
           <span className="text-white/50 text-sm">Popular:</span>
-          {["Goa", "Kerala", "Manali", "Rajasthan", "Char Dham", "Andaman"].map(
+          {["Goa", "Kerala", "Manali", "Rajasthan", "Andaman"].map(
             (place) => (
               <button
                 key={place}
@@ -1108,10 +340,10 @@ function HeroSection() {
 
 function TrustBar() {
   const stats = [
-    { icon: Users, label: "Happy Travellers", value: "12,000+" },
+    { icon: Users, label: "Happy Travellers", value: "6,000+" },
     { icon: MapPin, label: "Destinations", value: "80+" },
     { icon: Star, label: "Average Rating", value: "4.8 / 5" },
-    { icon: Award, label: "Years of Experience", value: "10+" },
+    { icon: Award, label: "Years of Experience", value: "5+" },
   ];
 
   return (
@@ -1390,7 +622,7 @@ function WhyUsSection() {
               <div>
                 <p className="font-bold text-sm">Rated 4.8/5</p>
                 <p className="text-xs text-muted-foreground">
-                  by 12,000+ travellers
+                  by travellers
                 </p>
               </div>
             </div>
@@ -1405,7 +637,7 @@ function WhyUsSection() {
               Travel with confidence, <br /> not guesswork
             </h2>
             <p className="text-muted-foreground mb-8 max-w-md">
-              We've helped 12,000+ Indians take their dream trips — here's what
+              We've helped 6,000+ Indians take their dream trips — here's what
               makes us different.
             </p>
 
@@ -1557,19 +789,21 @@ function RequestTripSection() {
 
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "Call us", value: "+91 98765 43210" },
-                { icon: Mail, label: "Email us", value: "hello@wanderindia.com" },
-                { icon: MessageSquare, label: "WhatsApp", value: "+91 98765 43210" },
+                { icon: Phone, label: "Call us", value: COMPANY_CONTACT.phone.primary },
+                { icon: Mail, label: "Email us", value: COMPANY_CONTACT.email.contact },
+                { icon: MessageSquare, label: "WhatsApp", value: COMPANY_CONTACT.phone.whatsapp },
               ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Icon size={16} aria-hidden="true" />
+                <a key={label} href={label === "Email us" ? `mailto:${value}` : label === "Call us" ? `tel:${value}` : `https://wa.me/${value.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-muted/50 rounded-lg p-3 transition-colors">
+                  <div key={label} className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon size={16} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">{label}</p>
+                      <p className="text-sm font-semibold">{value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">{label}</p>
-                    <p className="text-sm font-semibold">{value}</p>
-                  </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>

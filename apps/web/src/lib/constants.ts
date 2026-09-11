@@ -31,3 +31,34 @@ export const bookingOptions = [
     label: "Global holidays",
   },
 ] as const;
+
+/* ------------ Company details -------------- */
+
+export const COMPANY_ADDRESS = {
+  plot: "GF-12",
+  building: "Coner Point",
+  street: "Nr. Hussaini Park",
+  area: "Gorwa",
+  zip_code: 390016,
+  dist: "Vadodara",
+  state: "Gujarat",
+  country: "India",
+}
+
+export const COMPANY_CONTACT = {
+  phone: {
+    whatsapp: "+91 9978612235",
+    primary: "+91 9978612235",
+    alternate: ""
+  },
+  email: {
+    contact: "contact@travelbyfz.com",
+    info: "info@travelbyfz.com",
+    bookings: "bookings@travelbyfz.com"
+  },
+  social_link: {
+    facebook: "https://www.facebook.com/share/1BydkKzDfi/",
+    instagram: "https://www.instagram.com/fz_tours_and_travels?stkn=OHEyOHJmcjN1bnFh",
+    youtube: "https://youtube.com/@fztours.travels?si=0UrjuJaQEs0xj6_d"
+  }
+}

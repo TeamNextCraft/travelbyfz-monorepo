@@ -7,7 +7,6 @@ import {
   Compass,
   Shield,
   CreditCard,
-  HeartHandshake,
 } from "lucide-react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
@@ -15,7 +14,8 @@ import { Separator } from "#/components/ui/separator";
 import { Badge } from "#/components/ui/badge";
 import { useState } from "react";
 import { cn } from "#/lib/utils";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { COMPANY_CONTACT, COMPANY_ADDRESS } from "#/lib/constants.ts";
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -31,7 +31,6 @@ const POPULAR_TOURS = [
   { label: "Kerala Backwaters", to: "/tours/kerala-backwaters" },
   { label: "Royal Rajasthan", to: "/tours/rajasthan-royals" },
   { label: "Spiti Valley", to: "/tours/spiti-valley" },
-  { label: "Char Dham Yatra", to: "/tours/char-dham" },
   { label: "Coorg Retreat", to: "/tours/coorg-retreat" },
   { label: "Andaman Escape", to: "/tours/andaman-escape" },
 ];
@@ -55,33 +54,26 @@ const SOCIAL_LINKS = [
   {
     icon: FaInstagram,
     label: "Instagram",
-    href: "https://instagram.com",
+    href: COMPANY_CONTACT.social_link.instagram,
     color: "hover:text-pink-500",
   },
   {
     icon: FaFacebook,
     label: "Facebook",
-    href: "https://facebook.com",
+    href: COMPANY_CONTACT.social_link.facebook,
     color: "hover:text-blue-500",
   },
   {
     icon: FaYoutube,
     label: "YouTube",
-    href: "https://youtube.com",
+    href: COMPANY_CONTACT.social_link.youtube,
     color: "hover:text-red-500",
-  },
-  {
-    icon: FaTwitter,
-    label: "X / Twitter",
-    href: "https://twitter.com",
-    color: "hover:text-sky-400",
   },
 ];
 
 const TRUST_BADGES = [
   { icon: Shield, label: "Secure Payments" },
   { icon: CreditCard, label: "Razorpay & UPI" },
-  { icon: HeartHandshake, label: "IATA Member" },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -157,19 +149,19 @@ export function Footer() {
             <Link
               to="/"
               className="flex items-center gap-2 w-fit hover:opacity-80 transition-opacity"
-              aria-label="WanderIndia home"
+              aria-label="FZ Tours & Travels"
             >
               <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-primary-foreground">
                 <Compass size={18} aria-hidden="true" />
               </span>
               <span className="text-lg font-bold tracking-tight">
-                WanderIndia
+                FZ Tours & Travels
               </span>
             </Link>
 
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Your trusted partner for domestic travel across India. 500+
-              handcrafted tours, 12,000+ happy travellers, and 10 years of
+              Your trusted partner for domestic travel across India. 100+
+              handcrafted tours, 6,000+ happy travellers, and 5 years of
               turning journeys into memories.
             </p>
 
@@ -177,24 +169,24 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
-                  href="tel:+919876543210"
+                  href={`tel:${COMPANY_CONTACT.phone.primary}`}
                   className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group"
                 >
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                     <Phone size={13} aria-hidden="true" />
                   </span>
-                  +91 98765 43210
+                  {COMPANY_CONTACT.phone.primary}
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:hello@wanderindia.com"
+                  href={`mailto:${COMPANY_CONTACT.email.contact}`}
                   className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group"
                 >
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                     <Mail size={13} aria-hidden="true" />
                   </span>
-                  hello@wanderindia.com
+                  {COMPANY_CONTACT.email.contact}
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-muted-foreground">
@@ -202,9 +194,9 @@ export function Footer() {
                   <MapPin size={13} aria-hidden="true" />
                 </span>
                 <span className="leading-relaxed">
-                  12, Travel Hub, Linking Road,
+                  {COMPANY_ADDRESS.plot}, {COMPANY_ADDRESS.building}, {COMPANY_ADDRESS.street}, 
                   <br />
-                  Mumbai, Maharashtra — 400050
+                  {COMPANY_ADDRESS.area}, {COMPANY_ADDRESS.dist}, {COMPANY_ADDRESS.state}, {COMPANY_ADDRESS.country} — {COMPANY_ADDRESS.zip_code} 
                 </span>
               </li>
             </ul>
@@ -272,7 +264,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-5">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>
-            © {currentYear} WanderIndia Tours & Travels Pvt. Ltd. All rights
+            © {currentYear} FZ Tours & Travels Pvt. Ltd. All rights
             reserved.
           </p>
           <nav aria-label="Legal links">
