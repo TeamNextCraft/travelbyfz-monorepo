@@ -7,7 +7,7 @@ import {
   uniqueIndex,
   primaryKey,
 } from "drizzle-orm/sqlite-core";
-import { user } from "./auth";
+import { user } from "./auth.ts";
 
 /**
  * D1 / SQLite notes:

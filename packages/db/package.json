@@ -15,7 +15,8 @@
   },
   "exports": {
     "./schema/*": "./src/schema/*",
-    "./client": "./src/client.ts"
+    "./client": "./src/client.ts",
+    "./repository/*": "./src/repositories/*.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

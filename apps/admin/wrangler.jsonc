@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "travelbyfz-cf-admin",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "travelbyfz_db",
+      "database_id": "88b3ed50-9ab0-45da-ba30-ae43d6f5f767",
+      "migrations_dir": "../../packages/db/drizzle"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "admin.travelbyfz.com",
+      "custom_domain": true,
+    }
+  ]
+}
