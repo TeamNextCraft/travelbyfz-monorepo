@@ -13,7 +13,6 @@ import {
   Map,
 } from "lucide-react";
 import { useState, useMemo } from "react";
-import { Input } from "#/components/ui/input";
 import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";

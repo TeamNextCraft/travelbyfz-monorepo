@@ -1,7 +1,6 @@
 import { and, desc, eq, like, or } from "drizzle-orm";
 import { getDb } from "#/client.js";
 import { tours } from "#/schema/domestic.js";
-import { tourSelectSchema } from '../../../types/src/domestic';
 import { destinations } from '../schema/domestic';
 
 type Database = ReturnType<typeof getDb>;
@@ -11,20 +10,26 @@ type TourUpdate = Partial<Omit<TourInsert, "id" | "createdAt">>;
 export function createTourRepository(db: Database) {
   return {
     getPublicToursList() {
-      return await db.select({
+      return db.select({
         id: tours.id,
+        slug: tours.slug,
         title: tours.title,
         destination: destinations.name,
         state: destinations.state,
-        duration: tours.durationDays,
+        durationDays: tours.durationDays,
+        durationNights: tours.durationNights,
         price: tours.basePrice,
         rating: tours.avgRating,
-        reviewsCount: tours.reviewCount,
+        reviewCount: tours.reviewCount,
         category: tours.category,
         image: tours.featuredImage,
         groupSize: tours.maxGroupSize,
         highlights: tours.highlights,
-      }).from(tours)
+      })
+        .from(tours)
+        .leftJoin(destinations, eq(tours.destinationId, destinations.id))
+        .where(and(eq(tours.isActive, true), eq(tours.isPublished, true)))
+        .orderBy(desc(tours.createdAt));
     },
     list(input?: {
       search?: string;

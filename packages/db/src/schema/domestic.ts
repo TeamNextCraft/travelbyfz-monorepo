@@ -78,6 +78,7 @@ export const destinations = sqliteTable(
     country: text("country").notNull().default("India"),
     state: text("state").notNull(),
     city: text("city"),
+    region: text("region"), // e.g. "South India", "North India", "Islands"
 
     shortDescription: text("short_description"),
     description: text("description"),
