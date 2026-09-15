@@ -1,0 +1,16 @@
+{
+  "name": "@repo/auth",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    "./client": "./src/client.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@repo/db": "workspace:*",
+    "better-auth": "^1.7.4"
+  }
+}

@@ -341,7 +341,7 @@ function ToursPage() {
   const { tours: fetchedTours } = Route.useLoaderData();
 
   console.log("Fetched tours:", fetchedTours, "from loader");
-  const tours = fetchedTours.length > 0 ? fetchedTours : ALL_TOURS;
+  const tours = fetchedTours.length > 0 ? fetchedTours : [];
   const allStates = [...new Set(tours.map((tour) => tour.state))].sort();
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/domestic/tours/" });

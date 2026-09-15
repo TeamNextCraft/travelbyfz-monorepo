@@ -6,6 +6,28 @@ type Database = ReturnType<typeof getDb>;
 
 export function createDestinationRepository(db: Database) {
   return {
+    getPublicDestinationsList() {
+      const data = db.select({
+        id: destinations.id,
+        name: destinations.name,
+        state: destinations.state,
+        region: destinations.region,
+        category: destinations.category,
+        tourCount: destinations.tourCount,
+        rating: destinations.rating,
+        bestTimeToVisit: destinations.bestTimeToVisit,
+        coverImage: destinations.coverImage,
+        tagline: destinations.tagline,
+        highlights: destinations.highlights,
+        isTrending: destinations.isTrending,
+        country: destinations.country,
+        isActive: destinations.isActive,
+      })
+        .from(destinations)
+        .where(eq(destinations.isActive, true))
+        .orderBy(desc(destinations.createdAt));
+      return data; 
+    },
     list(input?: { search?: string; activeOnly?: boolean }) {
       const conditions = [];
 

@@ -12,11 +12,13 @@ import {
   X,
   Map,
 } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { cn } from "#/lib/utils";
+import { listDestinations } from "#/lib/actions/destinations";
+
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -414,7 +416,7 @@ const CATEGORY_STYLES: Record<DestinationCategory, string> = {
 export const Route = createFileRoute("/domestic/destinations/")({
   validateSearch: destSearchSchema,
   // swap with loader when DB is ready:
-  // loader: async () => ({ destinations: await getAllDestinations() }),
+  loader: async () => ({ destinations: await listDestinations() }),
   component: DestinationsPage,
 });
 
@@ -423,6 +425,12 @@ export const Route = createFileRoute("/domestic/destinations/")({
 function DestinationsPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+
+  const { destinations: fetchedDestinations } = Route.useLoaderData();
+
+  const destinations = fetchedDestinations.length > 0 ? fetchedDestinations : DESTINATIONS;
+
+  console.log("Fetched destinations:", fetchedDestinations, "from loader");
 
   const q = search.q ?? "";
   const activeRegion = (search.region as Region | "All") ?? "All";
@@ -444,24 +452,27 @@ function DestinationsPage() {
 
   // Trending destinations for the hero strip
   const trending = useMemo(
-    () => DESTINATIONS.filter((d) => d.trending).slice(0, 6),
-    []
+    () =>
+      destinations
+        .filter((d) => ("isTrending" in d ? d.isTrending : d.trending))
+        .slice(0, 6),
+    [destinations]
   );
 
   // Filtered results
   const filtered = useMemo(() => {
-    return DESTINATIONS.filter((d) => {
+    return destinations.filter((d) => {
       if (q) {
         const lower = q.toLowerCase();
         if (
           !d.name.toLowerCase().includes(lower) &&
           !d.state.toLowerCase().includes(lower) &&
-          !d.tagline.toLowerCase().includes(lower)
+          !d.tagline?.toLowerCase().includes(lower)
         )
           return false;
       }
       if (activeRegion !== "All" && d.region !== activeRegion) return false;
-      if (activeCategory !== "All" && !d.category.includes(activeCategory))
+      if (activeCategory !== "All" && !d.category?.includes(activeCategory))
         return false;
       return true;
     });
@@ -781,7 +792,7 @@ function DestinationCard({ dest }: { dest: Destination }) {
 
         {/* Highlights */}
         <div className="flex flex-wrap gap-1">
-          {dest.highlights.slice(0, 2).map((h) => (
+          {dest.highlights?.slice(0, 2).map((h) => (
             <span
               key={h}
               className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground"

@@ -8,6 +8,7 @@ import {
   primaryKey,
 } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.ts";
+import { sql } from "drizzle-orm";
 
 /**
  * D1 / SQLite notes:
@@ -79,6 +80,15 @@ export const destinations = sqliteTable(
     state: text("state").notNull(),
     city: text("city"),
     region: text("region"), // e.g. "South India", "North India", "Islands"
+    category: text("category"), // e.g. "beach", "hill station", "cultural", "adventure"
+    tourCount: integer("tour_count").notNull().default(0),
+    rating: real("rating").default(0),
+    tagline: text("tagline"),
+
+    highlights: text("highlights", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+    isTrending: integer("is_trending", { mode: "boolean" })
+      .notNull()
+      .default(false),
 
     shortDescription: text("short_description"),
     description: text("description"),

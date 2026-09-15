@@ -15,6 +15,20 @@
       "when": 1789385637213,
       "tag": "0001_exotic_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789389972626,
+      "tag": "0002_redundant_blazing_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789391775738,
+      "tag": "0003_overconfident_living_tribunal",
+      "breakpoints": true
     }
   ]
 }

@@ -1,3 +1,2 @@
-import { createAuthClient } from 'better-auth/react'
-
-export const authClient = createAuthClient()
+import { createAppAuthClient } from "@repo/auth/client"
+export const authClient = createAppAuthClient(import.meta.env.VITE_BETTER_AUTH_BASE_URL)
