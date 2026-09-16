@@ -43,9 +43,10 @@ import { Label } from "#/components/ui/label";
 import { Separator } from "#/components/ui/separator";
 import { ScrollArea } from "#/components/ui/scroll-area";
 import { cn } from "#/lib/utils";
-import { listTours } from "#/lib/actions/tours";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { useQuery } from "@tanstack/react-query";
+import { getPublicTours } from "#/server/actions/tours.ts";
+import type { PublicTour } from "#/lib/types/tour.ts";
+import { ToursError, ToursLoading } from "#/components/common/domestic/tours-status-components.tsx";
 
 type Category =
   | "Beach"
@@ -61,25 +62,6 @@ type SortOption =
   | "duration-asc";
 type ViewMode = "grid" | "list";
 
-type Tour = {
-  id: string;
-  title: string;
-  destination: string;
-  state: string;
-  duration: string;
-  durationDays: number;
-  price: number;
-  rating: number;
-  reviewCount: number;
-  category: Category;
-  image: string;
-  tag?: string;
-  groupSize: number;
-  highlights: string[];
-};
-
-// ─── Search Params Schema (URL-persisted filters) ─────────────────────────────
-
 const toursSearchSchema = z.object({
   q: z.string().optional(),
   category: z.string().optional(),
@@ -94,209 +76,6 @@ const toursSearchSchema = z.object({
 
 type ToursSearch = z.infer<typeof toursSearchSchema>;
 
-// ─── Static tour data (replace with loader + DB) ─────────────────────────────
-
-const ALL_TOURS: Tour[] = [
-  // {
-  //   id: "kerala-backwaters",
-  //   title: "Kerala Backwaters & Spice Trail",
-  //   destination: "Alleppey",
-  //   state: "Kerala",
-  //   duration: "5D / 4N",
-  //   durationDays: 5,
-  //   price: 18500,
-  //   rating: 4.9,
-  //   reviewCount: 312,
-  //   category: "Beach",
-  //   image:
-  //     "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
-  //   tag: "Best Seller",
-  //   groupSize: 12,
-  //   highlights: ["Houseboat stay", "Spice plantation", "Kathakali show"],
-  // },
-  // {
-  //   id: "rajasthan-royals",
-  //   title: "Royal Rajasthan Heritage Tour",
-  //   destination: "Jaipur → Jodhpur → Udaipur",
-  //   state: "Rajasthan",
-  //   duration: "7D / 6N",
-  //   durationDays: 7,
-  //   price: 24999,
-  //   rating: 4.8,
-  //   reviewCount: 198,
-  //   category: "Cultural",
-  //   image:
-  //     "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80",
-  //   tag: "Popular",
-  //   groupSize: 10,
-  //   highlights: ["Amber Fort", "Desert safari", "Lake Pichola cruise"],
-  // },
-  // {
-  //   id: "spiti-valley",
-  //   title: "Spiti Valley Expedition",
-  //   destination: "Kaza",
-  //   state: "Himachal Pradesh",
-  //   duration: "8D / 7N",
-  //   durationDays: 8,
-  //   price: 32000,
-  //   rating: 4.7,
-  //   reviewCount: 145,
-  //   category: "Adventure",
-  //   image:
-  //     "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80",
-  //   tag: "New",
-  //   groupSize: 8,
-  //   highlights: ["Key Monastery", "Chandratal Lake", "4WD off-roading"],
-  // },
-  // {
-  //   id: "char-dham",
-  //   title: "Char Dham Yatra",
-  //   destination: "Badrinath · Kedarnath · Gangotri · Yamunotri",
-  //   state: "Uttarakhand",
-  //   duration: "12D / 11N",
-  //   durationDays: 12,
-  //   price: 42000,
-  //   rating: 4.9,
-  //   reviewCount: 421,
-  //   category: "Religious",
-  //   image:
-  //     "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80",
-  //   tag: "Best Seller",
-  //   groupSize: 15,
-  //   highlights: ["4 sacred shrines", "Helicopter option", "Vedic rituals"],
-  // },
-  // {
-  //   id: "coorg-retreat",
-  //   title: "Coorg Coffee & Nature Retreat",
-  //   destination: "Madikeri",
-  //   state: "Karnataka",
-  //   duration: "4D / 3N",
-  //   durationDays: 4,
-  //   price: 14500,
-  //   rating: 4.6,
-  //   reviewCount: 87,
-  //   category: "Hill Station",
-  //   image:
-  //     "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
-  //   groupSize: 10,
-  //   highlights: ["Coffee plantation walk", "Abbey Falls", "Jungle safari"],
-  // },
-  // {
-  //   id: "andaman-escape",
-  //   title: "Andaman Island Escape",
-  //   destination: "Port Blair · Havelock",
-  //   state: "Andaman & Nicobar",
-  //   duration: "6D / 5N",
-  //   durationDays: 6,
-  //   price: 38000,
-  //   rating: 4.8,
-  //   reviewCount: 230,
-  //   category: "Beach",
-  //   image:
-  //     "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80",
-  //   groupSize: 12,
-  //   highlights: ["Scuba diving", "Radhanagar Beach", "Cellular Jail tour"],
-  // },
-  // {
-  //   id: "varanasi-spiritual",
-  //   title: "Varanasi Spiritual Journey",
-  //   destination: "Varanasi",
-  //   state: "Uttar Pradesh",
-  //   duration: "3D / 2N",
-  //   durationDays: 3,
-  //   price: 9800,
-  //   rating: 4.7,
-  //   reviewCount: 176,
-  //   category: "Religious",
-  //   image:
-  //     "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&q=80",
-  //   groupSize: 15,
-  //   highlights: ["Ganga Aarti", "Sunrise boat ride", "Sarnath visit"],
-  // },
-  // {
-  //   id: "manali-adventure",
-  //   title: "Manali Adventure & Snow",
-  //   destination: "Manali",
-  //   state: "Himachal Pradesh",
-  //   duration: "6D / 5N",
-  //   durationDays: 6,
-  //   price: 22000,
-  //   rating: 4.7,
-  //   reviewCount: 289,
-  //   category: "Adventure",
-  //   image:
-  //     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-  //   tag: "Popular",
-  //   groupSize: 12,
-  //   highlights: ["Rohtang Pass", "River rafting", "Solang Valley zip-line"],
-  // },
-  // {
-  //   id: "goa-beaches",
-  //   title: "Goa Sun, Sand & Seafood",
-  //   destination: "North & South Goa",
-  //   state: "Goa",
-  //   duration: "5D / 4N",
-  //   durationDays: 5,
-  //   price: 16500,
-  //   rating: 4.5,
-  //   reviewCount: 341,
-  //   category: "Beach",
-  //   image:
-  //     "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80",
-  //   groupSize: 15,
-  //   highlights: ["Beach hopping", "Water sports", "Spice plantation tour"],
-  // },
-  // {
-  //  id: "ooty-nilgiris",
-  //   title: "Ooty & Nilgiris Explorer",
-  //   destination: "Ooty",
-  //   state: "Tamil Nadu",
-  //   duration: "4D / 3N",
-  //   durationDays: 4,
-  //   price: 12000,
-  //   rating: 4.5,
-  //   reviewCount: 112,
-  //   category: "Hill Station",
-  //   image:
-  //     "https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=600&q=80",
-  //   groupSize: 10,
-  //   highlights: ["Toy train ride", "Botanical Garden", "Tea estate walk"],
-  // },
-  // {
-  //   id: "golden-triangle",
-  //   title: "Golden Triangle — Delhi Agra Jaipur",
-  //   destination: "Delhi · Agra · Jaipur",
-  //   state: "Multi-State",
-  //   duration: "6D / 5N",
-  //   durationDays: 6,
-  //   price: 19500,
-  //   rating: 4.8,
-  //   reviewCount: 507,
-  //   category: "Cultural",
-  //   tag: "Best Seller",
-  //   image:
-  //     "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&q=80",
-  //   groupSize: 12,
-  //   highlights: ["Taj Mahal sunrise", "Red Fort", "City Palace Jaipur"],
-  // },
-  // {
-  //   id: "ladakh-expedition",
-  //   title: "Ladakh Land of High Passes",
-  //   destination: "Leh · Nubra · Pangong",
-  //   state: "Ladakh",
-  //   duration: "9D / 8N",
-  //   durationDays: 9,
-  //   price: 45000,
-  //   rating: 4.9,
-  //   reviewCount: 193,
-  //   category: "Adventure",
-  //   image:
-  //     "https://images.unsplash.com/photo-1597040663342-45b6af3d91a5?w=600&q=80",
-  //   groupSize: 8,
-  //   highlights: ["Pangong Lake", "Nubra Valley", "Khardung La pass"],
-  // },
-];
-
 const CATEGORIES: Category[] = [
   "Beach",
   "Adventure",
@@ -305,7 +84,7 @@ const CATEGORIES: Category[] = [
   "Hill Station",
 ];
 
-const CATEGORY_STYLES: Record<Category, string> = {
+const CATEGORY_STYLES: Record<string, string> = {
   Beach: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
   Adventure:
     "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
@@ -327,30 +106,30 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 const MAX_PRICE = 50000;
 
-// ─── Route ────────────────────────────────────────────────────────────────────
-
 export const Route = createFileRoute("/domestic/tours/")({
   validateSearch: toursSearchSchema,
-  loader: async () => ({ tours: (await listTours()) as Tour[] }),
   component: ToursPage,
 });
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 function ToursPage() {
-  const { tours: fetchedTours } = Route.useLoaderData();
 
-  console.log("Fetched tours:", fetchedTours, "from loader");
-  const tours = fetchedTours.length > 0 ? fetchedTours : [];
-  const allStates = [...new Set(tours.map((tour) => tour.state))].sort();
+  const {
+    data: fetchedTours,
+    isPending,
+    isError,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["tours-array"],
+    queryFn: getPublicTours,
+  });
+
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/domestic/tours/" });
 
-  // Local UI state
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Derive filter state from URL search params
   const q = search.q ?? "";
   const category = search.category ?? "";
   const sort = search.sort ?? "popular";
@@ -359,67 +138,98 @@ function ToursPage() {
   const maxDays = search.maxDays ?? 30;
   const selectedState = search.state ?? "";
 
-  // Update URL search params
+  const tours = fetchedTours ?? [];
+
+  const allStates = useMemo(
+    () => [...new Set(tours.map((tour) => tour.state))].sort(),
+    [tours],
+  );
+
+  const filteredTours = useMemo(() => {
+    const result = tours.filter((tour) => {
+      const query = q.trim().toLowerCase();
+
+      const matchesSearch =
+        !query ||
+        tour.title.toLowerCase().includes(query) ||
+        tour.destination.toLowerCase().includes(query) ||
+        tour.state.toLowerCase().includes(query);
+
+      const matchesCategory =
+        !category || tour.category === category;
+
+      const matchesState =
+        !selectedState || tour.state === selectedState;
+
+      const matchesPrice =
+        tour.price >= minPrice && tour.price <= maxPrice;
+
+      const matchesDuration =
+        tour.durationDays <= maxDays;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesState &&
+        matchesPrice &&
+        matchesDuration
+      );
+    });
+
+    return [...result].sort((a, b) => {
+      switch (sort) {
+        case "price-asc":
+          return a.price - b.price;
+
+        case "price-desc":
+          return b.price - a.price;
+
+        case "rating":
+          return b.rating - a.rating;
+
+        case "duration-asc":
+          return a.durationDays - b.durationDays;
+
+        case "popular":
+        default:
+          return b.reviewCount - a.reviewCount;
+      }
+    });
+  }, [
+    tours,
+    q,
+    category,
+    selectedState,
+    minPrice,
+    maxPrice,
+    maxDays,
+    sort,
+  ]);
+
   const setSearch = (updates: Partial<ToursSearch>) => {
     navigate({
-      search: (prev) => ({ ...prev, ...updates }),
+      search: (previous) => ({
+        ...previous,
+        ...updates,
+      }),
       replace: true,
     });
   };
 
   const clearAllFilters = () => {
-    navigate({ search: {}, replace: true });
+    navigate({
+      search: {},
+      replace: true,
+    });
   };
 
-  // Count active filters for badge
   const activeFilterCount = [
     category,
     selectedState,
-    search.minPrice,
+    search.minPrice !== undefined,
     search.maxPrice !== undefined && search.maxPrice < MAX_PRICE,
-    search.maxDays && search.maxDays < 30,
+    search.maxDays !== undefined && search.maxDays < 30,
   ].filter(Boolean).length;
-
-  // Filter + sort logic
-  const filteredTours = useMemo(() => {
-    let result = tours.filter((tour) => {
-      if (q) {
-        const lower = q.toLowerCase();
-        if (
-          !tour.title.toLowerCase().includes(lower) &&
-          !tour.destination.toLowerCase().includes(lower) &&
-          !tour.state.toLowerCase().includes(lower)
-        )
-          return false;
-      }
-      if (category && tour.category !== category) return false;
-      if (selectedState && tour.state !== selectedState) return false;
-      if (tour.price < minPrice || tour.price > maxPrice) return false;
-      if (tour.durationDays > maxDays) return false;
-      return true;
-    });
-
-    switch (sort) {
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case "rating":
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case "duration-asc":
-        result.sort((a, b) => a.durationDays - b.durationDays);
-        break;
-      default:
-        result.sort((a, b) => b.reviewCount - a.reviewCount);
-    }
-
-    return result;
-  }, [tours, q, category, selectedState, minPrice, maxPrice, maxDays, sort]);
-
-  console.log("Filtered tours:", filteredTours.length, "out of", tours.length);
 
   return (
     <main>
@@ -709,7 +519,11 @@ function ToursPage() {
         </p>
 
         {/* ── Tour Grid / List ──────────────────────────────────────────── */}
-        {filteredTours.length === 0 ? (
+        {isPending ? (
+          <ToursLoading />
+        ) : isError ? (
+          <ToursError error={error} onRetry={refetch} />
+        ) : filteredTours.length === 0 ? (
           <EmptyState onClear={clearAllFilters} />
         ) : viewMode === "grid" ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -731,7 +545,7 @@ function ToursPage() {
 
 // ─── Grid Card ────────────────────────────────────────────────────────────────
 
-function TourGridCard({ tour }: { tour: Tour }) {
+function TourGridCard({ tour }: { tour: PublicTour }) {
   return (
     <Card className="group overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 border-border/60">
       <div className="relative overflow-hidden aspect-[16/10]">
@@ -825,7 +639,7 @@ function TourGridCard({ tour }: { tour: Tour }) {
 
 // ─── List Card ────────────────────────────────────────────────────────────────
 
-function TourListCard({ tour }: { tour: Tour }) {
+function TourListCard({ tour }: { tour: PublicTour }) {
   return (
     <Card className="group overflow-hidden border-border/60 hover:shadow-md transition-shadow duration-300">
       <div className="flex flex-col sm:flex-row">

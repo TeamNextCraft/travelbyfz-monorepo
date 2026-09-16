@@ -195,7 +195,7 @@ export const tours = sqliteTable(
     seoTitle: text("seo_title"),
     seoDescription: text("seo_description"),
 
-    avgRating: real("avg_rating").default(0),
+    avgRating: real("avg_rating").default(0).notNull(),
     reviewCount: integer("review_count").notNull().default(0),
     bookingCount: integer("booking_count").notNull().default(0),
 

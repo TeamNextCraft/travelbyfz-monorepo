@@ -9,8 +9,8 @@ type TourUpdate = Partial<Omit<TourInsert, "id" | "createdAt">>;
 
 export function createTourRepository(db: Database) {
   return {
-    getPublicToursList() {
-      return db.select({
+    async getPublicToursList() {
+      return await db.select({
         id: tours.id,
         slug: tours.slug,
         title: tours.title,

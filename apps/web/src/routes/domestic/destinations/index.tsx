@@ -17,37 +17,9 @@ import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { cn } from "#/lib/utils";
-import { listDestinations } from "#/lib/actions/destinations";
-
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type DestinationCategory =
-  | "Beach"
-  | "Hill Station"
-  | "Cultural"
-  | "Religious"
-  | "Adventure"
-  | "Wildlife";
-
-type Region = "North" | "South" | "East" | "West" | "Central" | "Islands";
-
-type Destination = {
-  id: string;
-  name: string;
-  state: string;
-  region: Region;
-  category: DestinationCategory[];
-  tagline: string;
-  tourCount: number;
-  rating: number;
-  bestTime: string;
-  image: string;
-  highlights: string[];
-  trending?: boolean;
-};
-
-// ─── Search Params ────────────────────────────────────────────────────────────
+import type { DestinationCategory, Region } from "#/lib/types/destinations.ts";
+import { useQuery } from "@tanstack/react-query";
+import { getPublicDestinations } from "#/server/actions/destinations.ts";
 
 const destSearchSchema = z.object({
   q: z.string().optional(),
@@ -58,7 +30,7 @@ const destSearchSchema = z.object({
 // ─── Destinations Data ────────────────────────────────────────────────────────
 // Source: India Tourism Data Compendium 2025, Ministry of Tourism
 
-const DESTINATIONS: Destination[] = [
+const DESTINATIONS = [
   // ── North ──────────────────────────────────────────────────────────────────
   {
     id: "jaipur",
@@ -415,27 +387,42 @@ const CATEGORY_STYLES: Record<DestinationCategory, string> = {
 
 export const Route = createFileRoute("/domestic/destinations/")({
   validateSearch: destSearchSchema,
-  // swap with loader when DB is ready:
-  loader: async () => ({ destinations: await listDestinations() }),
   component: DestinationsPage,
 });
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 function DestinationsPage() {
+  const {
+    data: fetchedDestinations,
+    isPending,
+    isError,
+    refetch,
+    error,
+  } = useQuery({
+    queryKey: ["destinations"],
+    queryFn: getPublicDestinations, 
+  })
+
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
-  const { destinations: fetchedDestinations } = Route.useLoaderData();
-
-  const destinations = fetchedDestinations.length > 0 ? fetchedDestinations : DESTINATIONS;
-
+  
   console.log("Fetched destinations:", fetchedDestinations, "from loader");
 
+  console.error({
+    isPending,
+    isError,
+    error,
+    fetchedDestinations,
+    file: "apps/web/src/routes/domestic/destinations/index.tsx",
+  })
+  
   const q = search.q ?? "";
   const activeRegion = (search.region as Region | "All") ?? "All";
   const activeCategory = (search.category as DestinationCategory | "All") ?? "All";
-
+  
+  const destinations = fetchedDestinations ?? [];
   const setSearch = (updates: Record<string, string | undefined>) => {
     navigate({
       search: (prev) => ({ ...prev, ...updates }),
