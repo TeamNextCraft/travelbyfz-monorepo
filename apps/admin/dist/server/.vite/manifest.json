@@ -1,0 +1,141 @@
+{
+  "F:/client-projects/travelbyfz-monorepo/apps/admin/src/styles.css": {
+    "file": "assets/styles-CORYWxf0.css",
+    "src": "F:/client-projects/travelbyfz-monorepo/apps/admin/src/styles.css"
+  },
+  "_default-query-compiler-CsFcy8EU.js": {
+    "file": "assets/default-query-compiler-CsFcy8EU.js",
+    "name": "default-query-compiler"
+  },
+  "_jsx-runtime-BreKMRQl.js": {
+    "file": "assets/jsx-runtime-BreKMRQl.js",
+    "name": "jsx-runtime"
+  },
+  "_kysely-migration-tables-DFfmKhq--eTBm8JUc.js": {
+    "file": "assets/kysely-migration-tables-DFfmKhq--eTBm8JUc.js",
+    "name": "kysely-migration-tables-DFfmKhq-"
+  },
+  "_useSelector-L4ZDj6Yf.js": {
+    "file": "assets/useSelector-L4ZDj6Yf.js",
+    "name": "useSelector",
+    "imports": [
+      "_jsx-runtime-BreKMRQl.js"
+    ]
+  },
+  "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/bun-sqlite-dialect-C7ftEUSI.mjs": {
+    "file": "assets/bun-sqlite-dialect-C7ftEUSI-CTTWpUzO.js",
+    "name": "bun-sqlite-dialect-C7ftEUSI",
+    "src": "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/bun-sqlite-dialect-C7ftEUSI.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "_kysely-migration-tables-DFfmKhq--eTBm8JUc.js",
+      "_default-query-compiler-CsFcy8EU.js",
+      "src/router.tsx"
+    ]
+  },
+  "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/d1-sqlite-dialect-D4qp4-wW.mjs": {
+    "file": "assets/d1-sqlite-dialect-D4qp4-wW-DUHrYzY0.js",
+    "name": "d1-sqlite-dialect-D4qp4-wW",
+    "src": "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/d1-sqlite-dialect-D4qp4-wW.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "_kysely-migration-tables-DFfmKhq--eTBm8JUc.js",
+      "src/router.tsx"
+    ]
+  },
+  "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/node-sqlite-dialect.mjs": {
+    "file": "assets/node-sqlite-dialect-C3yQSrFn.js",
+    "name": "node-sqlite-dialect",
+    "src": "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/node-sqlite-dialect.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "_kysely-migration-tables-DFfmKhq--eTBm8JUc.js",
+      "_default-query-compiler-CsFcy8EU.js",
+      "src/router.tsx"
+    ]
+  },
+  "node_modules/.pnpm/@better-auth+memory-adapter_653549f54833e0f7a5db5e4777623295/node_modules/@better-auth/memory-adapter/dist/index.mjs": {
+    "file": "assets/dist-CqzPots6.js",
+    "name": "dist",
+    "src": "node_modules/.pnpm/@better-auth+memory-adapter_653549f54833e0f7a5db5e4777623295/node_modules/@better-auth/memory-adapter/dist/index.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/router.tsx"
+    ]
+  },
+  "node_modules/.pnpm/@tanstack+react-start@1.168_5c35e36d1cfc231685e2ad9f1f1efbe1/node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts": {
+    "file": "assets/start-92UxEnsM.js",
+    "name": "start",
+    "src": "node_modules/.pnpm/@tanstack+react-start@1.168_5c35e36d1cfc231685e2ad9f1f1efbe1/node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts",
+    "isDynamicEntry": true
+  },
+  "node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/empty-plugin-adapters.js": {
+    "file": "assets/empty-plugin-adapters-7vg-90SR.js",
+    "name": "empty-plugin-adapters",
+    "src": "node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/empty-plugin-adapters.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/.pnpm/better-auth@1.7.4_@tanstack_36ba52cf940fd1262dd4c0a0eef03343/node_modules/better-auth/dist/adapters/kysely-adapter/index.mjs": {
+    "file": "assets/kysely-adapter-CzjA4Beg.js",
+    "name": "kysely-adapter",
+    "src": "node_modules/.pnpm/better-auth@1.7.4_@tanstack_36ba52cf940fd1262dd4c0a0eef03343/node_modules/better-auth/dist/adapters/kysely-adapter/index.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/router.tsx"
+    ]
+  },
+  "src/router.tsx": {
+    "file": "assets/router-DrhuBRk7.js",
+    "name": "router",
+    "src": "src/router.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jsx-runtime-BreKMRQl.js",
+      "_useSelector-L4ZDj6Yf.js",
+      "_default-query-compiler-CsFcy8EU.js"
+    ],
+    "dynamicImports": [
+      "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/bun-sqlite-dialect-C7ftEUSI.mjs",
+      "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/node-sqlite-dialect.mjs",
+      "node_modules/.pnpm/@better-auth+kysely-adapter_7bfff8e7e743e090be4154c28b020860/node_modules/@better-auth/kysely-adapter/dist/d1-sqlite-dialect-D4qp4-wW.mjs",
+      "src/routes/index.tsx?tsr-split=component",
+      "node_modules/.pnpm/@better-auth+memory-adapter_653549f54833e0f7a5db5e4777623295/node_modules/@better-auth/memory-adapter/dist/index.mjs",
+      "node_modules/.pnpm/better-auth@1.7.4_@tanstack_36ba52cf940fd1262dd4c0a0eef03343/node_modules/better-auth/dist/adapters/kysely-adapter/index.mjs",
+      "virtual:cloudflare/worker-entry"
+    ],
+    "assets": [
+      "assets/styles-CORYWxf0.css"
+    ]
+  },
+  "src/routes/index.tsx?tsr-split=component": {
+    "file": "assets/routes-CFY6m7BM.js",
+    "name": "routes",
+    "src": "src/routes/index.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "_jsx-runtime-BreKMRQl.js"
+    ]
+  },
+  "tanstack-start-manifest:v": {
+    "file": "assets/_tanstack-start-manifest_v-DSKY1GJs.js",
+    "name": "_tanstack-start-manifest_v",
+    "src": "tanstack-start-manifest:v",
+    "isDynamicEntry": true
+  },
+  "virtual:cloudflare/worker-entry": {
+    "file": "index.js",
+    "name": "index",
+    "src": "virtual:cloudflare/worker-entry",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-BreKMRQl.js",
+      "_useSelector-L4ZDj6Yf.js"
+    ],
+    "dynamicImports": [
+      "tanstack-start-manifest:v",
+      "src/router.tsx",
+      "node_modules/.pnpm/@tanstack+react-start@1.168_5c35e36d1cfc231685e2ad9f1f1efbe1/node_modules/@tanstack/react-start/dist/plugin/default-entry/start.ts",
+      "node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/empty-plugin-adapters.js"
+    ]
+  }
+}
