@@ -16,6 +16,7 @@ import {
 } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { Button } from "#/components/ui/button";
+import { WEBINAR_AMOUNT } from "#/routes/invitation/webinar";
 
 export const webinarRegistrationSchema = z.object({
   name: z
@@ -67,8 +68,6 @@ export function WebinarRegistrationForm() {
     setServerError(null);
     setLoading(true);
 
-    console.log("Submitting webinar registration:", data);
-
     try {
       const order = await createWebinarOrder({ data });
 
@@ -76,7 +75,7 @@ export function WebinarRegistrationForm() {
         key: order.key,
         amount: order.amount,
         currency: "INR",
-        name: "Fatema Tu Zohra Tours & Travels",
+        name: "FZ Tours & Travels",
         description: "Live Webinar Registration",
         order_id: order.orderId,
         prefill: { name: data.name, email: data.email, contact: data.phone },
@@ -182,7 +181,7 @@ export function WebinarRegistrationForm() {
         className="w-full"
       >
         <Wallet className="size-4" />
-        {loading ? "Processing..." : "Pay ₹199 & Reserve Seat"}
+        {loading ? "Processing..." : `Pay ₹${WEBINAR_AMOUNT / 100} & Reserve Seat`}
       </Button>
 
       <p className="flex items-center justify-center gap-2 text-xs text-slate-500">

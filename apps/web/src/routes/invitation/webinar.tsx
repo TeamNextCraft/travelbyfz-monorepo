@@ -99,6 +99,12 @@ const bonuses = [
   "Travel Business Starter Guide (PDF)",
 ];
 
+const DISCOUNTED_AMOUNT = 99;
+export const WEBINAR_AMOUNT = DISCOUNTED_AMOUNT * 100;
+const ACTUAL_PRICE = 1999;
+const DISCOUNT_PERECENTAGE =
+  ((ACTUAL_PRICE - DISCOUNTED_AMOUNT) / ACTUAL_PRICE) * 100;
+
 function useCountdown(target: Date) {
   const [timeLeft, setTimeLeft] = React.useState(target.getTime() - Date.now());
 
@@ -121,7 +127,7 @@ function useCountdown(target: Date) {
 
 function WebinarPage() {
   const webinarDate = React.useMemo(
-    () => new Date("2026-08-30T11:00:00+05:30"),
+    () => new Date("2026-10-04T11:00:00+05:30"),
     [],
   );
   const webinarEndTime = new Date(webinarDate.getTime() + 2 * 60 * 60 * 1000);
@@ -214,22 +220,22 @@ function WebinarPage() {
 
           <div className="mt-8 flex items-center gap-4">
             <div>
-              <span className="text-3xl font-bold text-white">₹199</span>
+              <span className="text-3xl font-bold text-white">
+                ₹{DISCOUNTED_AMOUNT}
+              </span>
               <span className="ml-2 text-lg text-slate-400 line-through">
-                ₹1,999
+                ₹{ACTUAL_PRICE}
               </span>
             </div>
             <Badge className="bg-emerald-500/15 text-emerald-300">
-              90% OFF Today
+              {DISCOUNT_PERECENTAGE.toFixed(0)}% OFF Today
             </Badge>
           </div>
-          
-          <a
-            href="#register"
-          >
-          <Button variant={"default"} className="mt-6 cursor-pointer">  
-            Reserve Your Seat Now
-          </Button>
+
+          <a href="#register">
+            <Button variant={"default"} className="mt-6 cursor-pointer">
+              Reserve Your Seat Now
+            </Button>
           </a>
 
           <p className="mt-3 text-xs text-slate-500">
@@ -399,11 +405,9 @@ function WebinarPage() {
 
       {/* Sticky mobile CTA */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-white p-3 shadow-lg lg:hidden">
-        <a
-          href="#register"
-        >
-          <Button className="w-full">    
-            Reserve Seat — ₹199 Only
+        <a href="#register">
+          <Button className="w-full">
+            Reserve Seat — ₹{DISCOUNTED_AMOUNT} Only
           </Button>
         </a>
       </div>
