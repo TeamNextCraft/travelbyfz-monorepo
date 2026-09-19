@@ -231,6 +231,11 @@ function ToursPage() {
     search.maxDays !== undefined && search.maxDays < 30,
   ].filter(Boolean).length;
 
+  console.log({
+    file: "tours/index.tsx",
+    output: filteredTours,
+  })
+
   return (
     <main>
       {/* ── Page Header ──────────────────────────────────────────────── */}

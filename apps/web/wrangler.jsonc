@@ -20,7 +20,8 @@
       "binding": "DB",
       "database_name": "travelbyfz_db",
       "database_id": "88b3ed50-9ab0-45da-ba30-ae43d6f5f767",
-      "migrations_dir": "../../packages/db/drizzle"
+      "migrations_dir": "../../packages/db/drizzle",
+      "remote": true
     }
   ]
 }

@@ -3,10 +3,12 @@ import type { PublicTour } from "#/lib/types/tour.ts";
 import { createTourRepository } from "@repo/db/repository/tours";
 import { createServerFn } from "@tanstack/react-start";
 
-export const getPublicTours = createServerFn().handler<Promise<PublicTour[] | undefined>>(async () => {
+export const getPublicTours = createServerFn().handler<
+  Promise<PublicTour[] | undefined>
+>(async () => {
   const data = await createTourRepository(db).getPublicToursList();
 
-  return data.map((tour) => ({
+    return data.map((tour) => ({
     ...tour,
     duration: `${tour.durationDays}D/${tour.durationNights}N`,
     destination: tour.destination ?? "N/A",
@@ -14,5 +16,4 @@ export const getPublicTours = createServerFn().handler<Promise<PublicTour[] | un
     image: tour.image ?? "/images/placeholder.jpg",
     groupSize: tour.groupSize ?? 0,
   }));
-})
-
+});

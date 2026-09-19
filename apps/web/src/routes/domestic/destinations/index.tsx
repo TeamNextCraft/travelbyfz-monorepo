@@ -406,10 +406,7 @@ function DestinationsPage() {
 
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
-
   
-  console.log("Fetched destinations:", fetchedDestinations, "from loader");
-
   console.error({
     isPending,
     isError,
