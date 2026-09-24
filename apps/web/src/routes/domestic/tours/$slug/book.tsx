@@ -103,7 +103,7 @@ const travellersSchema = z.object({
 
 const contactSchema = z.object({
   contactName: z.string().min(2, "Name must be at least 2 characters"),
-  contactEmail: z.string().email("Enter a valid email"),
+  contactEmail: z.email("Enter a valid email"),
   contactPhone: z
     .string()
     .min(10, "Enter a valid 10-digit number")
@@ -204,7 +204,7 @@ const STEPS = [
 
 // ─── Route ────────────────────────────────────────────────────────────────────
 
-export const Route = createFileRoute("/domestic/tours/$tourId/book")({
+export const Route = createFileRoute("/domestic/tours/$slug/book")({
   validateSearch: bookSearchSchema,
   loader: async ({ params }) => {
     const tour = TOURS_DB[params.tourId] ?? null;
@@ -427,8 +427,8 @@ function StepIndicator({
                     done
                       ? "bg-primary border-primary text-primary-foreground"
                       : active
-                      ? "border-primary text-primary bg-background"
-                      : "border-border text-muted-foreground bg-background"
+                        ? "border-primary text-primary bg-background"
+                        : "border-border text-muted-foreground bg-background"
                   )}
                   aria-current={active ? "step" : undefined}
                 >
@@ -486,14 +486,14 @@ function Step1TripDetails({
     const updated =
       count > current.length
         ? [
-            ...current,
-            ...Array.from({ length: count - current.length }, () => ({
-              firstName: "",
-              lastName: "",
-              age: "",
-              gender: "Male" as const,
-            })),
-          ]
+          ...current,
+          ...Array.from({ length: count - current.length }, () => ({
+            firstName: "",
+            lastName: "",
+            age: "",
+            gender: "Male" as const,
+          })),
+        ]
         : current.slice(0, count);
     onChange({ ...data, guestCount: count, travellers: updated });
   };
@@ -1225,10 +1225,10 @@ function OrderSummary({
               label: "Travel date",
               value: travellersData.travelDate
                 ? new Date(travellersData.travelDate).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })
                 : "Not selected",
             },
             {

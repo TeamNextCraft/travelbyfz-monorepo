@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "typescript": "latest"
+    "typescript": "latest",
+    "@repo/types": "workspace:*"
   },
   "dependencies": {
     "dotenv": "^17.4.2",

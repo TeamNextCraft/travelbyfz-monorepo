@@ -12,6 +12,6 @@
   "type": "module",
   "dependencies": {
     "@repo/db": "workspace:*",
-    "better-auth": "^1.7.4"
+    "better-auth": "^1.7.5"
   }
 }

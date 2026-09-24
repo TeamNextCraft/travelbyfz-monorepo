@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.ts";
 import { sql } from "drizzle-orm";
+import type { DestinationCategory, DestinationRegion } from '@repo/types/domestic';
 
 /**
  * D1 / SQLite notes:
@@ -79,8 +80,8 @@ export const destinations = sqliteTable(
     country: text("country").notNull().default("India"),
     state: text("state").notNull(),
     city: text("city"),
-    region: text("region"), // e.g. "South India", "North India", "Islands"
-    category: text("category"), // e.g. "beach", "hill station", "cultural", "adventure"
+    region: text("region").$type<DestinationRegion>(), // e.g. "South India", "North India", "Islands"
+    category: text("category", { mode: "json" }).$type<DestinationCategory[]>(), // e.g. "beach", "hill station", "cultural", "adventure"
     tourCount: integer("tour_count").notNull().default(0),
     rating: real("rating").default(0),
     tagline: text("tagline"),
@@ -117,10 +118,10 @@ export const destinations = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("destinations_slug_unique").on(table.slug),
-     index("destinations_state_idx").on(table.state),
-     index("destinations_featured_idx").on(table.isFeatured),
+  (table) => [
+    uniqueIndex("destinations_slug_unique").on(table.slug),
+    index("destinations_state_idx").on(table.state),
+    index("destinations_featured_idx").on(table.isFeatured),
     index("destinations_active_idx").on(table.isActive),
   ]
 );
@@ -216,15 +217,15 @@ export const tours = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("tours_slug_unique").on(table.slug),
-     uniqueIndex("tours_code_unique").on(table.code),
-     index("tours_destination_idx").on(table.destinationId),
-     index("tours_category_idx").on(table.category),
-     index("tours_featured_idx").on(table.isFeatured),
-     index("tours_published_idx").on(table.isPublished),
-     index("tours_active_idx").on(table.isActive),
-  ] 
+  (table) => [
+    uniqueIndex("tours_slug_unique").on(table.slug),
+    uniqueIndex("tours_code_unique").on(table.code),
+    index("tours_destination_idx").on(table.destinationId),
+    index("tours_category_idx").on(table.category),
+    index("tours_featured_idx").on(table.isFeatured),
+    index("tours_published_idx").on(table.isPublished),
+    index("tours_active_idx").on(table.isActive),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -272,12 +273,12 @@ export const departures = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("departures_code_unique").on(table.code),
-     index("departures_tour_idx").on(table.tourId),
-     index("departures_start_date_idx").on(table.startDate),
-     index("departures_status_idx").on(table.status),
-     index("departures_active_idx").on(table.isActive),
+  (table) => [
+    uniqueIndex("departures_code_unique").on(table.code),
+    index("departures_tour_idx").on(table.tourId),
+    index("departures_start_date_idx").on(table.startDate),
+    index("departures_status_idx").on(table.status),
+    index("departures_active_idx").on(table.isActive),
   ]
 );
 
@@ -303,12 +304,12 @@ export const departurePricing = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("departure_pricing_unique").on(
+  (table) => [
+    uniqueIndex("departure_pricing_unique").on(
       table.departureId,
       table.roomType
     ),
-  ] 
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -334,10 +335,10 @@ export const addons = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("addons_slug_unique").on(table.slug),
-   index("addons_active_idx").on(table.isActive),
-  ] 
+  (table) => [
+    uniqueIndex("addons_slug_unique").on(table.slug),
+    index("addons_active_idx").on(table.isActive),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -355,9 +356,9 @@ export const tourAddons = sqliteTable(
       .references(() => addons.id, { onDelete: "cascade" }),
     sortOrder: integer("sort_order").notNull().default(0),
   },
-  (table) => [ 
-   primaryKey({ columns: [table.tourId, table.addonId] }),
-  ] 
+  (table) => [
+    primaryKey({ columns: [table.tourId, table.addonId] }),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -394,11 +395,11 @@ export const coupons = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("coupons_code_unique").on(table.code),
-   index("coupons_active_idx").on(table.isActive),
-   index("coupons_expires_idx").on(table.expiresAt),
-  ] 
+  (table) => [
+    uniqueIndex("coupons_code_unique").on(table.code),
+    index("coupons_active_idx").on(table.isActive),
+    index("coupons_expires_idx").on(table.expiresAt),
+  ]
 );
 
 // optional coupon scoping
@@ -416,9 +417,9 @@ export const couponTargets = sqliteTable(
       onDelete: "cascade",
     }),
   },
-  (table) => [ 
-   index("coupon_targets_coupon_idx").on(table.couponId),
-  ] 
+  (table) => [
+    index("coupon_targets_coupon_idx").on(table.couponId),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -488,16 +489,16 @@ export const bookings = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("bookings_ref_unique").on(table.bookingRef),
-   index("bookings_user_idx").on(table.userId),
-   index("bookings_tour_idx").on(table.tourId),
-   index("bookings_departure_idx").on(table.departureId),
-   index("bookings_status_idx").on(table.status),
-   index("bookings_payment_status_idx").on(table.paymentStatus),
-   index("bookings_booked_at_idx").on(table.bookedAt),
-   index("bookings_email_idx").on(table.contactEmail),
-  ] 
+  (table) => [
+    uniqueIndex("bookings_ref_unique").on(table.bookingRef),
+    index("bookings_user_idx").on(table.userId),
+    index("bookings_tour_idx").on(table.tourId),
+    index("bookings_departure_idx").on(table.departureId),
+    index("bookings_status_idx").on(table.status),
+    index("bookings_payment_status_idx").on(table.paymentStatus),
+    index("bookings_booked_at_idx").on(table.bookedAt),
+    index("bookings_email_idx").on(table.contactEmail),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -545,7 +546,7 @@ export const bookingTravellers = sqliteTable(
       table.bookingId,
       table.isPrimary
     ),
-  ] 
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -612,7 +613,7 @@ export const payments = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
+  (table) => [
     index("payments_booking_idx").on(table.bookingId),
     index("payments_status_idx").on(table.status),
     index("payments_provider_payment_idx").on(

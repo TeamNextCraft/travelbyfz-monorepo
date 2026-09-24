@@ -17,8 +17,9 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
-    "turbo": "^2.10.5",
-    "wrangler": "^4.133.0"
+    "@biomejs/biome": "2.5.14",
+    "turbo": "^2.10.13",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.134.0"
   }
 }

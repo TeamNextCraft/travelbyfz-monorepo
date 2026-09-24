@@ -41,8 +41,8 @@ import { Route as DomesticTermsIndexRouteImport } from './routes/domestic/terms/
 import { Route as DomesticThemesIndexRouteImport } from './routes/domestic/themes/index'
 import { Route as DomesticToursIndexRouteImport } from './routes/domestic/tours/index'
 import { Route as HajjUmrahPackagesIndexRouteImport } from './routes/hajj-umrah/packages/index'
-import { Route as DomesticToursTourIdIndexRouteImport } from './routes/domestic/tours/$tourId/index'
-import { Route as DomesticToursTourIdBookRouteImport } from './routes/domestic/tours/$tourId/book'
+import { Route as DomesticToursSlugIndexRouteImport } from './routes/domestic/tours/$slug/index'
+import { Route as DomesticToursSlugBookRouteImport } from './routes/domestic/tours/$slug/book'
 import { Route as HajjUmrahPackagesPackageIdIndexRouteImport } from './routes/hajj-umrah/packages/$packageId/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -209,15 +209,14 @@ const HajjUmrahPackagesIndexRoute = HajjUmrahPackagesIndexRouteImport.update({
   path: '/packages/',
   getParentRoute: () => HajjUmrahRouteRoute,
 } as any)
-const DomesticToursTourIdIndexRoute =
-  DomesticToursTourIdIndexRouteImport.update({
-    id: '/tours/$tourId/',
-    path: '/tours/$tourId/',
-    getParentRoute: () => DomesticRouteRoute,
-  } as any)
-const DomesticToursTourIdBookRoute = DomesticToursTourIdBookRouteImport.update({
-  id: '/tours/$tourId/book',
-  path: '/tours/$tourId/book',
+const DomesticToursSlugIndexRoute = DomesticToursSlugIndexRouteImport.update({
+  id: '/tours/$slug/',
+  path: '/tours/$slug/',
+  getParentRoute: () => DomesticRouteRoute,
+} as any)
+const DomesticToursSlugBookRoute = DomesticToursSlugBookRouteImport.update({
+  id: '/tours/$slug/book',
+  path: '/tours/$slug/book',
   getParentRoute: () => DomesticRouteRoute,
 } as any)
 const HajjUmrahPackagesPackageIdIndexRoute =
@@ -260,8 +259,8 @@ export interface FileRoutesByFullPath {
   '/domestic/themes/': typeof DomesticThemesIndexRoute
   '/domestic/tours/': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages/': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId/': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug/': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId/': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -295,8 +294,8 @@ export interface FileRoutesByTo {
   '/domestic/themes': typeof DomesticThemesIndexRoute
   '/domestic/tours': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRoutesById {
@@ -333,8 +332,8 @@ export interface FileRoutesById {
   '/domestic/themes/': typeof DomesticThemesIndexRoute
   '/domestic/tours/': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages/': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId/': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug/': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId/': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -372,8 +371,8 @@ export interface FileRouteTypes {
     | '/domestic/themes/'
     | '/domestic/tours/'
     | '/hajj-umrah/packages/'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId/'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug/'
     | '/hajj-umrah/packages/$packageId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -407,8 +406,8 @@ export interface FileRouteTypes {
     | '/domestic/themes'
     | '/domestic/tours'
     | '/hajj-umrah/packages'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug'
     | '/hajj-umrah/packages/$packageId'
   id:
     | '__root__'
@@ -444,8 +443,8 @@ export interface FileRouteTypes {
     | '/domestic/themes/'
     | '/domestic/tours/'
     | '/hajj-umrah/packages/'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId/'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug/'
     | '/hajj-umrah/packages/$packageId/'
   fileRoutesById: FileRoutesById
 }
@@ -689,18 +688,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HajjUmrahPackagesIndexRouteImport
       parentRoute: typeof HajjUmrahRouteRoute
     }
-    '/domestic/tours/$tourId/': {
-      id: '/domestic/tours/$tourId/'
-      path: '/tours/$tourId'
-      fullPath: '/domestic/tours/$tourId/'
-      preLoaderRoute: typeof DomesticToursTourIdIndexRouteImport
+    '/domestic/tours/$slug/': {
+      id: '/domestic/tours/$slug/'
+      path: '/tours/$slug'
+      fullPath: '/domestic/tours/$slug/'
+      preLoaderRoute: typeof DomesticToursSlugIndexRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
-    '/domestic/tours/$tourId/book': {
-      id: '/domestic/tours/$tourId/book'
-      path: '/tours/$tourId/book'
-      fullPath: '/domestic/tours/$tourId/book'
-      preLoaderRoute: typeof DomesticToursTourIdBookRouteImport
+    '/domestic/tours/$slug/book': {
+      id: '/domestic/tours/$slug/book'
+      path: '/tours/$slug/book'
+      fullPath: '/domestic/tours/$slug/book'
+      preLoaderRoute: typeof DomesticToursSlugBookRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
     '/hajj-umrah/packages/$packageId/': {
@@ -727,8 +726,8 @@ interface DomesticRouteRouteChildren {
   DomesticTermsIndexRoute: typeof DomesticTermsIndexRoute
   DomesticThemesIndexRoute: typeof DomesticThemesIndexRoute
   DomesticToursIndexRoute: typeof DomesticToursIndexRoute
-  DomesticToursTourIdBookRoute: typeof DomesticToursTourIdBookRoute
-  DomesticToursTourIdIndexRoute: typeof DomesticToursTourIdIndexRoute
+  DomesticToursSlugBookRoute: typeof DomesticToursSlugBookRoute
+  DomesticToursSlugIndexRoute: typeof DomesticToursSlugIndexRoute
 }
 
 const DomesticRouteRouteChildren: DomesticRouteRouteChildren = {
@@ -745,8 +744,8 @@ const DomesticRouteRouteChildren: DomesticRouteRouteChildren = {
   DomesticTermsIndexRoute: DomesticTermsIndexRoute,
   DomesticThemesIndexRoute: DomesticThemesIndexRoute,
   DomesticToursIndexRoute: DomesticToursIndexRoute,
-  DomesticToursTourIdBookRoute: DomesticToursTourIdBookRoute,
-  DomesticToursTourIdIndexRoute: DomesticToursTourIdIndexRoute,
+  DomesticToursSlugBookRoute: DomesticToursSlugBookRoute,
+  DomesticToursSlugIndexRoute: DomesticToursSlugIndexRoute,
 }
 
 const DomesticRouteRouteWithChildren = DomesticRouteRoute._addFileChildren(

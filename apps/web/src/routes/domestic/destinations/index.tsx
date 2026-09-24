@@ -17,9 +17,10 @@ import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { cn } from "#/lib/utils";
-import type { DestinationCategory, Region } from "#/lib/types/destinations.ts";
+import type { DestinationCategory, DestinationRegion, PublicDestination } from "@repo/types/domestic";
 import { useQuery } from "@tanstack/react-query";
 import { getPublicDestinations } from "#/server/actions/destinations.ts";
+import { DESTINATIONS_LOCAL_DATA } from "#/lib/constants.ts";
 
 const destSearchSchema = z.object({
   q: z.string().optional(),
@@ -27,334 +28,11 @@ const destSearchSchema = z.object({
   category: z.string().optional(),
 });
 
-// ─── Destinations Data ────────────────────────────────────────────────────────
-// Source: India Tourism Data Compendium 2025, Ministry of Tourism
-
-const DESTINATIONS = [
-  // ── North ──────────────────────────────────────────────────────────────────
-  {
-    id: "jaipur",
-    name: "Jaipur",
-    state: "Rajasthan",
-    region: "North",
-    category: ["Cultural"],
-    tagline: "The Pink City of palaces, forts & desert royalty",
-    tourCount: 31,
-    rating: 4.8,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80",
-    highlights: ["Amber Fort", "Hawa Mahal", "City Palace"],
-    trending: true,
-  },
-  {
-    id: "varanasi",
-    name: "Varanasi",
-    state: "Uttar Pradesh",
-    region: "North",
-    category: ["Religious", "Cultural"],
-    tagline: "India's spiritual capital on the sacred Ganga",
-    tourCount: 18,
-    rating: 4.7,
-    bestTime: "Nov – Mar",
-    image: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&q=80",
-    highlights: ["Ganga Aarti", "Sarnath", "Kashi Vishwanath"],
-    trending: true,
-  },
-  {
-    id: "agra",
-    name: "Agra",
-    state: "Uttar Pradesh",
-    region: "North",
-    category: ["Cultural"],
-    tagline: "Home of the eternal Taj Mahal & Mughal grandeur",
-    tourCount: 22,
-    rating: 4.9,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&q=80",
-    highlights: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
-  },
-  {
-    id: "manali",
-    name: "Manali",
-    state: "Himachal Pradesh",
-    region: "North",
-    category: ["Hill Station", "Adventure"],
-    tagline: "Snow peaks, river valleys & Himalayan thrills",
-    tourCount: 24,
-    rating: 4.7,
-    bestTime: "Mar – Jun, Oct – Feb",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-    highlights: ["Rohtang Pass", "Solang Valley", "Old Manali"],
-    trending: true,
-  },
-  {
-    id: "leh-ladakh",
-    name: "Leh Ladakh",
-    state: "Ladakh",
-    region: "North",
-    category: ["Adventure", "Cultural"],
-    tagline: "The land of high passes, monasteries & starry skies",
-    tourCount: 15,
-    rating: 4.9,
-    bestTime: "Jun – Sep",
-    image: "https://images.unsplash.com/photo-1597040663342-45b6af3d91a5?w=600&q=80",
-    highlights: ["Pangong Lake", "Nubra Valley", "Khardung La"],
-    trending: true,
-  },
-  {
-    id: "jodhpur",
-    name: "Jodhpur",
-    state: "Rajasthan",
-    region: "North",
-    category: ["Cultural"],
-    tagline: "The Blue City — a maze of indigo rooftops and forts",
-    tourCount: 19,
-    rating: 4.7,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80",
-    highlights: ["Mehrangarh Fort", "Blue City", "Umaid Bhawan"],
-  },
-  {
-    id: "rishikesh",
-    name: "Rishikesh",
-    state: "Uttarakhand",
-    region: "North",
-    category: ["Adventure", "Religious"],
-    tagline: "Yoga capital of the world & gateway to the Himalayas",
-    tourCount: 14,
-    rating: 4.6,
-    bestTime: "Sep – Jun",
-    image: "https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=600&q=80",
-    highlights: ["River Rafting", "Laxman Jhula", "Bungee Jumping"],
-  },
-
-  // ── South ──────────────────────────────────────────────────────────────────
-  {
-    id: "kerala",
-    name: "Kerala",
-    state: "Kerala",
-    region: "South",
-    category: ["Beach", "Cultural"],
-    tagline: "God's Own Country — backwaters, spices & lush greenery",
-    tourCount: 27,
-    rating: 4.9,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
-    highlights: ["Alleppey Backwaters", "Munnar", "Fort Kochi"],
-    trending: true,
-  },
-  {
-    id: "coorg",
-    name: "Coorg",
-    state: "Karnataka",
-    region: "South",
-    category: ["Hill Station", "Wildlife"],
-    tagline: "Scotland of India — coffee, mist & jungle trails",
-    tourCount: 12,
-    rating: 4.6,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
-    highlights: ["Coffee Plantations", "Abbey Falls", "Nagarhole"],
-  },
-  {
-    id: "ooty",
-    name: "Ooty",
-    state: "Tamil Nadu",
-    region: "South",
-    category: ["Hill Station"],
-    tagline: "Queen of hill stations in the Nilgiri mountains",
-    tourCount: 10,
-    rating: 4.5,
-    bestTime: "Apr – Jun, Sep – Nov",
-    image: "https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=600&q=80",
-    highlights: ["Toy Train", "Botanical Garden", "Doddabetta Peak"],
-  },
-  {
-    id: "mysuru",
-    name: "Mysuru",
-    state: "Karnataka",
-    region: "South",
-    category: ["Cultural"],
-    tagline: "City of palaces, sandalwood & the Dasara festival",
-    tourCount: 14,
-    rating: 4.7,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1590050751974-7b5d5b5d5aca?w=600&q=80",
-    highlights: ["Mysore Palace", "Chamundi Hills", "Brindavan Garden"],
-  },
-  {
-    id: "hampi",
-    name: "Hampi",
-    state: "Karnataka",
-    region: "South",
-    category: ["Cultural", "Adventure"],
-    tagline: "UNESCO ruins of the Vijayanagara Empire among boulders",
-    tourCount: 9,
-    rating: 4.8,
-    bestTime: "Oct – Feb",
-    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&q=80",
-    highlights: ["Virupaksha Temple", "Stone Chariot", "Hippie Island"],
-    trending: true,
-  },
-
-  // ── East ───────────────────────────────────────────────────────────────────
-  {
-    id: "darjeeling",
-    name: "Darjeeling",
-    state: "West Bengal",
-    region: "East",
-    category: ["Hill Station"],
-    tagline: "Toy trains, tea estates & Kangchenjunga views",
-    tourCount: 11,
-    rating: 4.7,
-    bestTime: "Mar – May, Sep – Nov",
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
-    highlights: ["Tiger Hill Sunrise", "Toy Train", "Tea Garden Walk"],
-  },
-  {
-    id: "puri",
-    name: "Puri",
-    state: "Odisha",
-    region: "East",
-    category: ["Beach", "Religious"],
-    tagline: "Sacred beaches & the grand Jagannath Temple",
-    tourCount: 8,
-    rating: 4.5,
-    bestTime: "Nov – Feb",
-    image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80",
-    highlights: ["Jagannath Temple", "Puri Beach", "Konark Sun Temple"],
-  },
-  {
-    id: "gangtok",
-    name: "Gangtok",
-    state: "Sikkim",
-    region: "East",
-    category: ["Hill Station", "Adventure"],
-    tagline: "Himalayan hill capital with monasteries & mountain views",
-    tourCount: 7,
-    rating: 4.6,
-    bestTime: "Mar – May, Oct – Dec",
-    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80",
-    highlights: ["Rumtek Monastery", "Tsomgo Lake", "Nathu La Pass"],
-  },
-
-  // ── West ───────────────────────────────────────────────────────────────────
-  {
-    id: "goa",
-    name: "Goa",
-    state: "Goa",
-    region: "West",
-    category: ["Beach"],
-    tagline: "India's sun-soaked beach paradise with Portuguese soul",
-    tourCount: 24,
-    rating: 4.6,
-    bestTime: "Nov – Mar",
-    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80",
-    highlights: ["Baga Beach", "Old Goa Churches", "Dudhsagar Falls"],
-    trending: true,
-  },
-  {
-    id: "mumbai",
-    name: "Mumbai",
-    state: "Maharashtra",
-    region: "West",
-    category: ["Cultural"],
-    tagline: "The city that never sleeps — Bollywood, food & history",
-    tourCount: 16,
-    rating: 4.5,
-    bestTime: "Nov – Feb",
-    image: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=600&q=80",
-    highlights: ["Gateway of India", "Marine Drive", "Elephanta Caves"],
-  },
-  {
-    id: "rann-of-kutch",
-    name: "Rann of Kutch",
-    state: "Gujarat",
-    region: "West",
-    category: ["Cultural", "Adventure"],
-    tagline: "The great white salt desert under the full moon",
-    tourCount: 10,
-    rating: 4.8,
-    bestTime: "Nov – Feb",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-    highlights: ["White Desert", "Rann Utsav", "Dholavira"],
-    trending: true,
-  },
-  {
-    id: "lonavala",
-    name: "Lonavala",
-    state: "Maharashtra",
-    region: "West",
-    category: ["Hill Station"],
-    tagline: "Mumbai's misty weekend escape in the Sahyadri range",
-    tourCount: 9,
-    rating: 4.4,
-    bestTime: "Jun – Sep, Nov – Feb",
-    image: "https://images.unsplash.com/photo-1543158181-e6f9f6712055?w=600&q=80",
-    highlights: ["Bhushi Dam", "Rajmachi Fort", "Karla Caves"],
-  },
-
-  // ── Central ────────────────────────────────────────────────────────────────
-  {
-    id: "khajuraho",
-    name: "Khajuraho",
-    state: "Madhya Pradesh",
-    region: "Central",
-    category: ["Cultural"],
-    tagline: "UNESCO temples of extraordinary medieval stone sculptures",
-    tourCount: 8,
-    rating: 4.7,
-    bestTime: "Oct – Mar",
-    image: "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80",
-    highlights: ["Western Temples", "Light & Sound Show", "Panna Tiger Reserve"],
-  },
-  {
-    id: "kanha",
-    name: "Kanha",
-    state: "Madhya Pradesh",
-    region: "Central",
-    category: ["Wildlife"],
-    tagline: "Inspired The Jungle Book — prime tiger & barasingha territory",
-    tourCount: 6,
-    rating: 4.8,
-    bestTime: "Oct – Jun",
-    image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&q=80",
-    highlights: ["Tiger Safari", "Barasingha", "Bamni Dadar"],
-  },
-
-  // ── Islands ────────────────────────────────────────────────────────────────
-  {
-    id: "andaman",
-    name: "Andaman & Nicobar",
-    state: "Andaman & Nicobar",
-    region: "Islands",
-    category: ["Beach", "Adventure"],
-    tagline: "Turquoise waters, coral reefs & a pristine island world",
-    tourCount: 14,
-    rating: 4.8,
-    bestTime: "Nov – May",
-    image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80",
-    highlights: ["Radhanagar Beach", "Scuba Diving", "Cellular Jail"],
-    trending: true,
-  },
-  {
-    id: "lakshadweep",
-    name: "Lakshadweep",
-    state: "Lakshadweep",
-    region: "Islands",
-    category: ["Beach"],
-    tagline: "India's coral island paradise — untouched & serene",
-    tourCount: 5,
-    rating: 4.9,
-    bestTime: "Oct – May",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80",
-    highlights: ["Agatti Island", "Snorkelling", "Lagoon Stay"],
-  },
-];
+type Destination = PublicDestination;
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const REGIONS: { id: Region | "All"; label: string; icon: React.ElementType }[] = [
+const REGIONS: { id: DestinationRegion | "All"; label: string; icon: React.ElementType }[] = [
   { id: "All", label: "All India", icon: Map },
   { id: "North", label: "North", icon: Mountain },
   { id: "South", label: "South", icon: Landmark },
@@ -407,19 +85,12 @@ function DestinationsPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   
-  console.error({
-    isPending,
-    isError,
-    error,
-    fetchedDestinations,
-    file: "apps/web/src/routes/domestic/destinations/index.tsx",
-  })
-  
   const q = search.q ?? "";
-  const activeRegion = (search.region as Region | "All") ?? "All";
+  const activeRegion = (search.region as DestinationRegion | "All") ?? "All";
   const activeCategory = (search.category as DestinationCategory | "All") ?? "All";
   
-  const destinations = fetchedDestinations ?? [];
+  // const destinations = fetchedDestinations ?? [];
+  const destinations = DESTINATIONS_LOCAL_DATA ?? [];
   const setSearch = (updates: Record<string, string | undefined>) => {
     navigate({
       search: (prev) => ({ ...prev, ...updates }),
@@ -460,11 +131,11 @@ function DestinationsPage() {
         return false;
       return true;
     });
-  }, [q, activeRegion, activeCategory]);
+  }, [q, activeRegion, activeCategory, destinations]);
 
   // Group by region for browsing view
   const groupedByRegion = useMemo(() => {
-    const groups: Partial<Record<Region, Destination[]>> = {};
+    const groups: Partial<Record<DestinationRegion, Destination[]>> = {};
     filtered.forEach((d) => {
       if (!groups[d.region]) groups[d.region] = [];
       groups[d.region]!.push(d);
@@ -472,9 +143,17 @@ function DestinationsPage() {
     return groups;
   }, [filtered]);
 
-  const regionOrder: Region[] = ["North", "South", "West", "East", "Central", "Islands"];
+  const regionOrder: DestinationRegion[] = ["North", "South", "West", "East", "Central", "Islands"];
 
   const isFiltering = hasActiveFilters;
+
+  console.log({
+    file: "destinations/index.tsx",
+    output: filtered,
+    isPending,
+    error,
+    isError
+  })
 
   return (
     <main>
@@ -490,7 +169,7 @@ function DestinationsPage() {
               to go next?
             </h1>
             <p className="text-muted-foreground text-lg mb-8 max-w-xl">
-              From the Himalayas to the Indian Ocean — {DESTINATIONS.length} destinations
+              From the Himalayas to the Indian Ocean — {filtered.length} destinations
               across every region of India.
             </p>
 
@@ -675,10 +354,10 @@ function RegionSection({
   region,
   destinations,
 }: {
-  region: Region;
+  region: DestinationRegion;
   destinations: Destination[];
 }) {
-  const regionMeta: Record<Region, { emoji: string; description: string }> = {
+  const regionMeta: Record<DestinationRegion, { emoji: string; description: string }> = {
     North: { emoji: "🏔️", description: "Himalayas, forts, heritage & spiritual heartland" },
     South: { emoji: "🌴", description: "Backwaters, temples, coffee hills & pristine coastlines" },
     East: { emoji: "🍵", description: "Tea gardens, tribal culture, Bengal delta & Himalayan foothills" },
@@ -746,14 +425,14 @@ function DestinationCard({ dest }: { dest: Destination }) {
 
         {/* Category pills */}
         <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
-          {dest.category.slice(0, 1).map((cat) => (
+          {(dest.category !== null) ? dest.category.slice(0, 1).map((cat) => (
             <Badge
               key={cat}
               className={cn("border-0 text-xs", CATEGORY_STYLES[cat])}
             >
               {cat}
             </Badge>
-          ))}
+          )) : (<></>)}
         </div>
 
         {/* Bottom overlay */}

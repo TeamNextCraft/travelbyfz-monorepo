@@ -45,7 +45,7 @@ import { ScrollArea } from "#/components/ui/scroll-area";
 import { cn } from "#/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { getPublicTours } from "#/server/actions/tours.ts";
-import type { PublicTour } from "#/lib/types/tour.ts";
+import type { PublicTour } from "@repo/types/domestic"
 import { ToursError, ToursLoading } from "#/components/common/domestic/tours-status-components.tsx";
 
 type Category =
@@ -486,13 +486,13 @@ function ToursPage() {
             )}
             {(search.minPrice ||
               (search.maxPrice && search.maxPrice < MAX_PRICE)) && (
-              <FilterChip
-                label={`₹${minPrice.toLocaleString("en-IN")} – ₹${maxPrice >= MAX_PRICE ? "50,000+" : maxPrice.toLocaleString("en-IN")}`}
-                onRemove={() =>
-                  setSearch({ minPrice: undefined, maxPrice: undefined })
-                }
-              />
-            )}
+                <FilterChip
+                  label={`₹${minPrice.toLocaleString("en-IN")} – ₹${maxPrice >= MAX_PRICE ? "50,000+" : maxPrice.toLocaleString("en-IN")}`}
+                  onRemove={() =>
+                    setSearch({ minPrice: undefined, maxPrice: undefined })
+                  }
+                />
+              )}
             {search.maxDays && search.maxDays < 30 && (
               <FilterChip
                 label={`Max ${maxDays} days`}
@@ -631,8 +631,8 @@ function TourGridCard({ tour }: { tour: PublicTour }) {
           </p>
         </div>
         <Link
-          to="/domestic/tours/$tourId"
-          params={{ tourId: tour.id }}
+          to="/domestic/tours/$slug"
+          params={{ slug: tour.slug }}
           className={buttonVariants({ size: "sm" })}
         >
           View tour
