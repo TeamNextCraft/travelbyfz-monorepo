@@ -79,18 +79,18 @@ function DestinationsPage() {
     error,
   } = useQuery({
     queryKey: ["destinations"],
-    queryFn: getPublicDestinations, 
+    queryFn: getPublicDestinations,
   })
 
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
-  
+
   const q = search.q ?? "";
   const activeRegion = (search.region as DestinationRegion | "All") ?? "All";
   const activeCategory = (search.category as DestinationCategory | "All") ?? "All";
-  
-  // const destinations = fetchedDestinations ?? [];
-  const destinations = DESTINATIONS_LOCAL_DATA ?? [];
+
+  const destinations = fetchedDestinations ?? [];
+  // const destinations = DESTINATIONS_LOCAL_DATA ?? [];
   const setSearch = (updates: Record<string, string | undefined>) => {
     navigate({
       search: (prev) => ({ ...prev, ...updates }),

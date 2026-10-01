@@ -9,7 +9,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.ts";
 import { sql } from "drizzle-orm";
-import type { DestinationCategory, DestinationRegion } from '@repo/types/domestic';
+import { TourItinerary, type DestinationCategory, type DestinationRegion, type TourPricingTier, type TourReview } from '@repo/types/domestic';
 
 /**
  * D1 / SQLite notes:
@@ -142,6 +142,7 @@ export const tours = sqliteTable(
     }),
 
     title: text("title").notNull(),
+    tagline: text("tagline").notNull(),
     slug: text("slug").notNull(),
     code: text("code").notNull(),
 
@@ -162,6 +163,8 @@ export const tours = sqliteTable(
 
     currency: text("currency").notNull().default("INR"),
 
+    tag: text("tag"),
+
     minAge: integer("min_age"),
     maxAge: integer("max_age"),
     maxGroupSize: integer("max_group_size"),
@@ -177,18 +180,11 @@ export const tours = sqliteTable(
     exclusions: text("exclusions", { mode: "json" }).$type<string[]>().notNull(),
     highlights: text("highlights", { mode: "json" }).$type<string[]>().notNull(),
 
-    itinerary: text("itinerary", { mode: "json" }).$type<
-      Array<{
-        day: number;
-        title: string;
-        description: string;
-        hotel?: string;
-        meals?: string[];
-      }>
-    >(),
+    itinerary: text("itinerary", { mode: "json" }).$type<TourItinerary[]>(),
 
     cancellationPolicySummary: text("cancellation_policy_summary"),
     termsSummary: text("terms_summary"),
+    importantNotes: text("important_notes", { mode: "json" }).$type<string[]>(),
 
     featuredImage: text("featured_image"),
     gallery: text("gallery", { mode: "json" }).$type<string[]>(),
@@ -199,6 +195,12 @@ export const tours = sqliteTable(
     avgRating: real("avg_rating").default(0).notNull(),
     reviewCount: integer("review_count").notNull().default(0),
     bookingCount: integer("booking_count").notNull().default(0),
+
+    pricingTiers: text("pricing_tiers", { mode: "json" }).$type<TourPricingTier[]>().$defaultFn(() => [{
+      label: "Standard",
+      description: "Default pricing tier",
+      price: 0,
+    }]),
 
     isFeatured: integer("is_featured", { mode: "boolean" })
       .notNull()

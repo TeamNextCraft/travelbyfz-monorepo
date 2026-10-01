@@ -1,10 +1,31 @@
-import { tours } from "@repo/db/schema/domestic.ts";
-import { createSelectSchema } from "drizzle-orm/zod";
-import { z } from "zod";
+export type TourPricingTier = {
+  label: string,
+  description: string,
+  price: number,
+  minParticipants?: number;
+  maxParticipants?: number;
+}
 
-export const tourSelectSchema = createSelectSchema(tours).pick({ id: true, duration: true });
+export type TourItinerary = {
+  day: number;
+  title: string;
+  description: string;
+  hotel?: string;
+  meals?: string[];
+  highlights: string[];
+}
 
-export type PublicTour = z.infer<typeof tourSelectSchema>;
+type Review = {
+  id: string,
+  name: string,
+  avatar: string,
+  rating: number,
+  date: Date,
+  text: string,
+  location?: string,
+}
+
+export type TourReview = Review;
 
 export type PublicDestination = {
   id: string;

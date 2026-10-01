@@ -233,6 +233,7 @@ function ToursPage() {
 
   console.log({
     file: "tours/index.tsx",
+    fetchedTours: fetchedTours,
     output: filteredTours,
   })
 

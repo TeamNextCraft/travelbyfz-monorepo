@@ -41,6 +41,8 @@ import {
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
 import { getPublicTourbySlug } from "#/server/actions/tours";
+import { useQuery } from "@tanstack/react-query"
+import { profile } from "node:console";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -385,11 +387,6 @@ const TOURS_DB: Record<string, TourDetail> = {
 // ─── Route ────────────────────────────────────────────────────────────────────
 
 export const Route = createFileRoute("/domestic/tours/$slug/")({
-  loader: async ({ params }) => {
-    const tour = getPublicTourbySlug({ data: { slug: params.slug } });
-    if (!tour) throw notFound();
-    return { tour };
-  },
   notFoundComponent: () => (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-4">
       <div className="text-5xl">🗺️</div>
@@ -408,12 +405,34 @@ export const Route = createFileRoute("/domestic/tours/$slug/")({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 function TourDetailPage() {
-  const { tour } = Route.useLoaderData();
+
+  const { slug } = Route.useParams();
+
+  const {
+    data: fetchedTour,
+    isPending,
+    isError,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["tour", slug],
+    queryFn: () => getPublicTourbySlug({ data: { slug: slug } }),
+  });
+
+  if (!fetchedTour) {
+    throw notFound();
+  }
+
+  console.log({
+    file: "tours/$slug/index.tsx",
+    fetchedTour: fetchedTour
+  })
+
   const navigate = useNavigate();
   const [selectedTier, setSelectedTier] = useState(0);
   const [wishlisted, setWishlisted] = useState(false);
 
-  const selectedPrice = tour.pricingTiers[selectedTier].price;
+  const selectedPrice = fetchedTour.pricingTiers[selectedTier]?.price;
 
   return (
     <TooltipProvider>

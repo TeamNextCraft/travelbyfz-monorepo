@@ -90,8 +90,33 @@ export function createTourRepository(db: Database) {
 
     findPublicBySlug(slug: string) {
       return db
-        .select()
+        .select({
+          id: tours.id,
+          title: tours.title,
+          tagline: tours.tagline,
+          destination: destinations.name,
+          state: destinations.state,
+          durationNights: tours.durationNights,
+          durationDays: tours.durationDays,
+          category: tours.category,
+          basePrice: tours.basePrice,
+          rating: tours.avgRating,
+          reviewCount: tours.reviewCount,
+          groupSize: tours.maxGroupSize,
+          minAge: tours.minAge,
+          maxAge: tours.maxAge,
+          difficutly: tours.difficulty,
+          tag: tours.tag,
+          images: tours.gallery,
+          overview: tours.description,
+          highlights: tours.highlights,
+          inclusions: tours.inclusions,
+          exclusions: tours.exclusions,
+          itinerary: tours.itinerary,
+          pricingTiers: tours.pricingTiers,
+        })
         .from(tours)
+        .leftJoin(destinations, eq(tours.destinationId, destinations.id))
         .where(
           and(
             eq(tours.slug, slug),

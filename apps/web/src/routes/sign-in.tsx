@@ -35,8 +35,8 @@ export const Route = createFileRoute("/sign-in")({
     return {
       module:
         module === "domestic" ||
-        module === "hajj-umrah" ||
-        module === "international"
+          module === "hajj-umrah" ||
+          module === "international"
           ? (module as ModuleKey)
           : ("domestic" as ModuleKey),
     };
