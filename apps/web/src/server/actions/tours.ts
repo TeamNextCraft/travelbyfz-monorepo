@@ -1,16 +1,10 @@
-import { db } from "#/lib/db-config.ts";
 import { getDb } from "@repo/db/client";
 import { createTourRepository } from "@repo/db/repository/tours";
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
 import { env } from "cloudflare:workers";
+import { z } from "zod"
 
 export const getPublicTours = createServerFn({ method: "GET" }).handler(async () => {
-  console.log({
-    file: 'server/actions/tours.ts',
-    output: "server function getPublicTours called",
-  })
-
   try {
     const db = getDb(env.DB);
 
@@ -46,14 +40,31 @@ export const getPublicTours = createServerFn({ method: "GET" }).handler(async ()
 export const getPublicTourbySlug = createServerFn()
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
-    const result = await createTourRepository(db).findPublicBySlug(data.slug);
-    if (result) {
-      console.log({
-        file: "server/actions/tours.ts",
-        output: result,
-      })
-      return result
+    try {
+      const db = getDb(env.DB);
+      const result = await createTourRepository(db).findPublicBySlug(data.slug);
+      return result ?? null; // use null: undefined can't be serialized reliably
+    } catch (err) {
+      console.error("getPublicTourbySlug failed", { slug: data.slug, err });
+      throw err;
     }
-    return undefined;
   });
+
+export const getTourReviews = createServerFn()
+  .validator(z.object({
+    tourId: z.string(),
+    limit: z.number().min(0).default(10).optional(),
+    offset: z.number().min(0).optional(),
+  }))
+  .handler(async ({ data }) => {
+    const { tourId, limit, offset } = data;
+    try {
+      const db = getDb(env.DB);
+      const result = await createTourRepository(db).getReviews(tourId, limit, offset);
+      return result ?? null;
+    } catch (err) {
+      console.error("failed to fetch reviews for tourId: ", tourId);
+      throw err;
+    }
+  })
 

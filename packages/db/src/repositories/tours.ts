@@ -1,6 +1,6 @@
 import { and, desc, eq, like, or } from "drizzle-orm";
 import { getDb } from "#/client.js";
-import { tours } from "#/schema/domestic.js";
+import { reviews, tours } from "#/schema/domestic.js";
 import { destinations } from '../schema/domestic';
 
 type Database = ReturnType<typeof getDb>;
@@ -105,7 +105,7 @@ export function createTourRepository(db: Database) {
           groupSize: tours.maxGroupSize,
           minAge: tours.minAge,
           maxAge: tours.maxAge,
-          difficutly: tours.difficulty,
+          difficulty: tours.difficulty,
           tag: tours.tag,
           images: tours.gallery,
           overview: tours.description,
@@ -114,6 +114,7 @@ export function createTourRepository(db: Database) {
           exclusions: tours.exclusions,
           itinerary: tours.itinerary,
           pricingTiers: tours.pricingTiers,
+          importantNotes: tours.importantNotes,
         })
         .from(tours)
         .leftJoin(destinations, eq(tours.destinationId, destinations.id))
@@ -183,5 +184,9 @@ export function createTourRepository(db: Database) {
     remove(id: string) {
       return db.delete(tours).where(eq(tours.id, id)).returning().get();
     },
+
+    getReviews(tourId: string, limit: number = 10, offest: number = 0) {
+      return db.select().from(reviews).where(eq(reviews.tourId, tourId)).limit(limit).offset(offest)
+    }
   };
 }

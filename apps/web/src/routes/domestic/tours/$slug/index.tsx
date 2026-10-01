@@ -40,9 +40,12 @@ import {
   TooltipTrigger,
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
-import { getPublicTourbySlug } from "#/server/actions/tours";
+import { getPublicTourbySlug, getTourReviews } from "#/server/actions/tours";
 import { useQuery } from "@tanstack/react-query"
-import { profile } from "node:console";
+import { TourDetailSkeleton } from "#/components/common/domestic/tour-details-skeleton";
+import { TourDetailError } from "#/components/common/domestic/tour-details-error";
+import { useServerFn } from "@tanstack/react-start";
+import type { PublicTour } from "@repo/types/domestic/tour"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -407,32 +410,58 @@ export const Route = createFileRoute("/domestic/tours/$slug/")({
 function TourDetailPage() {
 
   const { slug } = Route.useParams();
+  const fetchTourDetails = useServerFn(getPublicTourbySlug);
+  const fetchTourReviews = useServerFn(getTourReviews);
+  const [selectedTier, setSelectedTier] = useState(0);
+  const [wishlisted, setWishlisted] = useState(false);
 
   const {
     data: fetchedTour,
     isPending,
     isError,
     error,
-    refetch
+    refetch,
   } = useQuery({
     queryKey: ["tour", slug],
-    queryFn: () => getPublicTourbySlug({ data: { slug: slug } }),
+    queryFn: () => fetchTourDetails({ data: { slug } }),
   });
 
-  if (!fetchedTour) {
-    throw notFound();
-  }
+  const tourId = fetchedTour?.id;
+
+  const {
+    data: fetchedReviews,
+    isPending: reviewsPending,
+    isError: reviewsIsError,
+    error: reviewsError,
+    refetch: reviewsRefetch,
+  } = useQuery({
+    queryKey: ["tour-reviews", tourId],
+    queryFn: () => {
+      if (!tourId) throw new Error("Tour ID is missing");
+
+      return fetchTourReviews({ data: { tourId } });
+    },
+    enabled: !!tourId,
+  });
 
   console.log({
     file: "tours/$slug/index.tsx",
     fetchedTour: fetchedTour
   })
 
-  const navigate = useNavigate();
-  const [selectedTier, setSelectedTier] = useState(0);
-  const [wishlisted, setWishlisted] = useState(false);
+  if (isPending) {
+    return <TourDetailSkeleton />;
+  }
 
-  const selectedPrice = fetchedTour.pricingTiers[selectedTier]?.price;
+  if (isError) {
+    return <TourDetailError error={error} onRetry={() => refetch()} />
+  }
+
+  if (!fetchedTour) {
+    throw notFound();
+  }
+
+  const selectedPrice = fetchedTour?.pricingTiers[selectedTier]?.price;
 
   return (
     <TooltipProvider>
@@ -456,7 +485,7 @@ function TourDetailPage() {
               </Link>
               <ChevronRight size={13} aria-hidden="true" />
               <span className="text-foreground font-medium truncate max-w-xs">
-                {tour.title}
+                {fetchedTour.title}
               </span>
             </nav>
           </div>
@@ -467,26 +496,45 @@ function TourDetailPage() {
             {/* ── Left / Main column ───────────────────────────────────── */}
             <div className="lg:col-span-2 space-y-8">
               {/* Gallery */}
-              <GallerySection images={tour.images} title={tour.title} />
-
+              {fetchedTour.images === null || fetchedTour.images?.length === 0 ? (
+                <div
+                  className="flex aspect-[16/9] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-muted/50 px-4 text-center"
+                  role="img"
+                  aria-label={`No photos available for ${fetchedTour.title}`}
+                >
+                  <Camera
+                    size={36}
+                    className="text-muted-foreground/60"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <p className="font-medium">No photos available yet</p>
+                    <p className="text-sm text-muted-foreground">
+                      Photos for this tour will be added soon.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <GallerySection images={fetchedTour.images} title={fetchedTour.title} />
+              )}
               {/* Title block */}
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  {tour.tag && (
+                  {fetchedTour.tag && (
                     <Badge className="bg-amber-500 text-black border-0 font-semibold text-xs">
-                      {tour.tag}
+                      {fetchedTour.tag}
                     </Badge>
                   )}
-                  <Badge variant="secondary">{tour.category}</Badge>
-                  <DifficultyBadge level={tour.difficulty} />
+                  <Badge variant="secondary">{fetchedTour.category}</Badge>
+                  <DifficultyBadge level={fetchedTour.difficulty} />
                 </div>
 
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug">
-                      {tour.title}
+                      {fetchedTour.title}
                     </h1>
-                    <p className="text-muted-foreground mt-1">{tour.tagline}</p>
+                    <p className="text-muted-foreground mt-1">{fetchedTour.tagline}</p>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <Tooltip>
@@ -495,10 +543,10 @@ function TourDetailPage() {
                           variant="outline"
                           size="icon"
                           className="h-9 w-9"
-                          aria-label="Share tour"
+                          aria-label="Share fetchedTour"
                           onClick={() =>
                             navigator.share?.({
-                              title: tour.title,
+                              title: fetchedTour.title,
                               url: window.location.href,
                             })
                           }
@@ -542,15 +590,15 @@ function TourDetailPage() {
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1.5">
                     <MapPin size={14} aria-hidden="true" />
-                    {tour.destination}, {tour.state}
+                    {fetchedTour.destination}, {fetchedTour.state}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Clock size={14} aria-hidden="true" />
-                    {tour.duration}
+                    {fetchedTour.durationDays}D / {fetchedTour.durationNights}N
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Users size={14} aria-hidden="true" />
-                    Max {tour.groupSize} people
+                    Max {fetchedTour.groupSize} people
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Star
@@ -559,9 +607,9 @@ function TourDetailPage() {
                       aria-hidden="true"
                     />
                     <span className="font-semibold text-foreground">
-                      {tour.rating}
+                      {fetchedTour.rating}
                     </span>
-                    <span>({tour.reviewCount} reviews)</span>
+                    <span>({fetchedTour.reviewCount} reviews)</span>
                   </span>
                 </div>
               </div>
@@ -573,28 +621,28 @@ function TourDetailPage() {
                 <TabsList className="w-full justify-start overflow-x-auto">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="itinerary">
-                    Itinerary ({tour.durationDays}D)
+                    Itinerary ({fetchedTour.durationDays}D)
                   </TabsTrigger>
                   <TabsTrigger value="inclusions">
                     Inclusions
                   </TabsTrigger>
                   <TabsTrigger value="reviews">
-                    Reviews ({tour.reviewCount})
+                    Reviews ({fetchedTour.reviewCount})
                   </TabsTrigger>
                 </TabsList>
 
                 {/* Overview */}
                 <TabsContent value="overview" className="mt-6 space-y-6">
                   <p className="text-muted-foreground leading-relaxed">
-                    {tour.overview}
+                    {fetchedTour.overview}
                   </p>
 
                   <div>
                     <h2 className="font-bold text-lg mb-3">
-                      Tour Highlights
+                      fetchedTour Highlights
                     </h2>
                     <ul className="grid sm:grid-cols-2 gap-2.5">
-                      {tour.highlights.map((h) => (
+                      {fetchedTour.highlights.map((h) => (
                         <li key={h} className="flex items-start gap-2.5 text-sm">
                           <CheckCircle2
                             size={16}
@@ -610,7 +658,7 @@ function TourDetailPage() {
                   {/* Quick info grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
-                      { icon: BedDouble, label: "Accommodation", value: `${tour.durationDays - 1} Nights` },
+                      { icon: BedDouble, label: "Accommodation", value: `${fetchedTour.durationDays - 1} Nights` },
                       { icon: Bus, label: "Transport", value: "AC Vehicle" },
                       { icon: Utensils, label: "Meals", value: "As per plan" },
                       { icon: Camera, label: "Sightseeing", value: "Guided" },
@@ -635,7 +683,7 @@ function TourDetailPage() {
                       Important Notes
                     </h3>
                     <ul className="space-y-1.5">
-                      {tour.importantNotes.map((note, i) => (
+                      {fetchedTour.importantNotes?.map((note, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-sm text-amber-800/80 dark:text-amber-400/80"
@@ -655,7 +703,7 @@ function TourDetailPage() {
                 {/* Itinerary */}
                 <TabsContent value="itinerary" className="mt-6">
                   <Accordion type="single" collapsible defaultValue="day-1">
-                    {tour.itinerary.map((day) => (
+                    {fetchedTour.itinerary.map((day) => (
                       <AccordionItem
                         key={day.day}
                         value={`day-${day.day}`}
@@ -709,7 +757,7 @@ function TourDetailPage() {
                         What's Included
                       </h3>
                       <ul className="space-y-2.5">
-                        {tour.inclusions.map((item) => (
+                        {fetchedTour.inclusions.map((item) => (
                           <li
                             key={item}
                             className="flex items-start gap-2.5 text-sm"
@@ -730,7 +778,7 @@ function TourDetailPage() {
                         What's Not Included
                       </h3>
                       <ul className="space-y-2.5">
-                        {tour.exclusions.map((item) => (
+                        {fetchedTour.exclusions.map((item) => (
                           <li
                             key={item}
                             className="flex items-start gap-2.5 text-sm text-muted-foreground"
@@ -753,14 +801,14 @@ function TourDetailPage() {
                   {/* Rating summary */}
                   <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 border border-border/60">
                     <div className="text-center">
-                      <p className="text-4xl font-bold">{tour.rating}</p>
+                      <p className="text-4xl font-bold">{fetchedTour.rating}</p>
                       <div className="flex items-center justify-center gap-0.5 mt-1">
                         {Array.from({ length: 5 }).map((_, i) => (
                           <Star
                             key={i}
                             size={14}
                             className={cn(
-                              i < Math.round(tour.rating)
+                              i < Math.round(fetchedTour.rating)
                                 ? "fill-amber-400 text-amber-400"
                                 : "text-muted-foreground"
                             )}
@@ -769,7 +817,7 @@ function TourDetailPage() {
                         ))}
                       </div>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {tour.reviewCount} reviews
+                        {fetchedTour.reviewCount} reviews
                       </p>
                     </div>
                     <Separator orientation="vertical" className="h-16" />
@@ -779,7 +827,7 @@ function TourDetailPage() {
                     </p>
                   </div>
 
-                  {tour.reviews.map((review) => (
+                  {fetchedReviews?.map((review) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
                 </TabsContent>
@@ -809,9 +857,9 @@ function TourDetailPage() {
                           className="fill-amber-400 text-amber-400"
                           aria-hidden="true"
                         />
-                        <span className="font-semibold">{tour.rating}</span>
+                        <span className="font-semibold">{fetchedTour.rating}</span>
                         <span className="text-muted-foreground">
-                          ({tour.reviewCount})
+                          ({fetchedTour.reviewCount})
                         </span>
                       </div>
                     </div>
@@ -821,7 +869,7 @@ function TourDetailPage() {
                     {/* Tier selector */}
                     <div className="space-y-2">
                       <p className="text-sm font-semibold">Choose package tier</p>
-                      {tour.pricingTiers.map((tier, i) => (
+                      {fetchedTour.pricingTiers?.map((tier, i) => (
                         <button
                           key={tier.label}
                           onClick={() => setSelectedTier(i)}
@@ -850,10 +898,10 @@ function TourDetailPage() {
                     {/* Quick stats */}
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {[
-                        { label: "Duration", value: tour.duration },
-                        { label: "Group size", value: `Max ${tour.groupSize}` },
-                        { label: "Min age", value: `${tour.minAge}+ years` },
-                        { label: "Difficulty", value: tour.difficulty },
+                        { label: "Duration", value: `${fetchedTour.durationDays}D / ${fetchedTour.durationNights}N` },
+                        { label: "Group size", value: `Max ${fetchedTour.groupSize}` },
+                        { label: "Min age", value: `${fetchedTour.minAge}+ years` },
+                        { label: "Difficulty", value: fetchedTour.difficulty },
                       ].map(({ label, value }) => (
                         <div key={label} className="rounded-lg bg-muted/50 px-3 py-2">
                           <p className="text-xs text-muted-foreground">{label}</p>
@@ -864,15 +912,15 @@ function TourDetailPage() {
 
                     {/* CTA */}
                     <Link
-                      to="/domestic/tours/$tourId/book"
-                      params={{ tourId: tour.id }}
-                      search={{ tier: tour.pricingTiers[selectedTier].label }}
+                      to="/domestic/tours/$slug/book"
+                      params={{ slug: fetchedTour.id }}
+                      search={{ tier: fetchedTour.pricingTiers[selectedTier]?.label ?? "Standard" }}
                       className={buttonVariants({
                         className: "w-full gap-2",
                         size: "lg",
                       })}
                     >
-                      Book This Tour
+                      Book This fetchedTour
                       <ArrowRight size={16} aria-hidden="true" />
                     </Link>
 
@@ -923,8 +971,8 @@ function TourDetailPage() {
             </aside>
           </div>
         </div>
-      </main>
-    </TooltipProvider>
+      </main >
+    </TooltipProvider >
   );
 }
 
@@ -1042,7 +1090,7 @@ function ReviewCard({ review }: { review: Review }) {
 
 // ─── Difficulty Badge ─────────────────────────────────────────────────────────
 
-function DifficultyBadge({ level }: { level: TourDetail["difficulty"] }) {
+function DifficultyBadge({ level }: { level: PublicTour["difficulty"] }) {
   const styles = {
     Easy: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
     Moderate: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300",

@@ -47,6 +47,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPublicTours } from "#/server/actions/tours.ts";
 import type { PublicTour } from "@repo/types/domestic"
 import { ToursError, ToursLoading } from "#/components/common/domestic/tours-status-components.tsx";
+import { useServerFn } from "@tanstack/react-start";
 
 type Category =
   | "Beach"
@@ -113,6 +114,8 @@ export const Route = createFileRoute("/domestic/tours/")({
 
 function ToursPage() {
 
+  const fetchTours = useServerFn(getPublicTours);
+
   const {
     data: fetchedTours,
     isPending,
@@ -121,7 +124,7 @@ function ToursPage() {
     refetch
   } = useQuery({
     queryKey: ["tours-array"],
-    queryFn: getPublicTours,
+    queryFn: () => fetchTours(),
   });
 
   const search = Route.useSearch();

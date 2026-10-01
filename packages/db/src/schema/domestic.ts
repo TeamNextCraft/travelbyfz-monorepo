@@ -9,15 +9,8 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.ts";
 import { sql } from "drizzle-orm";
-import { TourItinerary, type DestinationCategory, type DestinationRegion, type TourPricingTier, type TourReview } from '@repo/types/domestic';
-
-/**
- * D1 / SQLite notes:
- * - use TEXT for ids
- * - use integer({ mode: "boolean" }) for booleans
- * - use integer({ mode: "timestamp" }) for Date fields
- * - use text({ mode: "json" }) for JSON blobs
- */
+import type { TourItinerary, TourPricingTier, TourDifficulty } from "@repo/types/domestic/tour"
+import type { DestinationRegion, DestinationCategory } from "@repo/types/domestic/destination"
 
 export const bookingStatuses = [
   "draft",
@@ -165,12 +158,12 @@ export const tours = sqliteTable(
 
     tag: text("tag"),
 
-    minAge: integer("min_age"),
-    maxAge: integer("max_age"),
+    minAge: integer("min_age").default(5).notNull(),
+    maxAge: integer("max_age").default(75).notNull(),
     maxGroupSize: integer("max_group_size"),
     minGroupSize: integer("min_group_size").default(1),
 
-    difficulty: text("difficulty"), // easy/moderate/hard
+    difficulty: text("difficulty").$type<TourDifficulty>().default("Easy").notNull(), // easy/moderate/hard
     transportIncluded: integer("transport_included", { mode: "boolean" })
       .notNull()
       .default(true),
