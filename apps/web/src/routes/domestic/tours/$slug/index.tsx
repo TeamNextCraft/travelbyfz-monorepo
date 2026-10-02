@@ -47,16 +47,6 @@ import { TourDetailError } from "#/components/common/domestic/tour-details-error
 import { useServerFn } from "@tanstack/react-start";
 import type { PublicTour } from "@repo/types/domestic/tour"
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type ItineraryDay = {
-  day: number;
-  title: string;
-  description: string;
-  meals: ("Breakfast" | "Lunch" | "Dinner")[];
-  highlights: string[];
-};
-
 type Review = {
   id: string;
   name: string;
@@ -66,328 +56,6 @@ type Review = {
   text: string;
   location: string;
 };
-
-type PricingTier = {
-  label: string;
-  description: string;
-  price: number;
-};
-
-type TourDetail = {
-  id: string;
-  title: string;
-  tagline: string;
-  destination: string;
-  state: string;
-  duration: string;
-  durationDays: number;
-  category: string;
-  basePrice: number;
-  rating: number;
-  reviewCount: number;
-  groupSize: number;
-  minAge: number;
-  difficulty: "Easy" | "Moderate" | "Challenging";
-  tag?: string;
-  images: string[];
-  overview: string;
-  highlights: string[];
-  inclusions: string[];
-  exclusions: string[];
-  itinerary: ItineraryDay[];
-  pricingTiers: PricingTier[];
-  reviews: Review[];
-  importantNotes: string[];
-};
-
-// ─── Mock Data ────────────────────────────────────────────────────────────────
-// Replace with: loader: async ({ params }) => getTourById({ data: params.tourId })
-
-const TOURS_DB: Record<string, TourDetail> = {
-  "kerala-backwaters": {
-    id: "kerala-backwaters",
-    title: "Kerala Backwaters & Spice Trail",
-    tagline: "Float through paradise on a traditional Kerala houseboat",
-    destination: "Alleppey (Alappuzha)",
-    state: "Kerala",
-    duration: "5 Days / 4 Nights",
-    durationDays: 5,
-    category: "Beach",
-    basePrice: 18500,
-    rating: 4.9,
-    reviewCount: 312,
-    groupSize: 12,
-    minAge: 5,
-    difficulty: "Easy",
-    tag: "Best Seller",
-    images: [
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=85",
-      "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?w=1200&q=85",
-      "https://images.unsplash.com/photo-1590766940554-4a37b99ee0db?w=1200&q=85",
-      "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=85",
-      "https://images.unsplash.com/photo-1641493543690-6b4f7f01b1d3?w=1200&q=85",
-    ],
-    overview:
-      "Glide through the serene backwaters of Kerala on a traditional kettuvallam (rice boat), wake up to misty mornings on the water, and journey through fragrant spice plantations. This 5-day tour is the perfect blend of nature, culture, and culinary discovery — from a houseboat night to a Kathakali performance in Fort Kochi.",
-    highlights: [
-      "Overnight stay on a private houseboat on Vembanad Lake",
-      "Guided tour of a working spice & rubber plantation",
-      "Kathakali dance performance in Fort Kochi",
-      "Visit to Mattancherry Palace & Jewish Synagogue",
-      "Village canoe ride through narrow backwater canals",
-      "Traditional Kerala Sadhya (feast) experience",
-    ],
-    inclusions: [
-      "4 nights accommodation (3★ hotel + 1 night houseboat)",
-      "Daily breakfast; lunch & dinner on houseboat day",
-      "AC private vehicle throughout",
-      "Professional English-speaking guide",
-      "All entry fees & permits",
-      "Kathakali show tickets",
-      "GST & service charges",
-    ],
-    exclusions: [
-      "Airfare / train tickets to/from Kochi",
-      "Personal travel insurance",
-      "Meals not mentioned in inclusions",
-      "Tips & gratuities",
-      "Any activity not in the itinerary",
-      "Camera fees at monuments",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrive in Kochi — Fort Kochi Heritage Walk",
-        description:
-          "Arrive at Cochin International Airport. Transfer to your hotel in Fort Kochi. After settling in, embark on a heritage walk through the charming colonial lanes — Chinese fishing nets, St. Francis Church (where Vasco da Gama was once buried), and the vibrant Mattancherry spice market. Evening: Kathakali dance performance.",
-        meals: ["Dinner"],
-        highlights: ["Chinese fishing nets", "Mattancherry spice market", "Kathakali show"],
-      },
-      {
-        day: 2,
-        title: "Kochi to Alleppey — Board the Houseboat",
-        description:
-          "Morning visit to Mattancherry Palace and the Jewish Synagogue. Drive to Alleppey (1.5 hrs) and board your traditional kettuvallam houseboat. Spend the afternoon cruising the backwaters, watching village life unfold on the banks. Enjoy a fresh Kerala lunch cooked on board by your personal chef.",
-        meals: ["Breakfast", "Lunch", "Dinner"],
-        highlights: ["Kettuvallam boarding", "Backwater cruise", "On-board Kerala cuisine"],
-      },
-      {
-        day: 3,
-        title: "Backwaters to Kumarakom — Spice Plantation",
-        description:
-          "Wake up to misty backwaters. Disembark at Kumarakom and visit the famous Bird Sanctuary (seasonal). Drive to a working spice and rubber plantation for a guided walk — nutmeg, cardamom, black pepper, and cinnamon in their natural habitat. Evening at leisure.",
-        meals: ["Breakfast"],
-        highlights: ["Kumarakom Bird Sanctuary", "Spice plantation walk", "Black pepper & cardamom groves"],
-      },
-      {
-        day: 4,
-        title: "Village Canoe Ride & Cultural Immersion",
-        description:
-          "Take a village canoe through narrow shaded canals inaccessible to houseboats — the real Kerala. Stop at a local toddy shop for an authentic experience. Afternoon: cooking class with a local family, learning to make appam and fish curry from scratch.",
-        meals: ["Breakfast", "Lunch"],
-        highlights: ["Narrow-canal canoe ride", "Toddy shop experience", "Kerala cooking class"],
-      },
-      {
-        day: 5,
-        title: "Alleppey to Kochi — Departure",
-        description:
-          "Post-breakfast, drive back to Kochi. Visit the Indo-Portuguese Museum if time permits. Transfer to Cochin Airport or railway station for your onward journey. Tour ends with memories that last a lifetime.",
-        meals: ["Breakfast"],
-        highlights: ["Indo-Portuguese Museum", "Kochi transfer", "Departure"],
-      },
-    ],
-    pricingTiers: [
-      {
-        label: "Standard",
-        description: "3★ hotels, AC sleeper houseboat, shared group of up to 12",
-        price: 18500,
-      },
-      {
-        label: "Deluxe",
-        description: "4★ hotels, premium houseboat with AC cabin, group of up to 8",
-        price: 26000,
-      },
-      {
-        label: "Luxury",
-        description: "5★ CGH Earth properties, private luxury houseboat, couple/family only",
-        price: 45000,
-      },
-    ],
-    reviews: [
-      {
-        id: "r1",
-        name: "Priya Mehta",
-        avatar: "PM",
-        rating: 5,
-        date: "March 2026",
-        text: "Absolutely magical experience. The houseboat was spotless, the food was incredible, and our guide Suresh was knowledgeable and funny. The canoe ride on Day 4 was the highlight — saw kingfishers up close. Booking again next year!",
-        location: "Mumbai",
-      },
-      {
-        id: "r2",
-        name: "Arjun & Meghna Nair",
-        avatar: "AN",
-        rating: 5,
-        date: "February 2026",
-        text: "Took this as our anniversary trip. Everything was perfectly arranged — the houseboat sunset was straight out of a postcard. The spice plantation tour was educational and fun. Will recommend to everyone.",
-        location: "Bangalore",
-      },
-      {
-        id: "r3",
-        name: "Rahul Sharma",
-        avatar: "RS",
-        rating: 4,
-        date: "January 2026",
-        text: "Great tour overall. The houseboat experience and cooking class were standout moments. Only minor issue was the houseboat had some mosquitoes at night — bring repellent! Otherwise a 5-star trip.",
-        location: "Delhi",
-      },
-    ],
-    importantNotes: [
-      "Best time to visit: October to March. Avoid June–August (monsoon, houseboats may be restricted).",
-      "Houseboat cruising typically stops at 5:30 PM and resumes at 6:30 AM by Kerala Water Authority rules.",
-      "Carry light cotton clothing, sunscreen, and insect repellent.",
-      "This tour involves boarding small canoes — not recommended for guests with severe mobility issues without prior consultation.",
-    ],
-  },
-  "rajasthan-royals": {
-    id: "rajasthan-royals",
-    title: "Royal Rajasthan Heritage Tour",
-    tagline: "Step into the land of maharajas, palaces, and golden deserts",
-    destination: "Jaipur → Jodhpur → Udaipur",
-    state: "Rajasthan",
-    duration: "7 Days / 6 Nights",
-    durationDays: 7,
-    category: "Cultural",
-    basePrice: 24999,
-    rating: 4.8,
-    reviewCount: 198,
-    groupSize: 10,
-    minAge: 5,
-    difficulty: "Easy",
-    tag: "Popular",
-    images: [
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1200&q=85",
-      "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=85",
-      "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=1200&q=85",
-      "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=85",
-    ],
-    overview:
-      "Travel through the Pink City, Blue City, and City of Lakes on this iconic Rajasthan circuit. From the grandeur of Amber Fort and the blue labyrinth of Jodhpur's old city, to the shimmering Lake Pichola of Udaipur — this is India at its most photogenic and culturally rich.",
-    highlights: [
-      "Amber Fort jeep ride & mirror palace",
-      "Desert camel safari at Sam Sand Dunes",
-      "Boat ride on Lake Pichola at sunset",
-      "City Palace Udaipur guided tour",
-      "Street food walk in Jodhpur's clock tower market",
-      "Folk music & puppet show evening",
-    ],
-    inclusions: [
-      "6 nights accommodation in heritage hotels",
-      "Daily breakfast + 2 special dinners",
-      "AC Toyota Innova throughout",
-      "Experienced local guide at each city",
-      "Camel safari (1 hour)",
-      "Lake Pichola boat ride",
-      "All monument entry fees",
-    ],
-    exclusions: [
-      "Airfare to Jaipur / from Udaipur",
-      "Personal travel insurance",
-      "Meals beyond inclusions",
-      "Tips & gratuities",
-      "Hot air balloon ride (optional add-on ₹9,000)",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrive Jaipur — Pink City Welcome",
-        description: "Arrive in Jaipur, check in to your heritage hotel. Evening walk to Hawa Mahal for the famous pink façade at golden hour. Dinner at a rooftop restaurant overlooking the old city.",
-        meals: ["Dinner"],
-        highlights: ["Hawa Mahal", "Old city walk", "Rooftop dinner"],
-      },
-      {
-        day: 2,
-        title: "Jaipur — Amber Fort & City Palace",
-        description: "Morning jeep ride up to Amber Fort. Explore the Sheesh Mahal (mirror palace). Afternoon: City Palace museum and the royal Jantar Mantar observatory. Evening: bazaar shopping for block prints and blue pottery.",
-        meals: ["Breakfast"],
-        highlights: ["Amber Fort", "Sheesh Mahal", "Jantar Mantar", "Bazaar"],
-      },
-      {
-        day: 3,
-        title: "Jaipur to Jodhpur — The Blue City",
-        description: "Drive to Jodhpur (5 hrs). Check in and head straight to Mehrangarh Fort for panoramic views over the indigo rooftops. Evening: clock tower market street food walk.",
-        meals: ["Breakfast"],
-        highlights: ["Mehrangarh Fort", "Blue city panorama", "Street food walk"],
-      },
-      {
-        day: 4,
-        title: "Jodhpur to Jaisalmer — Desert & Sand Dunes",
-        description: "Drive to Jaisalmer (3 hrs). Post lunch, head to Sam Sand Dunes for a camel safari and watch the desert sunset. Folk music and bonfire dinner at the dune camp.",
-        meals: ["Breakfast", "Dinner"],
-        highlights: ["Sam Sand Dunes", "Camel safari", "Desert sunset", "Folk bonfire"],
-      },
-      {
-        day: 5,
-        title: "Jaisalmer Fort & Drive to Udaipur",
-        description: "Morning: Jaisalmer Fort — the only living fort in India, with residents still inside. Post lunch, scenic drive toward Udaipur (overnight journey or flight option).",
-        meals: ["Breakfast"],
-        highlights: ["Living fort", "Patwon Ki Haveli"],
-      },
-      {
-        day: 6,
-        title: "Udaipur — City of Lakes",
-        description: "Arrive Udaipur. Visit City Palace and the stunning Jagdish Temple. Evening: iconic boat ride on Lake Pichola with views of Lake Palace (Taj hotel). Special Rajasthani thali dinner.",
-        meals: ["Breakfast", "Dinner"],
-        highlights: ["City Palace", "Lake Pichola boat ride", "Lake Palace view"],
-      },
-      {
-        day: 7,
-        title: "Udaipur Departure",
-        description: "Leisure morning — visit Saheliyon ki Bari garden or explore local markets for miniature paintings and silver jewellery. Transfer to Udaipur airport/railway station.",
-        meals: ["Breakfast"],
-        highlights: ["Saheliyon ki Bari", "Departure transfer"],
-      },
-    ],
-    pricingTiers: [
-      { label: "Standard", description: "3★ heritage hotels, shared group up to 10", price: 24999 },
-      { label: "Deluxe", description: "4★ palace hotels, group up to 6", price: 35000 },
-      { label: "Luxury", description: "Taj/Oberoi properties, private tour", price: 68000 },
-    ],
-    reviews: [
-      {
-        id: "r1",
-        name: "Sunita Kapoor",
-        avatar: "SK",
-        rating: 5,
-        date: "February 2026",
-        text: "Everything about this tour was perfect. The guides at each city were incredibly knowledgeable. The Lake Pichola sunset boat ride was pure magic. Already planning to bring my parents.",
-        location: "Pune",
-      },
-      {
-        id: "r2",
-        name: "Vikram Joshi",
-        avatar: "VJ",
-        rating: 5,
-        date: "January 2026",
-        text: "The heritage hotels were beautiful — felt like royalty! Amber Fort was jaw-dropping. Great value for money. The desert bonfire on Day 4 was absolutely unforgettable.",
-        location: "Hyderabad",
-      },
-    ],
-    importantNotes: [
-      "Best time: October to March. Summers (April–June) are extremely hot (45°C+).",
-      "Carry light layers for desert nights — temperature drops significantly after sunset.",
-      "Modest dress recommended when visiting temples and heritage sites.",
-      "Jaisalmer to Udaipur leg may use overnight sleeper bus or budget flight (your choice at booking).",
-    ],
-  },
-};
-
-// Fallback for other tour IDs from the listing page
-// function getTourById(id: string): TourDetail | null {
-// return TOURS_DB[id] ?? null;
-// }
-
-// ─── Route ────────────────────────────────────────────────────────────────────
 
 export const Route = createFileRoute("/domestic/tours/$slug/")({
   notFoundComponent: () => (
@@ -460,6 +128,8 @@ function TourDetailPage() {
   if (!fetchedTour) {
     throw notFound();
   }
+
+  if (!fetchedTour.destination) throw notFound();
 
   const selectedPrice = fetchedTour?.pricingTiers[selectedTier]?.price;
 
@@ -703,7 +373,7 @@ function TourDetailPage() {
                 {/* Itinerary */}
                 <TabsContent value="itinerary" className="mt-6">
                   <Accordion type="single" collapsible defaultValue="day-1">
-                    {fetchedTour.itinerary.map((day) => (
+                    {fetchedTour?.itinerary?.map((day) => (
                       <AccordionItem
                         key={day.day}
                         value={`day-${day.day}`}
@@ -913,14 +583,14 @@ function TourDetailPage() {
                     {/* CTA */}
                     <Link
                       to="/domestic/tours/$slug/book"
-                      params={{ slug: fetchedTour.id }}
+                      params={{ slug: fetchedTour.slug }}
                       search={{ tier: fetchedTour.pricingTiers[selectedTier]?.label ?? "Standard" }}
                       className={buttonVariants({
                         className: "w-full gap-2",
                         size: "lg",
                       })}
                     >
-                      Book This fetchedTour
+                      Book This Tour
                       <ArrowRight size={16} aria-hidden="true" />
                     </Link>
 

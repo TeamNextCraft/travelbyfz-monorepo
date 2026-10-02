@@ -29,6 +29,7 @@ import { Route as HajjUmrahVisaRouteImport } from './routes/hajj-umrah/visa'
 import { Route as InternationalIndexRouteImport } from './routes/international/index'
 import { Route as InvitationWebinarRouteImport } from './routes/invitation/webinar'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiSeedV1RouteImport } from './routes/api/seed/v1'
 import { Route as ApiWebhooksRazorpayRouteImport } from './routes/api/webhooks/razorpay'
 import { Route as DomesticBookingsIndexRouteImport } from './routes/domestic/bookings/index'
 import { Route as DomesticBookingsBookingIdRouteImport } from './routes/domestic/bookings/$bookingId'
@@ -145,6 +146,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSeedV1Route = ApiSeedV1RouteImport.update({
+  id: '/api/seed/v1',
+  path: '/api/seed/v1',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiWebhooksRazorpayRoute = ApiWebhooksRazorpayRouteImport.update({
   id: '/api/webhooks/razorpay',
   path: '/api/webhooks/razorpay',
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/hajj-umrah/': typeof HajjUmrahIndexRoute
   '/international/': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -282,6 +289,7 @@ export interface FileRoutesByTo {
   '/hajj-umrah': typeof HajjUmrahIndexRoute
   '/international': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -320,6 +328,7 @@ export interface FileRoutesById {
   '/hajj-umrah/': typeof HajjUmrahIndexRoute
   '/international/': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah/'
     | '/international/'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah'
     | '/international'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah/'
     | '/international/'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -459,6 +471,7 @@ export interface RootRouteChildren {
   InvitationWebinarRoute: typeof InvitationWebinarRoute
   InternationalIndexRoute: typeof InternationalIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiSeedV1Route: typeof ApiSeedV1Route
   ApiWebhooksRazorpayRoute: typeof ApiWebhooksRazorpayRoute
 }
 
@@ -602,6 +615,13 @@ declare module '@tanstack/react-router' {
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/seed/v1': {
+      id: '/api/seed/v1'
+      path: '/api/seed/v1'
+      fullPath: '/api/seed/v1'
+      preLoaderRoute: typeof ApiSeedV1RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/webhooks/razorpay': {
@@ -791,6 +811,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvitationWebinarRoute: InvitationWebinarRoute,
   InternationalIndexRoute: InternationalIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiSeedV1Route: ApiSeedV1Route,
   ApiWebhooksRazorpayRoute: ApiWebhooksRazorpayRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,6 +1,6 @@
-import { and, desc, eq, like, or } from "drizzle-orm";
+import { and, desc, eq, like, or, asc } from "drizzle-orm";
 import { getDb } from "#/client.js";
-import { reviews, tours } from "#/schema/domestic.js";
+import { addons, reviews, tours } from "#/schema/domestic.js";
 import { destinations } from '../schema/domestic';
 
 type Database = ReturnType<typeof getDb>;
@@ -9,8 +9,8 @@ type TourUpdate = Partial<Omit<TourInsert, "id" | "createdAt">>;
 
 export function createTourRepository(db: Database) {
   return {
-    async getPublicToursList() {
-      return await db.select({
+    getPublicToursList() {
+      return db.select({
         id: tours.id,
         slug: tours.slug,
         title: tours.title,
@@ -92,7 +92,9 @@ export function createTourRepository(db: Database) {
       return db
         .select({
           id: tours.id,
+          slug: tours.slug,
           title: tours.title,
+          featuredImage: tours.featuredImage,
           tagline: tours.tagline,
           destination: destinations.name,
           state: destinations.state,
@@ -187,6 +189,19 @@ export function createTourRepository(db: Database) {
 
     getReviews(tourId: string, limit: number = 10, offest: number = 0) {
       return db.select().from(reviews).where(eq(reviews.tourId, tourId)).limit(limit).offset(offest)
+    },
+
+    getAddons() {
+      return db.select({
+        id: addons.id,
+        description: addons.description,
+        price: addons.price,
+        perPerson: addons.perPerson,
+        label: addons.title,
+      })
+        .from(addons)
+        .where(eq(addons.isActive, true))
+        .orderBy(asc(addons.title));
     }
   };
 }

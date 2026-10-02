@@ -47,17 +47,18 @@ import {
   TooltipProvider,
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type PricingTier = {
-  label: string;
-  price: number;
-  description: string;
-};
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getPublicTourbySlug, getTourAddons } from "#/server/actions/tours";
+import type { TourPricingTier, TourAddOn } from "@repo/types/domestic/tour"
+import { TourDetailError } from "#/components/common/domestic/tour-details-error";
+import { BookingSkeleton } from "#/components/common/domestic/tour-booking-skeleton";
+import { TourDetailNotFound } from "#/components/common/domestic/tour-details-not-found";
+import { toast } from "sonner";
 
 type TourSummary = {
   id: string;
+  slug: string;
   title: string;
   destination: string;
   state: string;
@@ -66,24 +67,12 @@ type TourSummary = {
   rating: number;
   reviewCount: number;
   image: string;
-  pricingTiers: PricingTier[];
+  pricingTiers: TourPricingTier[];
 };
-
-type AddOn = {
-  id: string;
-  label: string;
-  description: string;
-  price: number;
-  perPerson: boolean;
-};
-
-// ─── Search params schema ─────────────────────────────────────────────────────
 
 const bookSearchSchema = z.object({
   tier: z.string().optional(),
 });
-
-// ─── Form schemas per step ────────────────────────────────────────────────────
 
 const travellersSchema = z.object({
   travelDate: z.string().min(1, "Please select a travel date"),
@@ -116,44 +105,7 @@ const contactSchema = z.object({
 type TravellersData = z.infer<typeof travellersSchema>;
 type ContactData = z.infer<typeof contactSchema>;
 
-// ─── Static data (replace with loader) ───────────────────────────────────────
-
-const TOURS_DB: Record<string, TourSummary> = {
-  "kerala-backwaters": {
-    id: "kerala-backwaters",
-    title: "Kerala Backwaters & Spice Trail",
-    destination: "Alleppey",
-    state: "Kerala",
-    duration: "5 Days / 4 Nights",
-    durationDays: 5,
-    rating: 4.9,
-    reviewCount: 312,
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
-    pricingTiers: [
-      { label: "Standard", price: 18500, description: "3★ hotels + AC houseboat" },
-      { label: "Deluxe", price: 26000, description: "4★ hotels + premium houseboat" },
-      { label: "Luxury", price: 45000, description: "5★ CGH Earth + private houseboat" },
-    ],
-  },
-  "rajasthan-royals": {
-    id: "rajasthan-royals",
-    title: "Royal Rajasthan Heritage Tour",
-    destination: "Jaipur → Jodhpur → Udaipur",
-    state: "Rajasthan",
-    duration: "7 Days / 6 Nights",
-    durationDays: 7,
-    rating: 4.8,
-    reviewCount: 198,
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80",
-    pricingTiers: [
-      { label: "Standard", price: 24999, description: "3★ heritage hotels" },
-      { label: "Deluxe", price: 35000, description: "4★ palace hotels" },
-      { label: "Luxury", price: 68000, description: "Taj/Oberoi properties" },
-    ],
-  },
-};
-
-const ADD_ONS: AddOn[] = [
+const ADD_ONS: TourAddOn[] = [
   {
     id: "travel-insurance",
     label: "Travel Insurance",
@@ -202,22 +154,9 @@ const STEPS = [
   { id: 5, label: "Confirmed" },
 ];
 
-// ─── Route ────────────────────────────────────────────────────────────────────
-
 export const Route = createFileRoute("/domestic/tours/$slug/book")({
   validateSearch: bookSearchSchema,
-  loader: async ({ params }) => {
-    const tour = TOURS_DB[params.tourId] ?? null;
-    if (!tour) throw notFound();
-    return { tour };
-  },
-  notFoundComponent: () => (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-4">
-      <div className="text-5xl">🗺️</div>
-      <h1 className="text-2xl font-bold">Tour not found</h1>
-      <Link to="/domestic/tours" className={buttonVariants()}>Browse all tours</Link>
-    </div>
-  ),
+  notFoundComponent: () => <TourDetailNotFound />,
   // Uncomment once you have Better Auth wired:
   // beforeLoad: async ({ context }) => {
   //   const user = await getUser();
@@ -229,21 +168,73 @@ export const Route = createFileRoute("/domestic/tours/$slug/book")({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 function BookingPage() {
-  const { tour } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const fetchTourDetails = useServerFn(getPublicTourbySlug);
+  const fetchTourAddOns = useServerFn(getTourAddons);
+
+  const { data: fetchedTour, isPending, isError, error, refetch, isRefetching } =
+    useQuery({
+      queryKey: ["tour", slug],
+      queryFn: () => fetchTourDetails({ data: { slug } }),
+    });
+
+  const {
+    data: fetchedAddons,
+    isPending: addonsPending,
+    isError: addonsIsError,
+    error: addonsError,
+    refetch: refetchAddons,
+  } = useQuery({
+    queryKey: ["tour-addons"],
+    queryFn: () => fetchTourAddOns(),
+  });
+
+  if (isPending) return <BookingSkeleton />;
+  if (isError)
+    return <TourDetailError error={error} onRetry={() => refetch()} isRetrying={isRefetching} />;
+  if (!fetchedTour) throw notFound();
+
+  if (!fetchedTour.destination) throw notFound();
+
+  if (addonsIsError) {
+    return (
+      <TourDetailError
+        error={addonsError}
+        onRetry={() => refetchAddons()}
+      />
+    );
+  }
+
+  const tour: TourSummary = {
+    id: fetchedTour.id,
+    slug: fetchedTour.slug,
+    title: fetchedTour.title,
+    destination: fetchedTour.destination,
+    state: fetchedTour.state ?? "N/A",
+    duration: `${fetchedTour.durationDays}D / ${fetchedTour.durationNights}N`,
+    durationDays: fetchedTour.durationDays,
+    rating: fetchedTour.rating,
+    reviewCount: fetchedTour.reviewCount,
+    image: fetchedTour.featuredImage ?? fetchedTour.images?.[0],
+    pricingTiers: fetchedTour.pricingTiers ?? [],
+  };
+
+  return <BookingWizard tour={tour} addons={(addonsPending) ? ADD_ONS : fetchedAddons} />;
+}
+
+function BookingWizard({ tour, addons }: { tour: TourSummary, addons: TourAddOn[] }) {
   const { tier: tierFromUrl } = Route.useSearch();
 
   const defaultTier =
     tour.pricingTiers.find((t) => t.label === tierFromUrl) ??
     tour.pricingTiers[0];
-
-  // Wizard state
   const [step, setStep] = useState(1);
 
   // Step 1 & 2 data
   const [travellersData, setTravellersData] = useState<TravellersData>({
     travelDate: "",
     guestCount: 2,
-    tier: defaultTier.label,
+    tier: defaultTier?.label ?? "",
     travellers: [
       { firstName: "", lastName: "", age: "", gender: "Male" },
       { firstName: "", lastName: "", age: "", gender: "Male" },
@@ -276,7 +267,7 @@ function BookingPage() {
     tour.pricingTiers[0];
 
   const pricing = useMemo(() => {
-    const base = selectedTier.price * travellersData.guestCount;
+    const base = (selectedTier?.price ?? 0) * travellersData.guestCount;
     const addOnsTotal = selectedAddOns.reduce((sum, id) => {
       const addon = ADD_ONS.find((a) => a.id === id);
       if (!addon) return sum;
@@ -299,12 +290,26 @@ function BookingPage() {
   };
 
   const handleConfirmBooking = async () => {
+    if (isSubmitting) return;
     setIsSubmitting(true);
-    // Wire to createServerFn:
-    // await createBooking({ data: { tourId: tour.id, ...travellersData, ...contactData, addOns: selectedAddOns, paymentMethod, totalAmount: pricing.total } });
-    await new Promise((r) => setTimeout(r, 1500)); // simulate API
-    setIsSubmitting(false);
-    setStep(5);
+    try {
+      // Wire to createServerFn:
+      // await createBooking({ data: { tourId: tour.id, ...travellersData, ...contactData, addOns: selectedAddOns, paymentMethod, totalAmount: pricing.total } });
+      const booking = {
+        bookingId: 1,
+      }
+
+      await new Promise((r) => setTimeout(r, 1500)); // simulate API
+      toast.success("Booking created successfully", {
+        description: `Your booking reference is ${booking.bookingId}`
+      })
+      setIsSubmitting(false);
+      setStep(5);
+    } catch (err) {
+      console.error("Payment could not be started. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (step === 5) {
@@ -318,8 +323,8 @@ function BookingPage() {
         <div className="border-b bg-background sticky top-0 z-30">
           <div className="mx-auto max-w-5xl px-4 py-3 flex items-center gap-3">
             <Link
-              to="/domestic/tours/$tourId"
-              params={{ tourId: tour.id }}
+              to="/domestic/tours/$slug"
+              params={{ slug: tour.slug }}
               className={buttonVariants({ variant: "ghost", size: "sm", className: "gap-1.5" })}
             >
               <ArrowLeft size={15} />
@@ -359,7 +364,7 @@ function BookingPage() {
               )}
               {step === 3 && (
                 <Step3AddOns
-                  addOns={ADD_ONS}
+                  addOns={addons}
                   selected={selectedAddOns}
                   guestCount={travellersData.guestCount}
                   onToggle={toggleAddOn}
@@ -772,7 +777,7 @@ function Step3AddOns({
   onBack,
   onNext,
 }: {
-  addOns: AddOn[];
+  addOns: TourAddOn[];
   selected: string[];
   guestCount: number;
   onToggle: (id: string) => void;
@@ -1181,13 +1186,13 @@ function OrderSummary({
 }: {
   tour: TourSummary;
   travellersData: TravellersData;
-  selectedTier: PricingTier;
+  selectedTier: TourPricingTier;
   selectedAddOns: string[];
   pricing: any;
   promoApplied: boolean;
 }) {
   return (
-    <Card className="border-border/60 sticky top-20">
+    <Card className="border-border/60 sticky top-20 p-0 pb-2">
       {/* Tour thumbnail */}
       <div className="relative aspect-video overflow-hidden rounded-t-xl">
         <img
@@ -1206,7 +1211,7 @@ function OrderSummary({
         </div>
       </div>
 
-      <CardContent className="pt-4 space-y-4">
+      <CardContent className="space-y-4">
         {/* Trip info */}
         <div className="grid grid-cols-2 gap-2 text-xs">
           {[

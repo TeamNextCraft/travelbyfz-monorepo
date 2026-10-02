@@ -4,60 +4,62 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import appCss from "../styles.css?url";
+import { Toaster } from "#/components/ui/sonner";
 
 export const Route = createRootRoute({
-	head: () => ({
-		meta: [
-			{
-				charSet: "utf-8",
-			},
-			{
-				name: "viewport",
-				content: "width=device-width, initial-scale=1",
-			},
-			{
-				title: "Travel by FZ",
-			},
-		],
-		links: [
-			{
-				rel: "stylesheet",
-				href: appCss,
-			},
+  head: () => ({
+    meta: [
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "Travel by FZ",
+      },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
+      },
       {
         rel: 'icon',
         href: '/favicon.ico',
       },
-		],
-	}),
-	shellComponent: RootDocument,
+    ],
+  }),
+  shellComponent: RootDocument,
 });
 
 const queryClient = new QueryClient();
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	return (
-		<html lang="en">
-			<head>
-				<HeadContent />
-			</head>
-			<body>
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
         <QueryClientProvider client={queryClient}>
-				  {children}
+          {children}
+          <Toaster position="top-right" />
         </QueryClientProvider>
-				<TanStackDevtools
-					config={{
-						position: "bottom-right",
-					}}
-					plugins={[
-						{
-							name: "Tanstack Router",
-							render: <TanStackRouterDevtoolsPanel />,
-						},
-					]}
-				/>
-				<Scripts />
-			</body>
-		</html>
-	);
+        <TanStackDevtools
+          config={{
+            position: "bottom-right",
+          }}
+          plugins={[
+            {
+              name: "Tanstack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
+        <Scripts />
+      </body>
+    </html>
+  );
 }

@@ -68,3 +68,15 @@ export const getTourReviews = createServerFn()
     }
   })
 
+
+export const getTourAddons = createServerFn()
+  .handler(async () => {
+    try {
+      const db = getDb(env.DB);
+      const result = await createTourRepository(db).getAddons();
+      return result ?? null;
+    } catch (err) {
+      console.error("failed to fetch tour addons", err);
+      throw err;
+    }
+  })

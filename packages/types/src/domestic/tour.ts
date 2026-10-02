@@ -45,4 +45,12 @@ type Review = {
   location?: string,
 }
 
+export type TourAddOn = {
+  id: string;
+  label: string;
+  description: string;
+  price: number;
+  perPerson: boolean;
+};
+
 export type TourReview = Review;
