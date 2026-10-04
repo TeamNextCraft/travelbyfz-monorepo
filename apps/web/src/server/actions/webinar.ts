@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { eq } from "drizzle-orm";
 import { webinarRegistrations } from "@repo/db/schema/webinar-registrations.js";
 import { db } from "#/lib/db-config.ts";
+import { WEBINAR_AMOUNT } from "#/routes/invitation/webinar";
 // import { sendWebinarConfirmation } from "./notifications";
 
 const razorpay = new Razorpay({
@@ -11,7 +12,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
-const WEBINAR_AMOUNT = 19900; // ₹199 in paise
+// const WEBINAR_AMOUNT = 9900; // ₹99 in paise
 
 export const createWebinarOrder = createServerFn({ method: "POST" })
   .validator(
@@ -19,7 +20,6 @@ export const createWebinarOrder = createServerFn({ method: "POST" })
       data,
   )
   .handler(async ({ data }) => {
-
     const order = await razorpay.orders.create({
       amount: WEBINAR_AMOUNT,
       currency: "INR",
@@ -28,7 +28,7 @@ export const createWebinarOrder = createServerFn({ method: "POST" })
     });
 
     try {
-      await  db.insert(webinarRegistrations).values({
+      await db.insert(webinarRegistrations).values({
         name: data.name,
         email: data.email,
         phone: data.phone,
@@ -37,7 +37,6 @@ export const createWebinarOrder = createServerFn({ method: "POST" })
         razorpayOrderId: order.id,
         status: "created",
       });
-
     } catch (error) {
       console.error("Error inserting webinar registration:", error);
       throw new Error("Failed to create webinar registration");

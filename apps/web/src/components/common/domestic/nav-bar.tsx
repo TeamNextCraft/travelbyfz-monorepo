@@ -338,6 +338,8 @@ import {
 import { cn } from "#/lib/utils";
 import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
+import { MaintenanceBanner } from "../utility/maintenance-banner.tsx";
+
 
 const domesticNavItems = [
   {
@@ -382,6 +384,7 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
           : "border-border/50 bg-white/85"
       )}
     >
+    <MaintenanceBanner/>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Brand */}
         <div className="flex min-w-0 items-center gap-3">
