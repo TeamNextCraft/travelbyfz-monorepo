@@ -30,7 +30,7 @@ export const paymentStatuses = [
 export const paymentMethods = [
   "upi",
   "card",
-  "net_banking",
+  "netbanking",
   "cash",
   "wallet",
   "manual",
@@ -161,7 +161,7 @@ export const tours = sqliteTable(
     minAge: integer("min_age").default(5).notNull(),
     maxAge: integer("max_age").default(75).notNull(),
     maxGroupSize: integer("max_group_size"),
-    minGroupSize: integer("min_group_size").default(1),
+    minGroupSize: integer("min_group_size").notNull().default(1),
 
     difficulty: text("difficulty").$type<TourDifficulty>().default("Easy").notNull(), // easy/moderate/hard
     transportIncluded: integer("transport_included", { mode: "boolean" })
@@ -450,7 +450,6 @@ export const bookings = sqliteTable(
     contactPhone: text("contact_phone").notNull(),
     contactCity: text("contact_city"),
 
-    guestCount: integer("guest_count").notNull(),
     adultCount: integer("adult_count").notNull().default(1),
     childCount: integer("child_count").notNull().default(0),
 
@@ -534,6 +533,9 @@ export const bookingTravellers = sqliteTable(
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
       .$defaultFn(() => new Date()),
+    updatedAt: integer("updated_at", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
   },
   (table) => [
     index("booking_travellers_booking_idx").on(table.bookingId),
@@ -563,6 +565,8 @@ export const bookingAddons = sqliteTable(
 
     title: text("title").notNull(), // snapshot
     unitPrice: integer("unit_price").notNull(),
+    departureStartDate: integer("departure_start_date", { mode: "timestamp", }).notNull(),
+    departureEndDate: integer("departure_end_date", { mode: "timestamp", }).notNull(),
     quantity: integer("quantity").notNull().default(1),
     totalPrice: integer("total_price").notNull(),
     perPerson: integer("per_person", { mode: "boolean" }).notNull().default(true),
@@ -597,6 +601,10 @@ export const payments = sqliteTable(
     providerOrderId: text("provider_order_id"),
     providerPaymentId: text("provider_payment_id"),
     providerSignature: text("provider_signature"),
+
+    paymentDueAt: integer("payment_due_at", { mode: "timestamp" }),
+    paymentFailedAt: integer("payment_failed_at", { mode: "timestamp" }),
+    expiresAt: integer("expires_at", { mode: "timestamp" }),
 
     paidAt: integer("paid_at", { mode: "timestamp" }),
     notes: text("notes"),
@@ -647,10 +655,10 @@ export const refunds = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => ({
-    refundsBookingIdx: index("refunds_booking_idx").on(table.bookingId),
-    refundsPaymentIdx: index("refunds_payment_idx").on(table.paymentId),
-  })
+  (table) => [
+    index("refunds_booking_idx").on(table.bookingId),
+    index("refunds_payment_idx").on(table.paymentId),
+  ]
 );
 
 // -----------------------------------------------------------------------------
