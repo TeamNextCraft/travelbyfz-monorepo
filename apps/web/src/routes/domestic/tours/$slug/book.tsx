@@ -92,11 +92,20 @@ type TripState = {
   tier: string;
 };
 
+type IdType = "aadhaar" | "pan" | "passport" | "driving_license" | "voter_id";
+
 type TravellerInput = {
   firstName: string;
   lastName: string;
+  dateOfBirth: string; // "yyyy-mm-dd" or ""
   age: string;
   gender: Gender;
+  phone: string;
+  email: string;
+  idType: IdType | "";
+  idNumber: string;
+  dietaryPreferences: string[];
+  medicalNotes: string;
 };
 
 type ContactData = {
@@ -121,7 +130,7 @@ declare global {
 
 // ─── Constants & schemas ──────────────────────────────────────────────────────
 
-const BRAND_NAME = "Your Travel Brand";
+const BRAND_NAME = "FZ Tours & Travels";
 const GST_RATE = 0.05;
 const CHILD_MAX_AGE = 11; // 12+ is priced as adult
 const MAX_GUESTS = 20;
@@ -148,16 +157,56 @@ const STEPS = [
   { id: 4, label: "Payment" },
 ];
 
+const ID_TYPES: Record<
+  IdType,
+  { label: string; placeholder: string; regex: RegExp; error: string }
+> = {
+  aadhaar: {
+    label: "Aadhaar",
+    placeholder: "12-digit number",
+    regex: /^\d{12}$/,
+    error: "Aadhaar must be 12 digits",
+  },
+  pan: {
+    label: "PAN",
+    placeholder: "ABCDE1234F",
+    regex: /^[A-Z]{5}\d{4}[A-Z]$/,
+    error: "Enter a valid PAN (ABCDE1234F)",
+  },
+  passport: {
+    label: "Passport",
+    placeholder: "A1234567",
+    regex: /^[A-Z]\d{7}$/,
+    error: "Enter a valid passport number (A1234567)",
+  },
+  driving_license: {
+    label: "Driving licence",
+    placeholder: "GJ0520110012345",
+    regex: /^[A-Z]{2}\d{13}$/,
+    error: "Enter a valid licence number (e.g. GJ0520110012345)",
+  },
+  voter_id: {
+    label: "Voter ID",
+    placeholder: "ABC1234567",
+    regex: /^[A-Z]{3}\d{7}$/,
+    error: "Enter a valid Voter ID (ABC1234567)",
+  },
+};
+
+const DIETARY_OPTIONS = [
+  { id: "veg", label: "Vegetarian" },
+  { id: "jain", label: "Jain" },
+  { id: "vegan", label: "Vegan" },
+  { id: "eggetarian", label: "Eggetarian" },
+  { id: "non_veg", label: "Non-veg" },
+  { id: "no_onion_garlic", label: "No onion / garlic" },
+  { id: "gluten_free", label: "Gluten-free" },
+  { id: "diabetic", label: "Diabetic-friendly" },
+] as const;
+
 const bookSearchSchema = z.object({
   tier: z.string().optional(),
   departure: z.string().optional(),
-});
-
-const travellerSchema = z.object({
-  firstName: z.string().trim().min(1, "Required"),
-  lastName: z.string().trim().min(1, "Required"),
-  age: z.string().min(1, "Required"),
-  gender: z.enum(["male", "female", "other"]),
 });
 
 const contactSchema = z.object({
@@ -173,6 +222,20 @@ export const Route = createFileRoute("/domestic/tours/$slug/book")({
   validateSearch: bookSearchSchema,
   notFoundComponent: () => <TourDetailNotFound />,
   component: BookingPage,
+});
+
+const travellerSchema = z.object({
+  firstName: z.string().trim().min(1, "Required").max(60),
+  lastName: z.string().trim().min(1, "Required").max(60),
+  dateOfBirth: z.string(),
+  age: z.string().min(1, "Required"),
+  gender: z.enum(["male", "female", "other"]),
+  phone: z.union([z.literal(""), z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number")]),
+  email: z.union([z.literal(""), z.email("Enter a valid email")]),
+  idType: z.union([z.literal(""), z.enum(["aadhaar", "pan", "passport", "driving_license", "voter_id"])]),
+  idNumber: z.string(),
+  dietaryPreferences: z.array(z.string()),
+  medicalNotes: z.string().max(500, "Max 500 characters"),
 });
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -215,17 +278,41 @@ function roomPrice(dep: DepartureOption | undefined, room: RoomType | "") {
   return dep.pricing.find((p) => p.roomType === room)?.price;
 }
 
-function makeTravellers(count: number, existing: TravellerInput[] = []): TravellerInput[] {
-  return Array.from({ length: count }, (_, i) =>
-    existing[i] ?? { firstName: "", lastName: "", age: "", gender: "male" as Gender }
-  );
-}
-
 function computeDiscount(base: number, coupon: AppliedCoupon | null) {
   if (!coupon) return 0;
   let d = coupon.type === "percentage" ? Math.round((base * coupon.value) / 100) : coupon.value;
   if (coupon.maxDiscountAmount) d = Math.min(d, coupon.maxDiscountAmount);
   return Math.min(d, base);
+}
+
+const normalizeId = (v: string) => v.replace(/[\s-]/g, "").toUpperCase();
+
+function ageFromDob(dob: string, ref: Date = new Date()): number | null {
+  if (!dob) return null;
+  const d = new Date(`${dob}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
+  let age = ref.getFullYear() - d.getFullYear();
+  const m = ref.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && ref.getDate() < d.getDate())) age--;
+  return age;
+}
+
+const emptyTraveller = (): TravellerInput => ({
+  firstName: "",
+  lastName: "",
+  dateOfBirth: "",
+  age: "",
+  gender: "male",
+  phone: "",
+  email: "",
+  idType: "",
+  idNumber: "",
+  dietaryPreferences: [],
+  medicalNotes: "",
+});
+
+function makeTravellers(count: number, existing?: TravellerInput[]) {
+  return Array.from({ length: count }, (_, i) => existing?.[i] ?? emptyTraveller());
 }
 
 // UI estimate only. The server must recompute everything from IDs.
@@ -461,21 +548,62 @@ function BookingWizard({
     return Object.keys(e).length === 0;
   };
 
+  //   const validateStep2 = () => {
+  //     const e: Errors = {};
+  //     travellers.forEach((t, i) => {
+  //       const r = travellerSchema.safeParse(t);
+  //       if (!r.success) Object.assign(e, zodErrors(r.error, `t${i}`));
+  //       const age = Number(t.age);
+  //       const isChild = i >= trip.adults;
+  //       if (t.age && !e[`t${i}.age`]) {
+  //         if (!Number.isInteger(age) || age < 1) e[`t${i}.age`] = "Enter a valid age";
+  //         else if (age < tour.minAge) e[`t${i}.age`] = `Minimum age is ${tour.minAge}`;
+  //         else if (age > tour.maxAge) e[`t${i}.age`] = `Maximum age is ${tour.maxAge}`;
+  //         else if (isChild && age > CHILD_MAX_AGE) e[`t${i}.age`] = `Children must be ${CHILD_MAX_AGE} or under`;
+  //         else if (!isChild && age <= CHILD_MAX_AGE) e[`t${i}.age`] = `Adults must be ${CHILD_MAX_AGE + 1}+`;
+  //       }
+  //     });
+  //     setErrors(e);
+  //     return Object.keys(e).length === 0;
+  //   };
+
   const validateStep2 = () => {
     const e: Errors = {};
+    const ref = departure ? new Date(departure.startDate) : new Date();
+
     travellers.forEach((t, i) => {
       const r = travellerSchema.safeParse(t);
       if (!r.success) Object.assign(e, zodErrors(r.error, `t${i}`));
-      const age = Number(t.age);
+
       const isChild = i >= trip.adults;
-      if (t.age && !e[`t${i}.age`]) {
-        if (!Number.isInteger(age) || age < 1) e[`t${i}.age`] = "Enter a valid age";
-        else if (age < tour.minAge) e[`t${i}.age`] = `Minimum age is ${tour.minAge}`;
-        else if (age > tour.maxAge) e[`t${i}.age`] = `Maximum age is ${tour.maxAge}`;
-        else if (isChild && age > CHILD_MAX_AGE) e[`t${i}.age`] = `Children must be ${CHILD_MAX_AGE} or under`;
-        else if (!isChild && age <= CHILD_MAX_AGE) e[`t${i}.age`] = `Adults must be ${CHILD_MAX_AGE + 1}+`;
+      const ageKey = t.dateOfBirth ? `t${i}.dateOfBirth` : `t${i}.age`;
+      const dobAge = ageFromDob(t.dateOfBirth, ref);
+      const age = dobAge ?? Number(t.age);
+
+      if (t.dateOfBirth && dobAge === null) {
+        e[ageKey] = "Enter a valid date";
+      } else if (t.dateOfBirth && dobAge! < 0) {
+        e[ageKey] = "Date of birth can't be after the travel date";
+      } else if (!e[`t${i}.age`] || t.dateOfBirth) {
+        if (!Number.isInteger(age) || age < 0) e[ageKey] = "Enter a valid age";
+        else if (age < tour.minAge) e[ageKey] = `Minimum age is ${tour.minAge}`;
+        else if (age > tour.maxAge) e[ageKey] = `Maximum age is ${tour.maxAge}`;
+        else if (isChild && age > CHILD_MAX_AGE) e[ageKey] = `Children must be ${CHILD_MAX_AGE} or under`;
+        else if (!isChild && age <= CHILD_MAX_AGE) e[ageKey] = `Adults must be ${CHILD_MAX_AGE + 1}+`;
+      }
+
+      if (i === 0) {
+        if (!t.phone) e["t0.phone"] = "Required for the primary traveller";
+        if (!t.email) e["t0.email"] = "Required for the primary traveller";
+      }
+
+      if (t.idType || t.idNumber) {
+        if (!t.idType) e[`t${i}.idType`] = "Select an ID type";
+        else if (!ID_TYPES[t.idType].regex.test(normalizeId(t.idNumber)))
+          e[`t${i}.idNumber`] = ID_TYPES[t.idType].error;
       }
     });
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -495,7 +623,12 @@ function BookingWizard({
     }
     if (from === 2 && !contact.contactName) {
       const p = travellers[0];
-      setContact((c) => ({ ...c, contactName: `${p.firstName} ${p.lastName}`.trim() }));
+      setContact((c) => ({
+        ...c,
+        contactName: c.contactName || `${p.firstName} ${p.lastName}`.trim(),
+        contactPhone: c.contactPhone || p?.phone,
+        contactEmail: c.contactEmail || p?.email,
+      }));
     }
     setErrors({});
     setStep(from + 1);
@@ -532,6 +665,8 @@ function BookingWizard({
     setCouponError(null);
   };
 
+  const refDate = departure ? new Date(departure.startDate) : new Date();
+
   // ── Payment ──
   const buildPayload = () => ({
     tourId: tour.id,
@@ -543,10 +678,24 @@ function BookingWizard({
     travellers: travellers.map((t, i) => ({
       firstName: t.firstName.trim(),
       lastName: t.lastName.trim(),
-      age: Number(t.age),
+      dateOfBirth: t.dateOfBirth || null,
+      age: ageFromDob(t.dateOfBirth, refDate) ?? Number(t.age),
       gender: t.gender,
       isPrimary: i === 0,
+      phone: t.phone || null,
+      email: t.email.trim().toLowerCase() || null,
+      idType: t.idType || null,
+      idNumber: t.idNumber ? normalizeId(t.idNumber) : null,
+      dietaryPreferences: t.dietaryPreferences,
+      medicalNotes: t.medicalNotes.trim() || null,
     })),
+    //     travellers: travellers.map((t, i) => ({
+    //       firstName: t.firstName.trim(),
+    //       lastName: t.lastName.trim(),
+    //       age: Number(t.age),
+    //       gender: t.gender,
+    //       isPrimary: i === 0,
+    //     })),
     contactName: contact.contactName.trim(),
     contactEmail: contact.contactEmail.trim().toLowerCase(),
     contactPhone: contact.contactPhone,
@@ -674,10 +823,21 @@ function BookingWizard({
               />
             )}
             {step === 2 && (
+              //               <Step2Travellers
+              //                 travellers={travellers}
+              //                 adults={trip.adults}
+              //                 errors={errors}
+              //                 onChange={setTravellers}
+              //                 onBack={() => goBack(2)}
+              //                 onNext={() => goNext(2)}
+              //               />
               <Step2Travellers
                 travellers={travellers}
                 adults={trip.adults}
                 errors={errors}
+                travelDate={departure?.startDate}
+                minAge={tour.minAge}
+                maxAge={tour.maxAge}
                 onChange={setTravellers}
                 onBack={() => goBack(2)}
                 onNext={() => goNext(2)}
@@ -1079,109 +1239,421 @@ function Step1Departure({
 // ─── Step 2 — Travellers ──────────────────────────────────────────────────────
 
 function Step2Travellers({
-  travellers, adults, errors, onChange, onBack, onNext,
+  travellers, adults, errors, travelDate, minAge, maxAge, onChange, onBack, onNext,
 }: {
   travellers: TravellerInput[];
   adults: number;
   errors: Errors;
+  travelDate?: Date | string;
+  minAge: number;
+  maxAge: number;
   onChange: (t: TravellerInput[]) => void;
   onBack: () => void;
   onNext: () => void;
 }) {
-  const update = (i: number, field: keyof TravellerInput, value: string) =>
-    onChange(travellers.map((t, idx) => (idx === i ? { ...t, [field]: value } : t)));
+  const ref = travelDate ? new Date(travelDate) : new Date();
+
+  const patch = (i: number, p: Partial<TravellerInput>) =>
+    onChange(travellers.map((t, idx) => (idx === i ? { ...t, ...p } : t)));
+
+  const setDob = (i: number, dob: string) => {
+    const age = ageFromDob(dob, ref);
+    patch(i, { dateOfBirth: dob, ...(age !== null && age >= 0 ? { age: String(age) } : {}) });
+  };
+
+  const toggleDiet = (i: number, id: string) => {
+    const cur = travellers[i].dietaryPreferences;
+    patch(i, {
+      dietaryPreferences: cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id],
+    });
+  };
 
   return (
     <div className="space-y-4">
+      <p className="text-xs text-muted-foreground">
+        Enter names exactly as on the traveller's government ID. Ages are checked as of the departure date.
+      </p>
+
       {travellers.map((t, i) => {
         const isChild = i >= adults;
+        const isPrimary = i === 0;
+        const err = (k: string) => errors[`t${i}.${k}`];
+        const hasMoreErrors = ["phone", "email", "idType", "idNumber", "medicalNotes"].some(err);
+        const dobAge = ageFromDob(t.dateOfBirth, ref);
+        const ageLocked = dobAge !== null && dobAge >= 0;
+
         return (
-          <Card key={i} className="border-border/60">
-            <CardHeader className="pb-3">
-              <h3 className="font-bold text-base flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                  {i + 1}
-                </span>
-                Traveller {i + 1}
-                {i === 0 && <Badge variant="secondary" className="text-xs ml-1">Primary</Badge>}
-                {isChild && <Badge variant="outline" className="text-xs ml-1">Child</Badge>}
-              </h3>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor={`fn-${i}`} className="text-xs">First name</Label>
-                  <Input
-                    id={`fn-${i}`}
-                    placeholder="Rahul"
-                    autoComplete={i === 0 ? "given-name" : "off"}
-                    value={t.firstName}
-                    aria-invalid={!!errors[`t${i}.firstName`]}
-                    onChange={(e) => update(i, "firstName", e.target.value)}
-                  />
-                  <FieldError message={errors[`t${i}.firstName`]} />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor={`ln-${i}`} className="text-xs">Last name</Label>
-                  <Input
-                    id={`ln-${i}`}
-                    placeholder="Sharma"
-                    autoComplete={i === 0 ? "family-name" : "off"}
-                    value={t.lastName}
-                    aria-invalid={!!errors[`t${i}.lastName`]}
-                    onChange={(e) => update(i, "lastName", e.target.value)}
-                  />
-                  <FieldError message={errors[`t${i}.lastName`]} />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor={`age-${i}`} className="text-xs">Age</Label>
-                  <Input
-                    id={`age-${i}`}
-                    type="number"
-                    inputMode="numeric"
-                    min={1}
-                    max={100}
-                    placeholder={isChild ? "8" : "28"}
-                    value={t.age}
-                    aria-invalid={!!errors[`t${i}.age`]}
-                    onChange={(e) => update(i, "age", e.target.value)}
-                  />
-                  <FieldError message={errors[`t${i}.age`]} />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor={`gender-${i}`} className="text-xs">Gender</Label>
-                  <Select value={t.gender} onValueChange={(v) => update(i, "gender", v)}>
-                    <SelectTrigger id={`gender-${i}`}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="male">Male</SelectItem>
-                      <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <TravellerCard key={i} defaultOpen={isPrimary || hasMoreErrors}>
+            {({ open, toggle }) => (
+              <Card className="border-border/60">
+                <CardHeader className="pb-3">
+                  <h3 className="font-bold text-base flex items-center gap-2">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                      {i + 1}
+                    </span>
+                    Traveller {i + 1}
+                    {isPrimary && <Badge variant="secondary" className="text-xs ml-1">Primary</Badge>}
+                    {isChild && <Badge variant="outline" className="text-xs ml-1">Child</Badge>}
+                  </h3>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor={`fn-${i}`} className="text-xs">First name</Label>
+                      <Input
+                        id={`fn-${i}`}
+                        placeholder="Rahul"
+                        autoComplete={isPrimary ? "given-name" : "off"}
+                        value={t.firstName}
+                        aria-invalid={!!err("firstName")}
+                        onChange={(e) => patch(i, { firstName: e.target.value })}
+                      />
+                      <FieldError message={err("firstName")} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor={`ln-${i}`} className="text-xs">Last name</Label>
+                      <Input
+                        id={`ln-${i}`}
+                        placeholder="Sharma"
+                        autoComplete={isPrimary ? "family-name" : "off"}
+                        value={t.lastName}
+                        aria-invalid={!!err("lastName")}
+                        onChange={(e) => patch(i, { lastName: e.target.value })}
+                      />
+                      <FieldError message={err("lastName")} />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor={`dob-${i}`} className="text-xs">
+                        Date of birth <span className="text-muted-foreground">(optional)</span>
+                      </Label>
+                      <Input
+                        id={`dob-${i}`}
+                        type="date"
+                        max={new Date().toISOString().split("T")[0]}
+                        value={t.dateOfBirth}
+                        aria-invalid={!!err("dateOfBirth")}
+                        onChange={(e) => setDob(i, e.target.value)}
+                      />
+                      <FieldError message={err("dateOfBirth")} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor={`age-${i}`} className="text-xs">Age</Label>
+                      <Input
+                        id={`age-${i}`}
+                        type="number"
+                        inputMode="numeric"
+                        min={minAge}
+                        max={maxAge}
+                        placeholder={isChild ? "8" : "28"}
+                        value={t.age}
+                        readOnly={ageLocked}
+                        aria-invalid={!!err("age")}
+                        className={cn(ageLocked && "bg-muted")}
+                        onChange={(e) => patch(i, { age: e.target.value })}
+                      />
+                      <FieldError message={err("age")} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor={`gender-${i}`} className="text-xs">Gender</Label>
+                      <Select value={t.gender} onValueChange={(v) => patch(i, { gender: v as Gender })}>
+                        <SelectTrigger id={`gender-${i}`}><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {isPrimary && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="p-phone" className="text-xs">Mobile (10 digits)</Label>
+                        <div className="flex">
+                          <span className="flex items-center px-3 rounded-l-md border border-r-0 border-border bg-muted text-sm text-muted-foreground">+91</span>
+                          <Input
+                            id="p-phone"
+                            type="tel"
+                            inputMode="numeric"
+                            maxLength={10}
+                            autoComplete="tel-national"
+                            placeholder="9876543210"
+                            className="rounded-l-none"
+                            value={t.phone}
+                            aria-invalid={!!err("phone")}
+                            onChange={(e) => patch(i, { phone: e.target.value.replace(/\D/g, "") })}
+                          />
+                        </div>
+                        <FieldError message={err("phone")} />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="p-email" className="text-xs">Email</Label>
+                        <Input
+                          id="p-email"
+                          type="email"
+                          autoComplete="email"
+                          placeholder="rahul@email.com"
+                          value={t.email}
+                          aria-invalid={!!err("email")}
+                          onChange={(e) => patch(i, { email: e.target.value })}
+                        />
+                        <FieldError message={err("email")} />
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={toggle}
+                    className="text-xs font-medium text-primary underline underline-offset-2"
+                  >
+                    {open ? "Hide extra details" : "Add ID, food preferences & medical notes"}
+                  </button>
+
+                  {open && (
+                    <div className="space-y-4 rounded-xl border border-border/60 bg-muted/30 p-4">
+                      {!isPrimary && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="space-y-1.5">
+                            <Label htmlFor={`phone-${i}`} className="text-xs">Mobile (optional)</Label>
+                            <Input
+                              id={`phone-${i}`}
+                              type="tel"
+                              inputMode="numeric"
+                              maxLength={10}
+                              value={t.phone}
+                              aria-invalid={!!err("phone")}
+                              onChange={(e) => patch(i, { phone: e.target.value.replace(/\D/g, "") })}
+                            />
+                            <FieldError message={err("phone")} />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label htmlFor={`email-${i}`} className="text-xs">Email (optional)</Label>
+                            <Input
+                              id={`email-${i}`}
+                              type="email"
+                              value={t.email}
+                              aria-invalid={!!err("email")}
+                              onChange={(e) => patch(i, { email: e.target.value })}
+                            />
+                            <FieldError message={err("email")} />
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <Label htmlFor={`idt-${i}`} className="text-xs">ID type</Label>
+                          <Select
+                            value={t.idType || "none"}
+                            onValueChange={(v) =>
+                              patch(i, { idType: v === "none" ? "" : (v as IdType), ...(v === "none" ? { idNumber: "" } : {}) })
+                            }
+                          >
+                            <SelectTrigger id={`idt-${i}`}><SelectValue placeholder="Select" /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">None</SelectItem>
+                              {(Object.keys(ID_TYPES) as IdType[]).map((k) => (
+                                <SelectItem key={k} value={k}>{ID_TYPES[k].label}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FieldError message={err("idType")} />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor={`idn-${i}`} className="text-xs">ID number</Label>
+                          <Input
+                            id={`idn-${i}`}
+                            disabled={!t.idType}
+                            placeholder={t.idType ? ID_TYPES[t.idType].placeholder : "Select ID type first"}
+                            className="uppercase"
+                            value={t.idNumber}
+                            aria-invalid={!!err("idNumber")}
+                            onChange={(e) => patch(i, { idNumber: e.target.value })}
+                          />
+                          <FieldError message={err("idNumber")} />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-xs">Food preferences</Label>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          {DIETARY_OPTIONS.map((d) => (
+                            <Label
+                              key={d.id}
+                              htmlFor={`diet-${i}-${d.id}`}
+                              className="flex items-center gap-2 rounded-lg border border-border/60 bg-background px-2.5 py-2 text-xs font-normal cursor-pointer"
+                            >
+                              <Checkbox
+                                id={`diet-${i}-${d.id}`}
+                                checked={t.dietaryPreferences.includes(d.id)}
+                                onCheckedChange={() => toggleDiet(i, d.id)}
+                              />
+                              {d.label}
+                            </Label>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label htmlFor={`med-${i}`} className="text-xs">
+                          Medical notes / allergies <span className="text-muted-foreground">(optional)</span>
+                        </Label>
+                        <textarea
+                          id={`med-${i}`}
+                          rows={2}
+                          maxLength={500}
+                          placeholder="Allergies, asthma, mobility needs, medication..."
+                          value={t.medicalNotes}
+                          onChange={(e) => patch(i, { medicalNotes: e.target.value })}
+                          className="w-full resize-none rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        />
+                        <FieldError message={err("medicalNotes")} />
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          </TravellerCard>
         );
       })}
 
       <div className="flex gap-3">
         <Button variant="outline" className="gap-1.5" onClick={onBack}>
-          <ArrowLeft size={15} />
-          Back
+          <ArrowLeft size={15} /> Back
         </Button>
         <Button className="flex-1 gap-2" size="lg" onClick={onNext}>
-          Continue to Add-ons
-          <ArrowRight size={16} />
+          Continue to Add-ons <ArrowRight size={16} />
         </Button>
       </div>
     </div>
   );
 }
+
+function TravellerCard({
+  defaultOpen,
+  children,
+}: {
+  defaultOpen: boolean;
+  children: (s: { open: boolean; toggle: () => void }) => React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  useEffect(() => {
+    if (defaultOpen) setOpen(true);
+  }, [defaultOpen]);
+  return <>{children({ open, toggle: () => setOpen((o) => !o) })}</>;
+}
+
+// function Step2Travellers({
+//   travellers, adults, errors, onChange, onBack, onNext,
+// }: {
+//   travellers: TravellerInput[];
+//   adults: number;
+//   errors: Errors;
+//   onChange: (t: TravellerInput[]) => void;
+//   onBack: () => void;
+//   onNext: () => void;
+// }) {
+//   const update = (i: number, field: keyof TravellerInput, value: string) =>
+//     onChange(travellers.map((t, idx) => (idx === i ? { ...t, [field]: value } : t)));
+// 
+//   return (
+//     <div className="space-y-4">
+//       {travellers.map((t, i) => {
+//         const isChild = i >= adults;
+//         return (
+//           <Card key={i} className="border-border/60">
+//             <CardHeader className="pb-3">
+//               <h3 className="font-bold text-base flex items-center gap-2">
+//                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+//                   {i + 1}
+//                 </span>
+//                 Traveller {i + 1}
+//                 {i === 0 && <Badge variant="secondary" className="text-xs ml-1">Primary</Badge>}
+//                 {isChild && <Badge variant="outline" className="text-xs ml-1">Child</Badge>}
+//               </h3>
+//             </CardHeader>
+//             <CardContent className="space-y-4">
+//               <div className="grid grid-cols-2 gap-3">
+//                 <div className="space-y-1.5">
+//                   <Label htmlFor={`fn-${i}`} className="text-xs">First name</Label>
+//                   <Input
+//                     id={`fn-${i}`}
+//                     placeholder="Rahul"
+//                     autoComplete={i === 0 ? "given-name" : "off"}
+//                     value={t.firstName}
+//                     aria-invalid={!!errors[`t${i}.firstName`]}
+//                     onChange={(e) => update(i, "firstName", e.target.value)}
+//                   />
+//                   <FieldError message={errors[`t${i}.firstName`]} />
+//                 </div>
+//                 <div className="space-y-1.5">
+//                   <Label htmlFor={`ln-${i}`} className="text-xs">Last name</Label>
+//                   <Input
+//                     id={`ln-${i}`}
+//                     placeholder="Sharma"
+//                     autoComplete={i === 0 ? "family-name" : "off"}
+//                     value={t.lastName}
+//                     aria-invalid={!!errors[`t${i}.lastName`]}
+//                     onChange={(e) => update(i, "lastName", e.target.value)}
+//                   />
+//                   <FieldError message={errors[`t${i}.lastName`]} />
+//                 </div>
+//               </div>
+//               <div className="grid grid-cols-2 gap-3">
+//                 <div className="space-y-1.5">
+//                   <Label htmlFor={`age-${i}`} className="text-xs">Age</Label>
+//                   <Input
+//                     id={`age-${i}`}
+//                     type="number"
+//                     inputMode="numeric"
+//                     min={1}
+//                     max={100}
+//                     placeholder={isChild ? "8" : "28"}
+//                     value={t.age}
+//                     aria-invalid={!!errors[`t${i}.age`]}
+//                     onChange={(e) => update(i, "age", e.target.value)}
+//                   />
+//                   <FieldError message={errors[`t${i}.age`]} />
+//                 </div>
+//                 <div className="space-y-1.5">
+//                   <Label htmlFor={`gender-${i}`} className="text-xs">Gender</Label>
+//                   <Select value={t.gender} onValueChange={(v) => update(i, "gender", v)}>
+//                     <SelectTrigger id={`gender-${i}`}>
+//                       <SelectValue />
+//                     </SelectTrigger>
+//                     <SelectContent>
+//                       <SelectItem value="male">Male</SelectItem>
+//                       <SelectItem value="female">Female</SelectItem>
+//                       <SelectItem value="other">Other</SelectItem>
+//                     </SelectContent>
+//                   </Select>
+//                 </div>
+//               </div>
+//             </CardContent>
+//           </Card>
+//         );
+//       })}
+// 
+//       <div className="flex gap-3">
+//         <Button variant="outline" className="gap-1.5" onClick={onBack}>
+//           <ArrowLeft size={15} />
+//           Back
+//         </Button>
+//         <Button className="flex-1 gap-2" size="lg" onClick={onNext}>
+//           Continue to Add-ons
+//           <ArrowRight size={16} />
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }
 
 // ─── Step 3 — Add-ons + Contact ───────────────────────────────────────────────
 
