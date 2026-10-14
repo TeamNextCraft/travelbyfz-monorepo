@@ -76,7 +76,7 @@ type TourSummary = {
   rating: number;
   reviewCount: number;
   image: string;
-  pricingTiers: TourPricingTier[];
+  pricingTiers: Omit<TourPricingTier, "price"> & { fromPrice: number }[];
   minAge: number;
   maxAge: number;
   minGroupSize: number;
@@ -403,12 +403,12 @@ function BookingPage() {
     id: t.id,
     slug: t.slug,
     title: t.title,
-    destination: t.destination,
+    destination: t.destination ?? "Not Available",
     state: t.state ?? "N/A",
     duration: `${t.durationDays}D / ${t.durationNights}N`,
     rating: t.rating,
     reviewCount: t.reviewCount,
-    image: t.featuredImage ?? t.images?.[0],
+    image: t.featuredImage ?? t.images?.[0] ?? "./public/placeholder-img.png",
     pricingTiers: t.pricingTiers ?? [],
     minAge: t.minAge ?? 0,
     maxAge: t.maxAge ?? 100,
@@ -548,25 +548,6 @@ function BookingWizard({
     return Object.keys(e).length === 0;
   };
 
-  //   const validateStep2 = () => {
-  //     const e: Errors = {};
-  //     travellers.forEach((t, i) => {
-  //       const r = travellerSchema.safeParse(t);
-  //       if (!r.success) Object.assign(e, zodErrors(r.error, `t${i}`));
-  //       const age = Number(t.age);
-  //       const isChild = i >= trip.adults;
-  //       if (t.age && !e[`t${i}.age`]) {
-  //         if (!Number.isInteger(age) || age < 1) e[`t${i}.age`] = "Enter a valid age";
-  //         else if (age < tour.minAge) e[`t${i}.age`] = `Minimum age is ${tour.minAge}`;
-  //         else if (age > tour.maxAge) e[`t${i}.age`] = `Maximum age is ${tour.maxAge}`;
-  //         else if (isChild && age > CHILD_MAX_AGE) e[`t${i}.age`] = `Children must be ${CHILD_MAX_AGE} or under`;
-  //         else if (!isChild && age <= CHILD_MAX_AGE) e[`t${i}.age`] = `Adults must be ${CHILD_MAX_AGE + 1}+`;
-  //       }
-  //     });
-  //     setErrors(e);
-  //     return Object.keys(e).length === 0;
-  //   };
-
   const validateStep2 = () => {
     const e: Errors = {};
     const ref = departure ? new Date(departure.startDate) : new Date();
@@ -689,13 +670,6 @@ function BookingWizard({
       dietaryPreferences: t.dietaryPreferences,
       medicalNotes: t.medicalNotes.trim() || null,
     })),
-    //     travellers: travellers.map((t, i) => ({
-    //       firstName: t.firstName.trim(),
-    //       lastName: t.lastName.trim(),
-    //       age: Number(t.age),
-    //       gender: t.gender,
-    //       isPrimary: i === 0,
-    //     })),
     contactName: contact.contactName.trim(),
     contactEmail: contact.contactEmail.trim().toLowerCase(),
     contactPhone: contact.contactPhone,
@@ -823,14 +797,6 @@ function BookingWizard({
               />
             )}
             {step === 2 && (
-              //               <Step2Travellers
-              //                 travellers={travellers}
-              //                 adults={trip.adults}
-              //                 errors={errors}
-              //                 onChange={setTravellers}
-              //                 onBack={() => goBack(2)}
-              //                 onNext={() => goNext(2)}
-              //               />
               <Step2Travellers
                 travellers={travellers}
                 adults={trip.adults}
@@ -1549,111 +1515,6 @@ function TravellerCard({
   }, [defaultOpen]);
   return <>{children({ open, toggle: () => setOpen((o) => !o) })}</>;
 }
-
-// function Step2Travellers({
-//   travellers, adults, errors, onChange, onBack, onNext,
-// }: {
-//   travellers: TravellerInput[];
-//   adults: number;
-//   errors: Errors;
-//   onChange: (t: TravellerInput[]) => void;
-//   onBack: () => void;
-//   onNext: () => void;
-// }) {
-//   const update = (i: number, field: keyof TravellerInput, value: string) =>
-//     onChange(travellers.map((t, idx) => (idx === i ? { ...t, [field]: value } : t)));
-// 
-//   return (
-//     <div className="space-y-4">
-//       {travellers.map((t, i) => {
-//         const isChild = i >= adults;
-//         return (
-//           <Card key={i} className="border-border/60">
-//             <CardHeader className="pb-3">
-//               <h3 className="font-bold text-base flex items-center gap-2">
-//                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-//                   {i + 1}
-//                 </span>
-//                 Traveller {i + 1}
-//                 {i === 0 && <Badge variant="secondary" className="text-xs ml-1">Primary</Badge>}
-//                 {isChild && <Badge variant="outline" className="text-xs ml-1">Child</Badge>}
-//               </h3>
-//             </CardHeader>
-//             <CardContent className="space-y-4">
-//               <div className="grid grid-cols-2 gap-3">
-//                 <div className="space-y-1.5">
-//                   <Label htmlFor={`fn-${i}`} className="text-xs">First name</Label>
-//                   <Input
-//                     id={`fn-${i}`}
-//                     placeholder="Rahul"
-//                     autoComplete={i === 0 ? "given-name" : "off"}
-//                     value={t.firstName}
-//                     aria-invalid={!!errors[`t${i}.firstName`]}
-//                     onChange={(e) => update(i, "firstName", e.target.value)}
-//                   />
-//                   <FieldError message={errors[`t${i}.firstName`]} />
-//                 </div>
-//                 <div className="space-y-1.5">
-//                   <Label htmlFor={`ln-${i}`} className="text-xs">Last name</Label>
-//                   <Input
-//                     id={`ln-${i}`}
-//                     placeholder="Sharma"
-//                     autoComplete={i === 0 ? "family-name" : "off"}
-//                     value={t.lastName}
-//                     aria-invalid={!!errors[`t${i}.lastName`]}
-//                     onChange={(e) => update(i, "lastName", e.target.value)}
-//                   />
-//                   <FieldError message={errors[`t${i}.lastName`]} />
-//                 </div>
-//               </div>
-//               <div className="grid grid-cols-2 gap-3">
-//                 <div className="space-y-1.5">
-//                   <Label htmlFor={`age-${i}`} className="text-xs">Age</Label>
-//                   <Input
-//                     id={`age-${i}`}
-//                     type="number"
-//                     inputMode="numeric"
-//                     min={1}
-//                     max={100}
-//                     placeholder={isChild ? "8" : "28"}
-//                     value={t.age}
-//                     aria-invalid={!!errors[`t${i}.age`]}
-//                     onChange={(e) => update(i, "age", e.target.value)}
-//                   />
-//                   <FieldError message={errors[`t${i}.age`]} />
-//                 </div>
-//                 <div className="space-y-1.5">
-//                   <Label htmlFor={`gender-${i}`} className="text-xs">Gender</Label>
-//                   <Select value={t.gender} onValueChange={(v) => update(i, "gender", v)}>
-//                     <SelectTrigger id={`gender-${i}`}>
-//                       <SelectValue />
-//                     </SelectTrigger>
-//                     <SelectContent>
-//                       <SelectItem value="male">Male</SelectItem>
-//                       <SelectItem value="female">Female</SelectItem>
-//                       <SelectItem value="other">Other</SelectItem>
-//                     </SelectContent>
-//                   </Select>
-//                 </div>
-//               </div>
-//             </CardContent>
-//           </Card>
-//         );
-//       })}
-// 
-//       <div className="flex gap-3">
-//         <Button variant="outline" className="gap-1.5" onClick={onBack}>
-//           <ArrowLeft size={15} />
-//           Back
-//         </Button>
-//         <Button className="flex-1 gap-2" size="lg" onClick={onNext}>
-//           Continue to Add-ons
-//           <ArrowRight size={16} />
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// }
 
 // ─── Step 3 — Add-ons + Contact ───────────────────────────────────────────────
 

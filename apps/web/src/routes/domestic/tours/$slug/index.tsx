@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import {
   MapPin,
   Clock,
@@ -131,7 +131,7 @@ function TourDetailPage() {
 
   if (!fetchedTour.destination) throw notFound();
 
-  const selectedPrice = fetchedTour?.pricingTiers[selectedTier]?.price;
+  const selectedPrice = fetchedTour.fromPrice;
 
   return (
     <TooltipProvider>
@@ -389,7 +389,7 @@ function TourDetailPage() {
                                 {day.title}
                               </p>
                               <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                                {day.meals.map((meal) => (
+                                {day.meals?.map((meal) => (
                                   <span
                                     key={meal}
                                     className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded"
@@ -515,7 +515,7 @@ function TourDetailPage() {
                           Starting from
                         </p>
                         <p className="text-3xl font-bold text-primary leading-tight">
-                          ₹{selectedPrice.toLocaleString("en-IN")}
+                          ₹{selectedPrice?.toLocaleString("en-IN")}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           per person · excl. GST
@@ -539,28 +539,31 @@ function TourDetailPage() {
                     {/* Tier selector */}
                     <div className="space-y-2">
                       <p className="text-sm font-semibold">Choose package tier</p>
-                      {fetchedTour.pricingTiers?.map((tier, i) => (
-                        <button
-                          key={tier.label}
-                          onClick={() => setSelectedTier(i)}
-                          className={cn(
-                            "w-full text-left rounded-xl border p-3 transition-all duration-150",
-                            selectedTier === i
-                              ? "border-primary bg-primary/5 ring-1 ring-primary"
-                              : "border-border/60 hover:border-primary/50"
-                          )}
-                        >
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm font-semibold">{tier.label}</p>
-                            <p className="text-sm font-bold text-primary">
-                              ₹{tier.price.toLocaleString("en-IN")}
+                      {fetchedTour.pricingTiers?.map((tier, i) => {
+                        if (tier.fromPrice === null) return;
+                        return (
+                          <button
+                            key={tier.label}
+                            onClick={() => setSelectedTier(i)}
+                            className={cn(
+                              "w-full text-left rounded-xl border p-3 transition-all duration-150",
+                              selectedTier === i
+                                ? "border-primary bg-primary/5 ring-1 ring-primary"
+                                : "border-border/60 hover:border-primary/50"
+                            )}
+                          >
+                            <div className="flex items-center justify-between">
+                              <p className="text-sm font-semibold">{tier.label}</p>
+                              <p className="text-sm font-bold text-primary">
+                                ₹{tier.fromPrice?.toLocaleString("en-IN")}
+                              </p>
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+                              {tier.description}
                             </p>
-                          </div>
-                          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
-                            {tier.description}
-                          </p>
-                        </button>
-                      ))}
+                          </button>
+                        )
+                      })}
                     </div>
 
                     <Separator />

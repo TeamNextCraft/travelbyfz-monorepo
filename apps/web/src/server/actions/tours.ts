@@ -26,6 +26,7 @@ export const getPublicTours = createServerFn({ method: "GET" }).handler(async ()
       state: tour.state ?? "N/A",
       image: tour.image ?? "/images/placeholder.jpg",
       groupSize: tour.groupSize ?? 0,
+      price: tour.fromPrice ?? null,
     }));
   } catch (error) {
     console.error({

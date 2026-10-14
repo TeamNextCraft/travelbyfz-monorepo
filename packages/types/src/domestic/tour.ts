@@ -1,5 +1,6 @@
 export type PublicTour = {
   id: string;
+  slug: string;
   title: string;
   destination: string;
   state: string;

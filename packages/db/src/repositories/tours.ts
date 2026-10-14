@@ -1,7 +1,6 @@
-import { and, desc, eq, like, or, asc } from "drizzle-orm";
+import { and, desc, eq, like, or, asc, min, gt, ne } from "drizzle-orm";
 import { getDb } from "#/client.js";
-import { addons, reviews, tours } from "#/schema/domestic.js";
-import { destinations } from '../schema/domestic';
+import { addons, departurePricing, departures, reviews, tours, destinations, tourTiers } from "#/schema/domestic.js";
 
 type Database = ReturnType<typeof getDb>;
 type TourInsert = typeof tours.$inferInsert;
@@ -9,27 +8,60 @@ type TourUpdate = Partial<Omit<TourInsert, "id" | "createdAt">>;
 
 export function createTourRepository(db: Database) {
   return {
-    getPublicToursList() {
+    getPublicToursList(roomType: typeof departurePricing.$inferSelect["roomType"] = "double") {
+      const now = new Date();
+
+      const fromPriceQuery = db.select({
+        tourId: departures.tourId,
+        fromPrice: min(departurePricing.price).as("from_price"),
+      })
+        .from(departures)
+        .innerJoin(
+          departurePricing,
+          eq(departurePricing.departureId, departures.id),
+        )
+        .where(
+          and(
+            eq(departures.isActive, true),
+            eq(departures.status, "scheduled"),
+            gt(departures.availableSeats, 0),
+            gt(departures.startDate, now),
+            eq(departurePricing.roomType, roomType),
+          )
+        )
+        .groupBy(departures.tourId)
+        .as("tour_from_price")
+
+
       return db.select({
         id: tours.id,
         slug: tours.slug,
         title: tours.title,
-        destination: destinations.name,
-        state: destinations.state,
+        tagline: tours.tagline,
         durationDays: tours.durationDays,
         durationNights: tours.durationNights,
-        price: tours.basePrice,
         rating: tours.avgRating,
         reviewCount: tours.reviewCount,
         category: tours.category,
         image: tours.featuredImage,
         groupSize: tours.maxGroupSize,
         highlights: tours.highlights,
+        difficulty: tours.difficulty,
+        destination: destinations.name,
+        state: destinations.state,
+
+        fromPrice: fromPriceQuery.fromPrice,
       })
         .from(tours)
         .leftJoin(destinations, eq(tours.destinationId, destinations.id))
-        .where(and(eq(tours.isActive, true), eq(tours.isPublished, true)))
-        .orderBy(desc(tours.createdAt));
+        .leftJoin(fromPriceQuery, eq(fromPriceQuery.tourId, tours.id))
+        .where(
+          and(
+            eq(tours.isActive, true),
+            eq(tours.isPublished, true),
+          ),
+        )
+        .orderBy(asc(tours.title));
     },
     list(input?: {
       search?: string;
@@ -88,36 +120,35 @@ export function createTourRepository(db: Database) {
       return db.select().from(tours).where(eq(tours.slug, slug)).get();
     },
 
-    findPublicBySlug(slug: string) {
-      return db
-        .select({
-          id: tours.id,
-          slug: tours.slug,
-          title: tours.title,
-          featuredImage: tours.featuredImage,
-          tagline: tours.tagline,
-          destination: destinations.name,
-          state: destinations.state,
-          durationNights: tours.durationNights,
-          durationDays: tours.durationDays,
-          category: tours.category,
-          basePrice: tours.basePrice,
-          rating: tours.avgRating,
-          reviewCount: tours.reviewCount,
-          groupSize: tours.maxGroupSize,
-          minAge: tours.minAge,
-          maxAge: tours.maxAge,
-          difficulty: tours.difficulty,
-          tag: tours.tag,
-          images: tours.gallery,
-          overview: tours.description,
-          highlights: tours.highlights,
-          inclusions: tours.inclusions,
-          exclusions: tours.exclusions,
-          itinerary: tours.itinerary,
-          pricingTiers: tours.pricingTiers,
-          importantNotes: tours.importantNotes,
-        })
+    async findPublicBySlug(slug: string) {
+      const tour = await db.select({
+        id: tours.id,
+        slug: tours.slug,
+        title: tours.title,
+        featuredImage: tours.featuredImage,
+        tagline: tours.tagline,
+        destination: destinations.name,
+        state: destinations.state,
+        durationNights: tours.durationNights,
+        durationDays: tours.durationDays,
+        category: tours.category,
+        rating: tours.avgRating,
+        reviewCount: tours.reviewCount,
+        maxGroupSize: tours.maxGroupSize,
+        minGroupSize: tours.minGroupSize,
+        minAge: tours.minAge,
+        maxAge: tours.maxAge,
+        difficulty: tours.difficulty,
+        tag: tours.tag,
+        images: tours.gallery,
+        overview: tours.description,
+        highlights: tours.highlights,
+        inclusions: tours.inclusions,
+        exclusions: tours.exclusions,
+        itinerary: tours.itinerary,
+        importantNotes: tours.importantNotes,
+        cancellationPolicySummary: tours.cancellationPolicySummary,
+      })
         .from(tours)
         .leftJoin(destinations, eq(tours.destinationId, destinations.id))
         .where(
@@ -128,6 +159,71 @@ export function createTourRepository(db: Database) {
           ),
         )
         .get();
+
+      if (!tour) return undefined;
+
+      const tiers = await db.select({
+        id: tourTiers.id,
+        slug: tourTiers.slug,
+        label: tourTiers.label,
+        description: tourTiers.description,
+      })
+        .from(tourTiers)
+        .where(
+          and(
+            eq(tourTiers.tourId, tour.id),
+            eq(tourTiers.isActive, true),
+          )
+        )
+        .orderBy(
+          asc(tourTiers.sortOrder),
+        )
+
+      // Lowest price per tier and room type across open, future departures.
+      const priceRows = await db.select({
+        tierId: departurePricing.tierId,
+        roomTypes: departurePricing.roomType,
+        price: min(departurePricing.price),
+      })
+        .from(departurePricing)
+        .innerJoin(departures, eq(departures.id, departurePricing.departureId))
+        .where(
+          and(
+            eq(departures.tourId, tour.id),
+            eq(departures.isActive, true),
+            eq(departures.status, "scheduled"),
+            gt(departures.availableSeats, 0),
+            gt(departures.startDate, new Date()),
+            ne(departurePricing.roomType, "child"),
+          )
+        )
+        .groupBy(departurePricing.tierId, departurePricing.roomType);
+
+
+
+      const pricingTiers = tiers.map((t) => {
+        const rows = priceRows.filter((r) => r.tierId === t.id && r.price != null);
+        const double = rows.find((r) => r.roomTypes === "double");
+        const fromPrice = rows.length
+          ? (double?.price ?? Math.min(...rows.map((r) => r.price as number)))
+          : null;
+        return { ...t, fromPrice };
+      });
+
+      console.log({
+        pricingTiers: pricingTiers
+      })
+
+      const prices = pricingTiers
+        .map((t) => t.fromPrice)
+        .filter((p): p is number => p !== null);
+
+      return {
+        ...tour,
+        pricingTiers,
+        fromPrice: prices.length ? Math.min(...prices) : null,
+        hasUpcomingDepartures: prices.length > 0,
+      };
     },
 
     create(input: TourInsert) {
