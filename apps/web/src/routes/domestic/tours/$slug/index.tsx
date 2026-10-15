@@ -46,6 +46,7 @@ import { TourDetailSkeleton } from "#/components/common/domestic/tour-details-sk
 import { TourDetailError } from "#/components/common/domestic/tour-details-error";
 import { useServerFn } from "@tanstack/react-start";
 import type { PublicTour } from "@repo/types/domestic/tour"
+import { TourInterestButton } from "#/components/common/domestic/tour-interest-button";
 
 type Review = {
   id: string;
@@ -80,7 +81,6 @@ function TourDetailPage() {
   const { slug } = Route.useParams();
   const fetchTourDetails = useServerFn(getPublicTourbySlug);
   const fetchTourReviews = useServerFn(getTourReviews);
-  const [selectedTier, setSelectedTier] = useState(0);
   const [wishlisted, setWishlisted] = useState(false);
 
   const {
@@ -129,7 +129,9 @@ function TourDetailPage() {
     throw notFound();
   }
 
-  if (!fetchedTour.destination) throw notFound();
+  const canBook =
+    fetchedTour.hasUpcomingDepartures &&
+    fetchedTour.fromPrice !== null;
 
   const selectedPrice = fetchedTour.fromPrice;
 
@@ -258,17 +260,22 @@ function TourDetailPage() {
 
                 {/* Quick meta row */}
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin size={14} aria-hidden="true" />
-                    {fetchedTour.destination}, {fetchedTour.state}
-                  </span>
+                  {fetchedTour.destination && (
+                    <span className="flex items-center gap-1.5">
+                      <MapPin size={14} aria-hidden="true" />
+
+                      {[fetchedTour.destination, fetchedTour.state]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </span>
+                  )}
                   <span className="flex items-center gap-1.5">
                     <Clock size={14} aria-hidden="true" />
                     {fetchedTour.durationDays}D / {fetchedTour.durationNights}N
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Users size={14} aria-hidden="true" />
-                    Max {fetchedTour.groupSize} people
+                    Max {fetchedTour.maxGroupSize} people
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Star
@@ -309,7 +316,7 @@ function TourDetailPage() {
 
                   <div>
                     <h2 className="font-bold text-lg mb-3">
-                      fetchedTour Highlights
+                      Tour Highlights
                     </h2>
                     <ul className="grid sm:grid-cols-2 gap-2.5">
                       {fetchedTour.highlights.map((h) => (
@@ -328,7 +335,7 @@ function TourDetailPage() {
                   {/* Quick info grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[
-                      { icon: BedDouble, label: "Accommodation", value: `${fetchedTour.durationDays - 1} Nights` },
+                      { icon: BedDouble, label: "Accommodation", value: `${fetchedTour.durationNights} Nights` },
                       { icon: Bus, label: "Transport", value: "AC Vehicle" },
                       { icon: Utensils, label: "Meals", value: "As per plan" },
                       { icon: Camera, label: "Sightseeing", value: "Guided" },
@@ -347,27 +354,29 @@ function TourDetailPage() {
                   </div>
 
                   {/* Important notes */}
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/20 p-4 space-y-2">
-                    <h3 className="flex items-center gap-2 font-semibold text-sm text-amber-800 dark:text-amber-400">
-                      <Info size={15} aria-hidden="true" />
-                      Important Notes
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {fetchedTour.importantNotes?.map((note, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 text-sm text-amber-800/80 dark:text-amber-400/80"
-                        >
-                          <AlertCircle
-                            size={13}
-                            className="shrink-0 mt-0.5"
-                            aria-hidden="true"
-                          />
-                          {note}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {(fetchedTour.importantNotes?.length > 0) && (
+                    <div className="rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/20 p-4 space-y-2">
+                      <h3 className="flex items-center gap-2 font-semibold text-sm text-amber-800 dark:text-amber-400">
+                        <Info size={15} aria-hidden="true" />
+                        Important Notes
+                      </h3>
+                      <ul className="space-y-1.5">
+                        {fetchedTour.importantNotes?.map((note, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-sm text-amber-800/80 dark:text-amber-400/80"
+                          >
+                            <AlertCircle
+                              size={13}
+                              className="shrink-0 mt-0.5"
+                              aria-hidden="true"
+                            />
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </TabsContent>
 
                 {/* Itinerary */}
@@ -508,71 +517,45 @@ function TourDetailPage() {
             <aside className="lg:col-span-1">
               <div className="sticky top-20 space-y-4">
                 <Card className="border-border/60 shadow-md">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-baseline justify-between">
-                      <div>
-                        <p className="text-xs text-muted-foreground">
-                          Starting from
-                        </p>
-                        <p className="text-3xl font-bold text-primary leading-tight">
-                          ₹{selectedPrice?.toLocaleString("en-IN")}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          per person · excl. GST
-                        </p>
+                  <CardHeader className="">
+                    {canBook ? (
+                      <div className="flex items-baseline justify-between">
+                        <div>
+                          <p className="text-xs text-muted-foreground">
+                            Starting from
+                          </p>
+                          <p className="text-3xl font-bold text-primary leading-tight">
+                            ₹{selectedPrice?.toLocaleString("en-IN")}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            per person · excl. GST
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1 text-sm">
+                          <Star
+                            size={14}
+                            className="fill-amber-400 text-amber-400"
+                            aria-hidden="true"
+                          />
+                          <span className="font-semibold">{fetchedTour.rating}</span>
+                          <span className="text-muted-foreground">
+                            ({fetchedTour.reviewCount})
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1 text-sm">
-                        <Star
-                          size={14}
-                          className="fill-amber-400 text-amber-400"
-                          aria-hidden="true"
-                        />
-                        <span className="font-semibold">{fetchedTour.rating}</span>
-                        <span className="text-muted-foreground">
-                          ({fetchedTour.reviewCount})
-                        </span>
-                      </div>
-                    </div>
+                    ) : (
+                      <Badge variant="secondary" className="w-fit">
+                        Not currently open for booking
+                      </Badge>
+                    )}
                   </CardHeader>
 
                   <CardContent className="space-y-4">
-                    {/* Tier selector */}
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold">Choose package tier</p>
-                      {fetchedTour.pricingTiers?.map((tier, i) => {
-                        if (tier.fromPrice === null) return;
-                        return (
-                          <button
-                            key={tier.label}
-                            onClick={() => setSelectedTier(i)}
-                            className={cn(
-                              "w-full text-left rounded-xl border p-3 transition-all duration-150",
-                              selectedTier === i
-                                ? "border-primary bg-primary/5 ring-1 ring-primary"
-                                : "border-border/60 hover:border-primary/50"
-                            )}
-                          >
-                            <div className="flex items-center justify-between">
-                              <p className="text-sm font-semibold">{tier.label}</p>
-                              <p className="text-sm font-bold text-primary">
-                                ₹{tier.fromPrice?.toLocaleString("en-IN")}
-                              </p>
-                            </div>
-                            <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
-                              {tier.description}
-                            </p>
-                          </button>
-                        )
-                      })}
-                    </div>
-
-                    <Separator />
-
                     {/* Quick stats */}
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {[
                         { label: "Duration", value: `${fetchedTour.durationDays}D / ${fetchedTour.durationNights}N` },
-                        { label: "Group size", value: `Max ${fetchedTour.groupSize}` },
+                        { label: "Group size", value: `Max ${fetchedTour.maxGroupSize}` },
                         { label: "Min age", value: `${fetchedTour.minAge}+ years` },
                         { label: "Difficulty", value: fetchedTour.difficulty },
                       ].map(({ label, value }) => (
@@ -584,37 +567,55 @@ function TourDetailPage() {
                     </div>
 
                     {/* CTA */}
-                    <Link
-                      to="/domestic/tours/$slug/book"
-                      params={{ slug: fetchedTour.slug }}
-                      search={{ tier: fetchedTour.pricingTiers[selectedTier]?.label ?? "Standard" }}
-                      className={buttonVariants({
-                        className: "w-full gap-2",
-                        size: "lg",
-                      })}
-                    >
-                      Book This Tour
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
+                    {canBook ? (
+                      <>
+                        <Link
+                          to="/domestic/tours/$slug/book"
+                          params={{ slug: fetchedTour.slug }}
+                          className={buttonVariants({
+                            className: "w-full gap-2",
+                            size: "lg",
+                          })}
+                        >
+                          Book This Tour
+                          <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
 
-                    <Button
-                      variant="outline"
-                      className="w-full gap-2"
-                      onClick={() =>
-                        document
-                          .getElementById("request")
-                          ?.scrollIntoView({ behavior: "smooth" })
-                      }
-                    >
-                      <Phone size={14} aria-hidden="true" />
-                      Request customisation
-                    </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full gap-2"
+                          onClick={() =>
+                            document
+                              .getElementById("request")
+                              ?.scrollIntoView({ behavior: "smooth" })
+                          }
+                        >
+                          <Phone size={14} aria-hidden="true" />
+                          Request customisation
+                        </Button>
 
-                    {/* Trust strip */}
-                    <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground pt-1">
-                      <Shield size={12} className="text-green-600" aria-hidden="true" />
-                      Secure booking · Free cancellation up to 15 days
-                    </div>
+                        {/* Trust strip */}
+                        <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground pt-1">
+                          <Shield size={12} className="text-green-600" aria-hidden="true" />
+                          Secure booking · Free cancellation up to 15 days
+                        </div>
+                      </>
+                    ) : (
+                      <div className="space-y-4 rounded-xl border border-border/60 bg-muted/20 p-4">
+                        <div>
+                          <h3 className="font-semibold">
+                            Interested in this tour?
+                          </h3>
+
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            There are no departures available to book right now.
+                            Register your interest in future dates.
+                          </p>
+                        </div>
+
+                        <TourInterestButton tourId={fetchedTour.id} />
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -643,7 +644,7 @@ function TourDetailPage() {
               </div>
             </aside>
           </div>
-        </div>
+        </div >
       </main >
     </TooltipProvider >
   );

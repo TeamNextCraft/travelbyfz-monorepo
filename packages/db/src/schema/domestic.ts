@@ -123,25 +123,25 @@ export const destinations = sqliteTable(
 // toursTiers
 // -----------------------------------------------------------------------------
 
-export const tourTiers = sqliteTable(
-  "tour_tiers",
-  {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-    tourId: text("tour_id").notNull()
-      .references(() => tours.id, { onDelete: "cascade" }),
-    slug: text("slug").notNull(), // "standard", "deluxe", "luxury"; used in URLs
-    label: text("label").notNull(),
-    description: text("description"),
-    sortOrder: integer("sort_order").notNull().default(0),
-    isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
-    createdAt: integer("created_at", { mode: "timestamp" }).notNull()
-      .$defaultFn(() => new Date()),
-  },
-  (t) => [
-    uniqueIndex("tour_tiers_tour_slug_unique").on(t.tourId, t.slug),
-    index("tour_tiers_tour_idx").on(t.tourId),
-  ],
-);
+// export const tourTiers = sqliteTable(
+//   "tour_tiers",
+//   {
+//     id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+//     tourId: text("tour_id").notNull()
+//       .references(() => tours.id, { onDelete: "cascade" }),
+//     slug: text("slug").notNull(), // "standard", "deluxe", "luxury"; used in URLs
+//     label: text("label").notNull(),
+//     description: text("description"),
+//     sortOrder: integer("sort_order").notNull().default(0),
+//     isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
+//     createdAt: integer("created_at", { mode: "timestamp" }).notNull()
+//       .$defaultFn(() => new Date()),
+//   },
+//   (t) => [
+//     uniqueIndex("tour_tiers_tour_slug_unique").on(t.tourId, t.slug),
+//     index("tour_tiers_tour_idx").on(t.tourId),
+//   ],
+// );
 
 // -----------------------------------------------------------------------------
 // tours
@@ -318,8 +318,8 @@ export const departurePricing = sqliteTable(
 
     // Must match a tier label configured on the parent tour:
     // "Standard", "Deluxe", "Luxury"
-    tierId: text("tier_id").notNull()
-      .references(() => tourTiers.id, { onDelete: "restrict" }),
+    //     tierId: text("tier_id").notNull()
+    //       .references(() => tourTiers.id, { onDelete: "restrict" }),
 
     roomType: text("room_type", { enum: roomTypes }).notNull(),
 
@@ -336,7 +336,7 @@ export const departurePricing = sqliteTable(
   },
   (table) => [
     uniqueIndex("departure_pricing_unique").on(
-      table.tierId,
+      //       table.tierId,
       table.roomType,
       table.departureId,
     ),
@@ -346,7 +346,7 @@ export const departurePricing = sqliteTable(
 
     // Useful when computing "from" prices.
     index("departure_pricing_tier_room_price_idx").on(
-      table.tierId,
+      //       table.tierId,
       table.roomType,
       table.price,
     ),
@@ -517,8 +517,8 @@ export const bookings = sqliteTable(
     cancelledAt: integer("cancelled_at", { mode: "timestamp" }),
     completedAt: integer("completed_at", { mode: "timestamp" }),
 
-    tierId: text("tier_id").references(() => tourTiers.id, { onDelete: "set null" }),
-    tierLabel: text("tier_label"), // snapshot, so old bookings still read correctly
+    //     tierId: text("tier_id").references(() => tourTiers.id, { onDelete: "set null" }),
+    //     tierLabel: text("tier_label"), // snapshot, so old bookings still read correctly
 
     cancellationReason: text("cancellation_reason"),
     source: text("source").notNull().default("website"), // website, admin, phone, whatsapp
@@ -794,6 +794,9 @@ export const enquiries = sqliteTable(
       .$defaultFn(() => new Date()),
   },
   (table) => [
+    uniqueIndex("enquiries_tour_interest_user_unique")
+      .on(table.userId, table.tourId)
+      .where(sql`${table.source} = 'tour_interest'`),
     index("enquiries_tour_idx").on(table.tourId),
     index("enquiries_status_idx").on(table.status),
     index("enquiries_email_idx").on(table.email),

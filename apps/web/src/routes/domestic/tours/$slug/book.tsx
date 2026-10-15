@@ -29,7 +29,7 @@ import {
   validateCoupon,
   verifyPayment,
 } from "#/server/actions/tour-booking";
-import type { TourPricingTier, TourAddOn } from "@repo/types/domestic/tour";
+import type { TourAddOn } from "@repo/types/domestic/tour";
 import { TourDetailError } from "#/components/common/domestic/tour-details-error";
 import { BookingSkeleton } from "#/components/common/domestic/tour-booking-skeleton";
 import { TourDetailNotFound } from "#/components/common/domestic/tour-details-not-found";
@@ -66,6 +66,14 @@ type AppliedCoupon = {
   maxDiscountAmount: number | null;
 };
 
+type PublicTourTier = {
+  id: string;
+  slug: string;
+  label: string;
+  description: string | null;
+  fromPrice: number | null;
+};
+
 type TourSummary = {
   id: string;
   slug: string;
@@ -76,7 +84,6 @@ type TourSummary = {
   rating: number;
   reviewCount: number;
   image: string;
-  pricingTiers: Omit<TourPricingTier, "price"> & { fromPrice: number }[];
   minAge: number;
   maxAge: number;
   minGroupSize: number;
@@ -89,7 +96,6 @@ type TripState = {
   roomType: RoomType | "";
   adults: number;
   children: number;
-  tier: string;
 };
 
 type IdType = "aadhaar" | "pan" | "passport" | "driving_license" | "voter_id";
@@ -318,7 +324,7 @@ function makeTravellers(count: number, existing?: TravellerInput[]) {
 // UI estimate only. The server must recompute everything from IDs.
 function computePricing(args: {
   departure?: DepartureOption;
-  tier?: TourPricingTier;
+  tier?: PublicTourTier;
   roomType: RoomType | "";
   adults: number;
   children: number;
@@ -328,7 +334,7 @@ function computePricing(args: {
   const { departure, tier, roomType, adults, children, addons, coupon } = args;
   const guests = adults + children;
 
-  const fallback = departure ? (departure.discountedPrice ?? departure.price) : (tier?.price ?? 0);
+  const fallback = departure ? (departure.discountedPrice ?? departure.price) : (tier?.fromPrice ?? 0);
   const adultUnit = roomPrice(departure, roomType) ?? fallback;
   const childUnit = roomPrice(departure, "child") ?? adultUnit;
 
@@ -409,13 +415,18 @@ function BookingPage() {
     rating: t.rating,
     reviewCount: t.reviewCount,
     image: t.featuredImage ?? t.images?.[0] ?? "./public/placeholder-img.png",
-    pricingTiers: t.pricingTiers ?? [],
     minAge: t.minAge ?? 0,
     maxAge: t.maxAge ?? 100,
     minGroupSize: t.minGroupSize ?? 1,
     maxGroupSize: t.maxGroupSize ?? null,
     cancellationPolicySummary: t.cancellationPolicySummary ?? null,
   };
+
+  console.log({
+    tour: tour,
+    addons: addonsQ.data,
+    departures: departuresQ.data,
+  })
 
   return (
     <BookingWizard
@@ -435,7 +446,7 @@ function BookingWizard({
   addons: TourAddOn[];
   departures: DepartureOption[];
 }) {
-  const { tier: tierFromUrl, departure: departureFromUrl } = Route.useSearch();
+  const { departure: departureFromUrl } = Route.useSearch();
   const createBookingOrder = useServerFn(createBooking);
   const verifyPaymentFn = useServerFn(verifyPayment);
 
@@ -443,9 +454,6 @@ function BookingWizard({
     () => [...departures].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
     [departures]
   );
-
-  const defaultTier =
-    tour.pricingTiers.find((t) => t.label === tierFromUrl) ?? tour.pricingTiers[0];
 
   const initialDeparture =
     sortedDepartures.find((d) => d.id === departureFromUrl && isDepartureBookable(d)) ??
@@ -461,7 +469,6 @@ function BookingWizard({
     roomType: pickRoom(initialDeparture),
     adults: Math.min(2, initialDeparture?.availableSeats ?? 2),
     children: 0,
-    tier: defaultTier?.label ?? "",
   });
   const [travellers, setTravellers] = useState<TravellerInput[]>(() =>
     makeTravellers(Math.min(2, initialDeparture?.availableSeats ?? 2))
@@ -484,15 +491,14 @@ function BookingWizard({
   const validateCouponFn = useServerFn(validateCoupon);
 
   const departure = sortedDepartures.find((d) => d.id === trip.departureId);
-  const selectedTier = tour.pricingTiers.find((t) => t.label === trip.tier) ?? tour.pricingTiers[0];
   const guests = trip.adults + trip.children;
 
   const pricing = useMemo(
     () => computePricing({
-      departure, tier: selectedTier, roomType: trip.roomType,
+      departure, roomType: trip.roomType,
       adults: trip.adults, children: trip.children, addons: selectedAddOns, coupon,
     }),
-    [departure, selectedTier, trip.roomType, trip.adults, trip.children, selectedAddOns, coupon]
+    [departure, trip.roomType, trip.adults, trip.children, selectedAddOns, coupon]
   );
 
   useEffect(() => {
@@ -538,7 +544,6 @@ function BookingWizard({
     const e: Errors = {};
     if (!departure) e.departureId = "Please select a departure date";
     else if (!isDepartureBookable(departure)) e.departureId = "This departure is no longer available";
-    if (!trip.tier) e.tier = "Please select a package tier";
     if (departure?.pricing.length && !trip.roomType) e.roomType = "Please select a room type";
     if (guests < tour.minGroupSize) e.guests = `Minimum group size is ${tour.minGroupSize}`;
     if (departure && guests > departure.availableSeats)
@@ -607,8 +612,8 @@ function BookingWizard({
       setContact((c) => ({
         ...c,
         contactName: c.contactName || `${p.firstName} ${p.lastName}`.trim(),
-        contactPhone: c.contactPhone || p?.phone,
-        contactEmail: c.contactEmail || p?.email,
+        contactPhone: c.contactPhone || p?.phone || "+91 0000000000",
+        contactEmail: c.contactEmail || p?.email || "demo@email.com",
       }));
     }
     setErrors({});
@@ -652,7 +657,6 @@ function BookingWizard({
   const buildPayload = () => ({
     tourId: tour.id,
     departureId: trip.departureId,
-    tier: trip.tier,
     roomType: trip.roomType || null,
     adultCount: trip.adults,
     childCount: trip.children,
@@ -846,7 +850,6 @@ function BookingWizard({
               tour={tour}
               departure={departure}
               trip={trip}
-              selectedTier={selectedTier}
               selectedAddOns={selectedAddOns}
               pricing={pricing}
               coupon={coupon}
@@ -1156,43 +1159,6 @@ function Step1Departure({
           <FieldError message={errors.guests} />
         </CardContent>
       </Card>
-
-      {tour.pricingTiers.length > 1 && (
-        <Card className="border-border/60">
-          <CardHeader className="pb-2">
-            <h2 className="text-base font-bold">Package tier</h2>
-          </CardHeader>
-          <CardContent className="space-y-2.5">
-            {tour.pricingTiers.map((tier) => (
-              <button
-                key={tier.label}
-                type="button"
-                onClick={() => setTrip({ ...trip, tier: tier.label })}
-                className={cn(
-                  "w-full text-left rounded-xl border p-3.5 transition-all",
-                  trip.tier === tier.label
-                    ? "border-primary bg-primary/5 ring-1 ring-primary"
-                    : "border-border/60 hover:border-primary/50"
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <div
-                    className={cn(
-                      "h-4 w-4 rounded-full border-2 flex items-center justify-center",
-                      trip.tier === tier.label ? "border-primary" : "border-muted-foreground"
-                    )}
-                  >
-                    {trip.tier === tier.label && <div className="h-2 w-2 rounded-full bg-primary" />}
-                  </div>
-                  <span className="font-semibold text-sm">{tier.label}</span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-1 ml-6">{tier.description}</p>
-              </button>
-            ))}
-            <FieldError message={errors.tier} />
-          </CardContent>
-        </Card>
-      )}
 
       <Button className="w-full gap-2" size="lg" disabled={!departure} onClick={onNext}>
         Continue to Traveller Details
@@ -1869,7 +1835,7 @@ function OrderSummary({
   tour: TourSummary;
   departure?: DepartureOption;
   trip: TripState;
-  selectedTier?: TourPricingTier;
+  selectedTier?: PublicTourTier;
   selectedAddOns: TourAddOn[];
   pricing: Pricing;
   coupon: AppliedCoupon | null;

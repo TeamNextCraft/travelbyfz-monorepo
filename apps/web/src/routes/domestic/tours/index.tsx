@@ -8,7 +8,6 @@ import {
   Star,
   ArrowUpDown,
   X,
-  ChevronDown,
   Grid2X2,
   List,
   Filter,

@@ -1,6 +1,6 @@
 import { and, desc, eq, like, or, asc, min, gt, ne } from "drizzle-orm";
 import { getDb } from "#/client.js";
-import { addons, departurePricing, departures, reviews, tours, destinations, tourTiers } from "#/schema/domestic.js";
+import { addons, departurePricing, departures, reviews, tours, destinations, enquiries } from "#/schema/domestic.js";
 
 type Database = ReturnType<typeof getDb>;
 type TourInsert = typeof tours.$inferInsert;
@@ -162,26 +162,26 @@ export function createTourRepository(db: Database) {
 
       if (!tour) return undefined;
 
-      const tiers = await db.select({
-        id: tourTiers.id,
-        slug: tourTiers.slug,
-        label: tourTiers.label,
-        description: tourTiers.description,
-      })
-        .from(tourTiers)
-        .where(
-          and(
-            eq(tourTiers.tourId, tour.id),
-            eq(tourTiers.isActive, true),
-          )
-        )
-        .orderBy(
-          asc(tourTiers.sortOrder),
-        )
+      //       const tiers = await db.select({
+      //         id: tourTiers.id,
+      //         slug: tourTiers.slug,
+      //         label: tourTiers.label,
+      //         description: tourTiers.description,
+      //       })
+      //         .from(tourTiers)
+      //         .where(
+      //           and(
+      //             eq(tourTiers.tourId, tour.id),
+      //             eq(tourTiers.isActive, true),
+      //           )
+      //         )
+      //         .orderBy(
+      //           asc(tourTiers.sortOrder),
+      //         )
 
       // Lowest price per tier and room type across open, future departures.
       const priceRows = await db.select({
-        tierId: departurePricing.tierId,
+        //         tierId: departurePricing.tierId,
         roomTypes: departurePricing.roomType,
         price: min(departurePricing.price),
       })
@@ -197,32 +197,41 @@ export function createTourRepository(db: Database) {
             ne(departurePricing.roomType, "child"),
           )
         )
-        .groupBy(departurePricing.tierId, departurePricing.roomType);
+        //         .groupBy(departurePricing.tierId, departurePricing.roomType);
+        .groupBy(departurePricing.roomType);
 
 
 
-      const pricingTiers = tiers.map((t) => {
-        const rows = priceRows.filter((r) => r.tierId === t.id && r.price != null);
-        const double = rows.find((r) => r.roomTypes === "double");
-        const fromPrice = rows.length
-          ? (double?.price ?? Math.min(...rows.map((r) => r.price as number)))
-          : null;
-        return { ...t, fromPrice };
-      });
+      //       const pricingTiers = tiers.map((t) => {
+      //         const rows = priceRows.filter((r) => r.tierId === t.id && r.price != null);
+      //         const double = rows.find((r) => r.roomTypes === "double");
+      //         const fromPrice = rows.length
+      //           ? (double?.price ?? Math.min(...rows.map((r) => r.price as number)))
+      //           : null;
+      //         return { ...t, fromPrice };
+      //       });
+
+
+      //       const prices = pricingTiers
+      //         .map((t) => t.fromPrice)
+      //         .filter((p): p is number => p !== null);
+
+      const prices = priceRows
+        .map((t) => t.price)
+        .filter((p): p is number => p !== null);
 
       console.log({
-        pricingTiers: pricingTiers
+        priceRows: priceRows,
+        pricess: priceRows.map(p => p.price),
       })
-
-      const prices = pricingTiers
-        .map((t) => t.fromPrice)
-        .filter((p): p is number => p !== null);
 
       return {
         ...tour,
-        pricingTiers,
+        //         pricingTiers,
+        //         fromPrice: prices.length ? Math.min(...prices) : null,
+        //         hasUpcomingDepartures: prices.length > 0,
         fromPrice: prices.length ? Math.min(...prices) : null,
-        hasUpcomingDepartures: prices.length > 0,
+        hasUpcomingDepartures: priceRows.length > 0,
       };
     },
 
@@ -298,6 +307,72 @@ export function createTourRepository(db: Database) {
         .from(addons)
         .where(eq(addons.isActive, true))
         .orderBy(asc(addons.title));
-    }
+    },
+    findTourInterest(userId: string, tourId: string) {
+      return db
+        .select({
+          id: enquiries.id,
+        })
+        .from(enquiries)
+        .where(
+          and(
+            eq(enquiries.userId, userId),
+            eq(enquiries.tourId, tourId),
+            eq(enquiries.source, "tour_interest"),
+          ),
+        )
+        .get();
+    },
+
+    async registerTourInterest(input: {
+      userId: string;
+      tourId: string;
+      tourTitle: string;
+      name: string;
+      email: string;
+    }) {
+      const inserted = await db
+        .insert(enquiries)
+        .values({
+          userId: input.userId,
+          tourId: input.tourId,
+          name: input.name,
+          email: input.email,
+          subject: `Interest in ${input.tourTitle}`,
+          message:
+            `I am interested in ${input.tourTitle}. ` +
+            "Please contact me about future departures.",
+          source: "tour_interest",
+          status: "new",
+        })
+        .onConflictDoNothing()
+        .returning({
+          id: enquiries.id,
+        })
+        .get();
+
+      // The unique index prevents duplicate records even when
+      // requests arrive simultaneously.
+      if (inserted) {
+        return {
+          id: inserted.id,
+          alreadyRegistered: false,
+        };
+      }
+
+      const existing = await this.findTourInterest(
+        input.userId,
+        input.tourId,
+      );
+
+      if (!existing) {
+        throw new Error("Could not register tour interest.");
+      }
+
+      return {
+        id: existing.id,
+        alreadyRegistered: true,
+      };
+    },
   };
 }

@@ -18,9 +18,9 @@ export type PublicTour = {
 }
 
 export type TourPricingTier = {
-  label: string,
-  description: string,
-  price: number,
+  label: string;
+  description: string;
+  price: number;
   minParticipants?: number;
   maxParticipants?: number;
 }

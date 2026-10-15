@@ -122,23 +122,26 @@ export const getTourDepartures = createServerFn({ method: "GET" })
 
       const prices = await r.listDeparturePricing(rows.map((d) => d.id));
 
-      return rows.map((d) => ({
-        id: d.id,
-        code: d.code,
-        startDate: d.startDate,
-        endDate: d.endDate,
-        price: d.price,
-        discountedPrice: d.discountedPrice,
-        totalSeats: d.totalSeats,
-        availableSeats: d.availableSeats,
-        status: d.status,
-        bookingDeadline: d.bookingDeadline,
-        isGuaranteed: d.isGuaranteed,
-        notes: d.notes,
-        pricing: prices
-          .filter((p) => p.departureId === d.id)
-          .map((p) => ({ roomType: p.roomType, price: p.price })),
-      }));
+      return rows.map((d) => {
+        const departurePrice = prices.find((departurePricing) => departurePricing.departureId === d.id);
+        return {
+          id: d.id,
+          code: d.code,
+          startDate: d.startDate,
+          endDate: d.endDate,
+          price: departurePrice?.compareAtPrice,
+          discountedPrice: departurePrice?.price,
+          totalSeats: d.totalSeats,
+          availableSeats: d.availableSeats,
+          status: d.status,
+          bookingDeadline: d.bookingDeadline,
+          isGuaranteed: d.isGuaranteed,
+          notes: d.notes,
+          pricing: prices
+            .filter((p) => p.departureId === d.id)
+            .map((p) => ({ roomType: p.roomType, price: p.price })),
+        }
+      });
     } catch (err) {
       console.error("failed to fetch departures for tourId:", data.tourId, err);
       throw err;
@@ -172,7 +175,6 @@ export const validateCoupon = createServerFn({ method: "POST" })
 const createBookingInput = z.object({
   tourId: z.string().min(1),
   departureId: z.string().min(1),
-  tier: z.string().min(1),
   roomType: z.enum(ROOM_TYPES).nullable(),
   adultCount: z.number().int().min(1).max(20),
   childCount: z.number().int().min(0).max(20),
@@ -262,8 +264,6 @@ export const createBooking = createServerFn({ method: "POST" })
     if (!departure || !bookable(departure))
       throw new Error("This departure is no longer available");
 
-    if (!tour.pricingTiers?.some((t) => t.label === data.tier))
-      throw new Error("Invalid package tier");
     if (data.travellers.length !== guests)
       throw new Error("Traveller details do not match the guest count");
     if (data.travellers.filter((t) => t.isPrimary).length !== 1)
