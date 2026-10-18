@@ -384,7 +384,8 @@ function BookingPage() {
 
   const addonsQ = useQuery({
     queryKey: ["tour-addons"],
-    queryFn: () => fetchAddons(),
+    queryFn: () => fetchAddons({ data: { tourId: tourId! } }),
+    enabled: !!tourId,
   });
 
   const departuresQ = useQuery({

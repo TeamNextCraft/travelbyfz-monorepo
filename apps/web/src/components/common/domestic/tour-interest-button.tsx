@@ -2,25 +2,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Heart, Loader2, LockKeyhole } from "lucide-react";
 import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
-import { authClient } from "#/lib/auth-client";
 import { getMyTourInterest, registerTourInterest } from "#/server/actions/tours";
 
 
 export function TourInterestButton({
   tourId,
+  userId,
+  isUserSessionFetching
 }: {
-  tourId: string;
+  tourId: string,
+  userId: string,
+  isUserSessionFetching: boolean,
 }) {
   const queryClient = useQueryClient();
-
-  const {
-    data: session,
-    isPending: sessionPending,
-  } = authClient.useSession();
-
-  const userId = session?.user.id;
 
   const fetchInterest = useServerFn(getMyTourInterest);
   const submitInterest = useServerFn(registerTourInterest);
@@ -70,7 +65,7 @@ export function TourInterestButton({
     },
   });
 
-  if (sessionPending) {
+  if (isUserSessionFetching) {
     return (
       <Button className="w-full gap-2" disabled>
         <Loader2 size={16} className="animate-spin" />

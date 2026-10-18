@@ -10,7 +10,7 @@ import {
 import { user } from "./auth.ts";
 import { sql } from "drizzle-orm";
 import type { TourItinerary, TourDifficulty } from "@repo/types/domestic/tour"
-import type { DestinationRegion, DestinationCategory } from "@repo/types/domestic/destination"
+import type { DestinationRegion, DestinationCategory, DestinationSeason, DestinationAttraction, DestinationCuisine, DestinationTravelOption } from "@repo/types/domestic/destination"
 
 export const bookingStatuses = [
   "draft",
@@ -99,6 +99,19 @@ export const destinations = sqliteTable(
     seoTitle: text("seo_title"),
     seoDescription: text("seo_description"),
 
+    seasons: text("seasons", { mode: "json" }).$type<DestinationSeason[]>(),
+    reviewCount: integer("review_count").notNull().default(0),
+    area: text("area"),
+    language: text("language"),
+    currency: text("currency"),
+    attractions: text("attractions", { mode: "json" }).$type<DestinationAttraction[]>(),
+    cuisine: text("cuisine", { mode: "json" }).$type<DestinationCuisine[]>(),
+    howToReach: text("how_to_reach", { mode: "json" }).$type<DestinationTravelOption[]>(),
+    travelTips: text("travel_tips", { mode: "json" }).$type<string[]>(),
+    doList: text("do_list", { mode: "json" }).$type<string[]>(),
+    dontList: text("dont_list", { mode: "json" }).$type<string[]>(),
+
+
     isFeatured: integer("is_featured", { mode: "boolean" })
       .notNull()
       .default(false),
@@ -118,30 +131,6 @@ export const destinations = sqliteTable(
     index("destinations_active_idx").on(table.isActive),
   ]
 );
-
-// -----------------------------------------------------------------------------
-// toursTiers
-// -----------------------------------------------------------------------------
-
-// export const tourTiers = sqliteTable(
-//   "tour_tiers",
-//   {
-//     id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-//     tourId: text("tour_id").notNull()
-//       .references(() => tours.id, { onDelete: "cascade" }),
-//     slug: text("slug").notNull(), // "standard", "deluxe", "luxury"; used in URLs
-//     label: text("label").notNull(),
-//     description: text("description"),
-//     sortOrder: integer("sort_order").notNull().default(0),
-//     isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
-//     createdAt: integer("created_at", { mode: "timestamp" }).notNull()
-//       .$defaultFn(() => new Date()),
-//   },
-//   (t) => [
-//     uniqueIndex("tour_tiers_tour_slug_unique").on(t.tourId, t.slug),
-//     index("tour_tiers_tour_idx").on(t.tourId),
-//   ],
-// );
 
 // -----------------------------------------------------------------------------
 // tours
@@ -174,9 +163,6 @@ export const tours = sqliteTable(
 
     startLocation: text("start_location").notNull(),
     endLocation: text("end_location").notNull(),
-
-    //     basePrice: integer("base_price").notNull(), // store paise? for D1 simplest is integer rupees or paise
-    //     compareAtPrice: integer("compare_at_price"),
 
     currency: text("currency").notNull().default("INR"),
 
@@ -212,12 +198,6 @@ export const tours = sqliteTable(
     avgRating: real("avg_rating").default(0).notNull(),
     reviewCount: integer("review_count").notNull().default(0),
     bookingCount: integer("booking_count").notNull().default(0),
-
-    //     pricingTiers: text("pricing_tiers", { mode: "json" }).$type<TourPricingTier[]>().$defaultFn(() => [{
-    //       label: "Standard",
-    //       description: "Default pricing tier",
-    //       price: 0,
-    //     }]),
 
     isFeatured: integer("is_featured", { mode: "boolean" })
       .notNull()
@@ -267,9 +247,6 @@ export const departures = sqliteTable(
     startDate: integer("start_date", { mode: "timestamp" }).notNull(),
     endDate: integer("end_date", { mode: "timestamp" }).notNull(),
 
-    //     price: integer("price").notNull(),
-    //     discountedPrice: integer("discounted_price"),
-
     totalSeats: integer("total_seats").notNull(),
     availableSeats: integer("available_seats").notNull(),
 
@@ -316,10 +293,6 @@ export const departurePricing = sqliteTable(
       .notNull()
       .references(() => departures.id, { onDelete: "cascade" }),
 
-    // Must match a tier label configured on the parent tour:
-    // "Standard", "Deluxe", "Luxury"
-    //     tierId: text("tier_id").notNull()
-    //       .references(() => tourTiers.id, { onDelete: "restrict" }),
 
     roomType: text("room_type", { enum: roomTypes }).notNull(),
 
@@ -336,7 +309,6 @@ export const departurePricing = sqliteTable(
   },
   (table) => [
     uniqueIndex("departure_pricing_unique").on(
-      //       table.tierId,
       table.roomType,
       table.departureId,
     ),
@@ -346,7 +318,6 @@ export const departurePricing = sqliteTable(
 
     // Useful when computing "from" prices.
     index("departure_pricing_tier_room_price_idx").on(
-      //       table.tierId,
       table.roomType,
       table.price,
     ),
@@ -524,6 +495,8 @@ export const bookings = sqliteTable(
     source: text("source").notNull().default("website"), // website, admin, phone, whatsapp
 
     internalNotes: text("internal_notes"),
+
+    tourAddonsSelected: text("tour_addons_selected", { mode: "json" }).$type<typeof addons.$inferSelect>(),
 
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()

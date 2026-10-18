@@ -47,6 +47,7 @@ import { TourDetailError } from "#/components/common/domestic/tour-details-error
 import { useServerFn } from "@tanstack/react-start";
 import type { PublicTour } from "@repo/types/domestic/tour"
 import { TourInterestButton } from "#/components/common/domestic/tour-interest-button";
+import { authClient } from "#/lib/auth-client";
 
 type Review = {
   id: string;
@@ -94,7 +95,10 @@ function TourDetailPage() {
     queryFn: () => fetchTourDetails({ data: { slug } }),
   });
 
+  const { data: session, isPending: isUserSessionFetching } = authClient.useSession();
+
   const tourId = fetchedTour?.id;
+  const user = session?.user;
 
   const {
     data: fetchedReviews,
@@ -567,19 +571,39 @@ function TourDetailPage() {
                     </div>
 
                     {/* CTA */}
+
+                    {/* CTA */}
                     {canBook ? (
-                      <>
-                        <Link
-                          to="/domestic/tours/$slug/book"
-                          params={{ slug: fetchedTour.slug }}
-                          className={buttonVariants({
-                            className: "w-full gap-2",
-                            size: "lg",
-                          })}
-                        >
-                          Book This Tour
-                          <ArrowRight size={16} aria-hidden="true" />
-                        </Link>
+                      <div className="space-y-3">
+                        {isUserSessionFetching ? (
+                          <Button disabled className="w-full" size="lg">
+                            Checking session...
+                          </Button>
+                        ) : user ? (
+                          <Link
+                            to="/domestic/tours/$slug/book"
+                            params={{ slug: fetchedTour.slug }}
+                            className={buttonVariants({
+                              className: "w-full gap-2",
+                              size: "lg",
+                            })}
+                          >
+                            Book This Tour
+                            <ArrowRight size={16} aria-hidden="true" />
+                          </Link>
+                        ) : (
+                          <Link
+                            to="/sign-in"
+                            search={{ redirect: `/domestic/tours/${fetchedTour.slug}/book` }}
+                            className={buttonVariants({
+                              className: "w-full gap-2",
+                              size: "lg",
+                            })}
+                          >
+                            Sign In to Book
+                            <ArrowRight size={16} aria-hidden="true" />
+                          </Link>
+                        )}
 
                         <Button
                           variant="outline"
@@ -594,26 +618,26 @@ function TourDetailPage() {
                           Request customisation
                         </Button>
 
-                        {/* Trust strip */}
                         <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground pt-1">
                           <Shield size={12} className="text-green-600" aria-hidden="true" />
                           Secure booking · Free cancellation up to 15 days
                         </div>
-                      </>
+                      </div>
                     ) : (
                       <div className="space-y-4 rounded-xl border border-border/60 bg-muted/20 p-4">
                         <div>
-                          <h3 className="font-semibold">
-                            Interested in this tour?
-                          </h3>
-
+                          <h3 className="font-semibold">Interested in this tour?</h3>
                           <p className="mt-1 text-sm text-muted-foreground">
                             There are no departures available to book right now.
                             Register your interest in future dates.
                           </p>
                         </div>
 
-                        <TourInterestButton tourId={fetchedTour.id} />
+                        <TourInterestButton
+                          tourId={fetchedTour.id}
+                          userId={user?.id}
+                          isUserSessionFetching={isUserSessionFetching}
+                        />
                       </div>
                     )}
                   </CardContent>

@@ -2,6 +2,7 @@ import { and, eq, gt, inArray, isNull, lt, or, sql } from "drizzle-orm";
 import {
   addons, bookings, bookingAddons, bookingTravellers, coupons, couponTargets,
   departures, departurePricing, payments, tours,
+  destinations,
 } from "#/schema/domestic.js";
 import { getDb } from "#/client.js";
 
@@ -24,6 +25,36 @@ export function createTourBookingRepository(db: Database) {
           ),
         )
         .orderBy(departures.startDate);
+    },
+
+    listUserBookings(userId: string) {
+      return db.select({
+        id: bookings.id,
+        bookingRef: bookings.bookingRef,
+        tourId: bookings.tourId,
+        tourTitle: tours.title,
+        destination: destinations.name,
+        state: destinations.state,
+        heroImage: tours.featuredImage,
+        status: bookings.status,
+        travelDate: departures.startDate,
+        returnDate: departures.endDate,
+        bookedOn: bookings.bookedAt,
+        guestCount: sql`${bookings.adultCount} + ${bookings.childCount}`,
+        totalAmount: bookings.totalAmount,
+        paidAmount: bookings.paidAmount,
+        addOns: bookings.tourAddonsSelected,
+        contactName: bookings.contactName,
+        contactPhone: bookings.contactPhone,
+        rating: tours.avgRating,
+      })
+        .from(bookings)
+        .leftJoin(tours, eq(tours.id, bookings.tourId))
+        .leftJoin(destinations, eq(destinations.id, tours.destinationId))
+        .leftJoin(departures, eq(departures.id, bookings.departureId))
+        .where(
+          eq(bookings.userId, userId)
+        )
     },
 
     listDeparturePricing(departureIds: string[]) {

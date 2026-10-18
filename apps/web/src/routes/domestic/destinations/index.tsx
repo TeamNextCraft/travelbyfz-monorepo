@@ -17,10 +17,9 @@ import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { cn } from "#/lib/utils";
-import type { DestinationCategory, DestinationRegion, PublicDestination } from "@repo/types/domestic";
+import type { DestinationCategory, DestinationRegion, PublicDestination } from "@repo/types/domestic/destination";
 import { useQuery } from "@tanstack/react-query";
 import { getPublicDestinations } from "#/server/actions/destinations.ts";
-import { DESTINATIONS_LOCAL_DATA } from "#/lib/constants.ts";
 
 const destSearchSchema = z.object({
   q: z.string().optional(),
@@ -400,8 +399,8 @@ function DestinationCard({ dest }: { dest: Destination }) {
   return (
     <Link
       to="/domestic/destinations/$slug"
-      params={{ slug: dest.id }}
-      className="group block rounded-2xl overflow-hidden border border-border/60 bg-background hover:shadow-lg transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      params={{ slug: dest.slug }}
+      className="group h-fit block rounded-2xl overflow-hidden border border-border/60 bg-background hover:shadow-lg transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {/* Image */}
       <div className="relative overflow-hidden aspect-[4/3]">
@@ -422,7 +421,6 @@ function DestinationCard({ dest }: { dest: Destination }) {
             🔥 Trending
           </Badge>
         )}
-
         {/* Category pills */}
         <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
           {(dest.category !== null) ? dest.category.slice(0, 1).map((cat) => (

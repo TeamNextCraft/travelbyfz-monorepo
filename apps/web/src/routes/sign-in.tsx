@@ -1,9 +1,6 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import {
-  Globe,
-  Landmark,
-  MapPinned,
   ArrowLeft,
   Mail,
   Lock,
@@ -11,8 +8,10 @@ import {
   EyeOff,
   Phone,
   ShieldCheck,
+  UserCircle2,
+  BriefcaseBusiness,
+  Loader2,
 } from "lucide-react";
-
 import { cn } from "#/lib/utils";
 import { buttonVariants, Button } from "#/components/ui/button";
 import {
@@ -26,132 +25,175 @@ import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { Badge } from "#/components/ui/badge";
 import { Separator } from "#/components/ui/separator";
+import type { ComponentType } from "react";
+import { getSession } from "#/server/actions/auth";
+import { authClient } from "#/lib/auth-client";
+import z from "zod";
 
-type ModuleKey = "domestic" | "hajj-umrah" | "international";
+const signInSearchSchema = z.object({
+  module: z.enum(["agent", "customer"]).default("customer"),
+  redirect: z.string().min(2).optional(),
+  notice: z.enum(["not_agent", "agent_pending", "agent_suspended"]).optional(),
+})
+
+export type AccountType = z.infer<typeof signInSearchSchema>['module'];
+
+type AccountConfig = {
+  title: string;
+  shortTitle: string;
+  selectorDescription: string;
+  heading: string;
+  description: string;
+  image: string;
+  icon: ComponentType<{ className?: string }>;
+  tint: string;
+  accent: string;
+  buttonClass: string;
+  features: string[];
+  supportLabel: string;
+};
+
+export const accountConfig: Record<AccountType, AccountConfig> = {
+  customer: {
+    title: "Customer account",
+    shortTitle: "Customer",
+    selectorDescription: "Book and manage your trips",
+    heading: "Your next journey starts here.",
+    description:
+      "Sign in to view your bookings, save traveller details and keep track of your travel plans.",
+    image:
+      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1400&q=80",
+    icon: UserCircle2,
+    tint: "from-[#0f2f35]/95 via-[#0f2f35]/60 to-[#0f2f35]/15",
+    accent: "text-teal-100",
+    buttonClass:
+      "bg-[#123f45] text-white hover:bg-[#0f343a]",
+    features: [
+      "View your bookings and payment status",
+      "Manage traveller information",
+      "Register interest in upcoming departures",
+    ],
+    supportLabel: "Customer support",
+  },
+
+  agent: {
+    title: "Travel agent portal",
+    shortTitle: "Travel agent",
+    selectorDescription: "For approved travel partners",
+    heading: "Your partnership. One workspace.",
+    description:
+      "Sign in with your registered agent account to access the tools and services available to your agency.",
+    image:
+      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1400&q=80",
+    icon: BriefcaseBusiness,
+    tint: "from-[#10263f]/95 via-[#16395e]/65 to-[#215281]/20",
+    accent: "text-sky-100",
+    buttonClass:
+      "bg-[#183f66] text-white hover:bg-[#123554]",
+    features: [
+      "Access your agency workspace",
+      "Manage bookings made for your clients",
+      "Coordinate with the Travel by FZ team",
+    ],
+    supportLabel: "Agent support",
+  },
+};
+
+type Notice = "not_agent" | "agent_pending" | "agent_suspended";
+
+const NOTICE_TEXT: Record<Notice, string> = {
+  not_agent:
+    "This account isn't registered as a travel agent. Contact us to register your agency.",
+  agent_pending: "Your agent application is awaiting approval.",
+  agent_suspended:
+    "Agent access for this account is currently suspended. Please contact support.",
+};
 
 export const Route = createFileRoute("/sign-in")({
-  validateSearch: (search: Record<string, unknown>) => {
-    const module = String(search.module ?? "domestic");
-    return {
-      module:
-        module === "domestic" ||
-          module === "hajj-umrah" ||
-          module === "international"
-          ? (module as ModuleKey)
-          : ("domestic" as ModuleKey),
-    };
+  validateSearch: signInSearchSchema,
+  beforeLoad: async ({ search }) => {
+    if (search.notice) return;
+    const session = await getSession();
+    if (session) {
+      throw redirect({
+        to: "/auth/continue",
+        search: { module: search.module, redirect: search.redirect },
+      })
+    }
   },
   component: SignInPage,
 });
 
-const moduleConfig: Record<
-  ModuleKey,
-  {
-    title: string;
-    shortTitle: string;
-    description: string;
-    image: string;
-    icon: React.ComponentType<{ className?: string }>;
-    tint: string;
-    accent: string;
-    buttonClass: string;
-    features: string[];
-    supportLabel: string;
-  }
-> = {
-  domestic: {
-    title: "Domestic Tours",
-    shortTitle: "Domestic",
-    description:
-      "Sign in to manage your India tour bookings, traveller details, departures, and payments in one place.",
-    image:
-      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1400&q=80",
-    icon: MapPinned,
-    tint:
-      "from-[#0f2f35]/92 via-[#0f2f35]/62 to-[#0f2f35]/28",
-    accent: "text-teal-100",
-    buttonClass:
-      "bg-[#123f45] text-white hover:bg-[#0f343a] shadow-sm",
-    features: [
-      "View domestic tour bookings",
-      "Manage traveller details",
-      "Track payment and booking status",
-    ],
-    supportLabel: "Domestic travel support",
-  },
-  "hajj-umrah": {
-    title: "Hajj & Umrah",
-    shortTitle: "Hajj & Umrah",
-    description:
-      "Sign in to access your pilgrimage application, package details, documents, and travel updates securely.",
-    image:
-      "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1400&q=80",
-    icon: Landmark,
-    tint:
-      "from-[#3e2f10]/92 via-[#66501b]/62 to-[#8b6b21]/28",
-    accent: "text-amber-50",
-    buttonClass:
-      "bg-[#6f5516] text-white hover:bg-[#5d4712] shadow-sm",
-    features: [
-      "Check package and visa progress",
-      "Upload and review documents",
-      "Get pilgrimage travel updates",
-    ],
-    supportLabel: "Pilgrimage help desk",
-  },
-  international: {
-    title: "International Tours",
-    shortTitle: "International",
-    description:
-      "Sign in to review overseas bookings, passports, travel notes, and destination-specific trip details.",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
-    icon: Globe,
-    tint:
-      "from-[#10263f]/92 via-[#16395e]/62 to-[#215281]/28",
-    accent: "text-sky-50",
-    buttonClass:
-      "bg-[#183f66] text-white hover:bg-[#123554] shadow-sm",
-    features: [
-      "Manage international departures",
-      "Save traveller and passport info",
-      "Access trip documents and invoices",
-    ],
-    supportLabel: "International booking desk",
-  },
-};
-
 function SignInPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
-  const [activeModule, setActiveModule] = useState<ModuleKey>(search.module);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const active = useMemo(() => moduleConfig[activeModule], [activeModule]);
+  const activeModule = search.module;
+  const active = accountConfig[activeModule];
   const ActiveIcon = active.icon;
 
-  const handleModuleChange = (value: ModuleKey) => {
-    setActiveModule(value);
-    navigate({
+  const [showPassword, setShowPassword] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const handleModuleChange = (value: AccountType) => {
+    void navigate({
       to: "/sign-in",
-      search: { module: value },
+      search: (previous) => ({
+        ...previous,
+        module: value,
+      }),
       replace: true,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: wire this with Better Auth / your auth action
+    if (pending) return;
+
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+
+    setPending(true);
+    setFormError(null);
+
+    const { error } = await authClient.signIn.email({ email, password });
+
+    if (error) {
+      setPending(false);
+      setFormError(
+        error.status === 403
+          ? "Please verify your email address before signing in."
+          : "Incorrect email or password.",
+      );
+      return;
+    }
+
+    await navigate({
+      to: "/auth/continue",
+      search: { module: activeModule, redirect: search.redirect },
+    });
+  };
+
+  const handleGoogle = async () => {
+    setFormError(null);
+    const params = new URLSearchParams({ module: activeModule });
+    if (search.redirect) params.set("redirect", search.redirect);
+
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: `/auth/continue?${params.toString()}`,
+    });
   };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
       {/* Background image layer */}
       <div className="absolute inset-0 -z-20">
-        {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => (
+        {(Object.keys(accountConfig) as AccountType[]).map((key) => (
           <img
             key={key}
-            src={moduleConfig[key].image}
+            src={accountConfig[key].image}
             alt=""
             className={cn(
               "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
@@ -168,10 +210,10 @@ function SignInPage() {
         <div className="grid w-full gap-6 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
           {/* Visual panel */}
           <div className="relative min-h-[520px] overflow-hidden rounded-xl border border-white/50 shadow-[0_24px_70px_rgba(23,58,64,0.18)]">
-            {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => (
+            {(Object.keys(accountConfig) as AccountType[]).map((key) => (
               <img
                 key={`feature-${key}`}
-                src={moduleConfig[key].image}
+                src={accountConfig[key].image}
                 alt=""
                 className={cn(
                   "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
@@ -269,12 +311,12 @@ function SignInPage() {
               {/* Module switcher */}
               <div className="space-y-3">
                 <Label className="text-sm font-semibold text-slate-900">
-                  Select travel category
+                  How are you signing in?
                 </Label>
 
-                <div className="grid gap-3 md:grid-cols-3">
-                  {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => {
-                    const item = moduleConfig[key];
+                <div className="grid gap-2 md:grid-cols-2">
+                  {(Object.keys(accountConfig) as AccountType[]).map((key) => {
+                    const item = accountConfig[key];
                     const Icon = item.icon;
                     const isActive = activeModule === key;
 
@@ -309,7 +351,7 @@ function SignInPage() {
                                 isActive ? "text-white/75" : "text-muted-foreground"
                               )}
                             >
-                              Separate access area
+                              {item.selectorDescription}
                             </p>
                           </div>
                         </div>
@@ -320,6 +362,18 @@ function SignInPage() {
               </div>
 
               <Separator />
+
+              {search.notice && (
+                <div role="status" className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-sm text-amber-900">
+                  {NOTICE_TEXT[search.notice]}
+                </div>
+              )}
+
+              {formError && (
+                <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-800">
+                  {formError}
+                </div>
+              )}
 
               {/* Sign in form */}
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -332,11 +386,19 @@ function SignInPage() {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="you@example.com"
+                      name="email"
+                      required
+                      autoComplete="username"
+                      placeholder={
+                        activeModule === "agent"
+                          ? "agent@youragency.com"
+                          : "you@example.com"
+                      }
                       className="h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
                     />
                   </div>
                 </div>
+
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-3">
@@ -356,14 +418,19 @@ function SignInPage() {
                     <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                     <Input
                       id="password"
+                      name="password"
+                      autoComplete="current-password"
+                      required
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       className="h-11 border-white/60 bg-white/85 pl-10 pr-11 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
                     />
-                    <button
+                    <Button
+                      variant={"outline"}
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-900"
+                      aria-pressed={showPassword}
                       aria-label={
                         showPassword ? "Hide password" : "Show password"
                       }
@@ -373,18 +440,29 @@ function SignInPage() {
                       ) : (
                         <Eye className="size-4" />
                       )}
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
                 <Button
                   type="submit"
-                  className={cn("h-11 w-full font-semibold", active.buttonClass)}
+                  className={cn(
+                    "h-11 w-full font-semibold",
+                    active.buttonClass,
+                  )}
+                  disabled={pending}
                 >
-                  Sign in to {active.shortTitle}
+                  {pending
+                    ? (
+                      <Loader2 className="animate-spin" />
+                    )
+                    : activeModule === "agent"
+                      ? ("Sign in to agent portal")
+                      : ("Sign in")}
                 </Button>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                {/*
+                    <div className="grid gap-3 sm:grid-cols-2">
                   <Button
                     type="button"
                     variant="outline"
@@ -396,11 +474,14 @@ function SignInPage() {
                   <Button
                     type="button"
                     variant="outline"
+                    disabled={pending}
+  onClick={handleGoogle}
                     className="h-11 border-white/60 bg-white/75 text-slate-800 hover:bg-white"
                   >
                     Continue with Google
                   </Button>
                 </div>
+                */}
               </form>
 
               <Separator />

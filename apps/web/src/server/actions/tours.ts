@@ -71,10 +71,13 @@ export const getTourReviews = createServerFn()
 
 
 export const getTourAddons = createServerFn()
-  .handler(async () => {
+  .validator(z.object({
+    tourId: z.string(),
+  }))
+  .handler(async ({ data }) => {
     try {
       const db = getDb(env.DB);
-      const result = await createTourRepository(db).getAddons();
+      const result = await createTourRepository(db).getTourAddons(data.tourId);
       return result ?? null;
     } catch (err) {
       console.error("failed to fetch tour addons", err);

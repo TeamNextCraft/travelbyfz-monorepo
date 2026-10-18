@@ -24,8 +24,51 @@ export function createAuth(env: {
       },
     }),
 
+    user: {
+      additionalFields: {
+        firstName: {
+          type: "string",
+          required: false,
+        },
+        lastName: {
+          type: "string",
+          required: false,
+        },
+        phone: {
+          type: "string",
+          required: false,
+        },
+        role: {
+          type: ["customer", "agent"] as const,
+          required: false,
+          defaultValue: "customer",
+          input: true,
+        },
+        phoneVerified: {
+          type: "boolean",
+          required: false,
+          defaultValue: false,
+          input: false,
+        },
+        status: {
+          type: ["pending", "approved", "rejected"] as const,
+          required: false,
+          defaultValue: "pending",
+          input: false,
+        },
+        isActive: {
+          type: "boolean",
+          required: false,
+          defaultValue: true,
+          input: false,
+        },
+      }
+    },
+
     emailAndPassword: {
       enabled: true,
+      minPasswordLength: 8,
+      maxPasswordLength: 128,
     },
 
     advanced: {

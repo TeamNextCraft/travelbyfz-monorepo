@@ -10,11 +10,8 @@ import {
   AlertCircle,
   ChevronRight,
   ArrowRight,
-  Download,
-  Phone,
   RotateCcw,
   Search,
-  Filter,
   Star,
   Plane,
   X,
@@ -43,6 +40,11 @@ import {
   SelectValue,
 } from "#/components/ui/select";
 import { cn } from "#/lib/utils";
+import { getSession } from "#/server/actions/auth";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getCurrentUserBookings } from "#/server/actions/user";
+import { BookingsSkeleton } from "#/components/common/domestic/bookings-skeleton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -233,14 +235,22 @@ const STATUS_TABS: { value: "all" | BookingStatus; label: string }[] = [
 
 export const Route = createFileRoute("/domestic/bookings/")({
   validateSearch: bookingsSearchSchema,
-  // Uncomment once auth is wired:
-  // beforeLoad: async ({ context }) => {
-  //   const user = await getUser();
-  //   if (!user) throw redirect({ to: "/auth/sign-in", search: { redirect: "/bookings" } });
-  // },
-  // loader: async ({ context }) => {
-  //   return { bookings: await getUserBookings({ data: context.user.id }) };
-  // },
+  beforeLoad: async ({ location }) => {
+    const session = await getSession();
+
+    if (!session) {
+      throw redirect({
+        to: "/sign-in",
+        search: {
+          redirect: location.href,
+        }
+      })
+    }
+
+    return {
+      user: session.user
+    }
+  },
   component: BookingsPage,
 });
 
@@ -249,6 +259,7 @@ export const Route = createFileRoute("/domestic/bookings/")({
 function BookingsPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+  const { user } = Route.useRouteContext();
 
   const activeStatus = search.status ?? "all";
   const q = search.q ?? "";
@@ -261,19 +272,27 @@ function BookingsPage() {
   // Cancellation dialog state
   const [cancelTarget, setCancelTarget] = useState<Booking | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
-  const [bookings, setBookings] = useState<Booking[]>(MOCK_BOOKINGS);
+  const getUserBookins = useServerFn(getCurrentUserBookings);
+
+  const {
+    data: bookings = [],
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["my-bookings", user.id],
+    queryFn: () => getUserBookins({ data: { userId: user.id } }),
+  })
+
+  console.log({
+    fetchingState: isPending,
+    bookings: bookings
+  });
 
   const handleCancelConfirm = async () => {
     if (!cancelTarget) return;
     setIsCancelling(true);
     await new Promise((r) => setTimeout(r, 1200)); // simulate API
-    setBookings((prev) =>
-      prev.map((b) =>
-        b.id === cancelTarget.id
-          ? { ...b, status: "cancelled" as BookingStatus, canCancel: false, paidAmount: 0 }
-          : b
-      )
-    );
     setIsCancelling(false);
     setCancelTarget(null);
   };
@@ -307,9 +326,9 @@ function BookingsPage() {
 
     result = [...result].sort((a, b) => {
       if (sort === "newest")
-        return new Date(b.bookedOn).getTime() - new Date(a.bookedOn).getTime();
+        return new Date(b.bookedAt).getTime() - new Date(a.bookedAt).getTime();
       if (sort === "oldest")
-        return new Date(a.bookedOn).getTime() - new Date(b.bookedOn).getTime();
+        return new Date(a.bookedAt).getTime() - new Date(b.bookedAt).getTime();
       if (sort === "travel-date")
         return (
           new Date(a.travelDate).getTime() - new Date(b.travelDate).getTime()
@@ -322,6 +341,33 @@ function BookingsPage() {
 
   const pendingCount = bookings.filter((b) => b.status === "pending").length;
 
+  if (isPending) {
+    return <BookingsSkeleton />
+  }
+
+  if (isError) {
+    return (
+      <main className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
+        <h1 className="text-xl font-semibold">
+          Couldn't load your bookings
+        </h1>
+
+        <p className="text-sm text-muted-foreground">
+          {error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again."}
+        </p>
+
+        <Button
+          variant="outline"
+          onClick={() => window.location.reload()}
+        >
+          Try again
+        </Button>
+      </main>
+    );
+  }
+
   return (
     <>
       <main className="min-h-screen bg-muted/20">
@@ -331,7 +377,7 @@ function BookingsPage() {
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
-                  Welcome back, Moin 👋
+                  Welcome back, {user.firstName} 👋
                 </p>
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
                   My Bookings
@@ -784,25 +830,25 @@ function CancelDialog({
 
   const deadline = booking.cancellationDeadline
     ? new Date(booking.cancellationDeadline).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
     : null;
 
   const daysUntilTravel = Math.ceil(
     (new Date(booking.travelDate).getTime() - Date.now()) /
-      (1000 * 60 * 60 * 24)
+    (1000 * 60 * 60 * 24)
   );
 
   const refundPercent =
     daysUntilTravel >= 30
       ? 90
       : daysUntilTravel >= 15
-      ? 50
-      : daysUntilTravel >= 7
-      ? 25
-      : 0;
+        ? 50
+        : daysUntilTravel >= 7
+          ? 25
+          : 0;
 
   const refundAmount = Math.round(
     (booking.paidAmount * refundPercent) / 100
@@ -880,10 +926,10 @@ function CancelDialog({
               {daysUntilTravel >= 30
                 ? "Cancellation 30+ days before travel — 90% refund."
                 : daysUntilTravel >= 15
-                ? "Cancellation 15–29 days before travel — 50% refund."
-                : daysUntilTravel >= 7
-                ? "Cancellation 7–14 days before travel — 25% refund."
-                : "Cancellation within 7 days of travel — no refund."}
+                  ? "Cancellation 15–29 days before travel — 50% refund."
+                  : daysUntilTravel >= 7
+                    ? "Cancellation 7–14 days before travel — 25% refund."
+                    : "Cancellation within 7 days of travel — no refund."}
               {deadline && (
                 <span className="block mt-1">
                   Free cancellation deadline was{" "}

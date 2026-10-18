@@ -1,6 +1,6 @@
-import { and, desc, eq, like, or, asc, min, gt, ne } from "drizzle-orm";
+import { and, desc, eq, like, or, asc, min, gt, ne, inArray } from "drizzle-orm";
 import { getDb } from "#/client.js";
-import { addons, departurePricing, departures, reviews, tours, destinations, enquiries } from "#/schema/domestic.js";
+import { addons, departurePricing, departures, reviews, tours, destinations, enquiries, tourAddons } from "#/schema/domestic.js";
 
 type Database = ReturnType<typeof getDb>;
 type TourInsert = typeof tours.$inferInsert;
@@ -162,26 +162,8 @@ export function createTourRepository(db: Database) {
 
       if (!tour) return undefined;
 
-      //       const tiers = await db.select({
-      //         id: tourTiers.id,
-      //         slug: tourTiers.slug,
-      //         label: tourTiers.label,
-      //         description: tourTiers.description,
-      //       })
-      //         .from(tourTiers)
-      //         .where(
-      //           and(
-      //             eq(tourTiers.tourId, tour.id),
-      //             eq(tourTiers.isActive, true),
-      //           )
-      //         )
-      //         .orderBy(
-      //           asc(tourTiers.sortOrder),
-      //         )
-
-      // Lowest price per tier and room type across open, future departures.
+      // Lowest price room type across open, future departures.
       const priceRows = await db.select({
-        //         tierId: departurePricing.tierId,
         roomTypes: departurePricing.roomType,
         price: min(departurePricing.price),
       })
@@ -197,24 +179,7 @@ export function createTourRepository(db: Database) {
             ne(departurePricing.roomType, "child"),
           )
         )
-        //         .groupBy(departurePricing.tierId, departurePricing.roomType);
         .groupBy(departurePricing.roomType);
-
-
-
-      //       const pricingTiers = tiers.map((t) => {
-      //         const rows = priceRows.filter((r) => r.tierId === t.id && r.price != null);
-      //         const double = rows.find((r) => r.roomTypes === "double");
-      //         const fromPrice = rows.length
-      //           ? (double?.price ?? Math.min(...rows.map((r) => r.price as number)))
-      //           : null;
-      //         return { ...t, fromPrice };
-      //       });
-
-
-      //       const prices = pricingTiers
-      //         .map((t) => t.fromPrice)
-      //         .filter((p): p is number => p !== null);
 
       const prices = priceRows
         .map((t) => t.price)
@@ -227,9 +192,6 @@ export function createTourRepository(db: Database) {
 
       return {
         ...tour,
-        //         pricingTiers,
-        //         fromPrice: prices.length ? Math.min(...prices) : null,
-        //         hasUpcomingDepartures: prices.length > 0,
         fromPrice: prices.length ? Math.min(...prices) : null,
         hasUpcomingDepartures: priceRows.length > 0,
       };
@@ -296,7 +258,15 @@ export function createTourRepository(db: Database) {
       return db.select().from(reviews).where(eq(reviews.tourId, tourId)).limit(limit).offset(offest)
     },
 
-    getAddons() {
+    getTourAddons(tourId: string) {
+      const addonIds = db.select({
+        id: tourAddons.addonId
+      })
+        .from(tourAddons)
+        .where(
+          eq(tourAddons.tourId, tourId)
+        )
+
       return db.select({
         id: addons.id,
         description: addons.description,
@@ -305,9 +275,15 @@ export function createTourRepository(db: Database) {
         label: addons.title,
       })
         .from(addons)
-        .where(eq(addons.isActive, true))
+        .where(
+          and(
+            eq(addons.isActive, true),
+            inArray(addons.id, addonIds)
+          )
+        )
         .orderBy(asc(addons.title));
     },
+
     findTourInterest(userId: string, tourId: string) {
       return db
         .select({

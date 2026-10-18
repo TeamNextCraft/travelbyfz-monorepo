@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DomesticRouteRouteImport } from './routes/domestic/route'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HajjUmrahRouteRouteImport } from './routes/hajj-umrah/route'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AuthContinueRouteImport } from './routes/auth/continue'
 import { Route as DomesticIndexRouteImport } from './routes/domestic/index'
 import { Route as DomesticAboutRouteImport } from './routes/domestic/about'
 import { Route as DomesticContactRouteImport } from './routes/domestic/contact'
+import { Route as DomesticOffersRouteImport } from './routes/domestic/offers'
 import { Route as HajjUmrahIndexRouteImport } from './routes/hajj-umrah/index'
 import { Route as HajjUmrahContactRouteImport } from './routes/hajj-umrah/contact'
 import { Route as HajjUmrahCustomGroupRouteImport } from './routes/hajj-umrah/custom-group'
@@ -66,6 +70,11 @@ const HajjUmrahRouteRoute = HajjUmrahRouteRouteImport.update({
   path: '/hajj-umrah',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -81,6 +90,16 @@ const SignUpRoute = SignUpRouteImport.update({
   path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthContinueRoute = AuthContinueRouteImport.update({
+  id: '/auth/continue',
+  path: '/auth/continue',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DomesticIndexRoute = DomesticIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -94,6 +113,11 @@ const DomesticAboutRoute = DomesticAboutRouteImport.update({
 const DomesticContactRoute = DomesticContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => DomesticRouteRoute,
+} as any)
+const DomesticOffersRoute = DomesticOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
   getParentRoute: () => DomesticRouteRoute,
 } as any)
 const HajjUmrahIndexRoute = HajjUmrahIndexRouteImport.update({
@@ -237,11 +261,15 @@ export interface FileRoutesByFullPath {
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -273,11 +301,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -312,11 +344,15 @@ export interface FileRoutesById {
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -352,11 +388,15 @@ export interface FileRouteTypes {
     | '/domestic'
     | '/hajj-umrah'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -388,11 +428,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -426,11 +470,15 @@ export interface FileRouteTypes {
     | '/domestic'
     | '/hajj-umrah'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -465,9 +513,12 @@ export interface RootRouteChildren {
   DomesticRouteRoute: typeof DomesticRouteRouteWithChildren
   HajjUmrahRouteRoute: typeof HajjUmrahRouteRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  TermsRoute: typeof TermsRoute
+  AuthContinueRoute: typeof AuthContinueRoute
   InvitationWebinarRoute: typeof InvitationWebinarRoute
   InternationalIndexRoute: typeof InternationalIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -505,6 +556,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HajjUmrahRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -526,6 +584,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/continue': {
+      id: '/auth/continue'
+      path: '/auth/continue'
+      fullPath: '/auth/continue'
+      preLoaderRoute: typeof AuthContinueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/domestic/': {
       id: '/domestic/'
       path: '/'
@@ -545,6 +617,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/domestic/contact'
       preLoaderRoute: typeof DomesticContactRouteImport
+      parentRoute: typeof DomesticRouteRoute
+    }
+    '/domestic/offers': {
+      id: '/domestic/offers'
+      path: '/offers'
+      fullPath: '/domestic/offers'
+      preLoaderRoute: typeof DomesticOffersRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
     '/hajj-umrah/': {
@@ -735,6 +814,7 @@ declare module '@tanstack/react-router' {
 interface DomesticRouteRouteChildren {
   DomesticAboutRoute: typeof DomesticAboutRoute
   DomesticContactRoute: typeof DomesticContactRoute
+  DomesticOffersRoute: typeof DomesticOffersRoute
   DomesticIndexRoute: typeof DomesticIndexRoute
   DomesticBookingsBookingIdRoute: typeof DomesticBookingsBookingIdRoute
   DomesticDestinationsSlugRoute: typeof DomesticDestinationsSlugRoute
@@ -753,6 +833,7 @@ interface DomesticRouteRouteChildren {
 const DomesticRouteRouteChildren: DomesticRouteRouteChildren = {
   DomesticAboutRoute: DomesticAboutRoute,
   DomesticContactRoute: DomesticContactRoute,
+  DomesticOffersRoute: DomesticOffersRoute,
   DomesticIndexRoute: DomesticIndexRoute,
   DomesticBookingsBookingIdRoute: DomesticBookingsBookingIdRoute,
   DomesticDestinationsSlugRoute: DomesticDestinationsSlugRoute,
@@ -805,9 +886,12 @@ const rootRouteChildren: RootRouteChildren = {
   DomesticRouteRoute: DomesticRouteRouteWithChildren,
   HajjUmrahRouteRoute: HajjUmrahRouteRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  TermsRoute: TermsRoute,
+  AuthContinueRoute: AuthContinueRoute,
   InvitationWebinarRoute: InvitationWebinarRoute,
   InternationalIndexRoute: InternationalIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

@@ -25,22 +25,16 @@ import {
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { Separator } from "#/components/ui/separator";
+import z from "zod";
 
 type ModuleKey = "domestic" | "hajj-umrah" | "international";
 
-export const Route = createFileRoute("/forgot-password")({
-  validateSearch: (search: Record<string, unknown>) => {
-    const module = String(search.module ?? "domestic");
+const forgotPasswordSearchSchema = z.object({
+  module: z.enum(["agent", "customer"]).default("customer")
+})
 
-    return {
-      module:
-        module === "domestic" ||
-        module === "hajj-umrah" ||
-        module === "international"
-          ? (module as ModuleKey)
-          : ("domestic" as ModuleKey),
-    };
-  },
+export const Route = createFileRoute("/forgot-password")({
+  validateSearch: forgotPasswordSearchSchema,
   component: ForgotPasswordPage,
 });
 

@@ -252,6 +252,12 @@ function ToursPage() {
       : "flex flex-col gap-4";
 
 
+  console.log({
+    tours: tours,
+    published_only_tours: published_only_tours,
+  })
+
+
   return (
     <main>
       {/* ── Page Header ──────────────────────────────────────────────── */}
