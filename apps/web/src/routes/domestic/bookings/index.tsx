@@ -272,7 +272,7 @@ function BookingsPage() {
   // Cancellation dialog state
   const [cancelTarget, setCancelTarget] = useState<Booking | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
-  const getUserBookins = useServerFn(getCurrentUserBookings);
+  const getUserBookings = useServerFn(getCurrentUserBookings);
 
   const {
     data: bookings = [],
@@ -281,7 +281,7 @@ function BookingsPage() {
     error,
   } = useQuery({
     queryKey: ["my-bookings", user.id],
-    queryFn: () => getUserBookins({ data: { userId: user.id } }),
+    queryFn: () => getUserBookings(),
   })
 
   console.log({
@@ -315,8 +315,8 @@ function BookingsPage() {
       if (q) {
         const lower = q.toLowerCase();
         if (
-          !b.tourTitle.toLowerCase().includes(lower) &&
-          !b.destination.toLowerCase().includes(lower) &&
+          !b.tourTitle?.toLowerCase().includes(lower) &&
+          !b.destination?.toLowerCase().includes(lower) &&
           !b.bookingRef.toLowerCase().includes(lower)
         )
           return false;
@@ -341,6 +341,7 @@ function BookingsPage() {
 
   const pendingCount = bookings.filter((b) => b.status === "pending").length;
 
+
   if (isPending) {
     return <BookingsSkeleton />
   }
@@ -364,6 +365,37 @@ function BookingsPage() {
         >
           Try again
         </Button>
+      </main>
+    );
+  }
+
+  if (bookings.length === 0) {
+    return (
+      <main className="min-h-[60vh] bg-muted/20 px-4 flex items-center justify-center">
+        <div className="flex max-w-md flex-col items-center gap-4 py-16 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-muted text-4xl">
+            ✈️
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold tracking-tight">
+              No trips booked yet
+            </h1>
+
+            <p className="text-sm text-muted-foreground">
+              Your next adventure is waiting! Explore our tours and book your
+              first trip.
+            </p>
+          </div>
+
+          <Link
+            to="/domestic/tours"
+            className={buttonVariants({ className: "gap-2" })}
+          >
+            Browse tours
+            <ArrowRight size={14} />
+          </Link>
+        </div>
       </main>
     );
   }
@@ -633,7 +665,7 @@ function BookingCard({
             src={booking.heroImage}
             alt={booking.tourTitle}
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="lazy" bookings
             width={176}
             height={132}
           />
@@ -691,7 +723,7 @@ function BookingCard({
           </div>
 
           {/* Add-ons */}
-          {booking.addOns.length > 0 && (
+          {booking.addOns?.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {booking.addOns.map((addon) => (
                 <span

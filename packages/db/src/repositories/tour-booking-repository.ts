@@ -3,6 +3,7 @@ import {
   addons, bookings, bookingAddons, bookingTravellers, coupons, couponTargets,
   departures, departurePricing, payments, tours,
   destinations,
+  reviews,
 } from "#/schema/domestic.js";
 import { getDb } from "#/client.js";
 
@@ -27,6 +28,77 @@ export function createTourBookingRepository(db: Database) {
         .orderBy(departures.startDate);
     },
 
+    getUserBookingPayments(bookingId: string) {
+      return db.select({
+        id: payments.id,
+        date: payments.paidAt,
+        method: payments.method,
+        amount: payments.amount,
+        status: payments.status,
+        transactionId: payments.providerPaymentId,
+      })
+        .from(payments)
+        .where(
+          eq(payments.bookingId, bookingId)
+        )
+        .get();
+    },
+
+    listBookingReviews(bookingId: string) {
+      return db.select({
+        rating: reviews.rating,
+        comment: reviews.comment,
+        submittedAt: reviews.submittedAt,
+      })
+        .from(reviews)
+        .where(
+          eq(reviews.bookingId, bookingId)
+        )
+
+    },
+
+    getBookingById(bookingId: string) {
+      return db.select({
+        id: bookings.id,
+        slug: tours.slug,
+        bookingRef: bookings.bookingRef,
+        tourId: bookings.tourId,
+        tourTitle: tours.title,
+        destination: destinations.name,
+        state: destinations.state,
+        heroImage: tours.featuredImage,
+        status: bookings.status,
+        travelDate: departures.startDate,
+        returnDate: departures.endDate,
+        bookedOn: bookings.bookedAt,
+        guestCount: sql<number>`${bookings.adultCount} + ${bookings.childCount}`,
+        contactName: bookings.contactName,
+        contactPhone: bookings.contactPhone,
+        contactEmail: bookings.contactEmail,
+        contactCity: bookings.contactCity,
+        specialRequests: bookings.specialRequests,
+        highlights: tours.highlights,
+        itinerary: tours.itinerary,
+        inclusions: tours.inclusions,
+        exclusions: tours.exclusions,
+        subtotalAmount: bookings.subtotalAmount,
+        taxAmount: bookings.taxAmount,
+        discountAmount: bookings.discountAmount,
+        totalAmount: bookings.totalAmount,
+        paidAmount: bookings.paidAmount,
+        rating: tours.avgRating,
+        bookedAt: bookings.bookedAt,
+      })
+        .from(bookings)
+        .leftJoin(tours, eq(tours.id, bookings.tourId))
+        .leftJoin(destinations, eq(destinations.id, tours.destinationId))
+        .leftJoin(departures, eq(departures.id, bookings.departureId))
+        .where(
+          eq(bookings.id, bookingId)
+        )
+        .get();
+    },
+
     listUserBookings(userId: string) {
       return db.select({
         id: bookings.id,
@@ -40,13 +112,13 @@ export function createTourBookingRepository(db: Database) {
         travelDate: departures.startDate,
         returnDate: departures.endDate,
         bookedOn: bookings.bookedAt,
-        guestCount: sql`${bookings.adultCount} + ${bookings.childCount}`,
+        guestCount: sql<number>`${bookings.adultCount} + ${bookings.childCount}`,
         totalAmount: bookings.totalAmount,
         paidAmount: bookings.paidAmount,
-        addOns: bookings.tourAddonsSelected,
         contactName: bookings.contactName,
         contactPhone: bookings.contactPhone,
         rating: tours.avgRating,
+        bookedAt: bookings.bookedAt,
       })
         .from(bookings)
         .leftJoin(tours, eq(tours.id, bookings.tourId))
@@ -56,6 +128,40 @@ export function createTourBookingRepository(db: Database) {
           eq(bookings.userId, userId)
         )
     },
+
+    getBookingTravelers(bookingId: string) {
+      return db.select({
+        id: bookingTravellers.id,
+        firstName: bookingTravellers.firstName,
+        lastName: bookingTravellers.lastName,
+        age: bookingTravellers.age,
+        gender: bookingTravellers.gender,
+        isPrimary: bookingTravellers.isPrimary,
+      })
+        .from(bookingTravellers)
+        .where(
+          eq(bookingTravellers.bookingId, bookingId)
+        )
+        .get();
+    },
+
+    listUserBookingAddons(bookingIds: string[]) {
+      if (bookingIds.length === 0) {
+        return Promise.resolve([]);
+      }
+
+      return db
+        .select({
+          bookingId: bookingAddons.bookingId,
+          addonName: addons.title,
+          amount: addons.price,
+          perPerson: addons.perPerson,
+        })
+        .from(bookingAddons)
+        .leftJoin(addons, eq(addons.id, bookingAddons.addonId))
+        .where(inArray(bookingAddons.bookingId, bookingIds));
+    },
+
 
     listDeparturePricing(departureIds: string[]) {
       return db

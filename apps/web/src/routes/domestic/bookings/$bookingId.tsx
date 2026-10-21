@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import {
   ArrowLeft,
@@ -43,340 +43,23 @@ import {
   TooltipTrigger,
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
+import { getSession } from "#/server/actions/auth";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getBookingDetailsById } from "#/server/actions/user";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type BookingStatus = "confirmed" | "pending" | "completed" | "cancelled";
+type BookingStatus = Awaited<ReturnType<typeof getBookingDetailsById>>['status'];
 
-type Traveller = {
-  firstName: string;
-  lastName: string;
-  age: string;
-  gender: "Male" | "Female" | "Other";
-  isPrimary?: boolean;
-};
+type BookingDetail = Awaited<ReturnType<typeof getBookingDetailsById>>;
 
-type PaymentRecord = {
-  id: string;
-  date: string;
-  method: string;
-  amount: number;
-  status: "success" | "pending" | "failed";
-  transactionId: string;
-};
-
-type BookingDetail = {
-  id: string;
-  bookingRef: string;
-  tourId: string;
-  tourTitle: string;
-  destination: string;
-  state: string;
-  heroImage: string;
-  status: BookingStatus;
-  travelDate: string;
-  returnDate: string;
-  bookedOn: string;
-  duration: string;
-  guestCount: number;
-  tierLabel: string;
-  travellers: Traveller[];
-  contactName: string;
-  contactEmail: string;
-  contactPhone: string;
-  contactCity: string;
-  specialRequests?: string;
-  addOns: { label: string; amount: number; perPerson: boolean }[];
-  basePrice: number;
-  gstAmount: number;
-  discountAmount: number;
-  totalAmount: number;
-  paidAmount: number;
-  payments: PaymentRecord[];
-  highlights: string[];
-  itinerary: { day: number; title: string; description: string }[];
-  inclusions: string[];
-  exclusions: string[];
-  cancellationDeadline?: string;
-  canCancel: boolean;
-  review?: { rating: number; comment: string; submittedOn: string };
-};
 
 // ─── Search params ────────────────────────────────────────────────────────────
 
 const bookingDetailSearch = z.object({
   tab: z.enum(["overview", "travellers", "invoice", "review"]).optional(),
 });
-
-// ─── Mock DB ──────────────────────────────────────────────────────────────────
-
-const BOOKING_DB: Record<string, BookingDetail> = {
-  "bk-001": {
-    id: "bk-001",
-    bookingRef: "WI4F9A2K",
-    tourId: "kerala-backwaters",
-    tourTitle: "Kerala Backwaters & Spice Trail",
-    destination: "Alleppey",
-    state: "Kerala",
-    heroImage:
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=85",
-    status: "confirmed",
-    travelDate: "2026-08-15",
-    returnDate: "2026-08-19",
-    bookedOn: "2026-06-03",
-    duration: "5 Days / 4 Nights",
-    guestCount: 2,
-    tierLabel: "Deluxe",
-    travellers: [
-      { firstName: "Moin", lastName: "Malek", age: "24", gender: "Male", isPrimary: true },
-      { firstName: "Arjun", lastName: "Mehta", age: "25", gender: "Male" },
-    ],
-    contactName: "Moin Malek",
-    contactEmail: "moin@example.com",
-    contactPhone: "+91 98765 43210",
-    contactCity: "Bhuj, Gujarat",
-    specialRequests: "Vegetarian meals preferred. Window seat on houseboat if possible.",
-    addOns: [
-      { label: "Travel Insurance", amount: 799, perPerson: true },
-      { label: "Airport Pickup", amount: 1200, perPerson: false },
-    ],
-    basePrice: 52000,
-    gstAmount: 2860,
-    discountAmount: 0,
-    totalAmount: 56456,
-    paidAmount: 56456,
-    payments: [
-      {
-        id: "pay-1",
-        date: "2026-06-03",
-        method: "UPI (GPay)",
-        amount: 56456,
-        status: "success",
-        transactionId: "TXN8F3K2M9P",
-      },
-    ],
-    highlights: [
-      "Overnight houseboat cruise on Vembanad Lake",
-      "Spice plantation walk in Thekkady",
-      "Kathakali performance in Fort Kochi",
-      "Chinese fishing net experience",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Kochi → Fort Kochi",
-        description:
-          "Arrive at Kochi International Airport. Transfer to Fort Kochi hotel. Evening stroll along the Chinese fishing nets, followed by a Kathakali performance.",
-      },
-      {
-        day: 2,
-        title: "Kochi → Alleppey Houseboat",
-        description:
-          "Check out and drive to Alleppey (1.5 hrs). Board your premium houseboat at noon. Cruise through the backwaters, pass paddy fields and coconut groves. Overnight stay on the houseboat.",
-      },
-      {
-        day: 3,
-        title: "Alleppey → Kumarakom → Thekkady",
-        description:
-          "Morning canoe ride through narrow canals. Disembark and drive to Thekkady (3 hrs). Spice plantation walk in the afternoon. Evening wildlife boat safari at Periyar Lake.",
-      },
-      {
-        day: 4,
-        title: "Thekkady → Munnar",
-        description:
-          "Morning drive through the scenic Western Ghats to Munnar (3 hrs). Visit Tea Museum. Evening walk through Eravikulam National Park. Overnight in a tea-estate resort.",
-      },
-      {
-        day: 5,
-        title: "Munnar → Kochi Departure",
-        description:
-          "Sunrise at Top Station for panoramic Nilgiri views. Drive back to Kochi airport (4 hrs). Transfer to airport for onward journey. Tour ends.",
-      },
-    ],
-    inclusions: [
-      "4 nights accommodation (Deluxe category)",
-      "Overnight houseboat with all meals",
-      "Daily breakfast at hotels",
-      "All transfers in AC vehicle",
-      "Expert English-speaking tour guide",
-      "Kathakali performance tickets",
-      "Periyar boat safari entry",
-      "Tea Museum entry",
-      "Travel Insurance (add-on)",
-      "Airport Pickup (add-on)",
-    ],
-    exclusions: [
-      "Airfare / train tickets to Kochi",
-      "Lunch & dinner at hotels (except houseboat)",
-      "Personal expenses, tips, and souvenirs",
-      "Anything not mentioned in inclusions",
-    ],
-    cancellationDeadline: "2026-07-15",
-    canCancel: true,
-  },
-
-  "bk-002": {
-    id: "bk-002",
-    bookingRef: "WI9C1R7T",
-    tourId: "rajasthan-royals",
-    tourTitle: "Royal Rajasthan Heritage Tour",
-    destination: "Jaipur → Jodhpur → Udaipur",
-    state: "Rajasthan",
-    heroImage:
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1200&q=85",
-    status: "pending",
-    travelDate: "2026-10-05",
-    returnDate: "2026-10-11",
-    bookedOn: "2026-06-01",
-    duration: "7 Days / 6 Nights",
-    guestCount: 4,
-    tierLabel: "Standard",
-    travellers: [
-      { firstName: "Moin", lastName: "Malek", age: "24", gender: "Male", isPrimary: true },
-      { firstName: "Priya", lastName: "Malek", age: "22", gender: "Female" },
-      { firstName: "Ravi", lastName: "Malek", age: "50", gender: "Male" },
-      { firstName: "Sunita", lastName: "Malek", age: "48", gender: "Female" },
-    ],
-    contactName: "Moin Malek",
-    contactEmail: "moin@example.com",
-    contactPhone: "+91 98765 43210",
-    contactCity: "Bhuj, Gujarat",
-    addOns: [],
-    basePrice: 99996,
-    gstAmount: 5250,
-    discountAmount: 0,
-    totalAmount: 105246,
-    paidAmount: 52623,
-    payments: [
-      {
-        id: "pay-1",
-        date: "2026-06-01",
-        method: "Net Banking (HDFC)",
-        amount: 52623,
-        status: "success",
-        transactionId: "TXN2R9K1X5M",
-      },
-    ],
-    highlights: [
-      "Amber Fort jeep ride & Sheesh Mahal",
-      "Mehrangarh Fort in Jodhpur",
-      "Sunset boat ride on Lake Pichola, Udaipur",
-      "Camel safari in Jaisalmer desert",
-    ],
-    itinerary: [
-      { day: 1, title: "Arrival in Jaipur", description: "Arrive in Jaipur. Check in to heritage hotel. Evening visit to Chokhi Dhani village." },
-      { day: 2, title: "Jaipur Sightseeing", description: "Amber Fort, Hawa Mahal, Jantar Mantar, City Palace. Evening bazaar walk at Johari Bazaar." },
-      { day: 3, title: "Jaipur → Jodhpur", description: "Drive to Jodhpur (5 hrs). Visit Mehrangarh Fort and explore the Blue City on foot." },
-      { day: 4, title: "Jodhpur → Jaisalmer", description: "Drive to Jaisalmer (3.5 hrs). Evening camel safari and overnight desert camp." },
-      { day: 5, title: "Jaisalmer → Udaipur", description: "Sunrise at the sand dunes. Fly/drive to Udaipur. Check in to lake-facing hotel." },
-      { day: 6, title: "Udaipur Sightseeing", description: "City Palace, Jagdish Temple, Saheliyon Ki Bari. Sunset boat ride on Lake Pichola." },
-      { day: 7, title: "Udaipur Departure", description: "Free morning. Transfer to Udaipur Airport / Railway Station. Tour ends." },
-    ],
-    inclusions: [
-      "6 nights accommodation (Standard heritage hotels)",
-      "Daily breakfast",
-      "All surface transfers in AC vehicles",
-      "Camel safari with overnight camp",
-      "Boat ride on Lake Pichola",
-      "All monument entry fees",
-      "English-speaking guide throughout",
-    ],
-    exclusions: [
-      "Airfare / train tickets",
-      "Lunch & dinner",
-      "Jaisalmer to Udaipur flight (if opted)",
-      "Personal expenses",
-    ],
-    cancellationDeadline: "2026-09-05",
-    canCancel: true,
-  },
-
-  "bk-003": {
-    id: "bk-003",
-    bookingRef: "WI2M8B5X",
-    tourId: "leh-ladakh",
-    tourTitle: "Ladakh Land of High Passes",
-    destination: "Leh",
-    state: "Ladakh",
-    heroImage:
-      "https://images.unsplash.com/photo-1597040663342-45b6af3d91a5?w=1200&q=85",
-    status: "completed",
-    travelDate: "2026-07-10",
-    returnDate: "2026-07-18",
-    bookedOn: "2026-05-12",
-    duration: "9 Days / 8 Nights",
-    guestCount: 2,
-    tierLabel: "Deluxe",
-    travellers: [
-      { firstName: "Moin", lastName: "Malek", age: "24", gender: "Male", isPrimary: true },
-      { firstName: "Arjun", lastName: "Mehta", age: "25", gender: "Male" },
-    ],
-    contactName: "Moin Malek",
-    contactEmail: "moin@example.com",
-    contactPhone: "+91 98765 43210",
-    contactCity: "Bhuj, Gujarat",
-    addOns: [
-      { label: "Travel Insurance", amount: 799, perPerson: true },
-      { label: "Professional Photography", amount: 3500, perPerson: false },
-    ],
-    basePrice: 90000,
-    gstAmount: 4775,
-    discountAmount: 0,
-    totalAmount: 99073,
-    paidAmount: 99073,
-    payments: [
-      {
-        id: "pay-1",
-        date: "2026-05-12",
-        method: "Credit Card (HDFC Visa)",
-        amount: 99073,
-        status: "success",
-        transactionId: "TXN5Z7W3Q8N",
-      },
-    ],
-    highlights: [
-      "Sunrise puja at Thiksey Monastery",
-      "Pangong Tso Lake overnight camp",
-      "Khardung La — World's highest motorable pass",
-      "Bactrian camel safari in Nubra Valley",
-    ],
-    itinerary: [
-      { day: 1, title: "Arrival in Leh — Acclimatization", description: "Arrive in Leh. Rest and acclimatize. Short walk to Leh Palace. No strenuous activity." },
-      { day: 2, title: "Leh Local Sightseeing", description: "Shanti Stupa, Leh Market, Hall of Fame Museum, Magnetic Hill." },
-      { day: 3, title: "Thiksey & Hemis Monasteries", description: "Morning puja at Thiksey. Afternoon visit to Hemis Monastery. Evening in Leh." },
-      { day: 4, title: "Leh → Nubra Valley via Khardung La", description: "Drive over Khardung La Pass (5,359m). Descend to Nubra Valley. Camel safari at Hunder sand dunes." },
-      { day: 5, title: "Nubra → Pangong Lake", description: "Drive to Pangong Tso via Shyok Valley. Witness the colour-changing lake. Overnight in tented camp." },
-      { day: 6, title: "Pangong Lake → Leh", description: "Sunrise at Pangong. Return to Leh via Chang La. Afternoon rest." },
-      { day: 7, title: "Lamayuru & Alchi Monasteries", description: "Day trip to Lamayuru — the moonland landscape and ancient monastery." },
-      { day: 8, title: "Free Day / White Water Rafting", description: "Optional rafting on Zanskar River. Shopping in Leh Market." },
-      { day: 9, title: "Departure from Leh", description: "Early morning transfer to Leh Airport. Tour ends." },
-    ],
-    inclusions: [
-      "8 nights accommodation (Deluxe hotels + tented camps)",
-      "All meals (breakfast & dinner)",
-      "All transfers in SUV / Innova",
-      "Inner Line Permits for Nubra & Pangong",
-      "Camel safari in Nubra",
-      "English-speaking local guide",
-      "Oxygen cylinders for emergencies",
-      "Travel Insurance (add-on)",
-      "Professional Photography — 1 day (add-on)",
-    ],
-    exclusions: [
-      "Flights to/from Leh",
-      "Rafting charges (optional)",
-      "Personal expenses",
-      "Lunch during day trips",
-    ],
-    canCancel: false,
-    review: {
-      rating: 5,
-      comment:
-        "Absolutely life-changing trip! The Pangong Lake at sunset was beyond words. The guide Tenzin was brilliant. Highly recommend the photography add-on — the photos are priceless. Would book again without hesitation.",
-      submittedOn: "2026-07-21",
-    },
-  },
-};
 
 // ─── Status config ────────────────────────────────────────────────────────────
 
@@ -416,16 +99,41 @@ const STATUS_CONFIG: Record<BookingStatus, StatusConfig> = {
       "bg-red-100 text-red-600 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800",
     timelineColor: "bg-red-500",
   },
+  draft: {
+    label: "Draft",
+    icon: AlertCircle,
+    badgeClass:
+      "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700",
+    timelineColor: "bg-gray-400",
+  },
+  refunded: {
+    label: "Refunded",
+    icon: CheckCircle2,
+    badgeClass:
+      "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-800",
+    timelineColor: "bg-purple-500",
+  },
 };
 
 // ─── Route ────────────────────────────────────────────────────────────────────
 
 export const Route = createFileRoute("/domestic/bookings/$bookingId")({
   validateSearch: bookingDetailSearch,
-  loader: async ({ params }) => {
-    const booking = BOOKING_DB[params.bookingId] ?? null;
-    if (!booking) throw notFound();
-    return { booking };
+  beforeLoad: async ({ location }) => {
+    const session = await getSession();
+
+    if (!session) {
+      throw redirect({
+        to: "/sign-in",
+        search: {
+          redirect: location.href,
+        }
+      })
+    }
+
+    return {
+      user: session.user
+    }
   },
   notFoundComponent: () => (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-4">
@@ -445,13 +153,87 @@ export const Route = createFileRoute("/domestic/bookings/$bookingId")({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 function BookingDetailPage() {
-  const { booking } = Route.useLoaderData();
+  const { bookingId } = Route.useParams();
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+  const { user } = Route.useRouteContext();
+
   const [copied, setCopied] = useState(false);
+  const getUserBooking = useServerFn(getBookingDetailsById)
+
+  const {
+    data: booking,
+    isPending,
+    isError,
+    refetch
+  } = useQuery({
+    queryKey: ["booking", bookingId, user.id],
+    queryFn: () => getUserBooking({ data: { bookingId } }),
+  })
+
+  if (isPending) {
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center bg-muted/20 px-4">
+        <div
+          className="flex flex-col items-center gap-4 text-center"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+            <Loader2 className="h-7 w-7 animate-spin text-primary" />
+          </div>
+
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold">Loading your booking</h1>
+            <p className="text-sm text-muted-foreground">
+              Please wait while we retrieve your booking details.
+            </p>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (isError) {
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center bg-muted/20 px-4">
+        <div className="flex max-w-md flex-col items-center gap-4 py-12 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-destructive/10">
+            <AlertCircle className="h-7 w-7 text-destructive" />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-xl font-bold">Unable to load booking</h1>
+            <p className="text-sm text-muted-foreground">
+              Something went wrong while retrieving your booking details. Please try again.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button onClick={() => refetch()} className="gap-2">
+              <Loader2 className="hidden h-4 w-4" />
+              Try again
+            </Button>
+
+            <Link
+              to="/domestic/bookings"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Back to My Bookings
+            </Link>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (!booking) {
+    throw notFound();
+  }
 
   const config = STATUS_CONFIG[booking.status];
   const StatusIcon = config.icon;
+
 
   const activeTab = search.tab ?? "overview";
 
@@ -469,6 +251,10 @@ function BookingDetailPage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  console.log({
+    bookingFromDb: booking
+  })
 
   return (
     <TooltipProvider>
@@ -563,7 +349,7 @@ function BookingDetailPage() {
                 <TabsTrigger value="travellers">Travellers</TabsTrigger>
                 <TabsTrigger value="invoice">Invoice</TabsTrigger>
                 <TabsTrigger value="review">
-                  {booking.review ? "My Review" : "Leave Review"}
+                  {booking.reviews ? "My Review" : "Leave Review"}
                 </TabsTrigger>
               </TabsList>
 
@@ -598,11 +384,9 @@ function BookingDetailPage() {
 
 function HeroCard({
   booking,
-  config,
   balance,
 }: {
   booking: BookingDetail;
-  config: StatusConfig;
   balance: number;
 }) {
   const fmt = (iso: string) =>
@@ -651,7 +435,7 @@ function HeroCard({
             },
             {
               label: "Duration",
-              value: booking.duration,
+              value: fmt(booking.travelDate - booking.returnDate),
               icon: Clock,
             },
             {
@@ -677,7 +461,6 @@ function HeroCard({
           <div className="flex items-center gap-4 text-sm">
             <div>
               <p className="text-xs text-muted-foreground">Package</p>
-              <p className="font-semibold">{booking.tierLabel}</p>
             </div>
             <Separator orientation="vertical" className="h-8" />
             <div>
@@ -753,56 +536,60 @@ function OverviewTab({
       {/* Left — itinerary + inclusions */}
       <div className="lg:col-span-2 space-y-6">
         {/* Trip highlights */}
-        <Card className="border-border/60">
-          <CardHeader className="pb-2">
-            <h2 className="font-bold text-base">Trip Highlights</h2>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {booking.highlights.map((h, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm">
-                  <Star
-                    size={14}
-                    className="fill-amber-400 text-amber-400 shrink-0 mt-0.5"
-                    aria-hidden="true"
-                  />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        {booking.highlights !== null && (
+          <Card className="border-border/60">
+            <CardHeader className="pb-2">
+              <h2 className="font-bold text-base">Trip Highlights</h2>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {booking.highlights.map((h, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm">
+                    <Star
+                      size={14}
+                      className="fill-amber-400 text-amber-400 shrink-0 mt-0.5"
+                      aria-hidden="true"
+                    />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Itinerary */}
-        <Card className="border-border/60">
-          <CardHeader className="pb-2">
-            <h2 className="font-bold text-base">Day-by-Day Itinerary</h2>
-          </CardHeader>
-          <CardContent>
-            <ol className="space-y-0">
-              {booking.itinerary.map((day, i) => (
-                <li key={day.day} className="flex gap-4">
-                  {/* Timeline */}
-                  <div className="flex flex-col items-center">
-                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                      {day.day}
+        {booking.itinerary !== null && (
+          <Card className="border-border/60">
+            <CardHeader className="pb-2">
+              <h2 className="font-bold text-base">Day-by-Day Itinerary</h2>
+            </CardHeader>
+            <CardContent>
+              <ol className="space-y-0">
+                {booking.itinerary.map((day, i) => (
+                  <li key={day.day} className="flex gap-4">
+                    {/* Timeline */}
+                    <div className="flex flex-col items-center">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                        {day.day}
+                      </div>
+                      {i < booking.itinerary.length - 1 && (
+                        <div className="w-px flex-1 bg-border mt-1 mb-1" />
+                      )}
                     </div>
-                    {i < booking.itinerary.length - 1 && (
-                      <div className="w-px flex-1 bg-border mt-1 mb-1" />
-                    )}
-                  </div>
-                  {/* Content */}
-                  <div className="pb-5 pt-0.5 min-w-0">
-                    <p className="font-semibold text-sm">{day.title}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed mt-1">
-                      {day.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </CardContent>
-        </Card>
+                    {/* Content */}
+                    <div className="pb-5 pt-0.5 min-w-0">
+                      <p className="font-semibold text-sm">{day.title}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                        {day.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Inclusions & Exclusions */}
         <div className="grid sm:grid-cols-2 gap-4">
@@ -815,7 +602,7 @@ function OverviewTab({
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                {booking.inclusions.map((item, i) => (
+                {booking.inclusions?.map((item, i) => (
                   <li
                     key={i}
                     className="flex items-start gap-2 text-xs text-muted-foreground"
@@ -840,7 +627,7 @@ function OverviewTab({
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                {booking.exclusions.map((item, i) => (
+                {booking.exclusions?.map((item, i) => (
                   <li
                     key={i}
                     className="flex items-start gap-2 text-xs text-muted-foreground"
@@ -977,13 +764,19 @@ function OverviewTab({
 // ─── Travellers Tab ───────────────────────────────────────────────────────────
 
 function TravellersTab({ booking }: { booking: BookingDetail }) {
+  if (!booking.travellers) {
+    return (
+      <p>No Travellers</p>
+    )
+  }
+
   return (
     <div className="space-y-4 max-w-2xl">
       <p className="text-sm text-muted-foreground">
         {booking.travellers.length} traveller
         {booking.travellers.length > 1 ? "s" : ""} on this booking.
       </p>
-      {booking.travellers.map((t, i) => (
+      {booking.travellers?.map((t, i) => (
         <Card key={i} className="border-border/60">
           <CardContent className="pt-5">
             <div className="flex items-start gap-4">
@@ -1247,15 +1040,15 @@ function InvoiceTab({
                   p.status === "success"
                     ? "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-400"
                     : p.status === "pending"
-                    ? "border-amber-200 bg-amber-50 text-amber-700"
-                    : "border-red-200 bg-red-50 text-red-600"
+                      ? "border-amber-200 bg-amber-50 text-amber-700"
+                      : "border-red-200 bg-red-50 text-red-600"
                 )}
               >
                 {p.status === "success"
                   ? "Paid"
                   : p.status === "pending"
-                  ? "Pending"
-                  : "Failed"}
+                    ? "Pending"
+                    : "Failed"}
               </Badge>
             </div>
           ))}
@@ -1482,8 +1275,8 @@ function ReviewTab({ booking }: { booking: BookingDetail }) {
             </p>
           </div>
           <Link
-            to="/domestic/tours/$tourId"
-            params={{ tourId: booking.tourId }}
+            to="/domestic/tours/$slug"
+            params={{ slug: booking.slug }}
             className={buttonVariants({
               variant: "ghost",
               size: "sm",
@@ -1495,6 +1288,6 @@ function ReviewTab({ booking }: { booking: BookingDetail }) {
           </Link>
         </CardContent>
       </Card>
-    </div>
+    </div >
   );
 }
