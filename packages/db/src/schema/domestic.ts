@@ -7,15 +7,10 @@ import {
   uniqueIndex,
   primaryKey,
 } from "drizzle-orm/sqlite-core";
-import { user } from "./auth";
-
-/**
- * D1 / SQLite notes:
- * - use TEXT for ids
- * - use integer({ mode: "boolean" }) for booleans
- * - use integer({ mode: "timestamp" }) for Date fields
- * - use text({ mode: "json" }) for JSON blobs
- */
+import { user } from "./auth.ts";
+import { sql } from "drizzle-orm";
+import type { TourItinerary, TourDifficulty } from "@repo/types/domestic/tour"
+import type { DestinationRegion, DestinationCategory, DestinationSeason, DestinationAttraction, DestinationCuisine, DestinationTravelOption } from "@repo/types/domestic/destination"
 
 export const bookingStatuses = [
   "draft",
@@ -35,7 +30,7 @@ export const paymentStatuses = [
 export const paymentMethods = [
   "upi",
   "card",
-  "net_banking",
+  "netbanking",
   "cash",
   "wallet",
   "manual",
@@ -78,6 +73,16 @@ export const destinations = sqliteTable(
     country: text("country").notNull().default("India"),
     state: text("state").notNull(),
     city: text("city"),
+    region: text("region").$type<DestinationRegion>(), // e.g. "South India", "North India", "Islands"
+    category: text("category", { mode: "json" }).$type<DestinationCategory[]>(), // e.g. "beach", "hill station", "cultural", "adventure"
+    tourCount: integer("tour_count").notNull().default(0),
+    rating: real("rating").default(0),
+    tagline: text("tagline"),
+
+    highlights: text("highlights", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+    isTrending: integer("is_trending", { mode: "boolean" })
+      .notNull()
+      .default(false),
 
     shortDescription: text("short_description"),
     description: text("description"),
@@ -94,6 +99,19 @@ export const destinations = sqliteTable(
     seoTitle: text("seo_title"),
     seoDescription: text("seo_description"),
 
+    seasons: text("seasons", { mode: "json" }).$type<DestinationSeason[]>(),
+    reviewCount: integer("review_count").notNull().default(0),
+    area: text("area"),
+    language: text("language"),
+    currency: text("currency"),
+    attractions: text("attractions", { mode: "json" }).$type<DestinationAttraction[]>(),
+    cuisine: text("cuisine", { mode: "json" }).$type<DestinationCuisine[]>(),
+    howToReach: text("how_to_reach", { mode: "json" }).$type<DestinationTravelOption[]>(),
+    travelTips: text("travel_tips", { mode: "json" }).$type<string[]>(),
+    doList: text("do_list", { mode: "json" }).$type<string[]>(),
+    dontList: text("dont_list", { mode: "json" }).$type<string[]>(),
+
+
     isFeatured: integer("is_featured", { mode: "boolean" })
       .notNull()
       .default(false),
@@ -106,10 +124,10 @@ export const destinations = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("destinations_slug_unique").on(table.slug),
-     index("destinations_state_idx").on(table.state),
-     index("destinations_featured_idx").on(table.isFeatured),
+  (table) => [
+    uniqueIndex("destinations_slug_unique").on(table.slug),
+    index("destinations_state_idx").on(table.state),
+    index("destinations_featured_idx").on(table.isFeatured),
     index("destinations_active_idx").on(table.isActive),
   ]
 );
@@ -130,6 +148,7 @@ export const tours = sqliteTable(
     }),
 
     title: text("title").notNull(),
+    tagline: text("tagline").notNull(),
     slug: text("slug").notNull(),
     code: text("code").notNull(),
 
@@ -145,17 +164,16 @@ export const tours = sqliteTable(
     startLocation: text("start_location").notNull(),
     endLocation: text("end_location").notNull(),
 
-    basePrice: integer("base_price").notNull(), // store paise? for D1 simplest is integer rupees or paise
-    compareAtPrice: integer("compare_at_price"),
-
     currency: text("currency").notNull().default("INR"),
 
-    minAge: integer("min_age"),
-    maxAge: integer("max_age"),
-    maxGroupSize: integer("max_group_size"),
-    minGroupSize: integer("min_group_size").default(1),
+    tag: text("tag"),
 
-    difficulty: text("difficulty"), // easy/moderate/hard
+    minAge: integer("min_age").default(5).notNull(),
+    maxAge: integer("max_age").default(75).notNull(),
+    maxGroupSize: integer("max_group_size"),
+    minGroupSize: integer("min_group_size").notNull().default(1),
+
+    difficulty: text("difficulty").$type<TourDifficulty>().default("Easy").notNull(), // easy/moderate/hard
     transportIncluded: integer("transport_included", { mode: "boolean" })
       .notNull()
       .default(true),
@@ -165,18 +183,11 @@ export const tours = sqliteTable(
     exclusions: text("exclusions", { mode: "json" }).$type<string[]>().notNull(),
     highlights: text("highlights", { mode: "json" }).$type<string[]>().notNull(),
 
-    itinerary: text("itinerary", { mode: "json" }).$type<
-      Array<{
-        day: number;
-        title: string;
-        description: string;
-        hotel?: string;
-        meals?: string[];
-      }>
-    >(),
+    itinerary: text("itinerary", { mode: "json" }).$type<TourItinerary[]>(),
 
     cancellationPolicySummary: text("cancellation_policy_summary"),
     termsSummary: text("terms_summary"),
+    importantNotes: text("important_notes", { mode: "json" }).$type<string[]>(),
 
     featuredImage: text("featured_image"),
     gallery: text("gallery", { mode: "json" }).$type<string[]>(),
@@ -184,7 +195,7 @@ export const tours = sqliteTable(
     seoTitle: text("seo_title"),
     seoDescription: text("seo_description"),
 
-    avgRating: real("avg_rating").default(0),
+    avgRating: real("avg_rating").default(0).notNull(),
     reviewCount: integer("review_count").notNull().default(0),
     bookingCount: integer("booking_count").notNull().default(0),
 
@@ -205,15 +216,15 @@ export const tours = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("tours_slug_unique").on(table.slug),
-     uniqueIndex("tours_code_unique").on(table.code),
-     index("tours_destination_idx").on(table.destinationId),
-     index("tours_category_idx").on(table.category),
-     index("tours_featured_idx").on(table.isFeatured),
-     index("tours_published_idx").on(table.isPublished),
-     index("tours_active_idx").on(table.isActive),
-  ] 
+  (table) => [
+    uniqueIndex("tours_slug_unique").on(table.slug),
+    uniqueIndex("tours_code_unique").on(table.code),
+    index("tours_destination_idx").on(table.destinationId),
+    index("tours_category_idx").on(table.category),
+    index("tours_featured_idx").on(table.isFeatured),
+    index("tours_published_idx").on(table.isPublished),
+    index("tours_active_idx").on(table.isActive),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -236,9 +247,6 @@ export const departures = sqliteTable(
     startDate: integer("start_date", { mode: "timestamp" }).notNull(),
     endDate: integer("end_date", { mode: "timestamp" }).notNull(),
 
-    price: integer("price").notNull(),
-    discountedPrice: integer("discounted_price"),
-
     totalSeats: integer("total_seats").notNull(),
     availableSeats: integer("available_seats").notNull(),
 
@@ -247,6 +255,7 @@ export const departures = sqliteTable(
       .default("scheduled"),
 
     bookingDeadline: integer("booking_deadline", { mode: "timestamp" }),
+    cancellationDeadline: integer("cancellation_deadline", { mode: "timestamp" }),
     notes: text("notes"),
 
     isGuaranteed: integer("is_guaranteed", { mode: "boolean" })
@@ -261,12 +270,12 @@ export const departures = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-     uniqueIndex("departures_code_unique").on(table.code),
-     index("departures_tour_idx").on(table.tourId),
-     index("departures_start_date_idx").on(table.startDate),
-     index("departures_status_idx").on(table.status),
-     index("departures_active_idx").on(table.isActive),
+  (table) => [
+    uniqueIndex("departures_code_unique").on(table.code),
+    index("departures_tour_idx").on(table.tourId),
+    index("departures_start_date_idx").on(table.startDate),
+    index("departures_status_idx").on(table.status),
+    index("departures_active_idx").on(table.isActive),
   ]
 );
 
@@ -285,19 +294,35 @@ export const departurePricing = sqliteTable(
       .notNull()
       .references(() => departures.id, { onDelete: "cascade" }),
 
+
     roomType: text("room_type", { enum: roomTypes }).notNull(),
+
+    // Final selling price PER PERSON in INR, excluding GST.
     price: integer("price").notNull(),
+
+    // Optional original price, only for visual discount display.
+    // Example: price=29500, compareAtPrice=34000
+    compareAtPrice: integer("compare_at_price"),
 
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("departure_pricing_unique").on(
+  (table) => [
+    uniqueIndex("departure_pricing_unique").on(
+      table.roomType,
       table.departureId,
-      table.roomType
     ),
-  ] 
+
+    // Useful for fetching price rows after a departure is selected.
+    index("departure_pricing_departure_idx").on(table.departureId),
+
+    // Useful when computing "from" prices.
+    index("departure_pricing_tier_room_price_idx").on(
+      table.roomType,
+      table.price,
+    ),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -323,10 +348,10 @@ export const addons = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("addons_slug_unique").on(table.slug),
-   index("addons_active_idx").on(table.isActive),
-  ] 
+  (table) => [
+    uniqueIndex("addons_slug_unique").on(table.slug),
+    index("addons_active_idx").on(table.isActive),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -344,9 +369,9 @@ export const tourAddons = sqliteTable(
       .references(() => addons.id, { onDelete: "cascade" }),
     sortOrder: integer("sort_order").notNull().default(0),
   },
-  (table) => [ 
-   primaryKey({ columns: [table.tourId, table.addonId] }),
-  ] 
+  (table) => [
+    primaryKey({ columns: [table.tourId, table.addonId] }),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -383,11 +408,11 @@ export const coupons = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("coupons_code_unique").on(table.code),
-   index("coupons_active_idx").on(table.isActive),
-   index("coupons_expires_idx").on(table.expiresAt),
-  ] 
+  (table) => [
+    uniqueIndex("coupons_code_unique").on(table.code),
+    index("coupons_active_idx").on(table.isActive),
+    index("coupons_expires_idx").on(table.expiresAt),
+  ]
 );
 
 // optional coupon scoping
@@ -405,9 +430,9 @@ export const couponTargets = sqliteTable(
       onDelete: "cascade",
     }),
   },
-  (table) => [ 
-   index("coupon_targets_coupon_idx").on(table.couponId),
-  ] 
+  (table) => [
+    index("coupon_targets_coupon_idx").on(table.couponId),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -443,7 +468,6 @@ export const bookings = sqliteTable(
     contactPhone: text("contact_phone").notNull(),
     contactCity: text("contact_city"),
 
-    guestCount: integer("guest_count").notNull(),
     adultCount: integer("adult_count").notNull().default(1),
     childCount: integer("child_count").notNull().default(0),
 
@@ -465,10 +489,15 @@ export const bookings = sqliteTable(
     cancelledAt: integer("cancelled_at", { mode: "timestamp" }),
     completedAt: integer("completed_at", { mode: "timestamp" }),
 
+    //     tierId: text("tier_id").references(() => tourTiers.id, { onDelete: "set null" }),
+    //     tierLabel: text("tier_label"), // snapshot, so old bookings still read correctly
+
     cancellationReason: text("cancellation_reason"),
     source: text("source").notNull().default("website"), // website, admin, phone, whatsapp
 
     internalNotes: text("internal_notes"),
+
+    tourAddonsSelected: text("tour_addons_selected", { mode: "json" }).$type<typeof addons.$inferSelect>(),
 
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
@@ -477,16 +506,16 @@ export const bookings = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
-   uniqueIndex("bookings_ref_unique").on(table.bookingRef),
-   index("bookings_user_idx").on(table.userId),
-   index("bookings_tour_idx").on(table.tourId),
-   index("bookings_departure_idx").on(table.departureId),
-   index("bookings_status_idx").on(table.status),
-   index("bookings_payment_status_idx").on(table.paymentStatus),
-   index("bookings_booked_at_idx").on(table.bookedAt),
-   index("bookings_email_idx").on(table.contactEmail),
-  ] 
+  (table) => [
+    uniqueIndex("bookings_ref_unique").on(table.bookingRef),
+    index("bookings_user_idx").on(table.userId),
+    index("bookings_tour_idx").on(table.tourId),
+    index("bookings_departure_idx").on(table.departureId),
+    index("bookings_status_idx").on(table.status),
+    index("bookings_payment_status_idx").on(table.paymentStatus),
+    index("bookings_booked_at_idx").on(table.bookedAt),
+    index("bookings_email_idx").on(table.contactEmail),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -527,6 +556,9 @@ export const bookingTravellers = sqliteTable(
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
       .$defaultFn(() => new Date()),
+    updatedAt: integer("updated_at", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
   },
   (table) => [
     index("booking_travellers_booking_idx").on(table.bookingId),
@@ -534,7 +566,7 @@ export const bookingTravellers = sqliteTable(
       table.bookingId,
       table.isPrimary
     ),
-  ] 
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -556,6 +588,8 @@ export const bookingAddons = sqliteTable(
 
     title: text("title").notNull(), // snapshot
     unitPrice: integer("unit_price").notNull(),
+    departureStartDate: integer("departure_start_date", { mode: "timestamp", }).notNull(),
+    departureEndDate: integer("departure_end_date", { mode: "timestamp", }).notNull(),
     quantity: integer("quantity").notNull().default(1),
     totalPrice: integer("total_price").notNull(),
     perPerson: integer("per_person", { mode: "boolean" }).notNull().default(true),
@@ -591,6 +625,10 @@ export const payments = sqliteTable(
     providerPaymentId: text("provider_payment_id"),
     providerSignature: text("provider_signature"),
 
+    paymentDueAt: integer("payment_due_at", { mode: "timestamp" }),
+    paymentFailedAt: integer("payment_failed_at", { mode: "timestamp" }),
+    expiresAt: integer("expires_at", { mode: "timestamp" }),
+
     paidAt: integer("paid_at", { mode: "timestamp" }),
     notes: text("notes"),
 
@@ -601,7 +639,7 @@ export const payments = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => [ 
+  (table) => [
     index("payments_booking_idx").on(table.bookingId),
     index("payments_status_idx").on(table.status),
     index("payments_provider_payment_idx").on(
@@ -640,10 +678,10 @@ export const refunds = sqliteTable(
       .notNull()
       .$defaultFn(() => new Date()),
   },
-  (table) => ({
-    refundsBookingIdx: index("refunds_booking_idx").on(table.bookingId),
-    refundsPaymentIdx: index("refunds_payment_idx").on(table.paymentId),
-  })
+  (table) => [
+    index("refunds_booking_idx").on(table.bookingId),
+    index("refunds_payment_idx").on(table.paymentId),
+  ]
 );
 
 // -----------------------------------------------------------------------------
@@ -730,6 +768,9 @@ export const enquiries = sqliteTable(
       .$defaultFn(() => new Date()),
   },
   (table) => [
+    uniqueIndex("enquiries_tour_interest_user_unique")
+      .on(table.userId, table.tourId)
+      .where(sql`${table.source} = 'tour_interest'`),
     index("enquiries_tour_idx").on(table.tourId),
     index("enquiries_status_idx").on(table.status),
     index("enquiries_email_idx").on(table.email),

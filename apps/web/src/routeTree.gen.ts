@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DomesticRouteRouteImport } from './routes/domestic/route'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HajjUmrahRouteRouteImport } from './routes/hajj-umrah/route'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AuthContinueRouteImport } from './routes/auth/continue'
 import { Route as DomesticIndexRouteImport } from './routes/domestic/index'
 import { Route as DomesticAboutRouteImport } from './routes/domestic/about'
 import { Route as DomesticContactRouteImport } from './routes/domestic/contact'
+import { Route as DomesticOffersRouteImport } from './routes/domestic/offers'
 import { Route as HajjUmrahIndexRouteImport } from './routes/hajj-umrah/index'
 import { Route as HajjUmrahContactRouteImport } from './routes/hajj-umrah/contact'
 import { Route as HajjUmrahCustomGroupRouteImport } from './routes/hajj-umrah/custom-group'
@@ -29,6 +33,7 @@ import { Route as HajjUmrahVisaRouteImport } from './routes/hajj-umrah/visa'
 import { Route as InternationalIndexRouteImport } from './routes/international/index'
 import { Route as InvitationWebinarRouteImport } from './routes/invitation/webinar'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiSeedV1RouteImport } from './routes/api/seed/v1'
 import { Route as ApiWebhooksRazorpayRouteImport } from './routes/api/webhooks/razorpay'
 import { Route as DomesticBookingsIndexRouteImport } from './routes/domestic/bookings/index'
 import { Route as DomesticBookingsBookingIdRouteImport } from './routes/domestic/bookings/$bookingId'
@@ -41,8 +46,8 @@ import { Route as DomesticTermsIndexRouteImport } from './routes/domestic/terms/
 import { Route as DomesticThemesIndexRouteImport } from './routes/domestic/themes/index'
 import { Route as DomesticToursIndexRouteImport } from './routes/domestic/tours/index'
 import { Route as HajjUmrahPackagesIndexRouteImport } from './routes/hajj-umrah/packages/index'
-import { Route as DomesticToursTourIdIndexRouteImport } from './routes/domestic/tours/$tourId/index'
-import { Route as DomesticToursTourIdBookRouteImport } from './routes/domestic/tours/$tourId/book'
+import { Route as DomesticToursSlugIndexRouteImport } from './routes/domestic/tours/$slug/index'
+import { Route as DomesticToursSlugBookRouteImport } from './routes/domestic/tours/$slug/book'
 import { Route as HajjUmrahPackagesPackageIdIndexRouteImport } from './routes/hajj-umrah/packages/$packageId/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +70,11 @@ const HajjUmrahRouteRoute = HajjUmrahRouteRouteImport.update({
   path: '/hajj-umrah',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -80,6 +90,16 @@ const SignUpRoute = SignUpRouteImport.update({
   path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthContinueRoute = AuthContinueRouteImport.update({
+  id: '/auth/continue',
+  path: '/auth/continue',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DomesticIndexRoute = DomesticIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -93,6 +113,11 @@ const DomesticAboutRoute = DomesticAboutRouteImport.update({
 const DomesticContactRoute = DomesticContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => DomesticRouteRoute,
+} as any)
+const DomesticOffersRoute = DomesticOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
   getParentRoute: () => DomesticRouteRoute,
 } as any)
 const HajjUmrahIndexRoute = HajjUmrahIndexRouteImport.update({
@@ -143,6 +168,11 @@ const InvitationWebinarRoute = InvitationWebinarRouteImport.update({
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSeedV1Route = ApiSeedV1RouteImport.update({
+  id: '/api/seed/v1',
+  path: '/api/seed/v1',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiWebhooksRazorpayRoute = ApiWebhooksRazorpayRouteImport.update({
@@ -209,15 +239,14 @@ const HajjUmrahPackagesIndexRoute = HajjUmrahPackagesIndexRouteImport.update({
   path: '/packages/',
   getParentRoute: () => HajjUmrahRouteRoute,
 } as any)
-const DomesticToursTourIdIndexRoute =
-  DomesticToursTourIdIndexRouteImport.update({
-    id: '/tours/$tourId/',
-    path: '/tours/$tourId/',
-    getParentRoute: () => DomesticRouteRoute,
-  } as any)
-const DomesticToursTourIdBookRoute = DomesticToursTourIdBookRouteImport.update({
-  id: '/tours/$tourId/book',
-  path: '/tours/$tourId/book',
+const DomesticToursSlugIndexRoute = DomesticToursSlugIndexRouteImport.update({
+  id: '/tours/$slug/',
+  path: '/tours/$slug/',
+  getParentRoute: () => DomesticRouteRoute,
+} as any)
+const DomesticToursSlugBookRoute = DomesticToursSlugBookRouteImport.update({
+  id: '/tours/$slug/book',
+  path: '/tours/$slug/book',
   getParentRoute: () => DomesticRouteRoute,
 } as any)
 const HajjUmrahPackagesPackageIdIndexRoute =
@@ -232,11 +261,15 @@ export interface FileRoutesByFullPath {
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -248,6 +281,7 @@ export interface FileRoutesByFullPath {
   '/hajj-umrah/': typeof HajjUmrahIndexRoute
   '/international/': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -260,18 +294,22 @@ export interface FileRoutesByFullPath {
   '/domestic/themes/': typeof DomesticThemesIndexRoute
   '/domestic/tours/': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages/': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId/': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug/': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId/': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -283,6 +321,7 @@ export interface FileRoutesByTo {
   '/hajj-umrah': typeof HajjUmrahIndexRoute
   '/international': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -295,8 +334,8 @@ export interface FileRoutesByTo {
   '/domestic/themes': typeof DomesticThemesIndexRoute
   '/domestic/tours': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRoutesById {
@@ -305,11 +344,15 @@ export interface FileRoutesById {
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/terms': typeof TermsRoute
+  '/auth/continue': typeof AuthContinueRoute
   '/domestic/about': typeof DomesticAboutRoute
   '/domestic/contact': typeof DomesticContactRoute
+  '/domestic/offers': typeof DomesticOffersRoute
   '/hajj-umrah/contact': typeof HajjUmrahContactRoute
   '/hajj-umrah/custom-group': typeof HajjUmrahCustomGroupRoute
   '/hajj-umrah/faq': typeof HajjUmrahFaqRoute
@@ -321,6 +364,7 @@ export interface FileRoutesById {
   '/hajj-umrah/': typeof HajjUmrahIndexRoute
   '/international/': typeof InternationalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/seed/v1': typeof ApiSeedV1Route
   '/api/webhooks/razorpay': typeof ApiWebhooksRazorpayRoute
   '/domestic/bookings/$bookingId': typeof DomesticBookingsBookingIdRoute
   '/domestic/destinations/$slug': typeof DomesticDestinationsSlugRoute
@@ -333,8 +377,8 @@ export interface FileRoutesById {
   '/domestic/themes/': typeof DomesticThemesIndexRoute
   '/domestic/tours/': typeof DomesticToursIndexRoute
   '/hajj-umrah/packages/': typeof HajjUmrahPackagesIndexRoute
-  '/domestic/tours/$tourId/book': typeof DomesticToursTourIdBookRoute
-  '/domestic/tours/$tourId/': typeof DomesticToursTourIdIndexRoute
+  '/domestic/tours/$slug/book': typeof DomesticToursSlugBookRoute
+  '/domestic/tours/$slug/': typeof DomesticToursSlugIndexRoute
   '/hajj-umrah/packages/$packageId/': typeof HajjUmrahPackagesPackageIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -344,11 +388,15 @@ export interface FileRouteTypes {
     | '/domestic'
     | '/hajj-umrah'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -360,6 +408,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah/'
     | '/international/'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -372,18 +421,22 @@ export interface FileRouteTypes {
     | '/domestic/themes/'
     | '/domestic/tours/'
     | '/hajj-umrah/packages/'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId/'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug/'
     | '/hajj-umrah/packages/$packageId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -395,6 +448,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah'
     | '/international'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -407,8 +461,8 @@ export interface FileRouteTypes {
     | '/domestic/themes'
     | '/domestic/tours'
     | '/hajj-umrah/packages'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug'
     | '/hajj-umrah/packages/$packageId'
   id:
     | '__root__'
@@ -416,11 +470,15 @@ export interface FileRouteTypes {
     | '/domestic'
     | '/hajj-umrah'
     | '/forgot-password'
+    | '/privacy'
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/terms'
+    | '/auth/continue'
     | '/domestic/about'
     | '/domestic/contact'
+    | '/domestic/offers'
     | '/hajj-umrah/contact'
     | '/hajj-umrah/custom-group'
     | '/hajj-umrah/faq'
@@ -432,6 +490,7 @@ export interface FileRouteTypes {
     | '/hajj-umrah/'
     | '/international/'
     | '/api/auth/$'
+    | '/api/seed/v1'
     | '/api/webhooks/razorpay'
     | '/domestic/bookings/$bookingId'
     | '/domestic/destinations/$slug'
@@ -444,8 +503,8 @@ export interface FileRouteTypes {
     | '/domestic/themes/'
     | '/domestic/tours/'
     | '/hajj-umrah/packages/'
-    | '/domestic/tours/$tourId/book'
-    | '/domestic/tours/$tourId/'
+    | '/domestic/tours/$slug/book'
+    | '/domestic/tours/$slug/'
     | '/hajj-umrah/packages/$packageId/'
   fileRoutesById: FileRoutesById
 }
@@ -454,12 +513,16 @@ export interface RootRouteChildren {
   DomesticRouteRoute: typeof DomesticRouteRouteWithChildren
   HajjUmrahRouteRoute: typeof HajjUmrahRouteRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  TermsRoute: typeof TermsRoute
+  AuthContinueRoute: typeof AuthContinueRoute
   InvitationWebinarRoute: typeof InvitationWebinarRoute
   InternationalIndexRoute: typeof InternationalIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiSeedV1Route: typeof ApiSeedV1Route
   ApiWebhooksRazorpayRoute: typeof ApiWebhooksRazorpayRoute
 }
 
@@ -493,6 +556,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HajjUmrahRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -514,6 +584,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/continue': {
+      id: '/auth/continue'
+      path: '/auth/continue'
+      fullPath: '/auth/continue'
+      preLoaderRoute: typeof AuthContinueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/domestic/': {
       id: '/domestic/'
       path: '/'
@@ -533,6 +617,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/domestic/contact'
       preLoaderRoute: typeof DomesticContactRouteImport
+      parentRoute: typeof DomesticRouteRoute
+    }
+    '/domestic/offers': {
+      id: '/domestic/offers'
+      path: '/offers'
+      fullPath: '/domestic/offers'
+      preLoaderRoute: typeof DomesticOffersRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
     '/hajj-umrah/': {
@@ -603,6 +694,13 @@ declare module '@tanstack/react-router' {
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/seed/v1': {
+      id: '/api/seed/v1'
+      path: '/api/seed/v1'
+      fullPath: '/api/seed/v1'
+      preLoaderRoute: typeof ApiSeedV1RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/webhooks/razorpay': {
@@ -689,18 +787,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HajjUmrahPackagesIndexRouteImport
       parentRoute: typeof HajjUmrahRouteRoute
     }
-    '/domestic/tours/$tourId/': {
-      id: '/domestic/tours/$tourId/'
-      path: '/tours/$tourId'
-      fullPath: '/domestic/tours/$tourId/'
-      preLoaderRoute: typeof DomesticToursTourIdIndexRouteImport
+    '/domestic/tours/$slug/': {
+      id: '/domestic/tours/$slug/'
+      path: '/tours/$slug'
+      fullPath: '/domestic/tours/$slug/'
+      preLoaderRoute: typeof DomesticToursSlugIndexRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
-    '/domestic/tours/$tourId/book': {
-      id: '/domestic/tours/$tourId/book'
-      path: '/tours/$tourId/book'
-      fullPath: '/domestic/tours/$tourId/book'
-      preLoaderRoute: typeof DomesticToursTourIdBookRouteImport
+    '/domestic/tours/$slug/book': {
+      id: '/domestic/tours/$slug/book'
+      path: '/tours/$slug/book'
+      fullPath: '/domestic/tours/$slug/book'
+      preLoaderRoute: typeof DomesticToursSlugBookRouteImport
       parentRoute: typeof DomesticRouteRoute
     }
     '/hajj-umrah/packages/$packageId/': {
@@ -716,6 +814,7 @@ declare module '@tanstack/react-router' {
 interface DomesticRouteRouteChildren {
   DomesticAboutRoute: typeof DomesticAboutRoute
   DomesticContactRoute: typeof DomesticContactRoute
+  DomesticOffersRoute: typeof DomesticOffersRoute
   DomesticIndexRoute: typeof DomesticIndexRoute
   DomesticBookingsBookingIdRoute: typeof DomesticBookingsBookingIdRoute
   DomesticDestinationsSlugRoute: typeof DomesticDestinationsSlugRoute
@@ -727,13 +826,14 @@ interface DomesticRouteRouteChildren {
   DomesticTermsIndexRoute: typeof DomesticTermsIndexRoute
   DomesticThemesIndexRoute: typeof DomesticThemesIndexRoute
   DomesticToursIndexRoute: typeof DomesticToursIndexRoute
-  DomesticToursTourIdBookRoute: typeof DomesticToursTourIdBookRoute
-  DomesticToursTourIdIndexRoute: typeof DomesticToursTourIdIndexRoute
+  DomesticToursSlugBookRoute: typeof DomesticToursSlugBookRoute
+  DomesticToursSlugIndexRoute: typeof DomesticToursSlugIndexRoute
 }
 
 const DomesticRouteRouteChildren: DomesticRouteRouteChildren = {
   DomesticAboutRoute: DomesticAboutRoute,
   DomesticContactRoute: DomesticContactRoute,
+  DomesticOffersRoute: DomesticOffersRoute,
   DomesticIndexRoute: DomesticIndexRoute,
   DomesticBookingsBookingIdRoute: DomesticBookingsBookingIdRoute,
   DomesticDestinationsSlugRoute: DomesticDestinationsSlugRoute,
@@ -745,8 +845,8 @@ const DomesticRouteRouteChildren: DomesticRouteRouteChildren = {
   DomesticTermsIndexRoute: DomesticTermsIndexRoute,
   DomesticThemesIndexRoute: DomesticThemesIndexRoute,
   DomesticToursIndexRoute: DomesticToursIndexRoute,
-  DomesticToursTourIdBookRoute: DomesticToursTourIdBookRoute,
-  DomesticToursTourIdIndexRoute: DomesticToursTourIdIndexRoute,
+  DomesticToursSlugBookRoute: DomesticToursSlugBookRoute,
+  DomesticToursSlugIndexRoute: DomesticToursSlugIndexRoute,
 }
 
 const DomesticRouteRouteWithChildren = DomesticRouteRoute._addFileChildren(
@@ -786,12 +886,16 @@ const rootRouteChildren: RootRouteChildren = {
   DomesticRouteRoute: DomesticRouteRouteWithChildren,
   HajjUmrahRouteRoute: HajjUmrahRouteRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  TermsRoute: TermsRoute,
+  AuthContinueRoute: AuthContinueRoute,
   InvitationWebinarRoute: InvitationWebinarRoute,
   InternationalIndexRoute: InternationalIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiSeedV1Route: ApiSeedV1Route,
   ApiWebhooksRazorpayRoute: ApiWebhooksRazorpayRoute,
 }
 export const routeTree = rootRouteImport

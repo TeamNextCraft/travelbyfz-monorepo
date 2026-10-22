@@ -8,10 +8,11 @@ import {
   Star,
   ArrowUpDown,
   X,
-  ChevronDown,
   Grid2X2,
   List,
   Filter,
+  ArrowRight,
+  Users,
 } from "lucide-react";
 import { useState, useMemo } from "react";
 import { Button, buttonVariants } from "#/components/ui/button";
@@ -43,36 +44,32 @@ import { Label } from "#/components/ui/label";
 import { Separator } from "#/components/ui/separator";
 import { ScrollArea } from "#/components/ui/scroll-area";
 import { cn } from "#/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { getPublicTours } from "#/server/actions/tours.ts";
+import type { PublicTour } from "@repo/types/domestic/tour"
+import { ToursError, ToursLoading } from "#/components/common/domestic/tours-status-components.tsx";
+import { useServerFn } from "@tanstack/react-start";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type Category = "Beach" | "Adventure" | "Cultural" | "Religious" | "Hill Station";
-type SortOption = "popular" | "price-asc" | "price-desc" | "rating" | "duration-asc";
+type Category =
+  | "Beach"
+  | "Adventure"
+  | "Cultural"
+  | "Religious"
+  | "Hill Station";
+type SortOption =
+  | "popular"
+  | "price-asc"
+  | "price-desc"
+  | "rating"
+  | "duration-asc";
 type ViewMode = "grid" | "list";
-
-type Tour = {
-  id: string;
-  title: string;
-  destination: string;
-  state: string;
-  duration: string;
-  durationDays: number;
-  price: number;
-  rating: number;
-  reviewCount: number;
-  category: Category;
-  image: string;
-  tag?: string;
-  groupSize: number;
-  highlights: string[];
-};
-
-// ─── Search Params Schema (URL-persisted filters) ─────────────────────────────
 
 const toursSearchSchema = z.object({
   q: z.string().optional(),
   category: z.string().optional(),
-  sort: z.enum(["popular", "price-asc", "price-desc", "rating", "duration-asc"]).optional(),
+  sort: z
+    .enum(["popular", "price-asc", "price-desc", "rating", "duration-asc"])
+    .optional(),
   minPrice: z.number().optional(),
   maxPrice: z.number().optional(),
   maxDays: z.number().optional(),
@@ -81,206 +78,24 @@ const toursSearchSchema = z.object({
 
 type ToursSearch = z.infer<typeof toursSearchSchema>;
 
-// ─── Static tour data (replace with loader + DB) ─────────────────────────────
-
-const ALL_TOURS: Tour[] = [
-  {
-    id: "kerala-backwaters",
-    title: "Kerala Backwaters & Spice Trail",
-    destination: "Alleppey",
-    state: "Kerala",
-    duration: "5D / 4N",
-    durationDays: 5,
-    price: 18500,
-    rating: 4.9,
-    reviewCount: 312,
-    category: "Beach",
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
-    tag: "Best Seller",
-    groupSize: 12,
-    highlights: ["Houseboat stay", "Spice plantation", "Kathakali show"],
-  },
-  {
-    id: "rajasthan-royals",
-    title: "Royal Rajasthan Heritage Tour",
-    destination: "Jaipur → Jodhpur → Udaipur",
-    state: "Rajasthan",
-    duration: "7D / 6N",
-    durationDays: 7,
-    price: 24999,
-    rating: 4.8,
-    reviewCount: 198,
-    category: "Cultural",
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80",
-    tag: "Popular",
-    groupSize: 10,
-    highlights: ["Amber Fort", "Desert safari", "Lake Pichola cruise"],
-  },
-  {
-    id: "spiti-valley",
-    title: "Spiti Valley Expedition",
-    destination: "Kaza",
-    state: "Himachal Pradesh",
-    duration: "8D / 7N",
-    durationDays: 8,
-    price: 32000,
-    rating: 4.7,
-    reviewCount: 145,
-    category: "Adventure",
-    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80",
-    tag: "New",
-    groupSize: 8,
-    highlights: ["Key Monastery", "Chandratal Lake", "4WD off-roading"],
-  },
-  {
-    id: "char-dham",
-    title: "Char Dham Yatra",
-    destination: "Badrinath · Kedarnath · Gangotri · Yamunotri",
-    state: "Uttarakhand",
-    duration: "12D / 11N",
-    durationDays: 12,
-    price: 42000,
-    rating: 4.9,
-    reviewCount: 421,
-    category: "Religious",
-    image: "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80",
-    tag: "Best Seller",
-    groupSize: 15,
-    highlights: ["4 sacred shrines", "Helicopter option", "Vedic rituals"],
-  },
-  {
-    id: "coorg-retreat",
-    title: "Coorg Coffee & Nature Retreat",
-    destination: "Madikeri",
-    state: "Karnataka",
-    duration: "4D / 3N",
-    durationDays: 4,
-    price: 14500,
-    rating: 4.6,
-    reviewCount: 87,
-    category: "Hill Station",
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
-    groupSize: 10,
-    highlights: ["Coffee plantation walk", "Abbey Falls", "Jungle safari"],
-  },
-  {
-    id: "andaman-escape",
-    title: "Andaman Island Escape",
-    destination: "Port Blair · Havelock",
-    state: "Andaman & Nicobar",
-    duration: "6D / 5N",
-    durationDays: 6,
-    price: 38000,
-    rating: 4.8,
-    reviewCount: 230,
-    category: "Beach",
-    image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80",
-    groupSize: 12,
-    highlights: ["Scuba diving", "Radhanagar Beach", "Cellular Jail tour"],
-  },
-  {
-    id: "varanasi-spiritual",
-    title: "Varanasi Spiritual Journey",
-    destination: "Varanasi",
-    state: "Uttar Pradesh",
-    duration: "3D / 2N",
-    durationDays: 3,
-    price: 9800,
-    rating: 4.7,
-    reviewCount: 176,
-    category: "Religious",
-    image: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600&q=80",
-    groupSize: 15,
-    highlights: ["Ganga Aarti", "Sunrise boat ride", "Sarnath visit"],
-  },
-  {
-    id: "manali-adventure",
-    title: "Manali Adventure & Snow",
-    destination: "Manali",
-    state: "Himachal Pradesh",
-    duration: "6D / 5N",
-    durationDays: 6,
-    price: 22000,
-    rating: 4.7,
-    reviewCount: 289,
-    category: "Adventure",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-    tag: "Popular",
-    groupSize: 12,
-    highlights: ["Rohtang Pass", "River rafting", "Solang Valley zip-line"],
-  },
-  {
-    id: "goa-beaches",
-    title: "Goa Sun, Sand & Seafood",
-    destination: "North & South Goa",
-    state: "Goa",
-    duration: "5D / 4N",
-    durationDays: 5,
-    price: 16500,
-    rating: 4.5,
-    reviewCount: 341,
-    category: "Beach",
-    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80",
-    groupSize: 15,
-    highlights: ["Beach hopping", "Water sports", "Spice plantation tour"],
-  },
-  {
-    id: "ooty-nilgiris",
-    title: "Ooty & Nilgiris Explorer",
-    destination: "Ooty",
-    state: "Tamil Nadu",
-    duration: "4D / 3N",
-    durationDays: 4,
-    price: 12000,
-    rating: 4.5,
-    reviewCount: 112,
-    category: "Hill Station",
-    image: "https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=600&q=80",
-    groupSize: 10,
-    highlights: ["Toy train ride", "Botanical Garden", "Tea estate walk"],
-  },
-  {
-    id: "golden-triangle",
-    title: "Golden Triangle — Delhi Agra Jaipur",
-    destination: "Delhi · Agra · Jaipur",
-    state: "Multi-State",
-    duration: "6D / 5N",
-    durationDays: 6,
-    price: 19500,
-    rating: 4.8,
-    reviewCount: 507,
-    category: "Cultural",
-    tag: "Best Seller",
-    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&q=80",
-    groupSize: 12,
-    highlights: ["Taj Mahal sunrise", "Red Fort", "City Palace Jaipur"],
-  },
-  {
-    id: "ladakh-expedition",
-    title: "Ladakh Land of High Passes",
-    destination: "Leh · Nubra · Pangong",
-    state: "Ladakh",
-    duration: "9D / 8N",
-    durationDays: 9,
-    price: 45000,
-    rating: 4.9,
-    reviewCount: 193,
-    category: "Adventure",
-    image: "https://images.unsplash.com/photo-1597040663342-45b6af3d91a5?w=600&q=80",
-    groupSize: 8,
-    highlights: ["Pangong Lake", "Nubra Valley", "Khardung La pass"],
-  },
+const CATEGORIES: Category[] = [
+  "Beach",
+  "Adventure",
+  "Cultural",
+  "Religious",
+  "Hill Station",
 ];
 
-const ALL_STATES = [...new Set(ALL_TOURS.map((t) => t.state))].sort();
-const CATEGORIES: Category[] = ["Beach", "Adventure", "Cultural", "Religious", "Hill Station"];
-
-const CATEGORY_STYLES: Record<Category, string> = {
+const CATEGORY_STYLES: Record<string, string> = {
   Beach: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
-  Adventure: "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
-  Cultural: "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
-  Religious: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300",
-  "Hill Station": "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
+  Adventure:
+    "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+  Cultural:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
+  Religious:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300",
+  "Hill Station":
+    "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
 };
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -293,26 +108,32 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 const MAX_PRICE = 50000;
 
-// ─── Route ────────────────────────────────────────────────────────────────────
-
 export const Route = createFileRoute("/domestic/tours/")({
   validateSearch: toursSearchSchema,
-  // When you hook up a DB, swap static data:
-  // loader: async ({ context }) => ({ tours: await getAllTours() }),
   component: ToursPage,
 });
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 function ToursPage() {
+
+  const fetchTours = useServerFn(getPublicTours);
+
+  const {
+    data: fetchedTours,
+    isPending,
+    isError,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["tours-array"],
+    queryFn: () => fetchTours(),
+  });
+
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/domestic/tours/" });
 
-  // Local UI state
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Derive filter state from URL search params
   const q = search.q ?? "";
   const category = search.category ?? "";
   const sort = search.sort ?? "popular";
@@ -321,65 +142,121 @@ function ToursPage() {
   const maxDays = search.maxDays ?? 30;
   const selectedState = search.state ?? "";
 
-  // Update URL search params
+  const tours = fetchedTours ?? [];
+
+  const allStates = useMemo(
+    () => [...new Set(tours.map((tour) => tour.state))].sort(),
+    [tours],
+  );
+
+  const filteredTours = useMemo(() => {
+    const result = tours.filter((tour) => {
+      if (tour.price === null) return false;
+
+      const query = q.trim().toLowerCase();
+
+      const matchesSearch =
+        !query ||
+        tour.title.toLowerCase().includes(query) ||
+        tour.destination.toLowerCase().includes(query) ||
+        tour.state.toLowerCase().includes(query);
+
+      const matchesCategory =
+        !category || tour.category === category;
+
+      const matchesState =
+        !selectedState || tour.state === selectedState;
+
+      const matchesPrice =
+        tour.price >= minPrice && tour.price <= maxPrice;
+
+      const matchesDuration =
+        tour.durationDays <= maxDays;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesState &&
+        matchesPrice &&
+        matchesDuration
+      );
+    });
+
+    return [...result].sort((a, b) => {
+      switch (sort) {
+        case "price-asc":
+          return a.price - b.price;
+
+        case "price-desc":
+          return b.price - a.price;
+
+        case "rating":
+          return b.rating - a.rating;
+
+        case "duration-asc":
+          return a.durationDays - b.durationDays;
+
+        case "popular":
+        default:
+          return b.reviewCount - a.reviewCount;
+      }
+    });
+  }, [
+    tours,
+    q,
+    category,
+    selectedState,
+    minPrice,
+    maxPrice,
+    maxDays,
+    sort,
+  ]);
+
   const setSearch = (updates: Partial<ToursSearch>) => {
     navigate({
-      search: (prev) => ({ ...prev, ...updates }),
+      search: (previous) => ({
+        ...previous,
+        ...updates,
+      }),
       replace: true,
     });
   };
 
   const clearAllFilters = () => {
-    navigate({ search: {}, replace: true });
+    navigate({
+      search: {},
+      replace: true,
+    });
   };
 
-  // Count active filters for badge
   const activeFilterCount = [
     category,
     selectedState,
-    search.minPrice,
+    search.minPrice !== undefined,
     search.maxPrice !== undefined && search.maxPrice < MAX_PRICE,
-    search.maxDays && search.maxDays < 30,
+    search.maxDays !== undefined && search.maxDays < 30,
   ].filter(Boolean).length;
 
-  // Filter + sort logic
-  const filteredTours = useMemo(() => {
-    let result = ALL_TOURS.filter((tour) => {
-      if (q) {
-        const lower = q.toLowerCase();
-        if (
-          !tour.title.toLowerCase().includes(lower) &&
-          !tour.destination.toLowerCase().includes(lower) &&
-          !tour.state.toLowerCase().includes(lower)
-        )
-          return false;
-      }
-      if (category && tour.category !== category) return false;
-      if (selectedState && tour.state !== selectedState) return false;
-      if (tour.price < minPrice || tour.price > maxPrice) return false;
-      if (tour.durationDays > maxDays) return false;
-      return true;
-    });
+  // Tours those published but not yet planned to departure
+  const published_only_tours = tours.filter(t => t.price === null);
 
-    switch (sort) {
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case "rating":
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case "duration-asc":
-        result.sort((a, b) => a.durationDays - b.durationDays);
-        break;
-      default:
-        result.sort((a, b) => b.reviewCount - a.reviewCount);
-    }
+  const hasScheduledTours = filteredTours.length > 0;
+  const hasUnscheduledTours = published_only_tours.length > 0;
+  const hasAnyTours = hasScheduledTours || hasUnscheduledTours;
 
-    return result;
-  }, [q, category, selectedState, minPrice, maxPrice, maxDays, sort]);
+  const TourCard = viewMode === "grid" ? TourGridCard : TourListCard;
+
+  const toursLayoutClassName =
+    viewMode === "grid"
+      ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      : "flex flex-col gap-4";
+
+
+  console.log({
+    tours: tours,
+    published_only_tours: published_only_tours,
+  })
+
 
   return (
     <main>
@@ -393,8 +270,8 @@ function ToursPage() {
             All Tour Packages
           </h1>
           <p className="text-muted-foreground max-w-xl">
-            {ALL_TOURS.length} handcrafted domestic tours — from weekend
-            getaways to epic multi-week expeditions.
+            {tours.length} handcrafted domestic tours — from weekend getaways to
+            epic multi-week expeditions.
           </p>
         </div>
       </div>
@@ -412,9 +289,7 @@ function ToursPage() {
             <Input
               placeholder="Search tours, destinations, states..."
               value={q}
-              onChange={(e) =>
-                setSearch({ q: e.target.value || undefined })
-              }
+              onChange={(e) => setSearch({ q: e.target.value || undefined })}
               className="pl-9 w-full"
             />
             {q && (
@@ -520,7 +395,7 @@ function ToursPage() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All states</SelectItem>
-                        {ALL_STATES.map((s) => (
+                        {allStates.map((s) => (
                           <SelectItem key={s} value={s}>
                             {s}
                           </SelectItem>
@@ -595,7 +470,7 @@ function ToursPage() {
                 "p-2 transition-colors",
                 viewMode === "grid"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted"
+                  : "text-muted-foreground hover:bg-muted",
               )}
               aria-label="Grid view"
             >
@@ -607,7 +482,7 @@ function ToursPage() {
                 "p-2 transition-colors",
                 viewMode === "list"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted"
+                  : "text-muted-foreground hover:bg-muted",
               )}
               aria-label="List view"
             >
@@ -631,14 +506,15 @@ function ToursPage() {
                 onRemove={() => setSearch({ state: undefined })}
               />
             )}
-            {(search.minPrice || (search.maxPrice && search.maxPrice < MAX_PRICE)) && (
-              <FilterChip
-                label={`₹${minPrice.toLocaleString("en-IN")} – ₹${maxPrice >= MAX_PRICE ? "50,000+" : maxPrice.toLocaleString("en-IN")}`}
-                onRemove={() =>
-                  setSearch({ minPrice: undefined, maxPrice: undefined })
-                }
-              />
-            )}
+            {(search.minPrice ||
+              (search.maxPrice && search.maxPrice < MAX_PRICE)) && (
+                <FilterChip
+                  label={`₹${minPrice.toLocaleString("en-IN")} – ₹${maxPrice >= MAX_PRICE ? "50,000+" : maxPrice.toLocaleString("en-IN")}`}
+                  onRemove={() =>
+                    setSearch({ minPrice: undefined, maxPrice: undefined })
+                  }
+                />
+              )}
             {search.maxDays && search.maxDays < 30 && (
               <FilterChip
                 label={`Max ${maxDays} days`}
@@ -664,217 +540,359 @@ function ToursPage() {
           {q && (
             <>
               {" "}
-              for{" "}
-              <span className="font-semibold text-foreground">"{q}"</span>
+              for <span className="font-semibold text-foreground">"{q}"</span>
             </>
           )}
         </p>
 
         {/* ── Tour Grid / List ──────────────────────────────────────────── */}
-        {filteredTours.length === 0 ? (
+        {isPending ? (
+          <ToursLoading />
+        ) : isError ? (
+          <ToursError error={error} onRetry={refetch} />
+        ) : !hasAnyTours ? (
           <EmptyState onClear={clearAllFilters} />
-        ) : viewMode === "grid" ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredTours.map((tour) => (
-              <TourGridCard key={tour.id} tour={tour} />
-            ))}
-          </div>
         ) : (
-          <div className="flex flex-col gap-4">
-            {filteredTours.map((tour) => (
-              <TourListCard key={tour.id} tour={tour} />
-            ))}
+          <div className="space-y-12">
+            {hasScheduledTours && (
+              <section aria-labelledby="available-tours-heading">
+                <div className="mb-5">
+                  <h2
+                    id="available-tours-heading"
+                    className="text-xl font-semibold tracking-tight"
+                  >
+                    Available to book
+                  </h2>
+
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Explore tours with upcoming departures and choose your travel dates.
+                  </p>
+                </div>
+
+                <div className={toursLayoutClassName}>
+                  {filteredTours.map((tour) => (
+                    <TourCard key={tour.id} tour={tour} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {hasUnscheduledTours && (
+              <section
+                aria-labelledby="upcoming-tours-heading"
+                className={
+                  hasScheduledTours ? "border-t border-border/60 pt-8" : undefined
+                }
+              >
+                <div className="mb-5">
+                  <h2
+                    id="upcoming-tours-heading"
+                    className="text-xl font-semibold tracking-tight"
+                  >
+                    More tours to explore
+                  </h2>
+                  <p className="mt-1 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    These tours aren’t currently open for booking.
+                    Explore the itineraries and enquire about future departures.
+                  </p>
+                </div>
+
+                <div className={toursLayoutClassName}>
+                  {published_only_tours.map((tour) => (
+                    <TourCard key={tour.id} tour={tour} />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
       </div>
-    </main>
+    </main >
   );
 }
 
 // ─── Grid Card ────────────────────────────────────────────────────────────────
 
-function TourGridCard({ tour }: { tour: Tour }) {
+function TourGridCard({ tour }: { tour: PublicTour }) {
+  const hasPrice = tour.price != null;
+
   return (
-    <Card className="group overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 border-border/60">
-      <div className="relative overflow-hidden aspect-[16/10]">
-        <img
-          src={tour.image}
-          alt={tour.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-          width={600}
-          height={375}
-        />
-        {tour.tag && (
-          <Badge className="absolute top-3 left-3 bg-amber-500 text-black border-0 font-semibold text-xs">
-            {tour.tag}
-          </Badge>
-        )}
-        <Badge
-          className={cn(
-            "absolute top-3 right-3 border-0 text-xs font-medium",
-            CATEGORY_STYLES[tour.category]
-          )}
+    <Card className="group flex h-full flex-col gap-0 overflow-hidden border-border/60 py-0 transition-shadow duration-300 hover:shadow-lg">
+      {/* Image */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+        <Link
+          to="/domestic/tours/$slug"
+          params={{ slug: tour.slug }}
+          aria-label={`View ${tour.title}`}
+          className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
         >
-          {tour.category}
-        </Badge>
+          <img
+            src={tour.image}
+            alt={tour.title}
+            className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105 motion-reduce:transition-none"
+            loading="lazy"
+            width={600}
+            height={375}
+          />
+        </Link>
+
+        <div className="pointer-events-none absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5">
+            {tour.tag && (
+              <Badge className="border-0 bg-amber-400 text-xs font-semibold text-black">
+                {tour.tag}
+              </Badge>
+            )}
+
+            {!hasPrice && (
+              <Badge className="border-0 bg-background/95 text-xs text-foreground shadow-sm">
+                Dates coming soon
+              </Badge>
+            )}
+          </div>
+
+          <Badge
+            className={cn(
+              "shrink-0 border-0 text-xs font-medium",
+              CATEGORY_STYLES[tour.category],
+            )}
+          >
+            {tour.category}
+          </Badge>
+        </div>
       </div>
 
-      <CardHeader className="pb-2">
-        <h2 className="font-bold text-base leading-snug">{tour.title}</h2>
-        <div className="flex items-center gap-1 text-muted-foreground text-sm mt-0.5">
-          <MapPin size={12} aria-hidden="true" />
-          <span className="truncate">{tour.destination}</span>
-          <span className="mx-1 text-border">·</span>
-          <span className="shrink-0">{tour.state}</span>
+      {/* Title and destination */}
+      <CardHeader className="gap-2 px-5 pb-3 pt-5">
+        <h3 className="text-base font-bold leading-snug">
+          <Link
+            to="/domestic/tours/$slug"
+            params={{ slug: tour.slug }}
+            className="rounded-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {tour.title}
+          </Link>
+        </h3>
+
+        <div className="flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
+          <MapPin size={14} className="shrink-0" aria-hidden="true" />
+
+          <span className="truncate">
+            {tour.destination}
+            {tour.state && tour.state !== tour.destination
+              ? `, ${tour.state}`
+              : ""}
+          </span>
         </div>
       </CardHeader>
 
-      <CardContent className="pb-3 flex-1">
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <Clock size={12} aria-hidden="true" />
+      {/* Details */}
+      <CardContent className="flex-1 space-y-3 px-5 pb-5">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Clock size={13} aria-hidden="true" />
             {tour.duration}
           </span>
-          <span className="flex items-center gap-1">
-            <Star size={12} className="fill-amber-400 text-amber-400" aria-hidden="true" />
-            {tour.rating}
-            <span className="text-muted-foreground/70">({tour.reviewCount})</span>
-          </span>
+
+          {tour.groupSize > 0 && (
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Users size={13} aria-hidden="true" />
+              Max {tour.groupSize} people
+            </span>
+          )}
         </div>
 
-        {/* Highlights */}
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {tour.highlights.slice(0, 2).map((h) => (
-            <span
-              key={h}
-              className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground"
-            >
-              {h}
-            </span>
-          ))}
-        </div>
+        <TourRating
+          rating={tour.rating}
+          reviewCount={tour.reviewCount}
+        />
+
+        {tour.highlights.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {tour.highlights.slice(0, 2).map((highlight) => (
+              <span
+                key={highlight}
+                className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground"
+              >
+                {highlight}
+              </span>
+            ))}
+
+            {tour.highlights.length > 2 && (
+              <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+                +{tour.highlights.length - 2} more
+              </span>
+            )}
+          </div>
+        )}
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between pt-3 border-t border-border/60">
-        <div>
-          <p className="text-xs text-muted-foreground">Starting from</p>
-          <p className="text-xl font-bold text-primary leading-tight">
-            ₹{tour.price.toLocaleString("en-IN")}
-            <span className="text-xs font-normal text-muted-foreground"> /person</span>
-          </p>
-        </div>
+      {/* Price and action */}
+      <CardFooter className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t border-border/60 bg-muted/20 px-5 py-4">
+        <TourPrice price={tour.price} />
+
         <Link
-          to="/domestic/tours/$tourId"
-          params={{ tourId: tour.id }}
-          className={buttonVariants({ size: "sm" })}
+          to="/domestic/tours/$slug"
+          params={{ slug: tour.slug }}
+          className={buttonVariants({
+            variant: hasPrice ? "default" : "outline",
+            size: "sm",
+            className: "shrink-0 gap-1.5",
+          })}
         >
           View tour
+          <ArrowRight size={14} aria-hidden="true" />
         </Link>
       </CardFooter>
     </Card>
   );
 }
 
-// ─── List Card ────────────────────────────────────────────────────────────────
+function TourListCard({ tour }: { tour: PublicTour }) {
+  const hasPrice = tour.price != null;
 
-function TourListCard({ tour }: { tour: Tour }) {
   return (
-    <Card className="group overflow-hidden border-border/60 hover:shadow-md transition-shadow duration-300">
+    <Card className="group gap-0 overflow-hidden border-border/60 py-0 transition-shadow duration-300 hover:shadow-md">
       <div className="flex flex-col sm:flex-row">
         {/* Image */}
-        <div className="relative overflow-hidden sm:w-56 shrink-0 aspect-video sm:aspect-auto">
-          <img
-            src={tour.image}
-            alt={tour.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            width={224}
-            height={160}
-          />
-          {tour.tag && (
-            <Badge className="absolute top-3 left-3 bg-amber-500 text-black border-0 font-semibold text-xs">
-              {tour.tag}
-            </Badge>
-          )}
+        <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-muted sm:aspect-auto sm:w-52 lg:w-60">
+          <Link
+            to="/domestic/tours/$slug"
+            params={{ slug: tour.slug }}
+            aria-label={`View ${tour.title}`}
+            className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+          >
+            <img
+              src={tour.image}
+              alt={tour.title}
+              className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105 motion-reduce:transition-none sm:absolute sm:inset-0"
+              loading="lazy"
+              width={600}
+              height={375}
+            />
+          </Link>
+
+          <div className="pointer-events-none absolute left-3 top-3 flex flex-wrap gap-1.5">
+            {tour.tag && (
+              <Badge className="border-0 bg-amber-400 text-xs font-semibold text-black">
+                {tour.tag}
+              </Badge>
+            )}
+
+            {!hasPrice && (
+              <Badge className="border-0 bg-background/95 text-xs text-foreground shadow-sm">
+                Dates coming soon
+              </Badge>
+            )}
+          </div>
         </div>
 
         {/* Content */}
-        <div className="flex flex-col flex-1 p-4 sm:p-5">
-          <div className="flex items-start justify-between gap-3 mb-2">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
+        <div className="flex min-w-0 flex-1 flex-col p-5">
+          <div className="flex items-start justify-between gap-5">
+            <div className="min-w-0 flex-1 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge
                   className={cn(
                     "border-0 text-xs font-medium",
-                    CATEGORY_STYLES[tour.category]
+                    CATEGORY_STYLES[tour.category],
                   )}
                 >
                   {tour.category}
                 </Badge>
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Star size={11} className="fill-amber-400 text-amber-400" aria-hidden="true" />
-                  {tour.rating} ({tour.reviewCount} reviews)
+
+                <TourRating
+                  rating={tour.rating}
+                  reviewCount={tour.reviewCount}
+                />
+              </div>
+
+              <h3 className="text-base font-bold leading-snug sm:text-lg">
+                <Link
+                  to="/domestic/tours/$slug"
+                  params={{ slug: tour.slug }}
+                  className="rounded-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {tour.title}
+                </Link>
+              </h3>
+
+              <div className="flex items-start gap-1.5 text-sm text-muted-foreground">
+                <MapPin
+                  size={14}
+                  className="mt-0.5 shrink-0"
+                  aria-hidden="true"
+                />
+
+                <span>
+                  {tour.destination}
+                  {tour.state && tour.state !== tour.destination
+                    ? `, ${tour.state}`
+                    : ""}
                 </span>
               </div>
-              <h2 className="font-bold text-base leading-snug">{tour.title}</h2>
-              <div className="flex items-center gap-1 text-muted-foreground text-sm mt-1">
-                <MapPin size={12} aria-hidden="true" />
-                <span>{tour.destination}, {tour.state}</span>
-              </div>
             </div>
 
-            {/* Price — visible at md+ */}
-            <div className="hidden sm:block text-right shrink-0">
-              <p className="text-xs text-muted-foreground">From</p>
-              <p className="text-2xl font-bold text-primary leading-tight">
-                ₹{tour.price.toLocaleString("en-IN")}
-              </p>
-              <p className="text-xs text-muted-foreground">/person</p>
-            </div>
+            {/* Desktop price */}
+            <TourPrice
+              price={tour.price}
+              className="hidden max-w-44 shrink-0 text-right sm:block"
+            />
           </div>
 
-          {/* Meta row */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground mt-1">
-            <span className="flex items-center gap-1">
+          {/* Meta */}
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5">
               <Clock size={13} aria-hidden="true" />
               {tour.duration}
             </span>
-            <span className="flex items-center gap-1">
-              <ChevronDown size={13} aria-hidden="true" />
-              Max {tour.groupSize} people
-            </span>
+
+            {tour.groupSize > 0 && (
+              <span className="inline-flex items-center gap-1.5">
+                <Users size={13} aria-hidden="true" />
+                Max {tour.groupSize} people
+              </span>
+            )}
           </div>
 
           {/* Highlights */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {tour.highlights.map((h) => (
-              <span
-                key={h}
-                className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground"
-              >
-                {h}
-              </span>
-            ))}
-          </div>
+          {tour.highlights.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {tour.highlights.slice(0, 3).map((highlight) => (
+                <span
+                  key={highlight}
+                  className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground"
+                >
+                  {highlight}
+                </span>
+              ))}
 
-          {/* Footer row */}
-          <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
-            {/* Price on mobile */}
-            <div className="sm:hidden">
-              <p className="text-lg font-bold text-primary leading-tight">
-                ₹{tour.price.toLocaleString("en-IN")}
-                <span className="text-xs font-normal text-muted-foreground"> /person</span>
-              </p>
+              {tour.highlights.length > 3 && (
+                <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+                  +{tour.highlights.length - 3} more
+                </span>
+              )}
             </div>
-            <div className="sm:hidden" />
+          )}
+
+          {/* Footer */}
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-4 border-t border-border/50 pt-4">
+            <TourPrice
+              price={tour.price}
+              className="sm:hidden"
+            />
 
             <Link
-              to="/domestic/tours/$tourId"
-              params={{ tourId: tour.id }}
-              className={buttonVariants({ size: "sm", className: "ml-auto" })}
+              to="/domestic/tours/$slug"
+              params={{ slug: tour.slug }}
+              className={buttonVariants({
+                variant: hasPrice ? "default" : "outline",
+                size: "sm",
+                className: "ml-auto shrink-0 gap-1.5",
+              })}
             >
               View tour
+              <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -942,5 +960,75 @@ function FilterSection({
       <h3 className="text-sm font-semibold">{title}</h3>
       {children}
     </div>
+  );
+}
+
+function TourPrice({
+  price,
+  className,
+}: {
+  price: PublicTour["price"];
+  className?: string;
+}) {
+  if (price == null) {
+    return (
+      <div className={cn("space-y-1", className)}>
+        <p className="text-sm font-semibold text-foreground">
+          Dates to be announced
+        </p>
+        <p className="text-xs text-muted-foreground">
+          Enquire about future departures
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn("space-y-1", className)}>
+      <p className="text-xs text-muted-foreground">From</p>
+
+      <p className="text-xl font-bold tracking-tight text-primary sm:text-2xl">
+        ₹{price.toLocaleString("en-IN")}
+      </p>
+
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        Per person · twin sharing
+      </p>
+
+      <p className="text-xs text-muted-foreground">Excludes GST</p>
+    </div>
+  );
+}
+
+function TourRating({
+  rating,
+  reviewCount,
+}: {
+  rating: PublicTour["rating"];
+  reviewCount: PublicTour["reviewCount"];
+}) {
+  if (reviewCount <= 0) {
+    return (
+      <span className="text-xs text-muted-foreground">
+        No reviews yet
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs">
+      <Star
+        size={13}
+        className="fill-amber-400 text-amber-400"
+        aria-hidden="true"
+      />
+
+      <span className="font-semibold text-foreground">{rating}</span>
+
+      <span className="text-muted-foreground">
+        ({reviewCount.toLocaleString("en-IN")}{" "}
+        {reviewCount === 1 ? "review" : "reviews"})
+      </span>
+    </span>
   );
 }

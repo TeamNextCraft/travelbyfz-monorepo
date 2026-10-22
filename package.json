@@ -12,12 +12,14 @@
   },
   "keywords": [],
   "license": "ISC",
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@12.4.2",
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
-    "turbo": "^2.10.5"
+    "@biomejs/biome": "2.5.14",
+    "turbo": "^2.10.13",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.136.3"
   }
 }

@@ -8,6 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 
 export const userRoles = ["customer", "admin", "agent"] as const;
+export const accountStatuses = ["pending", "approved", "suspended"] as const;
 
 export const user = sqliteTable(
   "user",
@@ -19,13 +20,6 @@ export const user = sqliteTable(
       .default(false)
       .notNull(),
     image: text("image"),
-    createdAt: integer("created_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
 
     firstName: text("first_name"),
     lastName: text("last_name"),
@@ -38,6 +32,9 @@ export const user = sqliteTable(
     dateOfBirth: integer("date_of_birth", {
       mode: "timestamp",
     }),
+
+    status: text("status", { enum: accountStatuses }).notNull().default("pending"),
+
     gender: text("gender", {
       enum: ["male", "female", "other"] as const,
     }),
@@ -45,6 +42,14 @@ export const user = sqliteTable(
     lastLoginAt: integer("last_login_at", {
       mode: "timestamp",
     }),
+    approvedAt: integer("approved_at", { mode: "timestamp" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
   },
   (table) => [
     uniqueIndex("users_email_unique").on(table.email),

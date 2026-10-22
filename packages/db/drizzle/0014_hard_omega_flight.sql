@@ -1,0 +1,1 @@
+ALTER TABLE `departures` RENAME COLUMN "cancelation_deadline" TO "cancellation_deadline";

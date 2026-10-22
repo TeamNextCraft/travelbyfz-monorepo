@@ -1,19 +1,18 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useRef, useState } from "react";
+import type { FormEvent } from "react";
 import {
   ArrowLeft,
   Eye,
   EyeOff,
-  Globe,
-  Landmark,
   Mail,
-  MapPinned,
   Phone,
   User,
   Lock,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
-
+import { z } from "zod";
 import { cn } from "#/lib/utils";
 import { Badge } from "#/components/ui/badge";
 import { Button, buttonVariants } from "#/components/ui/button";
@@ -27,158 +26,257 @@ import {
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { Separator } from "#/components/ui/separator";
+import { accountConfig, type AccountType } from "./sign-in";
+import { authClient } from "#/lib/auth-client";
 
-type ModuleKey = "domestic" | "hajj-umrah" | "international";
+const signUpSchema = z.object({
+  firstName: z.string().trim()
+    .min(1, "First name is required.")
+    .max(50, "First name must be 50 characters or fewer."),
+  lastName: z.string().trim()
+    .min(1, "Last name is required.")
+    .max(50, "Last name must be 50 characters or fewer."),
+  email: z.email("Enter a valid email address."),
+  phone: z.string().trim()
+    .regex(
+      /^\+?[0-9\s-]{7,20}$/,
+      "Enter a valid mobile number.",
+    )
+    .optional()
+    .or(z.literal("")),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters.")
+    .max(128, "Password must be 128 characters or fewer.")
+    .regex(/[a-z]/, "Include at least one lowercase letter.")
+    .regex(/[A-Z]/, "Include at least one uppercase letter.")
+    .regex(/[0-9]/, "Include at least one number."),
+  confirmPassword: z.string().min(1, "Confirm your password."),
+})
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "The passwords don't match.",
+    path: ["confirmPassword"],
+  });
+
+type SignUpValues = z.infer<typeof signUpSchema>;
+type SignUpField = keyof SignUpValues;
+
+const signUpSearchSchema = z.object({
+  module: z.enum(["agent", "customer"]).default("customer"),
+  redirect: z.string().min(2).optional(),
+})
 
 export const Route = createFileRoute("/sign-up")({
-  validateSearch: (search: Record<string, unknown>) => {
-    const module = String(search.module ?? "domestic");
-
-    return {
-      module:
-        module === "domestic" ||
-        module === "hajj-umrah" ||
-        module === "international"
-          ? (module as ModuleKey)
-          : ("domestic" as ModuleKey),
-    };
-  },
+  validateSearch: signUpSearchSchema,
   component: SignUpPage,
 });
-
-const moduleConfig: Record<
-  ModuleKey,
-  {
-    title: string;
-    shortTitle: string;
-    description: string;
-    image: string;
-    icon: React.ComponentType<{ className?: string }>;
-    tint: string;
-    accent: string;
-    buttonClass: string;
-    features: string[];
-    helperLabel: string;
-  }
-> = {
-  domestic: {
-    title: "Domestic Tours",
-    shortTitle: "Domestic",
-    description:
-      "Create your account to manage India tour bookings, travellers, payments, and upcoming departures.",
-    image:
-      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1400&q=80",
-    icon: MapPinned,
-    tint: "from-[#0f2f35]/92 via-[#0f2f35]/62 to-[#0f2f35]/28",
-    accent: "text-teal-100",
-    buttonClass: "bg-[#123f45] text-white hover:bg-[#0f343a] shadow-sm",
-    features: [
-      "Book and manage domestic trips",
-      "Save traveller details for faster checkout",
-      "Track invoices, status, and updates",
-    ],
-    helperLabel: "Domestic account setup",
-  },
-  "hajj-umrah": {
-    title: "Hajj & Umrah",
-    shortTitle: "Hajj & Umrah",
-    description:
-      "Create your pilgrimage account to track package progress, required documents, and sacred journey updates.",
-    image:
-      "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1400&q=80",
-    icon: Landmark,
-    tint: "from-[#3e2f10]/92 via-[#66501b]/62 to-[#8b6b21]/28",
-    accent: "text-amber-50",
-    buttonClass: "bg-[#6f5516] text-white hover:bg-[#5d4712] shadow-sm",
-    features: [
-      "Access pilgrimage package details",
-      "Manage documentation and traveller info",
-      "Receive important trip and visa updates",
-    ],
-    helperLabel: "Pilgrimage account setup",
-  },
-  international: {
-    title: "International Tours",
-    shortTitle: "International",
-    description:
-      "Create your account to plan, book, and manage overseas travel with one secure travel profile.",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
-    icon: Globe,
-    tint: "from-[#10263f]/92 via-[#16395e]/62 to-[#215281]/28",
-    accent: "text-sky-50",
-    buttonClass: "bg-[#183f66] text-white hover:bg-[#123554] shadow-sm",
-    features: [
-      "Manage international departures",
-      "Store traveller details securely",
-      "Access trip documents and confirmations",
-    ],
-    helperLabel: "International account setup",
-  },
-};
 
 function SignUpPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
 
-  const [activeModule, setActiveModule] = useState<ModuleKey>(search.module);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<SignUpField, string>>
+  >({});
+  const [formError, setFormError] = useState<string | null>(null);
+  const [registeredWithoutSession, setRegisteredWithoutSession] =
+    useState(false);
 
-  const active = useMemo(() => moduleConfig[activeModule], [activeModule]);
+  const submitting = useRef(false);
+
+  const activeModule = search.module;
+  const active = accountConfig[activeModule];
   const ActiveIcon = active.icon;
 
-  const handleModuleChange = (value: ModuleKey) => {
-    setActiveModule(value);
-    navigate({
+  const handleModuleChange = (value: AccountType) => {
+    void navigate({
       to: "/sign-up",
-      search: { module: value },
+      search: {
+        module: value
+      },
       replace: true,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: wire this to Better Auth or your registration server action
+  const clearFieldError = (field: SignUpField) => {
+    setFieldErrors((previous) => {
+      if (!previous[field]) return previous;
+
+      const next = { ...previous };
+      delete next[field];
+      return next;
+    });
+  };
+
+  const setFieldErrorFromZod = (
+    field: SignUpField,
+    message: string | undefined,
+  ) => {
+    if (!message) return;
+    setFieldErrors((previous) => ({
+      ...previous,
+      [field]: message,
+    }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (submitting.current) return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const rawValues = {
+      firstName: String(formData.get("firstName") ?? ""),
+      lastName: String(formData.get("lastName") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      password: String(formData.get("password") ?? ""),
+      confirmPassword: String(formData.get("confirmPassword") ?? ""),
+    };
+
+    setFormError(null);
+    setFieldErrors({});
+
+    const parsed = signUpSchema.safeParse(rawValues);
+
+    if (!parsed.success) {
+      const errors: Partial<Record<SignUpField, string>> = {};
+
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0] as SignUpField | undefined;
+
+        if (field && !errors[field]) {
+          errors[field] = issue.message;
+        }
+      }
+
+      setFieldErrors(errors);
+      return;
+    }
+
+    const values = parsed.data;
+
+    submitting.current = true;
+    setPending(true);
+
+    try {
+      const params = new URLSearchParams({
+        module: "customer",
+      });
+
+      if (search.redirect) {
+        params.set("redirect", search.redirect);
+      }
+
+      const callbackURL = `/auth/continue?${params.toString()}`;
+
+      const result = await authClient.signUp.email({
+        name: `${values.firstName} ${values.lastName}`,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        role: activeModule,
+        password: values.password,
+        phone: values.phone,
+        callbackURL,
+      });
+
+      if (result.error) {
+        const code = result.error.code;
+
+        if (
+          code === "USER_ALREADY_EXISTS" ||
+          code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
+        ) {
+          setFieldErrorFromZod(
+            "email",
+            "An account with this email already exists. Please sign in.",
+          );
+        } else {
+          setFormError(
+            "We couldn't create your account. Check your details and try again.",
+          );
+        }
+
+        return;
+      }
+
+      const sessionResult = await authClient.getSession();
+
+      if (sessionResult.error) {
+        setFormError(
+          "Your registration was submitted, but we couldn't check your sign-in status. Please try signing in.",
+        );
+        return;
+      }
+
+      if (!sessionResult.data?.session) {
+        setRegisteredWithoutSession(true);
+        return;
+      }
+
+      await navigate({
+        to: "/auth/continue",
+        search: {
+          module: "customer",
+          redirect: search.redirect,
+        },
+      });
+    } catch {
+      setFormError(
+        "The request couldn't be completed. Please check your connection. If registration succeeded, you can sign in.",
+      );
+    } finally {
+      submitting.current = false;
+      setPending(false);
+    }
   };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
-      {/* Background image layer */}
       <div className="absolute inset-0 -z-20">
-        {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => (
+        {(Object.keys(accountConfig) as AccountType[]).map((key) => (
           <img
             key={key}
-            src={moduleConfig[key].image}
+            src={accountConfig[key].image}
             alt=""
+            aria-hidden="true"
             className={cn(
               "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
-              activeModule === key ? "opacity-100" : "opacity-0"
+              activeModule === key ? "opacity-100" : "opacity-0",
             )}
           />
         ))}
       </div>
 
-      {/* Overlay */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/78 via-white/46 to-[rgba(15,47,53,0.32)]" />
 
       <section className="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid w-full gap-6 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-          {/* Visual panel */}
           <div className="relative min-h-[560px] overflow-hidden rounded-xl border border-white/50 shadow-[0_24px_70px_rgba(23,58,64,0.18)]">
-            {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => (
+            {(Object.keys(accountConfig) as AccountType[]).map((key) => (
               <img
                 key={`feature-${key}`}
-                src={moduleConfig[key].image}
+                src={accountConfig[key].image}
                 alt=""
+                aria-hidden="true"
                 className={cn(
                   "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
-                  activeModule === key ? "opacity-100" : "opacity-0"
+                  activeModule === key ? "opacity-100" : "opacity-0",
                 )}
               />
             ))}
 
-            <div className={cn("absolute inset-0 bg-gradient-to-t", active.tint)} />
+            <div
+              className={cn(
+                "absolute inset-0 bg-gradient-to-t",
+                active.tint,
+              )}
+            />
 
             <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 sm:p-6">
               <Link
@@ -210,7 +308,12 @@ function SignUpPage() {
                 Create your {active.shortTitle} account.
               </h1>
 
-              <p className={cn("mt-4 max-w-md text-sm leading-relaxed sm:text-base", active.accent)}>
+              <p
+                className={cn(
+                  "mt-4 max-w-md text-sm leading-relaxed sm:text-base",
+                  active.accent,
+                )}
+              >
                 {active.description}
               </p>
 
@@ -228,7 +331,6 @@ function SignUpPage() {
             </div>
           </div>
 
-          {/* Form card */}
           <Card className="gap-0 rounded-xl border-white/60 bg-white/48 p-4 shadow-sm backdrop-blur-md sm:p-6">
             <CardHeader className="mb-6 border-b border-border/50 px-0 pb-5">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -259,15 +361,14 @@ function SignUpPage() {
             </CardHeader>
 
             <CardContent className="space-y-6 px-0">
-              {/* Module switcher */}
               <div className="space-y-3">
                 <Label className="text-sm font-semibold text-slate-900">
                   Select travel category
                 </Label>
 
-                <div className="grid gap-3 md:grid-cols-3">
-                  {(Object.keys(moduleConfig) as ModuleKey[]).map((key) => {
-                    const item = moduleConfig[key];
+                <div className="grid gap-2 md:grid-cols-2">
+                  {(Object.keys(accountConfig) as AccountType[]).map((key) => {
+                    const item = accountConfig[key];
                     const Icon = item.icon;
                     const isActive = activeModule === key;
 
@@ -276,11 +377,12 @@ function SignUpPage() {
                         key={key}
                         type="button"
                         onClick={() => handleModuleChange(key)}
+                        aria-pressed={isActive}
                         className={cn(
                           "rounded-xl border px-4 py-4 text-left transition-all",
                           isActive
                             ? "border-slate-900 bg-slate-900 text-white shadow-sm"
-                            : "border-border/60 bg-white/75 text-slate-800 hover:border-slate-300 hover:bg-white"
+                            : "border-border/60 bg-white/75 text-slate-800 hover:border-slate-300 hover:bg-white",
                         )}
                       >
                         <div className="flex items-center gap-2.5">
@@ -289,17 +391,21 @@ function SignUpPage() {
                               "flex size-9 items-center justify-center rounded-lg",
                               isActive
                                 ? "bg-white/14 text-white"
-                                : "bg-slate-100 text-slate-700"
+                                : "bg-slate-100 text-slate-700",
                             )}
                           >
                             <Icon className="size-4" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold">{item.shortTitle}</p>
+                            <p className="text-sm font-semibold">
+                              {item.shortTitle}
+                            </p>
                             <p
                               className={cn(
                                 "mt-0.5 text-xs",
-                                isActive ? "text-white/75" : "text-muted-foreground"
+                                isActive
+                                  ? "text-white/75"
+                                  : "text-muted-foreground",
                               )}
                             >
                               Separate booking space
@@ -314,83 +420,180 @@ function SignUpPage() {
 
               <Separator />
 
-              {/* Sign up form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                {formError ? (
+                  <div
+                    role="alert"
+                    className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                  >
+                    <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                    <span>{formError}</span>
+                  </div>
+                ) : null}
+
+                {registeredWithoutSession ? (
+                  <div
+                    role="status"
+                    className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800"
+                  >
+                    Your account was created, but no active session was found.
+                    Please{" "}
+                    <Link
+                      to="/sign-in"
+                      search={{ module: activeModule }}
+                      className="font-semibold underline underline-offset-4"
+                    >
+                      sign in
+                    </Link>
+                    .
+                  </div>
+                ) : null}
+
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-slate-900">
-                      First name
-                    </Label>
+                  <Field
+                    id="firstName"
+                    label="First name"
+                    error={fieldErrors.firstName}
+                  >
                     <div className="relative">
                       <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                       <Input
                         id="firstName"
-                        placeholder="Moin"
-                        className="h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                        name="firstName"
+                        autoComplete="given-name"
+                        placeholder="Jhon"
+                        aria-invalid={Boolean(fieldErrors.firstName)}
+                        aria-describedby={
+                          fieldErrors.firstName
+                            ? "firstName-error"
+                            : undefined
+                        }
+                        className={cn(
+                          "h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                          fieldErrors.firstName &&
+                          "border-red-400 focus-visible:ring-red-400",
+                        )}
+                        onChange={() => clearFieldError("firstName")}
                       />
                     </div>
-                  </div>
+                  </Field>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-slate-900">
-                      Last name
-                    </Label>
+                  <Field
+                    id="lastName"
+                    label="Last name"
+                    error={fieldErrors.lastName}
+                  >
                     <Input
                       id="lastName"
-                      placeholder="Malek"
-                      className="h-11 border-white/60 bg-white/85 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                      name="lastName"
+                      autoComplete="family-name"
+                      placeholder="Doe"
+                      aria-invalid={Boolean(fieldErrors.lastName)}
+                      aria-describedby={
+                        fieldErrors.lastName ? "lastName-error" : undefined
+                      }
+                      className={cn(
+                        "h-11 border-white/60 bg-white/85 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                        fieldErrors.lastName &&
+                        "border-red-400 focus-visible:ring-red-400",
+                      )}
+                      onChange={() => clearFieldError("lastName")}
                     />
-                  </div>
+                  </Field>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-slate-900">
-                    Email address
-                  </Label>
+                <Field
+                  id="email"
+                  label="Email address"
+                  error={fieldErrors.email}
+                >
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                     <Input
                       id="email"
+                      name="email"
                       type="email"
+                      inputMode="email"
+                      autoComplete="email"
                       placeholder="you@example.com"
-                      className="h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={
+                        fieldErrors.email ? "email-error" : undefined
+                      }
+                      className={cn(
+                        "h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                        fieldErrors.email &&
+                        "border-red-400 focus-visible:ring-red-400",
+                      )}
+                      onChange={() => clearFieldError("email")}
                     />
                   </div>
-                </div>
+                </Field>
 
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-slate-900">
-                    Mobile number
-                  </Label>
+                <Field
+                  id="phone"
+                  label="Mobile number"
+                  hint="Optional"
+                  error={fieldErrors.phone}
+                >
                   <div className="relative">
                     <Phone className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
                       placeholder="+91 90000 00000"
-                      className="h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                      aria-invalid={Boolean(fieldErrors.phone)}
+                      aria-describedby={
+                        fieldErrors.phone ? "phone-error" : undefined
+                      }
+                      className={cn(
+                        "h-11 border-white/60 bg-white/85 pl-10 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                        fieldErrors.phone &&
+                        "border-red-400 focus-visible:ring-red-400",
+                      )}
+                      onChange={() => clearFieldError("phone")}
                     />
                   </div>
-                </div>
+                </Field>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-slate-900">
-                      Password
-                    </Label>
+                  <Field
+                    id="password"
+                    label="Password"
+                    error={fieldErrors.password}
+                    hint="At least 8 characters, with uppercase, lowercase, and a number."
+                  >
                     <div className="relative">
                       <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                       <Input
                         id="password"
+                        name="password"
                         type={showPassword ? "text" : "password"}
+                        autoComplete="new-password"
                         placeholder="Create a password"
-                        className="h-11 border-white/60 bg-white/85 pl-10 pr-11 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                        aria-invalid={Boolean(fieldErrors.password)}
+                        aria-describedby={
+                          fieldErrors.password
+                            ? "password-error password-hint"
+                            : "password-hint"
+                        }
+                        className={cn(
+                          "h-11 border-white/60 bg-white/85 pl-10 pr-11 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                          fieldErrors.password &&
+                          "border-red-400 focus-visible:ring-red-400",
+                        )}
+                        onChange={() => clearFieldError("password")}
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword((prev) => !prev)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-900"
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                       >
                         {showPassword ? (
                           <EyeOff className="size-4" />
@@ -399,19 +602,33 @@ function SignUpPage() {
                         )}
                       </button>
                     </div>
-                  </div>
+                  </Field>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-slate-900">
-                      Confirm password
-                    </Label>
+                  <Field
+                    id="confirmPassword"
+                    label="Confirm password"
+                    error={fieldErrors.confirmPassword}
+                  >
                     <div className="relative">
                       <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                       <Input
                         id="confirmPassword"
+                        name="confirmPassword"
                         type={showConfirmPassword ? "text" : "password"}
+                        autoComplete="new-password"
                         placeholder="Repeat password"
-                        className="h-11 border-white/60 bg-white/85 pl-10 pr-11 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400"
+                        aria-invalid={Boolean(fieldErrors.confirmPassword)}
+                        aria-describedby={
+                          fieldErrors.confirmPassword
+                            ? "confirmPassword-error"
+                            : undefined
+                        }
+                        className={cn(
+                          "h-11 border-white/60 bg-white/85 pl-10 pr-11 shadow-none placeholder:text-slate-400 focus-visible:ring-slate-400",
+                          fieldErrors.confirmPassword &&
+                          "border-red-400 focus-visible:ring-red-400",
+                        )}
+                        onChange={() => clearFieldError("confirmPassword")}
                       />
                       <button
                         type="button"
@@ -432,7 +649,7 @@ function SignUpPage() {
                         )}
                       </button>
                     </div>
-                  </div>
+                  </Field>
                 </div>
 
                 <div className="rounded-xl border border-border/60 bg-white/70 p-3.5">
@@ -461,15 +678,20 @@ function SignUpPage() {
 
                 <Button
                   type="submit"
-                  className={cn("h-11 w-full font-semibold", active.buttonClass)}
+                  disabled={pending}
+                  className={cn(
+                    "h-11 w-full font-semibold",
+                    active.buttonClass,
+                  )}
                 >
-                  Create {active.shortTitle} account
+                  {pending ? "Creating account..." : `Create ${active.shortTitle} account`}
                 </Button>
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Button
                     type="button"
                     variant="outline"
+                    disabled={pending}
                     className="h-11 border-white/60 bg-white/75 text-slate-800 hover:bg-white"
                   >
                     Continue with OTP
@@ -478,6 +700,7 @@ function SignUpPage() {
                   <Button
                     type="button"
                     variant="outline"
+                    disabled={pending}
                     className="h-11 border-white/60 bg-white/75 text-slate-800 hover:bg-white"
                   >
                     Continue with Google
@@ -499,12 +722,6 @@ function SignUpPage() {
                       Sign in
                     </Link>
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Current module:{" "}
-                    <span className="font-semibold text-slate-800">
-                      {active.helperLabel}
-                    </span>
-                  </p>
                 </div>
 
                 <a
@@ -520,5 +737,46 @@ function SignUpPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function Field({
+  id,
+  label,
+  hint,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  hint?: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={id} className="text-slate-900">
+        {label}
+      </Label>
+
+      {children}
+
+      {hint && !error ? (
+        <p id={`${id}-hint`} className="text-xs text-muted-foreground">
+          {hint}
+        </p>
+      ) : null}
+
+      {error ? (
+        <p
+          id={`${id}-error`}
+          role="alert"
+          className="flex items-center gap-1.5 text-xs font-medium text-red-600"
+        >
+          <AlertCircle className="size-3.5" />
+          {error}
+        </p>
+      ) : null}
+    </div>
   );
 }

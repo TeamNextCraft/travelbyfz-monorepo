@@ -5,11 +5,12 @@ import { eq } from "drizzle-orm";
 import { webinarRegistrations } from "@repo/db/schema/webinar-registrations.js";
 import { db } from "#/lib/db-config.ts";
 import { WEBINAR_AMOUNT } from "#/routes/invitation/webinar";
+import { env } from "cloudflare:workers";
 // import { sendWebinarConfirmation } from "./notifications";
 
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+  key_id: env.RAZORPAY_KEY_ID!,
+  key_secret: env.RAZORPAY_KEY_SECRET!,
 });
 
 // const WEBINAR_AMOUNT = 9900; // ₹99 in paise
