@@ -155,7 +155,6 @@ export const Route = createFileRoute("/domestic/bookings/$bookingId")({
 function BookingDetailPage() {
   const { bookingId } = Route.useParams();
   const search = Route.useSearch();
-  const navigate = Route.useNavigate();
   const { user } = Route.useRouteContext();
 
   const [copied, setCopied] = useState(false);
@@ -234,9 +233,6 @@ function BookingDetailPage() {
   const config = STATUS_CONFIG[booking.status];
   const StatusIcon = config.icon;
 
-
-  const activeTab = search.tab ?? "overview";
-
   const balance = booking.totalAmount - booking.paidAmount;
 
   const fmt = (iso: string) =>
@@ -308,7 +304,7 @@ function BookingDetailPage() {
 
         <div className="mx-auto max-w-5xl px-4 py-8">
           {/* ── Hero card ─────────────────────────────────────────────── */}
-          <HeroCard booking={booking} config={config} balance={balance} />
+          <HeroCard booking={booking} balance={balance} />
 
           {/* ── Pending payment banner ────────────────────────────────── */}
           {booking.status === "pending" && balance > 0 && (
@@ -339,10 +335,7 @@ function BookingDetailPage() {
           {/* ── Tabs ─────────────────────────────────────────────────── */}
           <div className="mt-8">
             <Tabs
-              value={activeTab}
-              onValueChange={(v) =>
-                navigate({ search: (p) => ({ ...p, tab: v as any }), replace: true })
-              }
+              defaultValue={search.tab ?? "overview"}
             >
               <TabsList className="w-full justify-start overflow-x-auto mb-6">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -400,8 +393,8 @@ function HeroCard({
     <Card className="overflow-hidden border-border/60">
       <div className="relative h-44 sm:h-56 overflow-hidden">
         <img
-          src={booking.heroImage}
-          alt={booking.tourTitle}
+          src={booking.heroImage ?? "/placeholder-img.png"}
+          alt={booking.tourTitle ?? "Booking cover image"}
           className="w-full h-full object-cover"
           loading="eager"
           width={960}
@@ -435,7 +428,7 @@ function HeroCard({
             },
             {
               label: "Duration",
-              value: fmt(booking.travelDate - booking.returnDate),
+              value: fmt(booking.duration),
               icon: Clock,
             },
             {
@@ -459,10 +452,6 @@ function HeroCard({
         {/* Bottom row */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4 text-sm">
-            <div>
-              <p className="text-xs text-muted-foreground">Package</p>
-            </div>
-            <Separator orientation="vertical" className="h-8" />
             <div>
               <p className="text-xs text-muted-foreground">Total Amount</p>
               <p className="font-bold text-primary tabular-nums">
@@ -529,7 +518,7 @@ function OverviewTab({
   fmt,
 }: {
   booking: BookingDetail;
-  fmt: (s: string) => string;
+  fmt: (s: Date) => string;
 }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -836,7 +825,7 @@ function InvoiceTab({
   fmt,
 }: {
   booking: BookingDetail;
-  fmt: (s: string) => string;
+  fmt: (s: Date) => string;
 }) {
   const balance = booking.totalAmount - booking.paidAmount;
 
@@ -883,7 +872,7 @@ function InvoiceTab({
                 {fmt(booking.travelDate)} → {fmt(booking.returnDate)}
               </p>
               <p className="text-xs text-muted-foreground">
-                {booking.guestCount} guests · {booking.tierLabel} · {booking.duration}
+                {booking.guestCount} guests · {booking.duration}
               </p>
             </div>
           </div>
@@ -902,15 +891,15 @@ function InvoiceTab({
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-medium">
-                  {booking.tourTitle} — {booking.tierLabel}
+                  {booking.tourTitle}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  ₹{(booking.basePrice / booking.guestCount).toLocaleString("en-IN")} ×{" "}
+                  ₹{(booking.subtotalAmount / booking.guestCount).toLocaleString("en-IN")} ×{" "}
                   {booking.guestCount} guests
                 </p>
               </div>
               <span className="tabular-nums font-medium">
-                ₹{booking.basePrice.toLocaleString("en-IN")}
+                ₹{booking.subtotalAmount?.toLocaleString("en-IN")}
               </span>
             </div>
 
@@ -921,22 +910,22 @@ function InvoiceTab({
                 : addon.amount;
               return (
                 <div
-                  key={addon.label}
+                  key={addon.addonName}
                   className="flex justify-between items-start"
                 >
                   <div>
                     <p className="font-medium flex items-center gap-1.5">
                       <Tag size={12} className="text-primary" aria-hidden="true" />
-                      {addon.label}
+                      {addon.addonName}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {addon.perPerson
-                        ? `₹${addon.amount.toLocaleString("en-IN")} × ${booking.guestCount} guests`
+                        ? `₹${addon.amount?.toLocaleString("en-IN")} × ${booking.guestCount} guests`
                         : "Fixed add-on"}
                     </p>
                   </div>
                   <span className="tabular-nums font-medium">
-                    ₹{total.toLocaleString("en-IN")}
+                    ₹{total?.toLocaleString("en-IN")}
                   </span>
                 </div>
               );
@@ -958,7 +947,7 @@ function InvoiceTab({
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Subtotal</span>
               <span className="tabular-nums">
-                ₹{(booking.totalAmount - booking.gstAmount).toLocaleString("en-IN")}
+                ₹{(booking.totalAmount - booking.taxAmount).toLocaleString("en-IN")}
               </span>
             </div>
 
@@ -968,7 +957,7 @@ function InvoiceTab({
                 GST (5% — SAC 99694)
               </span>
               <span className="tabular-nums">
-                ₹{booking.gstAmount.toLocaleString("en-IN")}
+                ₹{booking.taxAmount?.toLocaleString("en-IN")}
               </span>
             </div>
 
@@ -1037,14 +1026,14 @@ function InvoiceTab({
                 variant="outline"
                 className={cn(
                   "text-xs shrink-0",
-                  p.status === "success"
+                  p.status === "paid"
                     ? "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-400"
                     : p.status === "pending"
                       ? "border-amber-200 bg-amber-50 text-amber-700"
                       : "border-red-200 bg-red-50 text-red-600"
                 )}
               >
-                {p.status === "success"
+                {p.status === "paid"
                   ? "Paid"
                   : p.status === "pending"
                     ? "Pending"

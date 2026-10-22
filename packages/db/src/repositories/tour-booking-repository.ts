@@ -1,4 +1,4 @@
-import { and, eq, gt, inArray, isNull, lt, or, sql } from "drizzle-orm";
+import { and, eq, gt, inArray, isNull, lt, or, SQL, sql } from "drizzle-orm";
 import {
   addons, bookings, bookingAddons, bookingTravellers, coupons, couponTargets,
   departures, departurePricing, payments, tours,
@@ -41,10 +41,15 @@ export function createTourBookingRepository(db: Database) {
         .where(
           eq(payments.bookingId, bookingId)
         )
-        .get();
     },
 
-    listBookingReviews(bookingId: string) {
+    listBookingReviews(bookingId: string, userId?: string) {
+      const conditions: SQL[] = [];
+
+      if (bookingId) return conditions.push(eq(reviews.bookingId, bookingId));
+
+      if (userId) return conditions.push(eq(reviews.userId, userId));
+
       return db.select({
         rating: reviews.rating,
         comment: reviews.comment,
@@ -52,9 +57,8 @@ export function createTourBookingRepository(db: Database) {
       })
         .from(reviews)
         .where(
-          eq(reviews.bookingId, bookingId)
+          and(...conditions)
         )
-
     },
 
     getBookingById(bookingId: string) {
@@ -88,6 +92,7 @@ export function createTourBookingRepository(db: Database) {
         paidAmount: bookings.paidAmount,
         rating: tours.avgRating,
         bookedAt: bookings.bookedAt,
+        cancellationDeadline: departures.cancellationDeadline,
       })
         .from(bookings)
         .leftJoin(tours, eq(tours.id, bookings.tourId))
@@ -142,7 +147,6 @@ export function createTourBookingRepository(db: Database) {
         .where(
           eq(bookingTravellers.bookingId, bookingId)
         )
-        .get();
     },
 
     listUserBookingAddons(bookingIds: string[]) {

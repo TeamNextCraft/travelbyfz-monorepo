@@ -255,6 +255,7 @@ export const departures = sqliteTable(
       .default("scheduled"),
 
     bookingDeadline: integer("booking_deadline", { mode: "timestamp" }),
+    cancellationDeadline: integer("cancellation_deadline", { mode: "timestamp" }),
     notes: text("notes"),
 
     isGuaranteed: integer("is_guaranteed", { mode: "boolean" })

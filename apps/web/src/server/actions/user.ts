@@ -61,6 +61,8 @@ export const getBookingDetailsById = createServerFn({
         throw new Error("Unauthorized");
       }
 
+      const user = session.user;
+
       const repo = createTourBookingRepository(getDb(env.DB));
 
       const booking = await repo.getBookingById(data.bookingId);
@@ -69,17 +71,23 @@ export const getBookingDetailsById = createServerFn({
         throw new Error("Booking Not Found");
       }
 
+      const canCancel =
+        booking.cancellationDeadline != null &&
+        new Date(booking.cancellationDeadline).getTime() > Date.now();
+
       const travellers = await repo.getBookingTravelers(booking.id);
 
       const addons = await repo.listUserBookingAddons([booking.id]);
 
       const payments = await repo.getUserBookingPayments(booking.id);
 
-      const reviews = await repo.listBookingReviews(booking.id);
+      const reviews = await repo.listBookingReviews(booking.id, user.id);
 
       return {
         ...booking,
-        addons: addons,
+        duration: booking.returnDate - booking.travelDate,
+        canCancel: canCancel,
+        addOns: addons,
         travellers: travellers,
         payments: payments,
         reviews: reviews,

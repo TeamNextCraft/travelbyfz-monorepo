@@ -1,0 +1,1 @@
+ALTER TABLE `departures` ADD `cancelation_deadline` integer;
