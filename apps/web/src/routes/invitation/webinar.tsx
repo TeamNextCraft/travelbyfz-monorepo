@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import * as React from "react";
 import {
   CalendarDays,
   CheckCircle2,
@@ -7,14 +6,15 @@ import {
   Gift,
   MessageCircle,
   Sparkles,
+  Star,
   Users,
   Video,
-  Star,
 } from "lucide-react";
+import * as React from "react";
+import { WebinarRegistrationForm } from "#/components/common/webinar-registration-form";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
-import { WebinarRegistrationForm } from "#/components/common/webinar-registration-form";
 
 export const Route = createFileRoute("/invitation/webinar")({
   component: WebinarPage,
@@ -99,7 +99,7 @@ const bonuses = [
   "Travel Business Starter Guide (PDF)",
 ];
 
-const DISCOUNTED_AMOUNT = 99;
+const DISCOUNTED_AMOUNT = 49;
 export const WEBINAR_AMOUNT = DISCOUNTED_AMOUNT * 100;
 const ACTUAL_PRICE = 1999;
 const DISCOUNT_PERECENTAGE =
@@ -127,7 +127,7 @@ function useCountdown(target: Date) {
 
 function WebinarPage() {
   const webinarDate = React.useMemo(
-    () => new Date("2026-10-04T11:00:00+05:30"),
+    () => new Date("2026-10-18T11:00:00+05:30"),
     [],
   );
   const webinarEndTime = new Date(webinarDate.getTime() + 2 * 60 * 60 * 1000);

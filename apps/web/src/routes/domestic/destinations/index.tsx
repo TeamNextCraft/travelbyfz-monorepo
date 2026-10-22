@@ -1,24 +1,28 @@
+import type {
+  DestinationCategory,
+  DestinationRegion,
+  PublicDestination,
+} from "@repo/types/domestic/destination";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { z } from "zod";
 import {
-  Search,
+  ArrowRight,
+  Landmark,
+  Map,
   MapPin,
   Mountain,
-  Waves,
-  Landmark,
-  TreePine,
+  Search,
   Star,
-  ArrowRight,
+  TreePine,
+  Waves,
   X,
-  Map,
 } from "lucide-react";
 import { useMemo } from "react";
+import { z } from "zod";
 import { Badge } from "#/components/ui/badge";
 import { buttonVariants } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { cn } from "#/lib/utils";
-import type { DestinationCategory, DestinationRegion, PublicDestination } from "@repo/types/domestic/destination";
-import { useQuery } from "@tanstack/react-query";
 import { getPublicDestinations } from "#/server/actions/destinations.ts";
 
 const destSearchSchema = z.object({
@@ -31,7 +35,11 @@ type Destination = PublicDestination;
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const REGIONS: { id: DestinationRegion | "All"; label: string; icon: React.ElementType }[] = [
+const REGIONS: {
+  id: DestinationRegion | "All";
+  label: string;
+  icon: React.ElementType;
+}[] = [
   { id: "All", label: "All India", icon: Map },
   { id: "North", label: "North", icon: Mountain },
   { id: "South", label: "South", icon: Landmark },
@@ -53,11 +61,16 @@ const CATEGORIES: (DestinationCategory | "All")[] = [
 
 const CATEGORY_STYLES: Record<DestinationCategory, string> = {
   Beach: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
-  "Hill Station": "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
-  Cultural: "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
-  Religious: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300",
-  Adventure: "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
-  Wildlife: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  "Hill Station":
+    "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
+  Cultural:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
+  Religious:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300",
+  Adventure:
+    "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+  Wildlife:
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
 };
 
 // ─── Route ────────────────────────────────────────────────────────────────────
@@ -79,14 +92,15 @@ function DestinationsPage() {
   } = useQuery({
     queryKey: ["destinations"],
     queryFn: getPublicDestinations,
-  })
+  });
 
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
   const q = search.q ?? "";
   const activeRegion = (search.region as DestinationRegion | "All") ?? "All";
-  const activeCategory = (search.category as DestinationCategory | "All") ?? "All";
+  const activeCategory =
+    (search.category as DestinationCategory | "All") ?? "All";
 
   const destinations = fetchedDestinations ?? [];
   // const destinations = DESTINATIONS_LOCAL_DATA ?? [];
@@ -110,7 +124,7 @@ function DestinationsPage() {
       destinations
         .filter((d) => ("isTrending" in d ? d.isTrending : d.trending))
         .slice(0, 6),
-    [destinations]
+    [destinations],
   );
 
   // Filtered results
@@ -142,7 +156,14 @@ function DestinationsPage() {
     return groups;
   }, [filtered]);
 
-  const regionOrder: DestinationRegion[] = ["North", "South", "West", "East", "Central", "Islands"];
+  const regionOrder: DestinationRegion[] = [
+    "North",
+    "South",
+    "West",
+    "East",
+    "Central",
+    "Islands",
+  ];
 
   const isFiltering = hasActiveFilters;
 
@@ -151,8 +172,8 @@ function DestinationsPage() {
     output: filtered,
     isPending,
     error,
-    isError
-  })
+    isError,
+  });
 
   return (
     <main>
@@ -168,8 +189,8 @@ function DestinationsPage() {
               to go next?
             </h1>
             <p className="text-muted-foreground text-lg mb-8 max-w-xl">
-              From the Himalayas to the Indian Ocean — {filtered.length} destinations
-              across every region of India.
+              From the Himalayas to the Indian Ocean — {filtered.length}{" "}
+              destinations across every region of India.
             </p>
 
             {/* Search */}
@@ -183,9 +204,7 @@ function DestinationsPage() {
                 type="search"
                 placeholder="Search destinations, states..."
                 value={q}
-                onChange={(e) =>
-                  setSearch({ q: e.target.value || undefined })
-                }
+                onChange={(e) => setSearch({ q: e.target.value || undefined })}
                 className="w-full pl-10 pr-10 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm"
               />
               {q && (
@@ -246,7 +265,7 @@ function DestinationsPage() {
                   "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors shrink-0",
                   activeRegion === id || (id === "All" && !activeRegion)
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
                 )}
               >
                 <Icon size={13} aria-hidden="true" />
@@ -269,7 +288,7 @@ function DestinationsPage() {
                   "flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border transition-colors shrink-0",
                   activeCategory === cat
                     ? "border-primary bg-primary/10 text-primary"
-                    : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                    : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground",
                 )}
               >
                 {cat}
@@ -316,7 +335,11 @@ function DestinationsPage() {
               const dests = groupedByRegion[region];
               if (!dests?.length) return null;
               return (
-                <RegionSection key={region} region={region} destinations={dests} />
+                <RegionSection
+                  key={region}
+                  region={region}
+                  destinations={dests}
+                />
               );
             })}
           </div>
@@ -356,13 +379,35 @@ function RegionSection({
   region: DestinationRegion;
   destinations: Destination[];
 }) {
-  const regionMeta: Record<DestinationRegion, { emoji: string; description: string }> = {
-    North: { emoji: "🏔️", description: "Himalayas, forts, heritage & spiritual heartland" },
-    South: { emoji: "🌴", description: "Backwaters, temples, coffee hills & pristine coastlines" },
-    East: { emoji: "🍵", description: "Tea gardens, tribal culture, Bengal delta & Himalayan foothills" },
-    West: { emoji: "🏖️", description: "Desert, beaches, Bollywood & ancient stepwells" },
-    Central: { emoji: "🐯", description: "Tiger reserves, UNESCO temples & the heart of India" },
-    Islands: { emoji: "🐠", description: "Coral reefs, turquoise lagoons & untouched island beaches" },
+  const regionMeta: Record<
+    DestinationRegion,
+    { emoji: string; description: string }
+  > = {
+    North: {
+      emoji: "🏔️",
+      description: "Himalayas, forts, heritage & spiritual heartland",
+    },
+    South: {
+      emoji: "🌴",
+      description: "Backwaters, temples, coffee hills & pristine coastlines",
+    },
+    East: {
+      emoji: "🍵",
+      description:
+        "Tea gardens, tribal culture, Bengal delta & Himalayan foothills",
+    },
+    West: {
+      emoji: "🏖️",
+      description: "Desert, beaches, Bollywood & ancient stepwells",
+    },
+    Central: {
+      emoji: "🐯",
+      description: "Tiger reserves, UNESCO temples & the heart of India",
+    },
+    Islands: {
+      emoji: "🐠",
+      description: "Coral reefs, turquoise lagoons & untouched island beaches",
+    },
   };
 
   const { emoji, description } = regionMeta[region];
@@ -379,7 +424,8 @@ function RegionSection({
           <p className="text-sm text-muted-foreground mt-0.5">{description}</p>
         </div>
         <span className="text-xs text-muted-foreground shrink-0">
-          {destinations.length} destination{destinations.length !== 1 ? "s" : ""}
+          {destinations.length} destination
+          {destinations.length !== 1 ? "s" : ""}
         </span>
       </div>
 
@@ -423,14 +469,18 @@ function DestinationCard({ dest }: { dest: Destination }) {
         )}
         {/* Category pills */}
         <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
-          {(dest.category !== null) ? dest.category.slice(0, 1).map((cat) => (
-            <Badge
-              key={cat}
-              className={cn("border-0 text-xs", CATEGORY_STYLES[cat])}
-            >
-              {cat}
-            </Badge>
-          )) : (<></>)}
+          {dest.category !== null ? (
+            dest.category.slice(0, 1).map((cat) => (
+              <Badge
+                key={cat}
+                className={cn("border-0 text-xs", CATEGORY_STYLES[cat])}
+              >
+                {cat}
+              </Badge>
+            ))
+          ) : (
+            <></>
+          )}
         </div>
 
         {/* Bottom overlay */}
@@ -501,7 +551,9 @@ function TrendingCard({ dest }: { dest: Destination }) {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-2.5">
-        <p className="text-white text-sm font-bold leading-tight">{dest.name}</p>
+        <p className="text-white text-sm font-bold leading-tight">
+          {dest.name}
+        </p>
         <p className="text-white/70 text-xs">{dest.state}</p>
       </div>
     </Link>

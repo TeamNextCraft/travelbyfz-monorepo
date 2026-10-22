@@ -1,27 +1,29 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useState } from "react";
 import {
+  Backpack,
+  Building2,
   ChevronDown,
+  LogOut,
   MapPinned,
   Menu,
-  Phone,
-  Search,
-  User,
-  X,
-  Backpack,
   Mountain,
-  Building2,
+  Phone,
   ReceiptText,
-  LogOut,
-  User2Icon,
+  Search,
   Settings,
+  User,
   User2,
+  User2Icon,
+  X,
 } from "lucide-react";
-import { cn } from "#/lib/utils";
+import { useState } from "react";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "#/components/ui/avatar.tsx";
 import { Badge } from "#/components/ui/badge";
 import { Button, buttonVariants } from "#/components/ui/button";
-import { authClient } from "#/lib/auth-client";
-import { Avatar, AvatarFallback, AvatarImage } from "#/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +32,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu"
+} from "#/components/ui/dropdown-menu.tsx";
+import { authClient } from "#/lib/auth-client.ts";
+import { cn } from "#/lib/utils";
+import { MaintenanceBanner } from "../utility/maintenance-banner.tsx";
+import { COMPANY_CONTACT } from "#/lib/constants.ts"
 
 const domesticNavItems = [
   {
@@ -60,13 +66,18 @@ const domesticNavItems = [
   },
 ];
 
-export function DomesticNavbar({ transparent = false }: { transparent?: boolean }) {
+export function DomesticNavbar({
+  transparent = false,
+}: {
+  transparent?: boolean;
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = useRouterState({
     select: (s) => s.location.pathname,
   });
 
-  const [isUserActionLoading, setIsUserActionLoading] = useState<boolean>(false);
+  const [isUserActionLoading, setIsUserActionLoading] =
+    useState<boolean>(false);
 
   const { data: session, isPending, error } = authClient.useSession();
 
@@ -75,15 +86,17 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
   console.log({
     user: user,
     actionState: isUserActionLoading,
-  })
+  });
 
   const handleSignOut = async () => {
     setIsUserActionLoading(true);
     await authClient.signOut();
     setIsUserActionLoading(false);
-  }
+  };
 
-  const navLinks = (user) ? domesticNavItems : domesticNavItems.filter(item => item.label !== "My Bookings");
+  const navLinks = user
+    ? domesticNavItems
+    : domesticNavItems.filter((item) => item.label !== "My Bookings");
 
   return (
     <header
@@ -91,9 +104,10 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
         "sticky top-0 z-50 w-full border-b backdrop-blur-xl",
         transparent
           ? "border-white/20 bg-white/35"
-          : "border-border/50 bg-white/85"
+          : "border-border/50 bg-white/85",
       )}
     >
+      <MaintenanceBanner />
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Brand */}
         <div className="flex min-w-0 items-center gap-3">
@@ -132,7 +146,7 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
               "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               pathname === "/domestic"
                 ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                : "text-slate-700 hover:bg-slate-100 hover:text-slate-950",
             )}
           >
             Home
@@ -150,7 +164,7 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
                   "inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive
                     ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-950",
                 )}
               >
                 {/* <Icon className="size-4" />*/}
@@ -165,7 +179,7 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
               "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               pathname.startsWith("/domestic/offers")
                 ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                : "text-slate-700 hover:bg-slate-100 hover:text-slate-950",
             )}
           >
             Offers
@@ -183,7 +197,7 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
           </button>
 
           <a
-            href="tel:+919000000000"
+            href={`tel:${COMPANY_CONTACT.phone.helpline.general}`}
             className={buttonVariants({
               variant: "outline",
               className:
@@ -198,14 +212,28 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
             <div className="border-gray-300 border-[1.5px] p-0.5 rounded-full stroke-none size-10 animate-pulse flex align-middle justify-center">
               <User2 className="size-full p-2" />
             </div>
-          ) : (user) ? (
+          ) : user ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar size="lg" className={cn((isUserActionLoading) ? "border-red-800" : "border-gray-300 ", "border-2 cursor-pointer")}>
+                <Avatar
+                  size="lg"
+                  className={cn(
+                    isUserActionLoading ? "border-red-800" : "border-gray-300 ",
+                    "border-2 cursor-pointer",
+                  )}
+                >
                   {user?.image ? (
-                    < AvatarImage src={"https://github.com/shadcn.png"} className={cn((isUserActionLoading) ? "animate-pulse" : "")} />
+                    <AvatarImage
+                      src={"https://github.com/shadcn.png"}
+                      className={cn(isUserActionLoading ? "animate-pulse" : "")}
+                    />
                   ) : (
-                    <AvatarFallback className={cn((isUserActionLoading) ? "animate-pulse" : "", "font-bold")}>
+                    <AvatarFallback
+                      className={cn(
+                        isUserActionLoading ? "animate-pulse" : "",
+                        "font-bold",
+                      )}
+                    >
                       <div className="border-gray-300 border-[1.5px] p-0.5 rounded-full stroke-none size-10 flex align-middle justify-center">
                         <User2 className="size-full p-2" />
                       </div>
@@ -235,14 +263,8 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button
-              variant={"outline"}
-              asChild
-            >
-              <Link
-                to="/sign-in"
-                search={{ module: "customer" }}
-              >
+            <Button variant={"outline"} asChild>
+              <Link to="/sign-in" search={{ module: "customer" }}>
                 Sign in
               </Link>
             </Button>
@@ -258,120 +280,118 @@ export function DomesticNavbar({ transparent = false }: { transparent?: boolean 
         >
           {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
-      </div >
+      </div>
 
       {/* Mobile panel */}
-      {
-        mobileOpen && (
-          <div className="border-t border-border/50 bg-white/95 backdrop-blur-xl lg:hidden">
-            <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-              <div className="mb-4 rounded-xl border border-teal-100 bg-teal-50 p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-[#123f45] text-white">
-                    <MapPinned className="size-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">
-                      Domestic Tours
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Discover and book trips across India
-                    </p>
-                  </div>
+      {mobileOpen && (
+        <div className="border-t border-border/50 bg-white/95 backdrop-blur-xl lg:hidden">
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+            <div className="mb-4 rounded-xl border border-teal-100 bg-teal-50 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-[#123f45] text-white">
+                  <MapPinned className="size-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">
+                    Domestic Tours
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Discover and book trips across India
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <nav className="grid gap-2">
-                <Link
-                  to="/domestic"
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
-                    pathname === "/domestic"
-                      ? "bg-slate-900 text-white"
-                      : "bg-slate-50 text-slate-800 hover:bg-slate-100"
-                  )}
-                >
-                  Home
-                </Link>
+            <nav className="grid gap-2">
+              <Link
+                to="/domestic"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                  pathname === "/domestic"
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-50 text-slate-800 hover:bg-slate-100",
+                )}
+              >
+                Home
+              </Link>
 
-                {domesticNavItems.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname.startsWith(item.to);
+              {domesticNavItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname.startsWith(item.to);
 
-                  return (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setMobileOpen(false)}
-                      className={cn(
-                        "inline-flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
-                        isActive
-                          ? "bg-slate-900 text-white"
-                          : "bg-slate-50 text-slate-800 hover:bg-slate-100"
-                      )}
-                    >
-                      <Icon className="size-4" />
-                      {item.label}
-                    </Link>
-                  );
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "inline-flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                      isActive
+                        ? "bg-slate-900 text-white"
+                        : "bg-slate-50 text-slate-800 hover:bg-slate-100",
+                    )}
+                  >
+                    <Icon className="size-4" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+
+              <Link
+                to="/domestic/offers"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                  pathname.startsWith("/domestic/offers")
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-50 text-slate-800 hover:bg-slate-100",
+                )}
+              >
+                Offers
+              </Link>
+            </nav>
+
+            <div className="mt-4 grid gap-2">
+              <Link
+                to="/sign-in"
+                search={{ module: "customer" }}
+                onClick={() => setMobileOpen(false)}
+                className={buttonVariants({
+                  variant: "outline",
+                  className:
+                    "justify-center border-white bg-white font-semibold text-slate-900",
                 })}
+              >
+                <User className="mr-2 size-4" />
+                Sign in
+              </Link>
 
-                <Link
-                  to="/domestic/offers"
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
-                    pathname.startsWith("/domestic/offers")
-                      ? "bg-slate-900 text-white"
-                      : "bg-slate-50 text-slate-800 hover:bg-slate-100"
-                  )}
-                >
-                  Offers
-                </Link>
-              </nav>
+              <a
+                href={`tel:${COMPANY_CONTACT.phone.helpline.general}`}
+                className={buttonVariants({
+                  variant: "ghost",
+                  className: "justify-center text-slate-800",
+                })}
+              >
+                <Phone className="mr-2 size-4" />
+                Call now
+              </a>
+            </div>
 
-              <div className="mt-4 grid gap-2">
-                <Link
-                  to="/sign-in"
-                  search={{ module: "domestic" }}
-                  onClick={() => setMobileOpen(false)}
-                  className={buttonVariants({
-                    variant: "outline",
-                    className:
-                      "justify-center border-white bg-white font-semibold text-slate-900",
-                  })}
-                >
-                  <User className="mr-2 size-4" />
-                  Sign in
-                </Link>
-
-                <a
-                  href="tel:+919000000000"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    className: "justify-center text-slate-800",
-                  })}
-                >
-                  <Phone className="mr-2 size-4" />
-                  Call now
-                </a>
-              </div>
-
-              <div className="mt-4 rounded-xl border border-border/60 bg-slate-50 p-3.5">
-                <Link
-                  to="/"
-                  onClick={() => setMobileOpen(false)}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-950"
-                >
-                  Switch travel category
-                  <ChevronDown className="size-4" />
-                </Link>
-              </div>
+            <div className="mt-4 rounded-xl border border-border/60 bg-slate-50 p-3.5">
+              <Link
+                to="/"
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-950"
+              >
+                Switch travel category
+                <ChevronDown className="size-4" />
+              </Link>
             </div>
           </div>
-        )
-      }
-    </header >
+        </div>
+      )}
+    </header>
   );
 }

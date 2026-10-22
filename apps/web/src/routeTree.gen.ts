@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CancellationPolicyRouteImport } from './routes/cancellation-policy'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DomesticRouteRouteImport } from './routes/domestic/route'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HajjUmrahRouteRouteImport } from './routes/hajj-umrah/route'
@@ -53,6 +56,21 @@ import { Route as HajjUmrahPackagesPackageIdIndexRouteImport } from './routes/ha
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CancellationPolicyRoute = CancellationPolicyRouteImport.update({
+  id: '/cancellation-policy',
+  path: '/cancellation-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DomesticRouteRoute = DomesticRouteRouteImport.update({
@@ -260,6 +278,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
+  '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -300,6 +321,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
+  '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -343,6 +367,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/domestic': typeof DomesticRouteRouteWithChildren
   '/hajj-umrah': typeof HajjUmrahRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/cancellation-policy': typeof CancellationPolicyRoute
+  '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -387,6 +414,9 @@ export interface FileRouteTypes {
     | '/'
     | '/domestic'
     | '/hajj-umrah'
+    | '/about'
+    | '/cancellation-policy'
+    | '/contact'
     | '/forgot-password'
     | '/privacy'
     | '/reset-password'
@@ -427,6 +457,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/cancellation-policy'
+    | '/contact'
     | '/forgot-password'
     | '/privacy'
     | '/reset-password'
@@ -469,6 +502,9 @@ export interface FileRouteTypes {
     | '/'
     | '/domestic'
     | '/hajj-umrah'
+    | '/about'
+    | '/cancellation-policy'
+    | '/contact'
     | '/forgot-password'
     | '/privacy'
     | '/reset-password'
@@ -512,6 +548,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DomesticRouteRoute: typeof DomesticRouteRouteWithChildren
   HajjUmrahRouteRoute: typeof HajjUmrahRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  CancellationPolicyRoute: typeof CancellationPolicyRoute
+  ContactRoute: typeof ContactRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -533,6 +572,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cancellation-policy': {
+      id: '/cancellation-policy'
+      path: '/cancellation-policy'
+      fullPath: '/cancellation-policy'
+      preLoaderRoute: typeof CancellationPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/domestic': {
@@ -885,6 +945,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DomesticRouteRoute: DomesticRouteRouteWithChildren,
   HajjUmrahRouteRoute: HajjUmrahRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  CancellationPolicyRoute: CancellationPolicyRoute,
+  ContactRoute: ContactRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,

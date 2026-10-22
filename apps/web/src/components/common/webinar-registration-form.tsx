@@ -1,12 +1,9 @@
-import { z } from "zod";
-import * as React from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BadgeCheck, ShieldCheck, Wallet } from "lucide-react";
-import {
-  createWebinarOrder,
-  verifyWebinarPayment,
-} from "#/server/actions/webinar";
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "#/components/ui/button";
 import {
   Field,
   FieldContent,
@@ -15,8 +12,11 @@ import {
   FieldLabel,
 } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
-import { Button } from "#/components/ui/button";
 import { WEBINAR_AMOUNT } from "#/routes/invitation/webinar";
+import {
+  createWebinarOrder,
+  verifyWebinarPayment,
+} from "#/server/actions/webinar";
 
 export const webinarRegistrationSchema = z.object({
   name: z
@@ -181,7 +181,9 @@ export function WebinarRegistrationForm() {
         className="w-full"
       >
         <Wallet className="size-4" />
-        {loading ? "Processing..." : `Pay ₹${WEBINAR_AMOUNT / 100} & Reserve Seat`}
+        {loading
+          ? "Processing..."
+          : `Pay ₹${WEBINAR_AMOUNT / 100} & Reserve Seat`}
       </Button>
 
       <p className="flex items-center justify-center gap-2 text-xs text-slate-500">
