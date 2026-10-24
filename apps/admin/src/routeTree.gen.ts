@@ -9,54 +9,259 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedDeparturesIndexRouteImport } from './routes/_authenticated/departures/index'
+import { Route as AuthenticatedDeparturesDepartureIdRouteImport } from './routes/_authenticated/departures/$departureId'
+import { Route as AuthenticatedDeparturesNewRouteImport } from './routes/_authenticated/departures/new'
+import { Route as AuthenticatedToursIndexRouteImport } from './routes/_authenticated/tours/index'
+import { Route as AuthenticatedToursNewRouteImport } from './routes/_authenticated/tours/new'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthenticatedToursTourIdIndexRouteImport } from './routes/_authenticated/tours/$tourId/index'
+import { Route as AuthenticatedToursTourIdEditRouteImport } from './routes/_authenticated/tours/$tourId/edit'
 
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDeparturesIndexRoute =
+  AuthenticatedDeparturesIndexRouteImport.update({
+    id: '/departures/',
+    path: '/departures/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDeparturesDepartureIdRoute =
+  AuthenticatedDeparturesDepartureIdRouteImport.update({
+    id: '/departures/$departureId',
+    path: '/departures/$departureId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDeparturesNewRoute =
+  AuthenticatedDeparturesNewRouteImport.update({
+    id: '/departures/new',
+    path: '/departures/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedToursIndexRoute = AuthenticatedToursIndexRouteImport.update({
+  id: '/tours/',
+  path: '/tours/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedToursNewRoute = AuthenticatedToursNewRouteImport.update({
+  id: '/tours/new',
+  path: '/tours/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedToursTourIdIndexRoute =
+  AuthenticatedToursTourIdIndexRouteImport.update({
+    id: '/tours/$tourId/',
+    path: '/tours/$tourId/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedToursTourIdEditRoute =
+  AuthenticatedToursTourIdEditRouteImport.update({
+    id: '/tours/$tourId/edit',
+    path: '/tours/$tourId/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/departures/$departureId': typeof AuthenticatedDeparturesDepartureIdRoute
+  '/departures/new': typeof AuthenticatedDeparturesNewRoute
+  '/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/departures/': typeof AuthenticatedDeparturesIndexRoute
+  '/tours/': typeof AuthenticatedToursIndexRoute
+  '/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
+  '/tours/$tourId/': typeof AuthenticatedToursTourIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/departures/$departureId': typeof AuthenticatedDeparturesDepartureIdRoute
+  '/departures/new': typeof AuthenticatedDeparturesNewRoute
+  '/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/departures': typeof AuthenticatedDeparturesIndexRoute
+  '/tours': typeof AuthenticatedToursIndexRoute
+  '/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
+  '/tours/$tourId': typeof AuthenticatedToursTourIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/departures/$departureId': typeof AuthenticatedDeparturesDepartureIdRoute
+  '/_authenticated/departures/new': typeof AuthenticatedDeparturesNewRoute
+  '/_authenticated/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/_authenticated/departures/': typeof AuthenticatedDeparturesIndexRoute
+  '/_authenticated/tours/': typeof AuthenticatedToursIndexRoute
+  '/_authenticated/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
+  '/_authenticated/tours/$tourId/': typeof AuthenticatedToursTourIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/departures/$departureId'
+    | '/departures/new'
+    | '/tours/new'
+    | '/api/auth/$'
+    | '/departures/'
+    | '/tours/'
+    | '/tours/$tourId/edit'
+    | '/tours/$tourId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/auth/$'
-  id: '__root__' | '/' | '/api/auth/$'
+  to:
+    | '/forgot-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/'
+    | '/departures/$departureId'
+    | '/departures/new'
+    | '/tours/new'
+    | '/api/auth/$'
+    | '/departures'
+    | '/tours'
+    | '/tours/$tourId/edit'
+    | '/tours/$tourId'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/forgot-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/_authenticated/'
+    | '/_authenticated/departures/$departureId'
+    | '/_authenticated/departures/new'
+    | '/_authenticated/tours/new'
+    | '/api/auth/$'
+    | '/_authenticated/departures/'
+    | '/_authenticated/tours/'
+    | '/_authenticated/tours/$tourId/edit'
+    | '/_authenticated/tours/$tourId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departures/': {
+      id: '/_authenticated/departures/'
+      path: '/departures'
+      fullPath: '/departures/'
+      preLoaderRoute: typeof AuthenticatedDeparturesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departures/$departureId': {
+      id: '/_authenticated/departures/$departureId'
+      path: '/departures/$departureId'
+      fullPath: '/departures/$departureId'
+      preLoaderRoute: typeof AuthenticatedDeparturesDepartureIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/departures/new': {
+      id: '/_authenticated/departures/new'
+      path: '/departures/new'
+      fullPath: '/departures/new'
+      preLoaderRoute: typeof AuthenticatedDeparturesNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tours/': {
+      id: '/_authenticated/tours/'
+      path: '/tours'
+      fullPath: '/tours/'
+      preLoaderRoute: typeof AuthenticatedToursIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tours/new': {
+      id: '/_authenticated/tours/new'
+      path: '/tours/new'
+      fullPath: '/tours/new'
+      preLoaderRoute: typeof AuthenticatedToursNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -65,11 +270,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/tours/$tourId/': {
+      id: '/_authenticated/tours/$tourId/'
+      path: '/tours/$tourId'
+      fullPath: '/tours/$tourId/'
+      preLoaderRoute: typeof AuthenticatedToursTourIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tours/$tourId/edit': {
+      id: '/_authenticated/tours/$tourId/edit'
+      path: '/tours/$tourId/edit'
+      fullPath: '/tours/$tourId/edit'
+      preLoaderRoute: typeof AuthenticatedToursTourIdEditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedDeparturesDepartureIdRoute: typeof AuthenticatedDeparturesDepartureIdRoute
+  AuthenticatedDeparturesNewRoute: typeof AuthenticatedDeparturesNewRoute
+  AuthenticatedToursNewRoute: typeof AuthenticatedToursNewRoute
+  AuthenticatedDeparturesIndexRoute: typeof AuthenticatedDeparturesIndexRoute
+  AuthenticatedToursIndexRoute: typeof AuthenticatedToursIndexRoute
+  AuthenticatedToursTourIdEditRoute: typeof AuthenticatedToursTourIdEditRoute
+  AuthenticatedToursTourIdIndexRoute: typeof AuthenticatedToursTourIdIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedDeparturesDepartureIdRoute:
+    AuthenticatedDeparturesDepartureIdRoute,
+  AuthenticatedDeparturesNewRoute: AuthenticatedDeparturesNewRoute,
+  AuthenticatedToursNewRoute: AuthenticatedToursNewRoute,
+  AuthenticatedDeparturesIndexRoute: AuthenticatedDeparturesIndexRoute,
+  AuthenticatedToursIndexRoute: AuthenticatedToursIndexRoute,
+  AuthenticatedToursTourIdEditRoute: AuthenticatedToursTourIdEditRoute,
+  AuthenticatedToursTourIdIndexRoute: AuthenticatedToursTourIdIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

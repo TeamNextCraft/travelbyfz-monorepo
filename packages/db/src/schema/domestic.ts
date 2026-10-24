@@ -841,6 +841,7 @@ export const appSettings = sqliteTable(
 
 export type Destination = typeof destinations.$inferSelect;
 export type Tour = typeof tours.$inferSelect;
+export type TourInsert = typeof tours.$inferInsert;
 export type Departure = typeof departures.$inferSelect;
 export type Booking = typeof bookings.$inferSelect;
 export type BookingTraveller = typeof bookingTravellers.$inferSelect;
