@@ -25,7 +25,7 @@ export type TourPricingTier = {
   maxParticipants?: number;
 }
 
-export type TourDifficulty = "Easy" | "Moderate" | "Challenging"
+export type TourDifficulty = "Easy" | "Moderate" | "Challenging" | "Hard"
 
 export type TourItinerary = {
   day: number;
