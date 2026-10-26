@@ -3,11 +3,10 @@ import { z } from "zod";
 const requiredLines = (message: string) =>
 	z.array(z.string()).refine((lines) => lines.some((l) => l.trim()), message);
 
-const nullableText = (max?: number) =>
-	z.preprocess(
-		(v) => (typeof v === "string" && v.trim() === "" ? null : v),
-		(max ? z.string().max(max) : z.string()).nullable(),
-	);
+const nullableText = (max?: number) => {
+	const schema = max ? z.string().max(max) : z.string();
+	return z.union([schema, z.literal("").transform(() => null), z.null()]);
+};
 
 const itinerarySchema = z.object({
 	day: z.number().min(1),

@@ -24,6 +24,12 @@
       "remote": true
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "IMAGES",
+      "bucket_name": "travelbyfz-images"
+    }
+  ],
   "routes": [
     {
       "pattern": "admin.travelbyfz.com",

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { TagInputList } from "./TagInputList";
+import { TextInputArray } from "../form/text-input-array";
 
 interface OmitIdItinerary extends Omit<TourItinerary, "day"> {
 	day: number | "";
@@ -58,7 +58,7 @@ export function ItineraryInputList({
 			description: current.description.trim(),
 			hotel: current.hotel?.trim() || undefined,
 			meals: current.meals,
-			highlights: current.highlights,
+			highlights: current.highlights ?? [],
 		};
 
 		// Sort the itinerary by day number before saving
@@ -182,7 +182,7 @@ export function ItineraryInputList({
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{/* Reusing your TagInputList component for Meals */}
-					<TagInputList
+					<TextInputArray
 						label="Meals (Optional)"
 						name={`${name}-meals`}
 						placeholder="e.g. Breakfast, Lunch"
@@ -191,7 +191,7 @@ export function ItineraryInputList({
 					/>
 
 					{/* Reusing your TagInputList component for Highlights */}
-					<TagInputList
+					<TextInputArray
 						label="Highlights *"
 						name={`${name}-highlights`}
 						placeholder="e.g. Eiffel Tower"

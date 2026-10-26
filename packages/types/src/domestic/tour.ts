@@ -33,7 +33,7 @@ export type TourItinerary = {
   description: string;
   hotel?: string;
   meals?: string[];
-  highlights: string[];
+  highlights?: string[];
 }
 
 type Review = {
