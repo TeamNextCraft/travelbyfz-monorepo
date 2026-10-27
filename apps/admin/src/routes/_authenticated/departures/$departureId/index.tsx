@@ -26,7 +26,7 @@ import {
 import { Separator } from "#/components/ui/separator"
 
 export const Route = createFileRoute(
-  "/_authenticated/departures/$departureId",
+  "/_authenticated/departures/$departureId/",
 )({
   component: DepartureDetailsPage,
 })

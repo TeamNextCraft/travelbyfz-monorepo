@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { DeparturesCard } from "#/components/common/departures-card";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import {
@@ -613,6 +614,7 @@ function TourDetailsPage() {
 						</CardContent>
 					</Card>
 
+					<DeparturesCard tourId={tourId} />
 					{/* Trip details */}
 					<Card>
 						<CardHeader>

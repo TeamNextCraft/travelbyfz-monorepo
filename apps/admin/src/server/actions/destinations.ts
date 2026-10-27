@@ -6,6 +6,31 @@ import { authMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 import { destinationInsertSchema } from "#/lib/schema/destinations";
 
+export const getDashboardDestinations = createServerFn({ method: "GET" })
+	.middleware([authMiddleware])
+	.handler(async () => {
+		try {
+			const data = await db
+				.select({
+					id: destinations.id,
+					name: destinations.name,
+					slug: destinations.slug,
+					state: destinations.state,
+					country: destinations.country,
+					region: destinations.region,
+					tourCount: destinations.tourCount,
+					isActive: destinations.isActive,
+					isFeatured: destinations.isFeatured,
+				})
+				.from(destinations);
+
+			return data ?? null;
+		} catch (error) {
+			console.error("Error fetching tours: ", error);
+			throw error;
+		}
+	});
+
 export const createDestination = createServerFn({ method: "POST" })
 	.middleware([authMiddleware])
 	.validator(destinationInsertSchema)
@@ -59,7 +84,27 @@ export const updateDestination = createServerFn({ method: "POST" })
 				.returning();
 			return updated;
 		} catch (error) {
-			console.error("Error updating destination: ", id, error);
+			console.error("error updating destination: ", id, error);
+			throw error;
+		}
+	});
+
+export const removeDestination = createServerFn({ method: "POST" })
+	.validator(
+		z.object({
+			destinationId: z.string(),
+		}),
+	)
+	.handler(async ({ data: { destinationId } }) => {
+		try {
+			const result = await db
+				.delete(destinations)
+				.where(eq(destinations.id, destinationId))
+				.returning({ id: destinations.id });
+
+			return { ids: result.map((d) => d.id) };
+		} catch (error) {
+			console.error("error deleting destination: ", destinationId, error);
 			throw error;
 		}
 	});
