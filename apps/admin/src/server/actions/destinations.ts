@@ -2,18 +2,19 @@ import { destinations } from "@repo/db/schema/domestic.ts";
 import { createServerFn } from "@tanstack/react-start";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { authMiddleware } from "#/lib/auth-middleware";
+import { adminMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 import { destinationInsertSchema } from "#/lib/schema/destinations";
 
 export const getDashboardDestinations = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.handler(async () => {
 		try {
 			const data = await db
 				.select({
 					id: destinations.id,
 					name: destinations.name,
+					coverImage: destinations.coverImage,
 					slug: destinations.slug,
 					state: destinations.state,
 					country: destinations.country,
@@ -32,7 +33,7 @@ export const getDashboardDestinations = createServerFn({ method: "GET" })
 	});
 
 export const createDestination = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(destinationInsertSchema)
 	.handler(async ({ data }) => {
 		try {
@@ -51,7 +52,7 @@ export const createDestination = createServerFn({ method: "POST" })
 	});
 
 export const getDestinationDetails = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(
 		z.object({
 			destinationId: z.string(),
@@ -73,7 +74,7 @@ export const getDestinationDetails = createServerFn({ method: "GET" })
 	});
 
 export const updateDestination = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(destinationInsertSchema.extend({ id: z.string() }))
 	.handler(async ({ data: { id, ...values } }) => {
 		try {

@@ -15,6 +15,18 @@ export const Route = createFileRoute("/_authenticated")({
 			});
 		}
 
+		switch (session.user.status) {
+			case "pending":
+				throw redirect({
+					to: "/account-pending",
+				});
+
+			case "suspended":
+				throw redirect({
+					to: "/account-suspended",
+				});
+		}
+
 		return { session };
 	},
 	component: RouteComponent,

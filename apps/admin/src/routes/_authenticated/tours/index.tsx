@@ -7,14 +7,18 @@ import {
 	CirclePlus,
 	Compass,
 	Eye,
+	Loader2,
 	MapPin,
 	MoreHorizontal,
 	Pencil,
+	RefreshCw,
 	Search,
 	Star,
+	Trash2,
 	XCircle,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { ToursPendingComponent } from "#/components/pending-components/tours-pending-component";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
@@ -23,6 +27,7 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { Input } from "#/components/ui/input";
@@ -34,7 +39,19 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
-import { getDashboardTours } from "#/server/actions/tours";
+import { getDashboardTours, removeTour } from "#/server/actions/tours";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogMedia,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/_authenticated/tours/")({
 	component: ToursPage,
@@ -44,7 +61,7 @@ type Tour = {
 	id: string;
 	title: string;
 	code: string;
-	destination: string;
+	destination: string | null;
 	category: string;
 	type: string;
 	durationDays: number;
@@ -83,13 +100,18 @@ function ToursPage() {
 	const [category, setCategory] = useState("all");
 	const [status, setStatus] = useState<StatusFilter>("all");
 	const [sortBy, setSortBy] = useState<"title" | "bookings">("title");
+	const [deleting, setDeleting] = useState<boolean>(false);
+	const [deleteAlertDialogOpen, setDeleteAlertDialogOpen] =
+		useState<boolean>(false);
+
 	const fetchTours = useServerFn(getDashboardTours);
+	const deleteTour = useServerFn(removeTour);
 
 	const {
 		data: tours = [],
 		isPending,
-		isError,
-		error,
+		isFetching,
+		refetch,
 	} = useQuery({
 		queryKey: ["dashboard-tours"],
 		queryFn: fetchTours,
@@ -148,16 +170,27 @@ function ToursPage() {
 		setStatus("all");
 	}
 
-	const hasFilters =
-		search.trim() !== "" || category !== "all" || status !== "all";
+	const handleDeleteTour = async (id: string) => {
+		try {
+			setDeleting(true);
+			setDeleteAlertDialogOpen(true);
+			const result = await deleteTour({ data: { tourId: id } });
+			if (!result) {
+				toast.error(`Error removing tour: ${id}`);
+			}
+			toast.success(`successfully removed tour: ${id}`);
+			refetch();
+		} catch (err) {
+			console.error(`Error removing tour: ${id}`, err);
+		} finally {
+			setDeleting(false);
+			setDeleteAlertDialogOpen(false);
+		}
+	};
 
 	if (isPending) {
 		return <ToursPendingComponent />;
 	}
-
-	console.log({
-		data: tours,
-	});
 
 	return (
 		<main className="min-w-0 space-y-6 p-4 md:p-6 lg:p-8">
@@ -291,6 +324,18 @@ function ToursPage() {
 							<ArrowDownUp className="size-4" />
 						</Button>
 					</div>
+					<Button
+						variant="outline"
+						onClick={() => refetch()}
+						disabled={isFetching}
+						aria-label="Refresh destinations"
+						title="Refresh destinations"
+					>
+						<RefreshCw
+							className={`size-4 ${isFetching ? "animate-spin" : ""}`}
+						/>
+						Refresh
+					</Button>
 				</div>
 
 				{/* Table */}
@@ -317,9 +362,17 @@ function ToursPage() {
 									{/* Tour information */}
 									<TableCell className="px-5 py-4">
 										<div className="flex items-center gap-3">
-											<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border bg-muted/30">
-												<Compass className="size-5 text-muted-foreground" />
-											</div>
+											{tour.coverImage ? (
+												<img
+													src={tour.coverImage}
+													alt={tour.title}
+													className="size-11 rounded-lg"
+												/>
+											) : (
+												<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border bg-muted/30">
+													<Compass className="size-5 text-muted-foreground" />
+												</div>
+											)}
 
 											<div className="min-w-0">
 												<div className="flex items-center gap-2">
@@ -344,7 +397,6 @@ function ToursPage() {
 											</div>
 										</div>
 									</TableCell>
-
 									{/* Category */}
 									<TableCell className="px-5 py-4">
 										<Badge variant="secondary">{tour.category}</Badge>
@@ -352,7 +404,6 @@ function ToursPage() {
 											{tour.type}
 										</p>
 									</TableCell>
-
 									{/* Duration */}
 									<TableCell className="px-5 py-4">
 										<div className="font-medium">{tour.durationDays} days</div>
@@ -360,7 +411,6 @@ function ToursPage() {
 											{tour.durationNights} nights
 										</p>
 									</TableCell>
-
 									{/* Performance */}
 									<TableCell className="px-5 py-4">
 										<div className="flex items-center gap-1 font-medium">
@@ -371,7 +421,6 @@ function ToursPage() {
 											{tour.bookingCount} bookings
 										</p>
 									</TableCell>
-
 									{/* Status */}
 									<TableCell className="px-5 py-4">
 										<Badge
@@ -381,7 +430,6 @@ function ToursPage() {
 											{tourStatus}
 										</Badge>
 									</TableCell>
-
 									{/* Actions */}
 									<TableCell className="px-5 py-4 text-right">
 										<DropdownMenu>
@@ -415,6 +463,57 @@ function ToursPage() {
 														Edit tour
 													</Link>
 												</DropdownMenuItem>
+												<DropdownMenuSeparator />
+												<AlertDialog open={deleteAlertDialogOpen}>
+													<AlertDialogTrigger
+														onClick={() => setDeleteAlertDialogOpen(true)}
+													>
+														<DropdownMenuItem
+															disabled
+															className="text-destructive focus:text-destructive"
+															variant="destructive"
+														>
+															<Trash2 className="mr-2 size-4" />
+															Delete tour
+														</DropdownMenuItem>
+													</AlertDialogTrigger>
+													<AlertDialogContent>
+														<AlertDialogHeader>
+															<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+																<Trash2 />
+															</AlertDialogMedia>
+															<AlertDialogTitle>
+																Are you absolutely sure?
+															</AlertDialogTitle>
+															<AlertDialogDescription>
+																This action cannot be undone. This will
+																permanently delete{" "}
+																<span className="text-destructive font-bold">
+																	{tour.title}
+																</span>{" "}
+																from data-base.
+															</AlertDialogDescription>
+														</AlertDialogHeader>
+														<AlertDialogFooter>
+															<AlertDialogCancel
+																variant={"outline"}
+																onClick={() => setDeleteAlertDialogOpen(false)}
+															>
+																Cancel
+															</AlertDialogCancel>
+															<AlertDialogAction
+																variant={"destructive"}
+																onClick={() => handleDeleteTour(tour.id)}
+															>
+																{deleting ? (
+																	<Loader2 className="animate-spin" />
+																) : (
+																	"Continue"
+																)}
+															</AlertDialogAction>
+														</AlertDialogFooter>
+													</AlertDialogContent>
+												</AlertDialog>
 											</DropdownMenuContent>
 										</DropdownMenu>
 									</TableCell>

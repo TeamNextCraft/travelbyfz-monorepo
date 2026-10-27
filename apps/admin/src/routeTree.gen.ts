@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AccountPendingRouteImport } from './routes/account-pending'
+import { Route as AccountSuspendedRouteImport } from './routes/account-suspended'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
@@ -37,6 +39,16 @@ import { Route as AuthenticatedToursTourIdDeparturesDepartureIdEditRouteImport }
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountPendingRoute = AccountPendingRouteImport.update({
+  id: '/account-pending',
+  path: '/account-pending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountSuspendedRoute = AccountSuspendedRouteImport.update({
+  id: '/account-suspended',
+  path: '/account-suspended',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -177,6 +189,8 @@ const AuthenticatedToursTourIdDeparturesDepartureIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
+  '/account-pending': typeof AccountPendingRoute
+  '/account-suspended': typeof AccountSuspendedRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -202,6 +216,8 @@ export interface FileRoutesByFullPath {
   '/tours/$tourId/departures/$departureId/edit': typeof AuthenticatedToursTourIdDeparturesDepartureIdEditRoute
 }
 export interface FileRoutesByTo {
+  '/account-pending': typeof AccountPendingRoute
+  '/account-suspended': typeof AccountSuspendedRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -230,6 +246,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/account-pending': typeof AccountPendingRoute
+  '/account-suspended': typeof AccountSuspendedRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -259,6 +277,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/account-pending'
+    | '/account-suspended'
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
@@ -284,6 +304,8 @@ export interface FileRouteTypes {
     | '/tours/$tourId/departures/$departureId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/account-pending'
+    | '/account-suspended'
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
@@ -311,6 +333,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/account-pending'
+    | '/account-suspended'
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
@@ -339,6 +363,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AccountPendingRoute: typeof AccountPendingRoute
+  AccountSuspendedRoute: typeof AccountSuspendedRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
@@ -353,6 +379,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account-pending': {
+      id: '/account-pending'
+      path: '/account-pending'
+      fullPath: '/account-pending'
+      preLoaderRoute: typeof AccountPendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account-suspended': {
+      id: '/account-suspended'
+      path: '/account-suspended'
+      fullPath: '/account-suspended'
+      preLoaderRoute: typeof AccountSuspendedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -582,6 +622,8 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AccountPendingRoute: AccountPendingRoute,
+  AccountSuspendedRoute: AccountSuspendedRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,

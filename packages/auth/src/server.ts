@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getDb } from "@repo/db/client";
-import * as schema from "@repo/db/schema/auth.ts";
+import { accountStatuses, user, account, verification, session } from "@repo/db/schema/auth.ts";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 export function createAuth(env: {
@@ -17,10 +17,10 @@ export function createAuth(env: {
     database: drizzleAdapter(db, {
       provider: "sqlite",
       schema: {
-        user: schema.user,
-        account: schema.account,
-        verification: schema.verification,
-        session: schema.session,
+        user: user,
+        account: account,
+        verification: verification,
+        session: session,
       },
     }),
 
@@ -51,7 +51,7 @@ export function createAuth(env: {
           input: false,
         },
         status: {
-          type: ["pending", "approved", "rejected"] as const,
+          type: [...accountStatuses],
           required: false,
           defaultValue: "pending",
           input: false,

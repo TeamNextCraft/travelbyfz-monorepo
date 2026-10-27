@@ -46,7 +46,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<QueryClientProvider client={queryClient}>
 					<TooltipProvider>{children}</TooltipProvider>
 				</QueryClientProvider>
-				<Toaster position="top-right" />
+				<Toaster position="top-right" richColors />
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",

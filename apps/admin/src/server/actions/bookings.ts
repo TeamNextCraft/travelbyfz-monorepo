@@ -7,7 +7,7 @@ import {
 import { createServerFn } from "@tanstack/react-start";
 import { and, count, desc, eq, like, ne, or, sql, sum } from "drizzle-orm";
 import { z } from "zod";
-import { authMiddleware } from "#/lib/auth-middleware";
+import { adminMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 
 const PAGE_SIZE = 20;
@@ -23,7 +23,7 @@ const listInput = z.object({
 });
 
 export const getBookings = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(listInput)
 	.handler(async ({ data }) => {
 		const term = data.q?.trim();
@@ -80,7 +80,7 @@ export const getBookings = createServerFn({ method: "GET" })
 /* ---------------------------- stats ---------------------------- */
 
 export const getBookingStats = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.handler(async () => {
 		const byStatus = await db
 			.select({ status: bookings.status, n: count() })
@@ -106,7 +106,7 @@ export const getBookingStats = createServerFn({ method: "GET" })
 /* ---------------------------- details ---------------------------- */
 
 export const getBookingDetails = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		const [booking] = await db
@@ -142,7 +142,7 @@ export const getBookingDetails = createServerFn({ method: "GET" })
 /* ---------------------------- mutations ---------------------------- */
 
 export const updateBookingNotes = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string(), internalNotes: z.string().max(5000) }))
 	.handler(async ({ data }) => {
 		await db
@@ -155,7 +155,7 @@ export const updateBookingNotes = createServerFn({ method: "POST" })
 	});
 
 export const updateBookingStatus = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(
 		z.object({
 			id: z.string(),

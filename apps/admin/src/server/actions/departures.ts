@@ -2,12 +2,12 @@ import { departurePricing, departures } from "@repo/db/schema/domestic.js";
 import { createServerFn } from "@tanstack/react-start";
 import { asc, eq, min } from "drizzle-orm";
 import { z } from "zod";
-import { authMiddleware } from "#/lib/auth-middleware";
+import { adminMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 import { departureInsertSchema } from "#/lib/schema/departures";
 
 export const getDeparture = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		const [departure] = await db
@@ -29,7 +29,7 @@ export const getDeparture = createServerFn({ method: "GET" })
 	});
 
 export const createDeparture = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(departureInsertSchema)
 	.handler(async ({ data: { pricing, ...departure } }) => {
 		const id = crypto.randomUUID();
@@ -48,7 +48,7 @@ export const createDeparture = createServerFn({ method: "POST" })
 	});
 
 export const updateDeparture = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string() }).and(departureInsertSchema))
 	.handler(async ({ data: { id, pricing, ...departure } }) => {
 		await db.batch([
@@ -69,7 +69,7 @@ export const updateDeparture = createServerFn({ method: "POST" })
 	});
 
 export const getTourDepartures = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ tourId: z.string() }))
 	.handler(async ({ data }) => {
 		return db

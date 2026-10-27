@@ -498,9 +498,17 @@ export function DestinationsIndexPage() {
 											<TableRow key={destination.id} className="group">
 												<TableCell>
 													<div className="flex items-center gap-3">
-														<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
-															<MapPin className="size-5 text-primary" />
-														</div>
+														{destination.coverImage ? (
+															<img
+																src={destination.coverImage}
+																alt={destination.name}
+																className="size-11 rounded-lg"
+															/>
+														) : (
+															<div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/15">
+																<MapPin className="size-5 text-primary" />
+															</div>
+														)}
 
 														<div className="min-w-0 space-y-1">
 															<p className="truncate font-medium">
@@ -643,7 +651,12 @@ export function DestinationsIndexPage() {
 																		</AlertDialogDescription>
 																	</AlertDialogHeader>
 																	<AlertDialogFooter>
-																		<AlertDialogCancel variant={"outline"}>
+																		<AlertDialogCancel
+																			variant={"outline"}
+																			onClick={() =>
+																				setDeleteAlertDialogOpen(false)
+																			}
+																		>
 																			Cancel
 																		</AlertDialogCancel>
 																		<AlertDialogAction

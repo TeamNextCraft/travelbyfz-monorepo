@@ -5,7 +5,7 @@ import { getRequestHeaders } from "@tanstack/react-start/server";
 import { and, count, desc, eq, gt, like, ne, or, sql, sum } from "drizzle-orm";
 import { z } from "zod";
 import { auth } from "#/lib/auth"; // your Better Auth instance
-import { authMiddleware } from "#/lib/auth-middleware";
+import { adminMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 
 const PAGE_SIZE = 20;
@@ -52,7 +52,7 @@ export const getSession = createServerFn({ method: "GET" }).handler(
 );
 
 export const getUsers = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(
 		z.object({
 			page: z.number().int().min(1).default(1),
@@ -96,7 +96,7 @@ export const getUsers = createServerFn({ method: "GET" })
 	});
 
 export const getUserStats = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.handler(async () => {
 		await requireAdmin();
 
@@ -120,7 +120,7 @@ export const getUserStats = createServerFn({ method: "GET" })
 /* ---------------------------- details ---------------------------- */
 
 export const getUserDetails = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		const admin = await requireAdmin();
@@ -204,7 +204,7 @@ const signOutEverywhere = (id: string) =>
 	db.delete(session).where(eq(session.userId, id));
 
 export const updateUserStatus = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(
 		z.object({ id: z.string(), status: z.enum(["approved", "suspended"]) }),
 	)
@@ -230,7 +230,7 @@ export const updateUserStatus = createServerFn({ method: "POST" })
 	});
 
 export const setUserActive = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string(), isActive: z.boolean() }))
 	.handler(async ({ data }) => {
 		const admin = await requireAdmin();
@@ -249,7 +249,7 @@ export const setUserActive = createServerFn({ method: "POST" })
 	});
 
 export const updateUserRole = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string(), role: z.enum(userRoles) }))
 	.handler(async ({ data }) => {
 		const admin = await requireAdmin();
@@ -258,7 +258,7 @@ export const updateUserRole = createServerFn({ method: "POST" })
 	});
 
 export const revokeUserSessions = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
+	.middleware([adminMiddleware])
 	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		await requireAdmin();
