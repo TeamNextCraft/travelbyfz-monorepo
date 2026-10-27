@@ -1,10 +1,19 @@
-import { i as __toESM, n as __commonJSMin, r as __exportAll, t as require_jsx_runtime } from "./assets/jsx-runtime-BreKMRQl.js";
-import { B as hasKeys, D as executeRewriteInput, F as decodePath, J as require_react, K as rootRouteId, N as invariant, P as createSieveCache, V as isDangerousProtocol, W as isRedirect, a as routerContext, f as getScriptPreloadAttrs, h as resolveManifestCssLink, i as useRouter, l as createInlineCssPlaceholderAsset, m as resolveManifestAssetLink, o as ClientOnly, p as getStylesheetHref, q as isNotFound, r as matchContext, u as createInlineCssStyleAsset, w as createMemoryHistory, x as _getRenderedMatches, y as useLayoutEffect } from "./assets/useSelector-L4ZDj6Yf.js";
+import { i as __toESM, n as __commonJSMin, t as require_jsx_runtime } from "./assets/jsx-runtime-DV6Z9NBx.js";
+import { n as routerContext, r as require_react, t as useRouter } from "./assets/useRouter-BB0s9D-e.js";
+import { C as hasKeys, E as isPromise, O as rootRouteId, f as invariant, i as waitForReason, k as isNotFound, l as createServerHistory, o as _getRenderedMatches, p as createSieveCache, v as decodePath, w as isDangerousProtocol } from "./assets/matchContext-B0F-_hB2.js";
+import { t as isRedirect } from "./assets/redirect-3Vy3u2Da.js";
+import { n as useLayoutEffect } from "./assets/utils-DbabVJ23.js";
+import { a as getScriptPreloadAttrs, c as resolveManifestCssLink, n as createInlineCssPlaceholderAsset, o as getStylesheetHref, r as createInlineCssStyleAsset, s as resolveManifestAssetLink } from "./assets/manifest-KjurXAon.js";
+import { i as CatchBoundary, r as renderPending, t as Match } from "./assets/Match-DEppxjtw.js";
+import "./assets/useSelector-Dx97wFO_.js";
+import { _ as setProtectedResponseHeaders, a as finalizeResponse, b as withStartRequest, c as getParsedRequestUrl, d as getSerializedResponseState, f as protectResponseHeaders, h as restoreResponseProtocol, m as resolveErrorResponseStatus, n as createFinalizedResponse, p as reconcileResponse, r as createServerEntry$1, s as getErrorHeaders, v as transferResponseMetadata, y as transferResponseProtocol } from "./assets/server-CmSQoZhc.js";
+import { a as getStartOptions, c as MAX_FRAMED_STREAMS, d as TSS_FORMDATA_CONTEXT, f as TSS_SERVER_FUNCTION, h as mergeHeaders, i as safeObjectMerge, l as MAX_FRAME_PAYLOAD_SIZE, m as X_TSS_SERIALIZED, n as flattenMiddlewares, o as getStartContext, p as X_TSS_RAW_RESPONSE, r as createNullProtoObject, s as runWithStartContext, u as TSS_CONTENT_TYPE_FRAMED_VERSIONED } from "./assets/createServerFn-C78wSqf7.js";
+import { t as require_react_dom } from "./assets/react-dom-BAHw6fhi.js";
+import { t as getServerFnById } from "./assets/__23tanstack-start-server-fn-resolver-0Lg2X-vn.js";
+import { t as createMiddleware } from "./assets/createMiddleware-Bk-A5Dm5.js";
 import { EventEmitter } from "node:events";
 import { PassThrough, Readable, Writable } from "node:stream";
-import { ReadableStream as ReadableStream$1 } from "node:stream/web";
-import { AsyncLocalStorage as AsyncLocalStorage$1 } from "node:async_hooks";
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/hrtime.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/hrtime.mjs
 var hrtime$1 = /* @__PURE__ */ Object.assign(function hrtime(startTime) {
 	const now = Date.now();
 	const seconds = Math.trunc(now / 1e3);
@@ -22,8 +31,7 @@ var hrtime$1 = /* @__PURE__ */ Object.assign(function hrtime(startTime) {
 }, { bigint: function bigint() {
 	return BigInt(Date.now() * 1e6);
 } });
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/tty/read-stream.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/tty/read-stream.mjs
 var ReadStream = class {
 	fd;
 	isRaw = false;
@@ -36,8 +44,7 @@ var ReadStream = class {
 		return this;
 	}
 };
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/tty/write-stream.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/tty/write-stream.mjs
 var WriteStream = class {
 	fd;
 	columns = 80;
@@ -80,8 +87,7 @@ var WriteStream = class {
 		return false;
 	}
 };
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/_internal/utils.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/_internal/utils.mjs
 /* @__NO_SIDE_EFFECTS__ */
 function createNotImplementedError(name) {
 	return /* @__PURE__ */ new Error(`[unenv] ${name} is not implemented yet!`);
@@ -102,11 +108,9 @@ function notImplementedClass(name) {
 		}
 	};
 }
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/node-version.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/node-version.mjs
 var NODE_VERSION = "22.14.0";
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/process.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/process/process.mjs
 var Process = class Process extends EventEmitter {
 	env;
 	hrtime;
@@ -321,8 +325,7 @@ var Process = class Process extends EventEmitter {
 	_send = void 0;
 	_linkedBinding = void 0;
 };
-//#endregion
-//#region node_modules/.pnpm/@cloudflare+unenv-preset@2._1c659c9daaa692695c947889742d77f6/node_modules/@cloudflare/unenv-preset/dist/runtime/node/process.mjs
+// ../../node_modules/.pnpm/@cloudflare+unenv-preset@2.16.2_unenv@2.0.0-rc.24_workerd@1.20261019.1/node_modules/@cloudflare/unenv-preset/dist/runtime/node/process.mjs
 var globalProcess = globalThis["process"];
 var getBuiltinModule = globalProcess.getBuiltinModule;
 var workerdProcess = getBuiltinModule("node:process");
@@ -333,8 +336,7 @@ var unenvProcess = new Process({
 });
 var { exit, features, platform } = workerdProcess;
 var { _channel, _debugEnd, _debugProcess, _disconnect, _events, _eventsCount, _exiting, _fatalException, _getActiveHandles, _getActiveRequests, _handleQueue, _kill, _linkedBinding, _maxListeners, _pendingMessage, _preload_modules, _rawDebug, _send, _startProfilerIdleNotifier, _stopProfilerIdleNotifier, _tickCallback, abort, addListener, allowedNodeEnvironmentFlags, arch, argv, argv0, assert: assert$1, availableMemory, binding, channel, chdir, config, connected, constrainedMemory, cpuUsage, cwd, debugPort, disconnect, dlopen, domain, emit, emitWarning, env, eventNames, execArgv, execPath, exitCode, finalization, getActiveResourcesInfo, getegid, geteuid, getgid, getgroups, getMaxListeners, getuid, hasUncaughtExceptionCaptureCallback, hrtime, initgroups, kill, listenerCount, listeners, loadEnvFile, mainModule, memoryUsage, moduleLoadList, nextTick, off, on, once, openStdin, permission, pid, ppid, prependListener, prependOnceListener, rawListeners, reallyExit, ref, release, removeAllListeners, removeListener, report, resourceUsage, send, setegid, seteuid, setgid, setgroups, setMaxListeners, setSourceMapsEnabled, setuid, setUncaughtExceptionCaptureCallback, sourceMapsEnabled, stderr, stdin, stdout, throwDeprecation, title, traceDeprecation, umask, unref, uptime, version, versions } = unenvProcess;
-//#endregion
-//#region \0virtual:cloudflare/nodejs-global-inject/@cloudflare/unenv-preset/node/process
+// \0virtual:cloudflare/nodejs-global-inject/@cloudflare/unenv-preset/node/process
 globalThis.process = {
 	abort,
 	addListener,
@@ -444,11 +446,9 @@ globalThis.process = {
 	_send,
 	_linkedBinding
 };
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/mock/noop.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/mock/noop.mjs
 var noop_default = Object.assign(() => {}, { __unenv__: true });
-//#endregion
-//#region node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/console.mjs
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/console.mjs
 var _console = globalThis.console;
 var _stderr = new Writable();
 var _stdout = new Writable();
@@ -478,8 +478,7 @@ var Console = _console?.Console ?? /* @__PURE__ */ notImplementedClass("console.
 var _times = /* @__PURE__ */ new Map();
 var _stdoutErrorHandler = noop_default;
 var _stderrErrorHandler = noop_default;
-//#endregion
-//#region node_modules/.pnpm/@cloudflare+unenv-preset@2._1c659c9daaa692695c947889742d77f6/node_modules/@cloudflare/unenv-preset/dist/runtime/node/console.mjs
+// ../../node_modules/.pnpm/@cloudflare+unenv-preset@2.16.2_unenv@2.0.0-rc.24_workerd@1.20261019.1/node_modules/@cloudflare/unenv-preset/dist/runtime/node/console.mjs
 var workerdConsole = globalThis["console"];
 var { assert, clear, context, count, countReset, createTask, debug, dir, dirxml, error, group, groupCollapsed, groupEnd, info, log, profile, profileEnd, table, time, timeEnd, timeLog, timeStamp, trace, warn } = workerdConsole;
 Object.assign(workerdConsole, {
@@ -491,20 +490,251 @@ Object.assign(workerdConsole, {
 	_stdoutErrorHandler,
 	_times
 });
-//#endregion
-//#region \0virtual:cloudflare/nodejs-global-inject/@cloudflare/unenv-preset/node/console
+// \0virtual:cloudflare/nodejs-global-inject/@cloudflare/unenv-preset/node/console
 globalThis.console = workerdConsole;
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/ssr-match-id.js
-function dehydrateSsrMatchId(id) {
-	return id.replaceAll("~", "~~").replaceAll("\0", "~0").replaceAll("�", "~r").replaceAll("/", "\0");
+// ../../node_modules/.pnpm/unenv@2.0.0-rc.24/node_modules/unenv/dist/runtime/node/internal/perf_hooks/performance.mjs
+var _timeOrigin = globalThis.performance?.timeOrigin ?? Date.now();
+var _performanceNow = globalThis.performance?.now ? globalThis.performance.now.bind(globalThis.performance) : () => Date.now() - _timeOrigin;
+var nodeTiming = {
+	name: "node",
+	entryType: "node",
+	startTime: 0,
+	duration: 0,
+	nodeStart: 0,
+	v8Start: 0,
+	bootstrapComplete: 0,
+	environment: 0,
+	loopStart: 0,
+	loopExit: 0,
+	idleTime: 0,
+	uvMetricsInfo: {
+		loopCount: 0,
+		events: 0,
+		eventsWaiting: 0
+	},
+	detail: void 0,
+	toJSON() {
+		return this;
+	}
+};
+var PerformanceEntry = class {
+	__unenv__ = true;
+	detail;
+	entryType = "event";
+	name;
+	startTime;
+	constructor(name, options) {
+		this.name = name;
+		this.startTime = options?.startTime || _performanceNow();
+		this.detail = options?.detail;
+	}
+	get duration() {
+		return _performanceNow() - this.startTime;
+	}
+	toJSON() {
+		return {
+			name: this.name,
+			entryType: this.entryType,
+			startTime: this.startTime,
+			duration: this.duration,
+			detail: this.detail
+		};
+	}
+};
+var PerformanceMark = class PerformanceMark extends PerformanceEntry {
+	entryType = "mark";
+	constructor() {
+		super(...arguments);
+	}
+	get duration() {
+		return 0;
+	}
+};
+var PerformanceMeasure = class extends PerformanceEntry {
+	entryType = "measure";
+};
+var PerformanceResourceTiming = class extends PerformanceEntry {
+	entryType = "resource";
+	serverTiming = [];
+	connectEnd = 0;
+	connectStart = 0;
+	decodedBodySize = 0;
+	domainLookupEnd = 0;
+	domainLookupStart = 0;
+	encodedBodySize = 0;
+	fetchStart = 0;
+	initiatorType = "";
+	name = "";
+	nextHopProtocol = "";
+	redirectEnd = 0;
+	redirectStart = 0;
+	requestStart = 0;
+	responseEnd = 0;
+	responseStart = 0;
+	secureConnectionStart = 0;
+	startTime = 0;
+	transferSize = 0;
+	workerStart = 0;
+	responseStatus = 0;
+};
+var PerformanceObserverEntryList = class {
+	__unenv__ = true;
+	getEntries() {
+		return [];
+	}
+	getEntriesByName(_name, _type) {
+		return [];
+	}
+	getEntriesByType(type) {
+		return [];
+	}
+};
+var Performance = class {
+	__unenv__ = true;
+	timeOrigin = _timeOrigin;
+	eventCounts = /* @__PURE__ */ new Map();
+	_entries = [];
+	_resourceTimingBufferSize = 0;
+	navigation = void 0;
+	timing = void 0;
+	timerify(_fn, _options) {
+		throw /* @__PURE__ */ createNotImplementedError("Performance.timerify");
+	}
+	get nodeTiming() {
+		return nodeTiming;
+	}
+	eventLoopUtilization() {
+		return {};
+	}
+	markResourceTiming() {
+		return new PerformanceResourceTiming("");
+	}
+	onresourcetimingbufferfull = null;
+	now() {
+		if (this.timeOrigin === _timeOrigin) return _performanceNow();
+		return Date.now() - this.timeOrigin;
+	}
+	clearMarks(markName) {
+		this._entries = markName ? this._entries.filter((e) => e.name !== markName) : this._entries.filter((e) => e.entryType !== "mark");
+	}
+	clearMeasures(measureName) {
+		this._entries = measureName ? this._entries.filter((e) => e.name !== measureName) : this._entries.filter((e) => e.entryType !== "measure");
+	}
+	clearResourceTimings() {
+		this._entries = this._entries.filter((e) => e.entryType !== "resource" || e.entryType !== "navigation");
+	}
+	getEntries() {
+		return this._entries;
+	}
+	getEntriesByName(name, type) {
+		return this._entries.filter((e) => e.name === name && (!type || e.entryType === type));
+	}
+	getEntriesByType(type) {
+		return this._entries.filter((e) => e.entryType === type);
+	}
+	mark(name, options) {
+		const entry = new PerformanceMark(name, options);
+		this._entries.push(entry);
+		return entry;
+	}
+	measure(measureName, startOrMeasureOptions, endMark) {
+		let start;
+		let end;
+		if (typeof startOrMeasureOptions === "string") {
+			start = this.getEntriesByName(startOrMeasureOptions, "mark")[0]?.startTime;
+			end = this.getEntriesByName(endMark, "mark")[0]?.startTime;
+		} else {
+			start = Number.parseFloat(startOrMeasureOptions?.start) || this.now();
+			end = Number.parseFloat(startOrMeasureOptions?.end) || this.now();
+		}
+		const entry = new PerformanceMeasure(measureName, {
+			startTime: start,
+			detail: {
+				start,
+				end
+			}
+		});
+		this._entries.push(entry);
+		return entry;
+	}
+	setResourceTimingBufferSize(maxSize) {
+		this._resourceTimingBufferSize = maxSize;
+	}
+	addEventListener(type, listener, options) {
+		throw /* @__PURE__ */ createNotImplementedError("Performance.addEventListener");
+	}
+	removeEventListener(type, listener, options) {
+		throw /* @__PURE__ */ createNotImplementedError("Performance.removeEventListener");
+	}
+	dispatchEvent(event) {
+		throw /* @__PURE__ */ createNotImplementedError("Performance.dispatchEvent");
+	}
+	toJSON() {
+		return this;
+	}
+};
+var PerformanceObserver = class {
+	__unenv__ = true;
+	static supportedEntryTypes = [];
+	_callback = null;
+	constructor(callback) {
+		this._callback = callback;
+	}
+	takeRecords() {
+		return [];
+	}
+	disconnect() {
+		throw /* @__PURE__ */ createNotImplementedError("PerformanceObserver.disconnect");
+	}
+	observe(options) {
+		throw /* @__PURE__ */ createNotImplementedError("PerformanceObserver.observe");
+	}
+	bind(fn) {
+		return fn;
+	}
+	runInAsyncScope(fn, thisArg, ...args) {
+		return fn.call(thisArg, ...args);
+	}
+	asyncId() {
+		return 0;
+	}
+	triggerAsyncId() {
+		return 0;
+	}
+	emitDestroy() {
+		return this;
+	}
+};
+var performance = globalThis.performance && "addEventListener" in globalThis.performance ? globalThis.performance : new Performance();
+// ../../node_modules/.pnpm/@cloudflare+unenv-preset@2.16.2_unenv@2.0.0-rc.24_workerd@1.20261019.1/node_modules/@cloudflare/unenv-preset/dist/runtime/polyfill/performance.mjs
+if (!("__unenv__" in performance)) {
+	const proto = Performance.prototype;
+	for (const key of Object.getOwnPropertyNames(proto)) if (key !== "constructor" && !(key in performance)) {
+		const desc = Object.getOwnPropertyDescriptor(proto, key);
+		if (desc) Object.defineProperty(performance, key, desc);
+	}
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/constants.js
-var GLOBAL_TSR = "$_TSR";
-var TSR_SCRIPT_BARRIER_ID = "$tsr-stream-barrier";
-//#endregion
-//#region node_modules/.pnpm/seroval@1.6.7/node_modules/seroval/dist/index.js
+globalThis.performance = performance;
+globalThis.Performance = Performance;
+globalThis.PerformanceEntry = PerformanceEntry;
+globalThis.PerformanceMark = PerformanceMark;
+globalThis.PerformanceMeasure = PerformanceMeasure;
+globalThis.PerformanceObserver = PerformanceObserver;
+globalThis.PerformanceObserverEntryList = PerformanceObserverEntryList;
+globalThis.PerformanceResourceTiming = PerformanceResourceTiming;
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/ssr-match-id.js
+function dehydrateSsrMatchId(id) {
+	return id.replaceAll("/", "#");
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/transformer.js
+/**
+* Create a strongly-typed serialization adapter for SSR hydration.
+* Use to register custom types with the router serializer.
+*/
+function createSerializationAdapter(opts) {
+	return opts;
+}
+// ../../node_modules/.pnpm/seroval@1.7.2/node_modules/seroval/dist/index.js
 var SYM_ASYNC_ITERATOR = Symbol.asyncIterator;
 var SYM_HAS_INSTANCE = Symbol.hasInstance;
 var SYM_IS_CONCAT_SPREADABLE = Symbol.isConcatSpreadable;
@@ -518,35 +748,15 @@ var SYM_SPLIT = Symbol.split;
 var SYM_TO_PRIMITIVE = Symbol.toPrimitive;
 var SYM_TO_STRING_TAG = Symbol.toStringTag;
 var SYM_UNSCOPABLES = Symbol.unscopables;
-var SYMBOL_STRING = {
-	[0]: "Symbol.asyncIterator",
-	[1]: "Symbol.hasInstance",
-	[2]: "Symbol.isConcatSpreadable",
-	[3]: "Symbol.iterator",
-	[4]: "Symbol.match",
-	[5]: "Symbol.matchAll",
-	[6]: "Symbol.replace",
-	[7]: "Symbol.search",
-	[8]: "Symbol.species",
-	[9]: "Symbol.split",
-	[10]: "Symbol.toPrimitive",
-	[11]: "Symbol.toStringTag",
-	[12]: "Symbol.unscopables"
-};
-var INV_SYMBOL_REF = {
-	[SYM_ASYNC_ITERATOR]: 0,
-	[SYM_HAS_INSTANCE]: 1,
-	[SYM_IS_CONCAT_SPREADABLE]: 2,
-	[SYM_ITERATOR]: 3,
-	[SYM_MATCH]: 4,
-	[SYM_MATCH_ALL]: 5,
-	[SYM_REPLACE]: 6,
-	[SYM_SEARCH]: 7,
-	[SYM_SPECIES]: 8,
-	[SYM_SPLIT]: 9,
-	[SYM_TO_PRIMITIVE]: 10,
-	[SYM_TO_STRING_TAG]: 11,
-	[SYM_UNSCOPABLES]: 12
+var TEMPORAL_TYPE_NAME = {
+	[0]: "Instant",
+	[1]: "Duration",
+	[2]: "PlainDate",
+	[3]: "PlainDateTime",
+	[4]: "PlainMonthDay",
+	[5]: "PlainTime",
+	[6]: "PlainYearMonth",
+	[7]: "ZonedDateTime"
 };
 var SYMBOL_REF = {
 	[0]: SYM_ASYNC_ITERATOR,
@@ -563,6 +773,18 @@ var SYMBOL_REF = {
 	[11]: SYM_TO_STRING_TAG,
 	[12]: SYM_UNSCOPABLES
 };
+function createSymbolStringTable() {
+	const result = {};
+	for (let i = 0; i <= 12; i++) result[i] = SYMBOL_REF[i].description;
+	return result;
+}
+var SYMBOL_STRING = /* @__PURE__ */ createSymbolStringTable();
+function createInverseSymbolTable() {
+	const result = {};
+	for (let i = 0; i <= 12; i++) result[SYMBOL_REF[i]] = i;
+	return result;
+}
+var INV_SYMBOL_REF = /* @__PURE__ */ createInverseSymbolTable();
 var CONSTANT_STRING = {
 	[2]: "!0",
 	[3]: "!1",
@@ -579,18 +801,9 @@ var CONSTANT_VAL = {
 	[1]: void 0,
 	[0]: null,
 	[4]: -0,
-	[5]: Number.POSITIVE_INFINITY,
-	[6]: Number.NEGATIVE_INFINITY,
+	[5]: Infinity,
+	[6]: -Infinity,
 	[7]: NaN
-};
-var ERROR_CONSTRUCTOR_STRING = {
-	[0]: "Error",
-	[1]: "EvalError",
-	[2]: "RangeError",
-	[3]: "ReferenceError",
-	[4]: "SyntaxError",
-	[5]: "TypeError",
-	[6]: "URIError"
 };
 var ERROR_CONSTRUCTOR = {
 	[0]: Error,
@@ -601,7 +814,18 @@ var ERROR_CONSTRUCTOR = {
 	[5]: TypeError,
 	[6]: URIError
 };
+function createErrorConstructorStringTable() {
+	const result = {};
+	for (let i = 0; i <= 6; i++) result[i] = ERROR_CONSTRUCTOR[i].name;
+	return result;
+}
+var ERROR_CONSTRUCTOR_STRING = /* @__PURE__ */ createErrorConstructorStringTable();
 function createSerovalNode(t, i, s, c, m, p, e, a, f, b, o, l) {
+	if (c === void 0 && m === void 0 && p === void 0 && e === void 0 && a === void 0 && f === void 0 && b === void 0 && o === void 0 && l === void 0) return {
+		t,
+		i,
+		s
+	};
 	return {
 		t,
 		i,
@@ -618,7 +842,7 @@ function createSerovalNode(t, i, s, c, m, p, e, a, f, b, o, l) {
 	};
 }
 function createConstantNode(value) {
-	return createSerovalNode(2, void 0, value, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(2, void 0, value);
 }
 var TRUE_NODE = /* @__PURE__ */ createConstantNode(2);
 var FALSE_NODE = /* @__PURE__ */ createConstantNode(3);
@@ -629,58 +853,104 @@ var INFINITY_NODE = /* @__PURE__ */ createConstantNode(5);
 var NEG_INFINITY_NODE = /* @__PURE__ */ createConstantNode(6);
 var NAN_NODE = /* @__PURE__ */ createConstantNode(7);
 var MIN_JSON_STRINGIFY_LENGTH = 64;
-var JSON_ESCAPE_DIFFERENCES = /[\x00-\x07\x0b\x0e-\x1f<\u2028\u2029\ud800-\udfff]/;
-function serializeChar(str) {
-	switch (str) {
-		case "\"": return "\\\"";
-		case "\\": return "\\\\";
-		case "\n": return "\\n";
-		case "\r": return "\\r";
-		case "\b": return "\\b";
-		case "	": return "\\t";
-		case "\f": return "\\f";
-		case "<": return "\\x3C";
-		case "\u2028": return "\\u2028";
-		case "\u2029": return "\\u2029";
+var NEEDS_ESCAPE = /["\\\n\r\b\t\f<\u2028\u2029]/;
+var JSON_ESCAPE_DIFFERENCES = /[\x00-\x07\x0b\x0e-\x1f\ud800-\udfff]/;
+var LESS_THAN = /</g;
+var LINE_SEPARATOR = /\u2028/g;
+var PARAGRAPH_SEPARATOR = /\u2029/g;
+function escapeCharCode(code) {
+	switch (code) {
+		case 34: return "\\\"";
+		case 92: return "\\\\";
+		case 10: return "\\n";
+		case 13: return "\\r";
+		case 8: return "\\b";
+		case 9: return "\\t";
+		case 12: return "\\f";
+		case 60: return "\\x3C";
+		case 8232: return "\\u2028";
+		case 8233: return "\\u2029";
 		default: return;
 	}
 }
 function serializeString(str) {
-	if (str.length >= MIN_JSON_STRINGIFY_LENGTH && !JSON_ESCAPE_DIFFERENCES.test(str)) return JSON.stringify(str).slice(1, -1);
+	if (!NEEDS_ESCAPE.test(str)) return str;
+	if (str.length >= MIN_JSON_STRINGIFY_LENGTH && !JSON_ESCAPE_DIFFERENCES.test(str)) {
+		let result = JSON.stringify(str).slice(1, -1);
+		if (result.includes("<")) result = result.replace(LESS_THAN, "\\x3C");
+		if (result.includes("\u2028")) result = result.replace(LINE_SEPARATOR, "\\u2028");
+		if (result.includes("\u2029")) result = result.replace(PARAGRAPH_SEPARATOR, "\\u2029");
+		return result;
+	}
 	let result = "";
 	let lastPos = 0;
 	let replacement;
 	for (let i = 0, len = str.length; i < len; i++) {
-		replacement = serializeChar(str[i]);
+		replacement = escapeCharCode(str.charCodeAt(i));
 		if (replacement) {
 			result += str.slice(lastPos, i) + replacement;
 			lastPos = i + 1;
 		}
 	}
-	if (lastPos === 0) result = str;
-	else result += str.slice(lastPos);
-	return result;
+	return result + str.slice(lastPos);
 }
-function deserializeReplacer(str) {
-	switch (str) {
-		case "\\\\": return "\\";
-		case "\\\"": return "\"";
-		case "\\n": return "\n";
-		case "\\r": return "\r";
-		case "\\b": return "\b";
-		case "\\t": return "	";
-		case "\\f": return "\f";
-		case "\\x3C": return "<";
-		case "\\u2028": return "\u2028";
-		case "\\u2029": return "\u2029";
-		default: return str;
-	}
-}
+var JSON_COMPATIBLE = /^(?:[^"\\\x00-\x1f]|\\["\\nrbtf])*$/;
+var ESCAPE_SEQUENCE = /(\\\\|\\"|\\n|\\r|\\b|\\t|\\f|\\u2028|\\u2029|\\x3C)/g;
 function deserializeString(str) {
-	if (typeof str === "string" && !str.includes("\\")) return str;
-	return str.replace(/(\\\\|\\"|\\n|\\r|\\b|\\t|\\f|\\u2028|\\u2029|\\x3C)/g, deserializeReplacer);
+	if (typeof str !== "string") return str.replace(ESCAPE_SEQUENCE, deserializeString);
+	let index = str.indexOf("\\");
+	if (index === -1) return str;
+	if (JSON_COMPATIBLE.test(str)) return JSON.parse("\"" + str + "\"");
+	let result = "";
+	let lastPos = 0;
+	const last = str.length - 1;
+	while (index !== -1 && index < last) {
+		let replacement;
+		let length = 2;
+		switch (str.charCodeAt(index + 1)) {
+			case 92:
+				replacement = "\\";
+				break;
+			case 34:
+				replacement = "\"";
+				break;
+			case 110:
+				replacement = "\n";
+				break;
+			case 114:
+				replacement = "\r";
+				break;
+			case 98:
+				replacement = "\b";
+				break;
+			case 116:
+				replacement = "	";
+				break;
+			case 102:
+				replacement = "\f";
+				break;
+			case 120:
+				if (str.startsWith("3C", index + 2)) {
+					replacement = "<";
+					length = 4;
+				}
+				break;
+			case 117: if (str.startsWith("2028", index + 2)) {
+				replacement = "\u2028";
+				length = 6;
+			} else if (str.startsWith("2029", index + 2)) {
+				replacement = "\u2029";
+				length = 6;
+			}
+		}
+		if (replacement) {
+			result += str.slice(lastPos, index) + replacement;
+			lastPos = index + length;
+			index = str.indexOf("\\", lastPos);
+		} else index = str.indexOf("\\", index + 1);
+	}
+	return result + str.slice(lastPos);
 }
-var { toString: objectToString } = Object.prototype;
 var STEP_ERROR_CODES = {
 	parsing: 1,
 	serialization: 2,
@@ -689,16 +959,20 @@ var STEP_ERROR_CODES = {
 function getErrorMessageProd(type) {
 	return `Seroval Error (step: ${STEP_ERROR_CODES[type]})`;
 }
-var getErrorMessage = (type, cause) => getErrorMessageProd(type);
 var SerovalError = class extends Error {
 	constructor(type, cause) {
-		super(getErrorMessage(type, cause));
+		super(getErrorMessageProd(type));
 		this.cause = cause;
 	}
 };
 var SerovalParserError = class extends SerovalError {
 	constructor(cause) {
 		super("parsing", cause);
+	}
+};
+var SerovalSerializationError = class extends SerovalError {
+	constructor(cause) {
+		super("serialization", cause);
 	}
 };
 var SerovalDeserializationError = class extends SerovalError {
@@ -730,12 +1004,6 @@ var SerovalMissingInstanceError = class extends Error {
 		super(getSpecificErrorMessage(4));
 	}
 };
-var SerovalMissingReferenceError = class extends Error {
-	constructor(value) {
-		super(getSpecificErrorMessage(5));
-		this.value = value;
-	}
-};
 var SerovalMissingReferenceForIdError = class extends Error {
 	constructor(id) {
 		super(getSpecificErrorMessage(6));
@@ -751,96 +1019,60 @@ var SerovalMalformedNodeError = class extends Error {
 		super(getSpecificErrorMessage(8));
 	}
 };
-var SerovalDepthLimitError = class extends Error {
-	constructor(limit) {
+var SerovalConflictedNodeIdError = class extends Error {
+	constructor(node) {
 		super(getSpecificErrorMessage(9));
 	}
 };
-var REFERENCES_KEY = "__SEROVAL_REFS__";
-var GLOBAL_CONTEXT_R = `self.\$R`;
-function getCrossReferenceHeader(id) {
-	if (id == null) return `${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||[]`;
-	return `(${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||{})["${serializeString(id)}"]=[]`;
-}
-var REFERENCE = /* @__PURE__ */ new Map();
-var INV_REFERENCE = /* @__PURE__ */ new Map();
-function hasReferenceID(value) {
-	return REFERENCE.has(value);
-}
-function hasReference(id) {
-	return INV_REFERENCE.has(id);
-}
-function getReferenceID(value) {
-	if (hasReferenceID(value)) return REFERENCE.get(value);
-	throw new SerovalMissingReferenceError(value);
-}
-function getReference(id) {
-	if (hasReference(id)) return INV_REFERENCE.get(id);
-	throw new SerovalMissingReferenceForIdError(id);
-}
-if (typeof globalThis !== "undefined") Object.defineProperty(globalThis, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof window !== "undefined") Object.defineProperty(window, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof self !== "undefined") Object.defineProperty(self, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof global !== "undefined") Object.defineProperty(global, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
+var SerovalDepthLimitError = class extends Error {
+	constructor(limit) {
+		super(getSpecificErrorMessage(10));
+	}
+};
+var SerovalLiveStreamError = class extends Error {
+	constructor(reason) {
+		super(getSpecificErrorMessage(12));
+		this.reason = reason;
+	}
+};
 function getErrorConstructor(error) {
-	if (error instanceof EvalError) return 1;
-	if (error instanceof RangeError) return 2;
-	if (error instanceof ReferenceError) return 3;
-	if (error instanceof SyntaxError) return 4;
-	if (error instanceof TypeError) return 5;
-	if (error instanceof URIError) return 6;
+	for (let i = 1; i <= 6; i++) if (error instanceof ERROR_CONSTRUCTOR[i]) return i;
 	return 0;
 }
-function getInitialErrorOptions(error) {
-	const construct = ERROR_CONSTRUCTOR_STRING[getErrorConstructor(error)];
-	if (error.name !== construct) return { name: error.name };
-	if (error.constructor.name !== construct) return { name: error.constructor.name };
-	return {};
-}
 function getErrorOptions(error, features) {
-	let options = getInitialErrorOptions(error);
-	const names = Object.getOwnPropertyNames(error);
-	for (let i = 0, len = names.length, name; i < len; i++) {
-		name = names[i];
-		if (name !== "name" && name !== "message") {
-			if (name === "stack") {
-				if (features & 4) {
-					options = options || {};
-					options[name] = error[name];
-				}
-			} else {
-				options = options || {};
-				options[name] = error[name];
-			}
-		}
-	}
+	const options = Object.create(null);
+	const construct = ERROR_CONSTRUCTOR_STRING[getErrorConstructor(error)];
+	if (error.name !== construct) options.name = error.name;
+	else if (error.constructor.name !== construct) options.name = error.constructor.name;
+	for (const name of Object.getOwnPropertyNames(error)) if (name !== "name" && name !== "message" && (name !== "stack" || features & 4)) options[name] = error[name];
 	return options;
 }
 function getObjectFlag(obj) {
+	if (Object.isExtensible(obj)) return 0;
 	if (Object.isFrozen(obj)) return 3;
 	if (Object.isSealed(obj)) return 2;
-	if (Object.isExtensible(obj)) return 0;
 	return 1;
+}
+function getTypedArrayConstructor(name) {
+	switch (name) {
+		case "Int8Array": return Int8Array;
+		case "Int16Array": return Int16Array;
+		case "Int32Array": return Int32Array;
+		case "Uint8Array": return Uint8Array;
+		case "Uint16Array": return Uint16Array;
+		case "Uint32Array": return Uint32Array;
+		case "Uint8ClampedArray": return Uint8ClampedArray;
+		case "Float32Array": return Float32Array;
+		case "Float64Array": return Float64Array;
+		case "BigInt64Array": return BigInt64Array;
+		case "BigUint64Array": return BigUint64Array;
+		default: throw new SerovalUnknownTypedArrayError(name);
+	}
+}
+var typedArrayNameGetter;
+function getTypedArrayName(value) {
+	if (!typedArrayNameGetter) typedArrayNameGetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Int8Array.prototype), Symbol.toStringTag).get;
+	return typedArrayNameGetter.call(value);
 }
 function createNumberNode(value) {
 	switch (value) {
@@ -849,85 +1081,233 @@ function createNumberNode(value) {
 	}
 	if (value !== value) return NAN_NODE;
 	if (Object.is(value, -0)) return NEG_ZERO_NODE;
-	return createSerovalNode(0, void 0, value, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(0, void 0, value);
 }
 function createStringNode(value) {
-	return createSerovalNode(1, void 0, serializeString(value), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(1, void 0, serializeString(value));
 }
 function createBigIntNode(current) {
-	return createSerovalNode(3, void 0, "" + current, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(3, void 0, "" + current);
 }
 function createIndexedValueNode(id) {
-	return createSerovalNode(4, id, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(4, id);
 }
 function createDateNode(id, current) {
 	const timestamp = current.valueOf();
-	return createSerovalNode(5, id, timestamp !== timestamp ? "" : current.toISOString(), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(5, id, timestamp === timestamp ? current.toISOString() : "");
 }
 function createTemporalNode(id, type, current) {
-	return createSerovalNode(36, id, current.toString(), type, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(36, id, current.toString(), type);
 }
 function createRegExpNode(id, current) {
-	return createSerovalNode(6, id, void 0, serializeString(current.source), current.flags, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(6, id, void 0, serializeString(current.source), current.flags);
 }
 function createWKSymbolNode(id, current) {
-	return createSerovalNode(17, id, INV_SYMBOL_REF[current], void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(17, id, INV_SYMBOL_REF[current]);
 }
-function createReferenceNode(id, ref) {
-	return createSerovalNode(18, id, serializeString(getReferenceID(ref)), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+function createReferenceNode(id, referenceId) {
+	return createSerovalNode(18, id, serializeString(referenceId));
 }
 function createPluginNode(id, tag, value) {
-	return createSerovalNode(25, id, value, serializeString(tag), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	return createSerovalNode(25, id, value, serializeString(tag));
 }
 function createArrayNode(id, current, parsedItems) {
-	return createSerovalNode(9, id, void 0, void 0, void 0, void 0, void 0, parsedItems, void 0, void 0, getObjectFlag(current), void 0);
+	return createSerovalNode(9, id, void 0, void 0, void 0, void 0, void 0, parsedItems, void 0, void 0, getObjectFlag(current));
 }
 function createBoxedNode(id, boxed) {
-	return createSerovalNode(21, id, void 0, void 0, void 0, void 0, void 0, void 0, boxed, void 0, void 0, void 0);
+	return createSerovalNode(21, id, void 0, void 0, void 0, void 0, void 0, void 0, boxed);
 }
 var MAX_TYPED_ARRAY_LENGTH = 1e6;
-function createTypedArrayNode(id, current, buffer) {
-	if (current.length > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(15, id, void 0, current.constructor.name, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.length);
+function createViewNode(type, id, current, buffer) {
+	const isDataView = type === 20;
+	const size = isDataView ? current.byteLength : current.length;
+	if (size > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
+	return createSerovalNode(type, id, void 0, isDataView ? void 0 : getTypedArrayName(current), void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, size);
 }
-function createBigIntTypedArrayNode(id, current, buffer) {
-	if (current.length > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(16, id, void 0, current.constructor.name, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.length);
-}
-function createDataViewNode(id, current, buffer) {
-	if (current.byteLength > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(20, id, void 0, void 0, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.byteLength);
-}
-function createErrorNode(id, current, options) {
-	return createSerovalNode(13, id, getErrorConstructor(current), void 0, serializeString(current.message), options, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createAggregateErrorNode(id, current, options) {
-	return createSerovalNode(14, id, getErrorConstructor(current), void 0, serializeString(current.message), options, void 0, void 0, void 0, void 0, void 0, void 0);
+function createErrorNode(type, id, current, options) {
+	return createSerovalNode(type, id, getErrorConstructor(current), void 0, serializeString(current.message), options);
 }
 function createSetNode(id, items) {
-	return createSerovalNode(7, id, void 0, void 0, void 0, void 0, void 0, items, void 0, void 0, void 0, void 0);
+	return createSerovalNode(7, id, void 0, void 0, void 0, void 0, void 0, items);
 }
-function createIteratorFactoryInstanceNode(factory, items) {
-	return createSerovalNode(28, void 0, void 0, void 0, void 0, void 0, void 0, [factory, items], void 0, void 0, void 0, void 0);
+function createIteratorFactoryInstanceNode(type, factory, items) {
+	return createSerovalNode(type, void 0, void 0, void 0, void 0, void 0, void 0, [factory, items]);
 }
-function createAsyncIteratorFactoryInstanceNode(factory, items) {
-	return createSerovalNode(30, void 0, void 0, void 0, void 0, void 0, void 0, [factory, items], void 0, void 0, void 0, void 0);
+function createStreamConstructorNode(id, factory, sequence, live) {
+	return createSerovalNode(31, id, void 0, void 0, void 0, void 0, void 0, sequence, factory, void 0, void 0, live);
 }
-function createStreamConstructorNode(id, factory, sequence) {
-	return createSerovalNode(31, id, void 0, void 0, void 0, void 0, void 0, sequence, factory, void 0, void 0, void 0);
-}
-function createStreamNextNode(id, parsed) {
-	return createSerovalNode(32, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
-}
-function createStreamThrowNode(id, parsed) {
-	return createSerovalNode(33, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
-}
-function createStreamReturnNode(id, parsed) {
-	return createSerovalNode(34, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
+function createStreamEventNode(type, id, parsed) {
+	return createSerovalNode(type, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed);
 }
 function createSequenceNode(id, sequence, throwAt, doneAt) {
 	return createSerovalNode(35, id, throwAt, void 0, void 0, void 0, void 0, sequence, void 0, void 0, void 0, doneAt);
 }
+function isLiveStream(value) {
+	return value instanceof LiveStream;
+}
+/**
+* A single-consumer stream for incremental serialization. Unlike
+* `createStream`, it keeps no history: at most one event is held, and the
+* producer operation that sent it settles only when the consumer accepts it.
+*
+* An internal class rather than a tagged POJO: identity is checked with
+* `instanceof`, which untrusted input cannot forge. The class is exported
+* because bundlers cannot drop an unexported top-level class.
+*/
+var LiveStream = class {
+	constructor(options) {
+		this.consumed = false;
+		this.closed = false;
+		this.cancelled = false;
+		this.options = options;
+	}
+	deliver(reader, record) {
+		record.delivered = true;
+		reader.resolve({
+			event: record.event,
+			accept: () => {
+				if (this.pending === record && record.delivered) {
+					const terminal = record.event.type !== "next";
+					record.event = void 0;
+					this.pending = void 0;
+					const resolve = record.resolve;
+					record.resolve = void 0;
+					record.reject = void 0;
+					if (terminal) {
+						this.closed = true;
+						this.options = void 0;
+						const waiter = this.waiting;
+						this.waiting = void 0;
+						waiter?.reject(new SerovalLiveStreamError("closed"));
+					}
+					resolve?.();
+				}
+			}
+		});
+	}
+	/** @internal */
+	push(event) {
+		if (this.cancelled) return Promise.reject(this.cancelReason);
+		if (this.closed) return Promise.reject(new SerovalLiveStreamError("closed"));
+		if (this.pending) return Promise.reject(new SerovalLiveStreamError("pending"));
+		return new Promise((resolve, reject) => {
+			const record = {
+				event,
+				delivered: false,
+				resolve,
+				reject
+			};
+			this.pending = record;
+			if (this.waiting) {
+				const waiter = this.waiting;
+				this.waiting = void 0;
+				this.deliver(waiter, record);
+			}
+		});
+	}
+	cancel(reason) {
+		if (this.cancelled || this.closed) return;
+		this.cancelled = true;
+		this.cancelReason = reason;
+		const record = this.pending;
+		const waiter = this.waiting;
+		this.pending = void 0;
+		this.waiting = void 0;
+		const callbackOwner = this.options;
+		this.options = void 0;
+		if (record) {
+			record.event = void 0;
+			const reject = record.reject;
+			record.resolve = void 0;
+			record.reject = void 0;
+			reject?.(reason);
+		}
+		if (waiter) waiter.reject(reason);
+		callbackOwner?.onCancel?.(reason);
+	}
+	read() {
+		if (this.cancelled) return Promise.reject(this.cancelReason);
+		if (this.closed) return Promise.reject(new SerovalLiveStreamError("closed"));
+		if (this.waiting) return Promise.reject(new SerovalLiveStreamError("reading"));
+		return new Promise((resolve, reject) => {
+			const next = {
+				resolve,
+				reject
+			};
+			if (this.pending && !this.pending.delivered) this.deliver(next, this.pending);
+			else this.waiting = next;
+		});
+	}
+	consume() {
+		if (this.consumed) throw new SerovalLiveStreamError("consumed");
+		this.consumed = true;
+		return {
+			read: () => this.read(),
+			cancel: (reason) => this.cancel(reason)
+		};
+	}
+	/**
+	* Consumes the stream through a replay-style listener, accepting each
+	* event as soon as it has been delivered. Use `consume` or `pump` when
+	* acceptance must wait for processing.
+	*/
+	on(listener) {
+		const wrap = (key) => (value, accept) => {
+			listener[key](value);
+			accept();
+		};
+		return this.pump({
+			next: wrap("next"),
+			throw: wrap("throw"),
+			return: wrap("return")
+		});
+	}
+	/**
+	* Consumes the stream into a sink that controls acceptance. Returns the
+	* cancel function.
+	* @internal
+	*/
+	pump(sink) {
+		const consumer = this.consume();
+		let current = sink;
+		function next() {
+			consumer.read().then((delivery) => {
+				const target = current;
+				if (!target) return;
+				const event = delivery.event;
+				let failure;
+				let failed = false;
+				try {
+					failure = target[event.type](event.type === "throw" ? event.error : event.value, delivery.accept);
+				} catch (error) {
+					failed = true;
+					failure = error;
+				}
+				if (failed || failure !== void 0) {
+					current = void 0;
+					try {
+						consumer.cancel(failure);
+					} finally {
+						target.done?.();
+					}
+					return;
+				}
+				if (event.type === "next") {
+					next();
+					return;
+				}
+				current = void 0;
+				target.done?.();
+			}, (reason) => {
+				const target = current;
+				current = void 0;
+				target?.error?.(reason);
+			});
+		}
+		next();
+		return consumer.cancel;
+	}
+};
 /**
 * An opaque reference allows hiding values from the serializer.
 */
@@ -962,7 +1342,7 @@ var PROMISE_FAILURE = (resolver, data) => {
 var SERIALIZED_PROMISE_CONSTRUCTOR = /* @__PURE__ */ PROMISE_CONSTRUCTOR.toString();
 var SERIALIZED_PROMISE_SUCCESS = /* @__PURE__ */ PROMISE_SUCCESS.toString();
 var SERIALIZED_PROMISE_FAILURE = /* @__PURE__ */ PROMISE_FAILURE.toString();
-var STREAM_CONSTRUCTOR = () => {
+var STREAM_CONSTRUCTOR = (live) => {
 	const buffer = [];
 	const listeners = [];
 	let alive = true;
@@ -970,6 +1350,7 @@ var STREAM_CONSTRUCTOR = () => {
 	let count = 0;
 	const internal = {
 		flush(value, mode, x) {
+			live > 1 || buffer.push(value);
 			for (x = 0; x < count; x++) {
 				const listener = listeners[x];
 				if (listener) listener[mode](value);
@@ -983,6 +1364,7 @@ var STREAM_CONSTRUCTOR = () => {
 			}
 		},
 		on(listener, temp = 0) {
+			if (live > 1) throw new Error("Stream consumed");
 			let subscribed = alive;
 			if (alive) {
 				for (temp = 0; temp < count; temp++) if (!listeners[temp]) break;
@@ -990,6 +1372,10 @@ var STREAM_CONSTRUCTOR = () => {
 				listeners[temp] = listener;
 			}
 			internal.up(listener);
+			if (live) {
+				live = 2;
+				buffer.length = 0;
+			}
 			return () => {
 				if (alive && subscribed) {
 					subscribed = false;
@@ -1006,14 +1392,10 @@ var STREAM_CONSTRUCTOR = () => {
 			return internal.on(listener);
 		},
 		next(value) {
-			if (alive) {
-				buffer.push(value);
-				internal.flush(value, "next");
-			}
+			if (alive) internal.flush(value, "next");
 		},
 		throw(value) {
 			if (alive) {
-				buffer.push(value);
 				internal.flush(value, "throw");
 				alive = false;
 				success = false;
@@ -1022,7 +1404,6 @@ var STREAM_CONSTRUCTOR = () => {
 		},
 		return(value) {
 			if (alive) {
-				buffer.push(value);
 				internal.flush(value, "return");
 				alive = false;
 				success = true;
@@ -1140,23 +1521,34 @@ var ARRAY_BUFFER_CONSTRUCTOR = (b64) => {
 	return arr.buffer;
 };
 var SERIALIZED_ARRAY_BUFFER_CONSTRUCTOR = /* @__PURE__ */ ARRAY_BUFFER_CONSTRUCTOR.toString();
+/**
+* An internal class rather than a tagged POJO: identity is checked with
+* `instanceof`, which untrusted input cannot forge. The class is exported
+* because bundlers cannot drop an unexported top-level class.
+* The eval-based `deserialize` path still rebuilds a `{__SEROVAL_SEQUENCE__…}`
+* POJO from embedded source - it has no access to this class - so a value read
+* back through `deserialize` is not an instance and, by design, is not treated
+* as a genuine Sequence on re-serialization.
+*/
+var Sequence = class {
+	constructor(values, throwAt, doneAt) {
+		this.v = values;
+		this.t = throwAt;
+		this.d = doneAt;
+	}
+};
 function isSequence(value) {
-	return "__SEROVAL_SEQUENCE__" in value;
+	return value instanceof Sequence;
 }
 function createSequence(values, throwAt, doneAt) {
-	return {
-		__SEROVAL_SEQUENCE__: true,
-		v: values,
-		t: throwAt,
-		d: doneAt
-	};
+	return new Sequence(values, throwAt, doneAt);
 }
 function createSequenceFromIterable(source) {
 	const values = [];
 	let throwsAt = -1;
 	let doneAt = -1;
 	const iterator = source[SYM_ITERATOR]();
-	while (true) try {
+	for (;;) try {
 		const value = iterator.next();
 		values.push(value.value);
 		if (value.done) {
@@ -1165,11 +1557,13 @@ function createSequenceFromIterable(source) {
 		}
 	} catch (error) {
 		throwsAt = values.length;
+		doneAt = throwsAt;
 		values.push(error);
+		break;
 	}
 	return createSequence(values, throwsAt, doneAt);
 }
-var createIterator = ITERATOR_CONSTRUCTOR(SYM_ITERATOR);
+var createIterator = /* @__PURE__ */ ITERATOR_CONSTRUCTOR(SYM_ITERATOR);
 function sequenceToIterator(sequence) {
 	return createIterator(sequence);
 }
@@ -1194,47 +1588,102 @@ var SPECIAL_REF_STRING = {
 	[4]: SERIALIZED_STREAM_CONSTRUCTOR,
 	[5]: SERIALIZED_ARRAY_BUFFER_CONSTRUCTOR
 };
-function isStream(value) {
-	return "__SEROVAL_STREAM__" in value;
-}
-function createStream() {
-	return STREAM_CONSTRUCTOR();
-}
-function createStreamFromAsyncIterable(iterable, cleanups) {
-	const stream = createStream();
-	const iterator = iterable[SYM_ASYNC_ITERATOR]();
-	let cancelled = false;
-	let done = false;
-	cleanups === null || cleanups === void 0 || cleanups.push(() => {
-		if (!(done || cancelled)) {
-			cancelled = true;
-			Promise.resolve().then(() => {
-				var _iterator$return;
-				return (_iterator$return = iterator.return) === null || _iterator$return === void 0 ? void 0 : _iterator$return.call(iterator);
-			}).catch(() => {});
-		}
-	});
-	async function push() {
-		try {
-			while (!cancelled) {
-				const value = await iterator.next();
-				if (cancelled) return;
-				if (value.done) {
-					done = true;
-					stream.return(value.value);
-					break;
-				}
-				stream.next(value.value);
-			}
-		} catch (error) {
-			done = true;
-			if (!cancelled) stream.throw(error);
+/**
+* An internal class rather than a tagged POJO: identity is checked with
+* `instanceof`, which untrusted input cannot forge. The class is exported
+* because bundlers cannot drop an unexported top-level class.
+*
+* The behavior is intentionally duplicated from `STREAM_CONSTRUCTOR`. That
+* constructor's source is embedded verbatim into the eval-based `deserialize`
+* output, which has no access to this class, so the two cannot be shared. A
+* stream read back through `deserialize` is therefore a plain POJO and, by
+* design, is not treated as a genuine Stream on re-serialization. Keep the two
+* implementations in sync.
+*/
+var Stream = class {
+	constructor(live) {
+		this.buffer = [];
+		this.listeners = [];
+		this.alive = true;
+		this.success = false;
+		this.count = 0;
+		this.live = live;
+	}
+	flush(value, mode) {
+		this.live > 1 || this.buffer.push(value);
+		for (let x = 0; x < this.count; x++) this.listeners[x]?.[mode](value);
+	}
+	replay(listener) {
+		for (let x = 0, z = this.buffer.length; x < z; x++) {
+			const current = this.buffer[x];
+			if (!this.alive && x === z - 1) listener[this.success ? "return" : "throw"](current);
+			else listener.next(current);
 		}
 	}
-	push().catch(() => {});
-	return stream;
+	on(listener) {
+		if (this.live > 1) throw new Error("Stream consumed");
+		let subscribed = this.alive;
+		let temp = 0;
+		if (subscribed) {
+			for (; temp < this.count; temp++) if (!this.listeners[temp]) break;
+			if (temp === this.count) this.count++;
+			this.listeners[temp] = listener;
+		}
+		this.replay(listener);
+		if (this.live) {
+			this.live = 2;
+			this.buffer.length = 0;
+		}
+		return () => {
+			if (this.alive && subscribed) {
+				subscribed = false;
+				this.listeners[temp] = void 0;
+				while (this.count > 0 && !this.listeners[this.count - 1]) this.count--;
+				this.listeners.length = this.count;
+			}
+		};
+	}
+	/**
+	* Returns the events of a stream that has ended, without subscribing, so a
+	* live receiver is not consumed. The last value is the `return` or `throw`
+	* value. Returns `undefined` while the stream is open, or when a live
+	* receiver was already consumed and has no events left.
+	* @internal
+	*/
+	endedEvents() {
+		if (this.alive || this.live > 1) return void 0;
+		return {
+			values: this.buffer.slice(),
+			success: this.success
+		};
+	}
+	next(value) {
+		if (this.alive) this.flush(value, "next");
+	}
+	throw(value) {
+		if (this.alive) {
+			this.flush(value, "throw");
+			this.alive = false;
+			this.success = false;
+			this.listeners.length = 0;
+		}
+	}
+	return(value) {
+		if (this.alive) {
+			this.flush(value, "return");
+			this.alive = false;
+			this.success = true;
+			this.listeners.length = 0;
+		}
+	}
+};
+function isStream(value) {
+	return value instanceof Stream || isLiveStream(value);
 }
-var createAsyncIterable = ASYNC_ITERATOR_CONSTRUCTOR(SYM_ASYNC_ITERATOR, PROMISE_CONSTRUCTOR);
+function createStream() {
+	return new Stream();
+}
+var createAsyncIterable = /* @__PURE__ */ ASYNC_ITERATOR_CONSTRUCTOR(SYM_ASYNC_ITERATOR, PROMISE_CONSTRUCTOR);
 function streamToAsyncIterable(stream) {
 	return createAsyncIterable(stream);
 }
@@ -1245,17 +1694,115 @@ async function promiseToResult(current) {
 		return [0, e];
 	}
 }
-function createBaseParserContext(mode, options) {
-	var _options$compactArray;
+function encodeArrayBuffer$1(current) {
+	const bytes = new Uint8Array(current);
+	if (typeof bytes.toBase64 === "function") return bytes.toBase64();
+	let result = "";
+	for (let i = 0, len = bytes.length; i < len; i++) result += String.fromCharCode(bytes[i]);
+	return btoa(result);
+}
+var MIN_NATIVE_BASE64_LENGTH = 512;
+function encodeArrayBuffer(current) {
+	if (typeof Buffer !== "undefined") return Buffer.from(current).toString("base64");
+	return encodeArrayBuffer$1(current);
+}
+function decodeArrayBuffer(source) {
+	if (source.length < MIN_NATIVE_BASE64_LENGTH || typeof Buffer === "undefined") return ARRAY_BUFFER_CONSTRUCTOR(source);
+	const decoded = atob(source);
+	const buffer = new ArrayBuffer(decoded.length);
+	Buffer.from(buffer).write(decoded, "latin1");
+	return buffer;
+}
+function createPlugin(plugin) {
+	return plugin;
+}
+function dedupePlugins(deduped, plugins) {
+	for (let i = 0, len = plugins.length; i < len; i++) {
+		const current = plugins[i];
+		if (!deduped.has(current)) {
+			deduped.add(current);
+			if (current.extends) dedupePlugins(deduped, current.extends);
+		}
+	}
+}
+var RESOLVED_PLUGINS = /* @__PURE__ */ new WeakMap();
+function matchResolved(resolved, plugins, added) {
+	for (let i = 0, len = plugins.length; i < len; i++) {
+		const current = plugins[i];
+		if (current === resolved[added]) {
+			added++;
+			if (current.extends) {
+				added = matchResolved(resolved, current.extends, added);
+				if (added === -1) return -1;
+			}
+		} else {
+			const index = resolved.indexOf(current);
+			if (index === -1 || index >= added) return -1;
+		}
+	}
+	return added;
+}
+function resolvePlugins(plugins) {
+	if (plugins) {
+		const cached = RESOLVED_PLUGINS.get(plugins);
+		if (cached && matchResolved(cached, plugins, 0) === cached.length) return cached;
+		const deduped = /* @__PURE__ */ new Set();
+		dedupePlugins(deduped, plugins);
+		const resolved = [...deduped];
+		RESOLVED_PLUGINS.set(plugins, resolved);
+		return resolved;
+	}
+}
+/**
+* Returns the plugins that are tested for plain objects. It is the same array
+* when no plugin sets `skipPlainObjects`.
+*/
+function getPlainObjectPlugins(plugins) {
+	if (plugins) {
+		for (let i = 0, len = plugins.length; i < len; i++) if (plugins[i].skipPlainObjects) {
+			const result = plugins.filter((plugin) => !plugin.skipPlainObjects);
+			return result.length ? result : void 0;
+		}
+	}
+	return plugins;
+}
+var REFERENCES_KEY = "__SEROVAL_REFS__";
+var GLOBAL_CONTEXT_R = `self.\$R`;
+function getCrossReferenceHeader(id) {
+	if (id == null) return `${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||[]`;
+	return `(${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||{})["${serializeString(id)}"]=[]`;
+}
+var REFERENCE = /* @__PURE__ */ new Map();
+var INV_REFERENCE = /* @__PURE__ */ new Map();
+function hasReference(id) {
+	return INV_REFERENCE.has(id);
+}
+function getReferenceID(value) {
+	return REFERENCE.get(value);
+}
+function getReference(id) {
+	if (hasReference(id)) return INV_REFERENCE.get(id);
+	throw new SerovalMissingReferenceForIdError(id);
+}
+function createBaseParserContext(options) {
 	return {
 		plugins: options.plugins,
-		mode,
+		plainObjectPlugins: getPlainObjectPlugins(options.plugins),
 		marked: /* @__PURE__ */ new Set(),
-		features: 127 ^ (options.disabledFeatures || 0),
-		refs: options.refs || /* @__PURE__ */ new Map(),
+		features: 127 ^ (options.disabledFeatures ?? 0),
+		refs: options.refs ?? /* @__PURE__ */ new Map(),
 		depthLimit: options.depthLimit || 1e3,
-		compactArrayBufferViews: (_options$compactArray = options.compactArrayBufferViews) !== null && _options$compactArray !== void 0 ? _options$compactArray : false
+		compactArrayBufferViews: options.compactArrayBufferViews ?? false
 	};
+}
+/**
+* Returns the plugins to test for an object. Plain objects, whose prototype is
+* `Object.prototype`, skip the plugins that set `skipPlainObjects`. Checking
+* the prototype as well as `constructor` keeps instances whose prototype has
+* no own `constructor` property from skipping those plugins.
+*/
+function getObjectPlugins(ctx, current, currentClass) {
+	return currentClass === Object && Object.getPrototypeOf(current) === Object.prototype ? ctx.plainObjectPlugins : ctx.plugins;
 }
 /**
 * Ensures that the value (based on an identifier) has been visited by the parser.
@@ -1279,117 +1826,164 @@ function getNodeForIndexedValue(ctx, current) {
 	const registeredId = ctx.refs.get(current);
 	if (registeredId != null) {
 		markParserRef(ctx, registeredId);
-		return {
-			type: 1,
-			value: createIndexedValueNode(registeredId)
-		};
+		return createIndexedValueNode(registeredId);
 	}
-	return {
-		type: 0,
-		value: createIndexForValue(ctx, current)
-	};
+	return createIndexForValue(ctx, current);
 }
 function getReferenceNode(ctx, current) {
 	const indexed = getNodeForIndexedValue(ctx, current);
-	if (indexed.type === 1) return indexed;
-	if (hasReferenceID(current)) return {
-		type: 2,
-		value: createReferenceNode(indexed.value, current)
-	};
-	return indexed;
+	if (typeof indexed !== "number") return indexed;
+	const referenceId = getReferenceID(current);
+	return referenceId === void 0 ? indexed : createReferenceNode(indexed, referenceId);
 }
 /**
 * Parsing methods
 */
 function parseWellKnownSymbol(ctx, current) {
 	const ref = getReferenceNode(ctx, current);
-	if (ref.type !== 0) return ref.value;
-	if (current in INV_SYMBOL_REF) return createWKSymbolNode(ref.value, current);
+	if (typeof ref !== "number") return ref;
+	if (current in INV_SYMBOL_REF) return createWKSymbolNode(ref, current);
 	throw new SerovalUnsupportedTypeError(current);
 }
 function parseSpecialReference(ctx, ref) {
 	const result = getNodeForIndexedValue(ctx, SPECIAL_REFS[ref]);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(26, result.value, ref, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
+	if (typeof result !== "number") return result;
+	return createSerovalNode(26, result, ref);
 }
 function parseIteratorFactory(ctx) {
 	const result = getNodeForIndexedValue(ctx, ITERATOR);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(27, result.value, void 0, void 0, void 0, void 0, void 0, void 0, parseWellKnownSymbol(ctx, SYM_ITERATOR), void 0, void 0, void 0);
+	if (typeof result !== "number") return result;
+	return createSerovalNode(27, result, void 0, void 0, void 0, void 0, void 0, void 0, parseWellKnownSymbol(ctx, SYM_ITERATOR));
 }
 function parseAsyncIteratorFactory(ctx) {
 	const result = getNodeForIndexedValue(ctx, ASYNC_ITERATOR);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(29, result.value, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(ctx, 1), parseWellKnownSymbol(ctx, SYM_ASYNC_ITERATOR)], void 0, void 0, void 0, void 0);
+	if (typeof result !== "number") return result;
+	return createSerovalNode(29, result, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(ctx, 1), parseWellKnownSymbol(ctx, SYM_ASYNC_ITERATOR)]);
+}
+function getTemporalType(currentClass) {
+	switch (currentClass) {
+		case Temporal.Instant: return 0;
+		case Temporal.Duration: return 1;
+		case Temporal.PlainDate: return 2;
+		case Temporal.PlainDateTime: return 3;
+		case Temporal.PlainMonthDay: return 4;
+		case Temporal.PlainTime: return 5;
+		case Temporal.PlainYearMonth: return 6;
+		case Temporal.ZonedDateTime: return 7;
+		default: return;
+	}
+}
+function getObjectClass(current) {
+	const currentClass = current.constructor;
+	if (currentClass !== void 0 && typeof currentClass !== "function") {
+		const proto = Object.getPrototypeOf(current);
+		return proto === null ? void 0 : proto.constructor;
+	}
+	return currentClass;
+}
+/**
+* Decides how an object is parsed. Shared by the sync, stream and async
+* parsers so the class checks and feature gates live in one place.
+*/
+function getObjectKind(current, currentClass, features) {
+	switch (currentClass) {
+		case Object: return 1;
+		case void 0: return 2;
+		case Date: return 3;
+		case Error:
+		case EvalError:
+		case RangeError:
+		case ReferenceError:
+		case SyntaxError:
+		case TypeError:
+		case URIError: return 4;
+		case Number:
+		case Boolean:
+		case String:
+		case BigInt: return 6;
+		case ArrayBuffer: return 7;
+		case Int8Array:
+		case Int16Array:
+		case Int32Array:
+		case Uint8Array:
+		case Uint16Array:
+		case Uint32Array:
+		case Uint8ClampedArray:
+		case Float32Array:
+		case Float64Array: return 8;
+		case DataView: return 10;
+		case Map: return 11;
+		case Set: return 12;
+	}
+	if (currentClass === Promise || current instanceof Promise) return 13;
+	if (features & 32 && currentClass === RegExp) return 14;
+	if (features & 16 && (currentClass === BigInt64Array || currentClass === BigUint64Array)) return 9;
+	if (features & 1 && typeof AggregateError !== "undefined" && (currentClass === AggregateError || current instanceof AggregateError)) return 5;
+	if (features & 64 && typeof Temporal !== "undefined" && getTemporalType(currentClass) != null) return 15;
+	if (current instanceof Error) return 4;
+	if (SYM_ITERATOR in current || SYM_ASYNC_ITERATOR in current) return 16;
+	return 0;
 }
 function createObjectNode(id, current, empty, record) {
-	return createSerovalNode(empty ? 11 : 10, id, void 0, void 0, void 0, record, void 0, void 0, void 0, void 0, getObjectFlag(current), void 0);
+	return createSerovalNode(empty ? 11 : 10, id, void 0, void 0, void 0, record, void 0, void 0, void 0, void 0, getObjectFlag(current));
 }
-function createMapNode(ctx, id, k, v) {
+/**
+* Gets the sentinel node for a Map. Call it before parsing the entries, so
+* that an outer Map declares the sentinel before any Map inside it uses it.
+*/
+function parseMapSentinel(ctx) {
+	return parseSpecialReference(ctx, 0);
+}
+function createMapNode(id, sentinel, k, v) {
 	return createSerovalNode(8, id, void 0, void 0, void 0, void 0, {
 		k,
 		v
-	}, void 0, parseSpecialReference(ctx, 0), void 0, void 0, void 0);
+	}, void 0, sentinel);
 }
 function createPromiseConstructorNode(ctx, id, resolver) {
-	return createSerovalNode(22, id, resolver, void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 1), void 0, void 0, void 0);
+	return createSerovalNode(22, id, resolver, void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 1));
 }
 function getArrayBufferView(ctx, current) {
 	if (!ctx.compactArrayBufferViews) return current;
 	const buffer = new Uint8Array(current.buffer, current.byteOffset, current.byteLength).slice().buffer;
-	const Constructor = current.constructor;
-	return new Constructor(buffer);
-}
-function encodeArrayBuffer(current) {
-	if (typeof Buffer !== "undefined") return Buffer.from(current).toString("base64");
-	const bytes = new Uint8Array(current);
-	if (typeof bytes.toBase64 === "function") return bytes.toBase64();
-	let result = "";
-	for (let i = 0, len = bytes.length; i < len; i++) result += String.fromCharCode(bytes[i]);
-	return btoa(result);
+	return new (current instanceof DataView ? DataView : getTypedArrayConstructor(getTypedArrayName(current)))(buffer);
 }
 function createArrayBufferNode(ctx, id, current) {
-	return createSerovalNode(19, id, encodeArrayBuffer(current), void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 5), void 0, void 0, void 0);
+	return createSerovalNode(19, id, encodeArrayBuffer(current), void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 5));
 }
-function createAsyncParserContext(mode, options) {
-	return {
-		base: createBaseParserContext(mode, options),
-		child: void 0
-	};
+function createAsyncParserContext(options) {
+	return { base: createBaseParserContext(options) };
 }
-var AsyncParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseAsync(this._p, this.depth, current);
-	}
-};
 async function parseItems$1(ctx, depth, current) {
-	const nodes = [];
-	for (let i = 0, len = current.length; i < len; i++) if (i in current) nodes[i] = await parseAsync(ctx, depth, current[i]);
-	else nodes[i] = 0;
+	const len = current.length;
+	const nodes = new Array(len);
+	for (let i = 0, node; i < len; i++) if (i in current) {
+		node = parseValueAsync(ctx, depth, current[i]);
+		nodes[i] = node instanceof Promise ? await node : node;
+	} else nodes[i] = 0;
 	return nodes;
 }
 async function parseArray$1(ctx, depth, id, current) {
 	return createArrayNode(id, current, await parseItems$1(ctx, depth, current));
 }
 async function parseProperties$1(ctx, depth, properties) {
-	const entries = Object.entries(properties);
-	const keyNodes = [];
-	const valueNodes = [];
-	for (let i = 0, len = entries.length; i < len; i++) {
-		keyNodes.push(serializeString(entries[i][0]));
-		valueNodes.push(await parseAsync(ctx, depth, entries[i][1]));
+	const keys = Object.keys(properties);
+	const len = keys.length;
+	const keyNodes = new Array(len);
+	const valueNodes = new Array(len);
+	for (let i = 0, key, node; i < len; i++) {
+		key = keys[i];
+		keyNodes[i] = serializeString(key);
+		node = parseValueAsync(ctx, depth, properties[key]);
+		valueNodes[i] = node instanceof Promise ? await node : node;
 	}
 	if (SYM_ITERATOR in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ITERATOR));
-		valueNodes.push(createIteratorFactoryInstanceNode(parseIteratorFactory(ctx.base), await parseAsync(ctx, depth, createSequenceFromIterable(properties))));
+		valueNodes.push(createIteratorFactoryInstanceNode(28, parseIteratorFactory(ctx.base), await parseAsync(ctx, depth, createSequenceFromIterable(properties))));
 	}
 	if (SYM_ASYNC_ITERATOR in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ASYNC_ITERATOR));
-		valueNodes.push(createAsyncIteratorFactoryInstanceNode(parseAsyncIteratorFactory(ctx.base), await parseAsync(ctx, depth, createStreamFromAsyncIterable(properties))));
+		valueNodes.push(createIteratorFactoryInstanceNode(30, parseAsyncIteratorFactory(ctx.base), await parseAsyncIterable$1(ctx, depth, properties)));
 	}
 	if (SYM_TO_STRING_TAG in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_TO_STRING_TAG));
@@ -1410,166 +2004,183 @@ async function parsePlainObject$1(ctx, depth, id, current, empty) {
 async function parseBoxed$1(ctx, depth, id, current) {
 	return createBoxedNode(id, await parseAsync(ctx, depth, current.valueOf()));
 }
-async function parseTypedArray$1(ctx, depth, id, current) {
+async function parseView$1(ctx, depth, type, id, current) {
 	current = getArrayBufferView(ctx.base, current);
-	return createTypedArrayNode(id, current, await parseAsync(ctx, depth, current.buffer));
+	return createViewNode(type, id, current, await parseAsync(ctx, depth, current.buffer));
 }
-async function parseBigIntTypedArray$1(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createBigIntTypedArrayNode(id, current, await parseAsync(ctx, depth, current.buffer));
-}
-async function parseDataView$1(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createDataViewNode(id, current, await parseAsync(ctx, depth, current.buffer));
-}
-async function parseError$1(ctx, depth, id, current) {
+async function parseError$1(ctx, depth, type, id, current) {
 	const options = getErrorOptions(current, ctx.base.features);
-	return createErrorNode(id, current, options ? await parseProperties$1(ctx, depth, options) : void 0);
-}
-async function parseAggregateError$1(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createAggregateErrorNode(id, current, options ? await parseProperties$1(ctx, depth, options) : void 0);
+	return createErrorNode(type, id, current, options ? await parseProperties$1(ctx, depth, options) : void 0);
 }
 async function parseMap$1(ctx, depth, id, current) {
-	const keyNodes = [];
-	const valueNodes = [];
+	const sentinel = parseMapSentinel(ctx.base);
+	const keyNodes = new Array(current.size);
+	const valueNodes = new Array(current.size);
+	let node;
+	let i = 0;
 	for (const [key, value] of current.entries()) {
-		keyNodes.push(await parseAsync(ctx, depth, key));
-		valueNodes.push(await parseAsync(ctx, depth, value));
+		node = parseValueAsync(ctx, depth, key);
+		keyNodes[i] = node instanceof Promise ? await node : node;
+		node = parseValueAsync(ctx, depth, value);
+		valueNodes[i] = node instanceof Promise ? await node : node;
+		i++;
 	}
-	return createMapNode(ctx.base, id, keyNodes, valueNodes);
+	return createMapNode(id, sentinel, keyNodes, valueNodes);
 }
 async function parseSet$1(ctx, depth, id, current) {
-	const items = [];
-	for (const item of current.keys()) items.push(await parseAsync(ctx, depth, item));
+	const items = new Array(current.size);
+	let node;
+	let i = 0;
+	for (const item of current.keys()) {
+		node = parseValueAsync(ctx, depth, item);
+		items[i++] = node instanceof Promise ? await node : node;
+	}
 	return createSetNode(id, items);
 }
-async function parsePlugin$1(ctx, depth, id, current) {
-	const currentPlugins = ctx.base.plugins;
+async function parsePlugin$1(ctx, depth, id, current, currentPlugins) {
 	if (currentPlugins) for (let i = 0, len = currentPlugins.length; i < len; i++) {
 		const plugin = currentPlugins[i];
-		if (plugin.parse.async && plugin.test(current)) return createPluginNode(id, plugin.tag, await plugin.parse.async(current, new AsyncParsePluginContext(ctx, depth), { id }));
+		if (plugin.parse.async && plugin.test(current)) return createPluginNode(id, plugin.tag, await plugin.parse.async(current, {
+			parse: (value) => parseAsync(ctx, depth, value),
+			parseStreamSource(source) {
+				if (depth >= ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
+				return parseAsyncIterable$1(ctx, depth + 1, source);
+			}
+		}, { id }));
 	}
 }
 async function parsePromise$1(ctx, depth, id, current) {
 	const [status, result] = await promiseToResult(current);
-	return createSerovalNode(12, id, status, void 0, void 0, void 0, void 0, void 0, await parseAsync(ctx, depth, result), void 0, void 0, void 0);
+	return createSerovalNode(12, id, status, void 0, void 0, void 0, void 0, void 0, await parseAsync(ctx, depth, result));
 }
 function parseStreamHandle(depth, id, current, resolve, reject) {
 	const sequence = [];
-	const cleanup = current.on({
-		next: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamNextNode(id, data));
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
-		},
-		throw: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamThrowNode(id, data));
-				resolve(sequence);
-				cleanup();
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
-		},
-		return: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamReturnNode(id, data));
-				resolve(sequence);
-				cleanup();
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
+	let unparsed = 0;
+	let ended = false;
+	let settled = false;
+	const fail = (error) => {
+		if (!settled) {
+			settled = true;
+			try {
+				cleanup(error);
+			} catch {}
+			reject(error);
 		}
-	});
+	};
+	const handle = (type) => (value, accept) => {
+		if (settled) return;
+		markParserRef(this.base, id);
+		const slot = sequence.push(void 0) - 1;
+		unparsed++;
+		if (type !== 32) ended = true;
+		parseAsync(this, depth, value).then((data) => {
+			if (!settled) {
+				sequence[slot] = createStreamEventNode(type, id, data);
+				unparsed--;
+				accept?.();
+				if (ended && unparsed === 0) {
+					settled = true;
+					try {
+						cleanup();
+					} catch (error) {
+						reject(error);
+						return;
+					}
+					resolve(sequence);
+				}
+			}
+		}, fail);
+	};
+	const listener = {
+		next: handle(32),
+		throw: handle(33),
+		return: handle(34)
+	};
+	const cleanup = isLiveStream(current) ? current.pump(listener) : current.on(listener);
 }
 async function parseStream$1(ctx, depth, id, current) {
 	return createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), await new Promise(parseStreamHandle.bind(ctx, depth, id, current)));
 }
+/**
+* Collects an async iterable into a replay node, one value at a time.
+*/
+async function parseAsyncIterable$1(ctx, depth, current) {
+	const id = createIndexForValue(ctx.base, {});
+	const reference = parseSpecialReference(ctx.base, 4);
+	const iterator = current[SYM_ASYNC_ITERATOR]();
+	const sequence = [];
+	for (;;) {
+		let result;
+		try {
+			result = await iterator.next();
+		} catch (error) {
+			markParserRef(ctx.base, id);
+			sequence.push(createStreamEventNode(33, id, await parseAsync(ctx, depth, error)));
+			break;
+		}
+		markParserRef(ctx.base, id);
+		let parsed;
+		try {
+			parsed = await parseAsync(ctx, depth, result.value);
+		} catch (error) {
+			Promise.resolve().then(() => iterator.return?.()).catch(() => {});
+			throw error;
+		}
+		sequence.push(createStreamEventNode(result.done ? 34 : 32, id, parsed));
+		if (result.done) break;
+	}
+	return createStreamConstructorNode(id, reference, sequence);
+}
 async function parseSequence$1(ctx, depth, id, current) {
-	const nodes = [];
-	for (let i = 0, len = current.v.length; i < len; i++) nodes[i] = await parseAsync(ctx, depth, current.v[i]);
+	const len = current.v.length;
+	const nodes = new Array(len);
+	for (let i = 0, node; i < len; i++) {
+		node = parseValueAsync(ctx, depth, current.v[i]);
+		nodes[i] = node instanceof Promise ? await node : node;
+	}
 	return createSequenceNode(id, nodes, current.t, current.d);
 }
 async function parseObjectAsync(ctx, depth, id, current) {
 	if (Array.isArray(current)) return parseArray$1(ctx, depth, id, current);
 	if (isStream(current)) return parseStream$1(ctx, depth, id, current);
 	if (isSequence(current)) return parseSequence$1(ctx, depth, id, current);
-	let currentClass = current.constructor;
-	if (currentClass !== void 0 && typeof currentClass !== "function") {
-		const proto = Object.getPrototypeOf(current);
-		currentClass = proto === null ? void 0 : proto.constructor;
-	}
+	const currentClass = getObjectClass(current);
 	if (currentClass === OpaqueReference) return parseAsync(ctx, depth, current.replacement);
-	const parsed = await parsePlugin$1(ctx, depth, id, current);
+	const parsed = await parsePlugin$1(ctx, depth, id, current, getObjectPlugins(ctx.base, current, currentClass));
 	if (parsed) return parsed;
-	switch (currentClass) {
-		case Object: return parsePlainObject$1(ctx, depth, id, current, false);
-		case void 0: return parsePlainObject$1(ctx, depth, id, current, true);
-		case Date: return createDateNode(id, current);
-		case Error:
-		case EvalError:
-		case RangeError:
-		case ReferenceError:
-		case SyntaxError:
-		case TypeError:
-		case URIError: return parseError$1(ctx, depth, id, current);
-		case Number:
-		case Boolean:
-		case String:
-		case BigInt: return parseBoxed$1(ctx, depth, id, current);
-		case ArrayBuffer: return createArrayBufferNode(ctx.base, id, current);
-		case Int8Array:
-		case Int16Array:
-		case Int32Array:
-		case Uint8Array:
-		case Uint16Array:
-		case Uint32Array:
-		case Uint8ClampedArray:
-		case Float32Array:
-		case Float64Array: return parseTypedArray$1(ctx, depth, id, current);
-		case DataView: return parseDataView$1(ctx, depth, id, current);
-		case Map: return parseMap$1(ctx, depth, id, current);
-		case Set: return parseSet$1(ctx, depth, id, current);
+	if (currentClass === Object) return parsePlainObject$1(ctx, depth, id, current, false);
+	switch (getObjectKind(current, currentClass, ctx.base.features)) {
+		case 2: return parsePlainObject$1(ctx, depth, id, current, true);
+		case 3: return createDateNode(id, current);
+		case 4: return parseError$1(ctx, depth, 13, id, current);
+		case 5: return parseError$1(ctx, depth, 14, id, current);
+		case 6: return parseBoxed$1(ctx, depth, id, current);
+		case 7: return createArrayBufferNode(ctx.base, id, current);
+		case 8: return parseView$1(ctx, depth, 15, id, current);
+		case 9: return parseView$1(ctx, depth, 16, id, current);
+		case 10: return parseView$1(ctx, depth, 20, id, current);
+		case 11: return parseMap$1(ctx, depth, id, current);
+		case 12: return parseSet$1(ctx, depth, id, current);
+		case 13: return parsePromise$1(ctx, depth, id, current);
+		case 14: return createRegExpNode(id, current);
+		case 15: return createTemporalNode(id, getTemporalType(currentClass), current);
+		case 16: return parsePlainObject$1(ctx, depth, id, current, !!currentClass);
+		default: throw new SerovalUnsupportedTypeError(current);
 	}
-	if (currentClass === Promise || current instanceof Promise) return parsePromise$1(ctx, depth, id, current);
-	const currentFeatures = ctx.base.features;
-	if (currentFeatures & 32 && currentClass === RegExp) return createRegExpNode(id, current);
-	if (currentFeatures & 16) switch (currentClass) {
-		case BigInt64Array:
-		case BigUint64Array: return parseBigIntTypedArray$1(ctx, depth, id, current);
-	}
-	if (currentFeatures & 1 && typeof AggregateError !== "undefined" && (currentClass === AggregateError || current instanceof AggregateError)) return parseAggregateError$1(ctx, depth, id, current);
-	if (currentFeatures & 64 && typeof Temporal !== "undefined") switch (currentClass) {
-		case Temporal.Instant: return createTemporalNode(id, 0, current);
-		case Temporal.Duration: return createTemporalNode(id, 1, current);
-		case Temporal.PlainDate: return createTemporalNode(id, 2, current);
-		case Temporal.PlainDateTime: return createTemporalNode(id, 3, current);
-		case Temporal.PlainMonthDay: return createTemporalNode(id, 4, current);
-		case Temporal.PlainTime: return createTemporalNode(id, 5, current);
-		case Temporal.PlainYearMonth: return createTemporalNode(id, 6, current);
-		case Temporal.ZonedDateTime: return createTemporalNode(id, 7, current);
-	}
-	if (current instanceof Error) return parseError$1(ctx, depth, id, current);
-	if (SYM_ITERATOR in current || SYM_ASYNC_ITERATOR in current) return parsePlainObject$1(ctx, depth, id, current, !!currentClass);
-	throw new SerovalUnsupportedTypeError(current);
 }
 async function parseFunctionAsync(ctx, depth, current) {
 	const ref = getReferenceNode(ctx.base, current);
-	if (ref.type !== 0) return ref.value;
-	const plugin = await parsePlugin$1(ctx, depth, ref.value, current);
+	if (typeof ref !== "number") return ref;
+	const plugin = await parsePlugin$1(ctx, depth, ref, current, ctx.base.plugins);
 	if (plugin) return plugin;
 	throw new SerovalUnsupportedTypeError(current);
 }
-async function parseAsync(ctx, depth, current) {
+/**
+* Parses primitives and already-seen values synchronously; only objects and
+* functions come back as a Promise. Errors are thrown synchronously, which
+* an async caller turns into a rejection as before.
+*/
+function parseValueAsync(ctx, depth, current) {
 	if (depth >= ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
 	switch (typeof current) {
 		case "boolean": return current ? TRUE_NODE : FALSE_NODE;
@@ -1580,7 +2191,7 @@ async function parseAsync(ctx, depth, current) {
 		case "object":
 			if (current) {
 				const ref = getReferenceNode(ctx.base, current);
-				return ref.type === 0 ? await parseObjectAsync(ctx, depth + 1, ref.value, current) : ref.value;
+				return typeof ref === "number" ? parseObjectAsync(ctx, depth + 1, ref, current) : ref;
 			}
 			return NULL_NODE;
 		case "symbol": return parseWellKnownSymbol(ctx.base, current);
@@ -1588,46 +2199,14 @@ async function parseAsync(ctx, depth, current) {
 		default: throw new SerovalUnsupportedTypeError(current);
 	}
 }
+async function parseAsync(ctx, depth, current) {
+	return await parseValueAsync(ctx, depth, current);
+}
 async function parseTopAsync(ctx, current) {
 	try {
 		return await parseAsync(ctx, 0, current);
 	} catch (error) {
 		throw error instanceof SerovalParserError ? error : new SerovalParserError(error);
-	}
-}
-function createPlugin(plugin) {
-	return plugin;
-}
-function dedupePlugins(deduped, plugins) {
-	for (let i = 0, len = plugins.length; i < len; i++) {
-		const current = plugins[i];
-		if (!deduped.has(current)) {
-			deduped.add(current);
-			if (current.extends) dedupePlugins(deduped, current.extends);
-		}
-	}
-}
-function resolvePlugins(plugins) {
-	if (plugins) {
-		const deduped = /* @__PURE__ */ new Set();
-		dedupePlugins(deduped, plugins);
-		return [...deduped];
-	}
-}
-function getTypedArrayConstructor(name) {
-	switch (name) {
-		case "Int8Array": return Int8Array;
-		case "Int16Array": return Int16Array;
-		case "Int32Array": return Int32Array;
-		case "Uint8Array": return Uint8Array;
-		case "Uint16Array": return Uint16Array;
-		case "Uint32Array": return Uint32Array;
-		case "Uint8ClampedArray": return Uint8ClampedArray;
-		case "Float32Array": return Float32Array;
-		case "Float64Array": return Float64Array;
-		case "BigInt64Array": return BigInt64Array;
-		case "BigUint64Array": return BigUint64Array;
-		default: throw new SerovalUnknownTypedArrayError(name);
 	}
 }
 function isValidKey(key) {
@@ -1652,7 +2231,6 @@ function isValidSymbol(symbol) {
 	}
 }
 var DEFAULT_MAX_BASE64_LENGTH = 1e6;
-var MIN_NATIVE_BASE64_LENGTH = 512;
 var MAX_BIGINT_LENGTH = 1e4;
 var MAX_REGEXP_SOURCE_LENGTH = 2e4;
 function applyObjectFlag(obj, flag) {
@@ -1664,60 +2242,43 @@ function applyObjectFlag(obj, flag) {
 	}
 }
 var DEFAULT_DEPTH_LIMIT = 1e3;
-function createBaseDeserializerContext(mode, options) {
-	var _options$maxBase64Len, _options$features;
-	const maxBase64Length = (_options$maxBase64Len = options.maxBase64Length) !== null && _options$maxBase64Len !== void 0 ? _options$maxBase64Len : DEFAULT_MAX_BASE64_LENGTH;
+function createBaseDeserializerContext(options) {
+	const maxBase64Length = options.maxBase64Length ?? DEFAULT_MAX_BASE64_LENGTH;
 	if (!Number.isSafeInteger(maxBase64Length) || maxBase64Length < 0) throw new RangeError("maxBase64Length must be a non-negative safe integer");
-	const refs = options.refs || /* @__PURE__ */ new Map();
+	const refs = options.refs ?? /* @__PURE__ */ new Map();
 	if (!("types" in refs)) Object.assign(refs, { types: /* @__PURE__ */ new Map() });
 	return {
-		mode,
 		plugins: options.plugins,
 		refs,
-		features: (_options$features = options.features) !== null && _options$features !== void 0 ? _options$features : 127 ^ (options.disabledFeatures || 0),
+		features: options.features ?? 127 ^ (options.disabledFeatures ?? 0),
 		depthLimit: options.depthLimit || DEFAULT_DEPTH_LIMIT,
 		maxBase64Length
 	};
 }
 function createVanillaDeserializerContext(options) {
 	return {
-		mode: 1,
-		base: createBaseDeserializerContext(1, options),
-		child: void 0,
-		state: { marked: new Set(options.markedRefs) }
+		base: createBaseDeserializerContext(options),
+		marked: new Set(options.markedRefs)
 	};
 }
-var DeserializePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	deserialize(node) {
-		return deserialize$1(this._p, this.depth, node);
-	}
-};
 function guardIndexedValue(ctx, id) {
-	if (id < 0 || !Number.isFinite(id) || !Number.isInteger(id)) throw new SerovalMalformedNodeError({
+	const node = {
 		t: 4,
 		i: id
-	});
-	if (ctx.refs.has(id)) throw new Error("Conflicted ref id: " + id);
+	};
+	if (id < 0 || !Number.isInteger(id)) throw new SerovalMalformedNodeError(node);
+	if (ctx.refs.has(id)) throw new SerovalConflictedNodeIdError(node);
 }
 function isThennable(value) {
-	return !!value && typeof value === "object" && "then" in value && typeof value.then === "function";
+	return !!value && (typeof value === "object" || typeof value === "function") && "then" in value && typeof value.then === "function";
 }
-function assignIndexedValueVanilla(ctx, id, value) {
-	guardIndexedValue(ctx.base, id);
-	if (ctx.state.marked.has(id)) ctx.base.refs.set(id, value);
-	return value;
-}
-function assignIndexedValueCross(ctx, id, value) {
-	guardIndexedValue(ctx.base, id);
-	ctx.base.refs.set(id, value);
-	return value;
-}
+var ignoreRejection = () => {};
 function assignIndexedValue$1(ctx, id, value) {
-	return ctx.mode === 1 ? assignIndexedValueVanilla(ctx, id, value) : assignIndexedValueCross(ctx, id, value);
+	guardIndexedValue(ctx.base, id);
+	if (value instanceof Promise) value.catch(ignoreRejection);
+	const marked = ctx.marked;
+	if (!marked || marked.has(id)) ctx.base.refs.set(id, value);
+	return value;
 }
 function deserializeKnownValue(node, record, key) {
 	if (Object.hasOwn(record, key)) return record[key];
@@ -1726,8 +2287,12 @@ function deserializeKnownValue(node, record, key) {
 function deserializeReference(ctx, node) {
 	return assignIndexedValue$1(ctx, node.i, getReference(deserializeString(node.s)));
 }
+function validateNodeList(node, list) {
+	if (!Array.isArray(list)) throw new SerovalMalformedNodeError(node);
+}
 function deserializeArray(ctx, depth, node) {
 	const items = node.a;
+	validateNodeList(node, items);
 	const len = items.length;
 	const result = assignIndexedValue$1(ctx, node.i, new Array(len));
 	for (let i = 0, item; i < len; i++) {
@@ -1769,7 +2334,10 @@ function validateNodeType(ctx, node, id, type) {
 }
 function deserializeProperties(ctx, depth, node, result) {
 	const keys = node.k;
-	if (keys.length > 0) for (let i = 0, vals = node.v, len = keys.length; i < len; i++) assignProperty(ctx, depth, result, keys[i], vals[i]);
+	validateNodeList(node, keys);
+	validateNodeList(node, node.v);
+	const len = keys.length;
+	if (len > 0) for (let i = 0, vals = node.v; i < len; i++) assignProperty(ctx, depth, result, keys[i], vals[i]);
 	return result;
 }
 function deserializeObject(ctx, depth, node) {
@@ -1783,35 +2351,8 @@ function deserializeDate(ctx, node) {
 }
 function deserializeTemporal(ctx, node) {
 	if (!(ctx.base.features & 64)) throw new SerovalUnsupportedNodeError(node);
-	let value;
-	switch (node.c) {
-		case 0:
-			value = Temporal.Instant.from(node.s);
-			break;
-		case 1:
-			value = Temporal.Duration.from(node.s);
-			break;
-		case 2:
-			value = Temporal.PlainDate.from(node.s);
-			break;
-		case 3:
-			value = Temporal.PlainDateTime.from(node.s);
-			break;
-		case 4:
-			value = Temporal.PlainMonthDay.from(node.s);
-			break;
-		case 5:
-			value = Temporal.PlainTime.from(node.s);
-			break;
-		case 6:
-			value = Temporal.PlainYearMonth.from(node.s);
-			break;
-		case 7:
-			value = Temporal.ZonedDateTime.from(node.s);
-			break;
-		default: throw new SerovalMalformedNodeError(node);
-	}
-	return assignIndexedValue$1(ctx, node.i, value);
+	const construct = Temporal[deserializeKnownValue(node, TEMPORAL_TYPE_NAME, node.c)];
+	return assignIndexedValue$1(ctx, node.i, construct.from(node.s));
 }
 function deserializeRegExp(ctx, node) {
 	if (ctx.base.features & 32) {
@@ -1823,43 +2364,29 @@ function deserializeRegExp(ctx, node) {
 }
 function deserializeSet(ctx, depth, node) {
 	const result = assignIndexedValue$1(ctx, node.i, /* @__PURE__ */ new Set());
+	validateNodeList(node, node.a);
 	for (let i = 0, items = node.a, len = items.length; i < len; i++) result.add(deserialize$1(ctx, depth, items[i]));
 	return result;
 }
 function deserializeMap(ctx, depth, node) {
 	const result = assignIndexedValue$1(ctx, node.i, /* @__PURE__ */ new Map());
+	validateNodeList(node, node.e.k);
+	validateNodeList(node, node.e.v);
 	for (let i = 0, keys = node.e.k, vals = node.e.v, len = keys.length; i < len; i++) result.set(deserialize$1(ctx, depth, keys[i]), deserialize$1(ctx, depth, vals[i]));
 	return result;
 }
 function deserializeArrayBuffer(ctx, node) {
 	if (typeof node.s !== "string") throw new SerovalMalformedNodeError(node);
 	if (node.s.length > ctx.base.maxBase64Length) throw new RangeError("ArrayBuffer exceeds maxBase64Length (" + ctx.base.maxBase64Length + ")");
-	const source = deserializeString(node.s);
-	let buffer;
-	if (source.length < MIN_NATIVE_BASE64_LENGTH || typeof Buffer === "undefined") buffer = ARRAY_BUFFER_CONSTRUCTOR(source);
-	else {
-		const decoded = atob(source);
-		buffer = new ArrayBuffer(decoded.length);
-		Buffer.from(buffer).write(decoded, "latin1");
-	}
+	const buffer = decodeArrayBuffer(deserializeString(node.s));
 	return assignIndexedValue$1(ctx, node.i, buffer);
 }
-function deserializeTypedArray(ctx, depth, node) {
-	var _node$b;
-	const construct = getTypedArrayConstructor(node.c);
+function deserializeView(ctx, depth, node, construct) {
 	const source = deserialize$1(ctx, depth, node.f);
 	if (!(source instanceof ArrayBuffer)) throw new SerovalMalformedNodeError(node);
-	const offset = (_node$b = node.b) !== null && _node$b !== void 0 ? _node$b : 0;
+	const offset = node.b ?? 0;
 	if (offset < 0 || offset > source.byteLength) throw new SerovalMalformedNodeError(node);
-	return assignIndexedValue$1(ctx, node.i, new construct(source, offset, node.l));
-}
-function deserializeDataView(ctx, depth, node) {
-	var _node$b2;
-	const source = deserialize$1(ctx, depth, node.f);
-	if (!(source instanceof ArrayBuffer)) throw new SerovalMalformedNodeError(node);
-	const offset = (_node$b2 = node.b) !== null && _node$b2 !== void 0 ? _node$b2 : 0;
-	if (offset < 0 || offset > source.byteLength) throw new SerovalMalformedNodeError(node);
-	return assignIndexedValue$1(ctx, node.i, new DataView(source, offset, node.l));
+	return assignIndexedValue$1(ctx, node.i, construct ? new construct(source, offset, node.l) : new DataView(source, offset, node.l));
 }
 function deserializeDictionary(ctx, depth, node, result) {
 	if (node.p) {
@@ -1893,7 +2420,7 @@ function deserializePlugin(ctx, depth, node) {
 		const tag = deserializeString(node.c);
 		for (let i = 0, len = currentPlugins.length; i < len; i++) {
 			const plugin = currentPlugins[i];
-			if (plugin.tag === tag) return assignIndexedValue$1(ctx, node.i, plugin.deserialize(node.s, new DeserializePluginContext(ctx, depth), { id: node.i }));
+			if (plugin.tag === tag) return assignIndexedValue$1(ctx, node.i, plugin.deserialize(node.s, { deserialize: (current) => deserialize$1(ctx, depth, current) }, { id: node.i }));
 		}
 	}
 	throw new SerovalMissingPluginError(node.c);
@@ -1901,6 +2428,7 @@ function deserializePlugin(ctx, depth, node) {
 function deserializePromiseConstructor(ctx, node) {
 	const value = assignIndexedValue$1(ctx, node.i, assignIndexedValue$1(ctx, node.s, PROMISE_CONSTRUCTOR()).p);
 	assignNodeType(ctx, node.s, 22);
+	ctx.base.pending?.add(node.s);
 	return value;
 }
 function deserializePromiseFulfill(ctx, depth, node) {
@@ -1911,6 +2439,7 @@ function deserializePromiseFulfill(ctx, depth, node) {
 		if (isThennable(deserialized)) throw new SerovalMalformedNodeError(node.a[1]);
 		if (node.t === 23) deferred.s(deserialized);
 		else deferred.f(deserialized);
+		ctx.base.pending?.delete(node.i);
 		return;
 	}
 	throw new SerovalMissingInstanceError("Promise");
@@ -1918,48 +2447,31 @@ function deserializePromiseFulfill(ctx, depth, node) {
 function deserializeIteratorFactoryInstance(ctx, depth, node) {
 	deserialize$1(ctx, depth, node.a[0]);
 	const source = deserialize$1(ctx, depth, node.a[1]);
-	validateNodeType(ctx, node, node.a[1].i, 35);
-	if (!source) throw new SerovalMalformedNodeError(node.a[1]);
+	if (!isSequence(source)) throw new SerovalMalformedNodeError(node.a[1]);
 	return sequenceToIterator(source);
 }
 function deserializeAsyncIteratorFactoryInstance(ctx, depth, node) {
 	deserialize$1(ctx, depth, node.a[0]);
 	const source = deserialize$1(ctx, depth, node.a[1]);
-	validateNodeType(ctx, node, node.a[1].i, 31);
-	if (!source) throw new SerovalMalformedNodeError(node.a[1]);
+	if (!isStream(source)) throw new SerovalMalformedNodeError(node.a[1]);
 	return streamToAsyncIterable(source);
 }
 function deserializeStreamConstructor(ctx, depth, node) {
-	const result = assignIndexedValue$1(ctx, node.i, createStream());
+	const result = assignIndexedValue$1(ctx, node.i, new Stream(node.l === 1 ? 1 : void 0));
 	assignNodeType(ctx, node.i, 31);
+	ctx.base.pending?.add(node.i);
 	const items = node.a;
+	validateNodeList(node, items);
 	const len = items.length;
 	if (len) for (let i = 0; i < len; i++) deserialize$1(ctx, depth, items[i]);
 	return result;
 }
-function deserializeStreamNext(ctx, depth, node) {
+function deserializeStreamCall(ctx, depth, node, method) {
 	const deferred = ctx.base.refs.get(node.i);
 	if (deferred) {
 		validateNodeType(ctx, node, node.i, 31);
-		deferred.next(deserialize$1(ctx, depth, node.f));
-		return;
-	}
-	throw new SerovalMissingInstanceError("Stream");
-}
-function deserializeStreamThrow(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 31);
-		deferred.throw(deserialize$1(ctx, depth, node.f));
-		return;
-	}
-	throw new SerovalMissingInstanceError("Stream");
-}
-function deserializeStreamReturn(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 31);
-		deferred.return(deserialize$1(ctx, depth, node.f));
+		deferred[method](deserialize$1(ctx, depth, node.f));
+		if (method !== "next") ctx.base.pending?.delete(node.i);
 		return;
 	}
 	throw new SerovalMissingInstanceError("Stream");
@@ -1970,10 +2482,16 @@ function deserializeIteratorFactory(ctx, depth, node) {
 function deserializeAsyncIteratorFactory(ctx, depth, node) {
 	deserialize$1(ctx, depth, node.a[1]);
 }
+function isSequenceIndex(value, size) {
+	return Number.isInteger(value) && value >= -1 && value < size;
+}
 function deserializeSequence(ctx, depth, node) {
+	validateNodeList(node, node.a);
+	const size = node.a.length;
+	if (!(isSequenceIndex(node.s, size) && isSequenceIndex(node.l, size))) throw new SerovalMalformedNodeError(node);
 	const result = assignIndexedValue$1(ctx, node.i, createSequence([], node.s, node.l));
 	assignNodeType(ctx, node.i, 35);
-	for (let i = 0, len = node.a.length; i < len; i++) result.v[i] = deserialize$1(ctx, depth, node.a[i]);
+	for (let i = 0; i < size; i++) result.v[i] = deserialize$1(ctx, depth, node.a[i]);
 	return result;
 }
 function deserialize$1(ctx, depth, node) {
@@ -1997,8 +2515,8 @@ function deserialize$1(ctx, depth, node) {
 		case 8: return deserializeMap(ctx, depth, node);
 		case 19: return deserializeArrayBuffer(ctx, node);
 		case 16:
-		case 15: return deserializeTypedArray(ctx, depth, node);
-		case 20: return deserializeDataView(ctx, depth, node);
+		case 15: return deserializeView(ctx, depth, node, getTypedArrayConstructor(node.c));
+		case 20: return deserializeView(ctx, depth, node);
 		case 14: return deserializeAggregateError(ctx, depth, node);
 		case 13: return deserializeError(ctx, depth, node);
 		case 12: return deserializePromise(ctx, depth, node);
@@ -2011,9 +2529,9 @@ function deserialize$1(ctx, depth, node) {
 		case 28: return deserializeIteratorFactoryInstance(ctx, depth, node);
 		case 30: return deserializeAsyncIteratorFactoryInstance(ctx, depth, node);
 		case 31: return deserializeStreamConstructor(ctx, depth, node);
-		case 32: return deserializeStreamNext(ctx, depth, node);
-		case 33: return deserializeStreamThrow(ctx, depth, node);
-		case 34: return deserializeStreamReturn(ctx, depth, node);
+		case 32: return deserializeStreamCall(ctx, depth, node, "next");
+		case 33: return deserializeStreamCall(ctx, depth, node, "throw");
+		case 34: return deserializeStreamCall(ctx, depth, node, "return");
 		case 27: return deserializeIteratorFactory(ctx, depth, node);
 		case 29: return deserializeAsyncIteratorFactory(ctx, depth, node);
 		case 35: return deserializeSequence(ctx, depth, node);
@@ -2029,8 +2547,7 @@ function deserializeTop(ctx, node) {
 	}
 }
 var RETURN = () => T;
-var SERIALIZED_RETURN = /* @__PURE__ */ RETURN.toString();
-var IS_MODERN = /* @__PURE__ */ /=>/.test(SERIALIZED_RETURN);
+var IS_MODERN = /* @__PURE__ */ (/* @__PURE__ */ RETURN.toString()).includes("=>");
 function createFunction(parameters, body) {
 	if (IS_MODERN) return (parameters.length === 1 ? parameters[0] : "(" + parameters.join(",") + ")") + "=>" + (body.startsWith("{") ? "(" + body + ")" : body);
 	return "function(" + parameters.join(",") + "){return " + body + "}";
@@ -2054,10 +2571,13 @@ function getIdentifier(index) {
 	}
 	return ref;
 }
-var IDENTIFIER_CHECK = /^[$A-Z_][0-9A-Z_$]*$/i;
 function isValidIdentifier(name) {
-	const char = name[0];
-	return (char === "$" || char === "_" || char >= "A" && char <= "Z" || char >= "a" && char <= "z") && IDENTIFIER_CHECK.test(name);
+	const len = name.length;
+	for (let i = 0; i < len; i++) {
+		const code = name.charCodeAt(i);
+		if (!(code >= 97 && code <= 122 || code >= 65 && code <= 90 || code >= 48 && code <= 57 && i > 0 || code === 95 || code === 36)) return false;
+	}
+	return len > 0;
 }
 function getAssignmentExpression(assignment) {
 	switch (assignment.t) {
@@ -2068,51 +2588,32 @@ function getAssignmentExpression(assignment) {
 		case 4: return "Object.defineProperty(" + assignment.s + ",\"__proto__\",{value:" + assignment.k + ",configurable:!0,enumerable:!0,writable:!0})";
 	}
 }
-function mergeAssignments(assignments) {
-	const newAssignments = [];
-	let current = assignments[0];
-	for (let i = 1, len = assignments.length, item, prev = current; i < len; i++) {
-		item = assignments[i];
-		if (item.t === 0 && item.v === prev.v) current = {
-			t: 0,
-			s: item.s,
-			k: void 0,
-			v: getAssignmentExpression(current)
-		};
-		else if (item.t === 2 && item.s === prev.s) current = {
-			t: 2,
-			s: getAssignmentExpression(current),
-			k: item.k,
-			v: item.v
-		};
-		else if (item.t === 1 && item.s === prev.s) current = {
-			t: 1,
-			s: getAssignmentExpression(current),
-			k: void 0,
-			v: item.v
-		};
-		else if (item.t === 3 && item.s === prev.s) current = {
-			t: 3,
-			s: getAssignmentExpression(current),
-			k: item.k,
-			v: void 0
-		};
-		else {
-			newAssignments.push(current);
-			current = item;
-		}
-		prev = item;
-	}
-	newAssignments.push(current);
-	return newAssignments;
-}
+var MAX_ASSIGNMENT_CHAIN_LENGTH = 100;
 function resolveAssignments(assignments) {
-	if (assignments.length) {
-		let result = "";
-		const merged = mergeAssignments(assignments);
-		for (let i = 0, len = merged.length; i < len; i++) result += getAssignmentExpression(merged[i]) + ",";
-		return result;
+	if (!assignments.length) return void 0;
+	let previous = assignments[0];
+	let expression = getAssignmentExpression(previous);
+	let result = "";
+	let chainLength = 1;
+	for (let index = 1, length = assignments.length; index < length; index++) {
+		const assignment = assignments[index];
+		if (chainLength === MAX_ASSIGNMENT_CHAIN_LENGTH) {
+			result += expression + ",";
+			expression = getAssignmentExpression(assignment);
+			chainLength = 0;
+		} else if (assignment.t === 0 && previous.t === 0 && assignment.v === previous.v) expression = assignment.s + "=" + expression;
+		else if (assignment.t === 2 && previous.t === 2 && assignment.s === previous.s) expression += ".set(" + assignment.k + "," + assignment.v + ")";
+		else if (assignment.t === 1 && previous.t === 1 && assignment.s === previous.s) expression += ".add(" + assignment.v + ")";
+		else if (assignment.t === 3 && previous.t === 2 && assignment.s === previous.s) expression += ".delete(" + assignment.k + ")";
+		else {
+			result += expression + ",";
+			expression = getAssignmentExpression(assignment);
+			chainLength = 0;
+		}
+		chainLength++;
+		previous = assignment;
 	}
+	return result + expression + ",";
 }
 var NULL_CONSTRUCTOR = "Object.create(null)";
 var SET_CONSTRUCTOR = "new Set";
@@ -2130,28 +2631,20 @@ function createBaseSerializerContext(mode, options) {
 		mode,
 		plugins: options.plugins,
 		features: options.features,
-		marked: new Set(options.markedRefs),
+		marked: Array.isArray(options.markedRefs) ? new Set(options.markedRefs) : options.markedRefs,
 		stack: [],
 		flags: [],
-		assignments: []
+		assignments: [],
+		assignAll: mode === 2 && !options.assignSharedRefsOnly
 	};
 }
 function createCrossSerializerContext(options) {
 	return {
 		mode: 2,
 		base: createBaseSerializerContext(2, options),
-		state: options,
-		child: void 0
+		state: options
 	};
 }
-var SerializePluginContext = class {
-	constructor(_p) {
-		this._p = _p;
-	}
-	serialize(node) {
-		return serialize$1(this._p, node);
-	}
-};
 /**
 * Creates the reference param (identifier) from the given reference ID
 * Calling this function means the value has been referenced somewhere
@@ -2259,7 +2752,7 @@ function createArrayAssign(ctx, ref, index, value) {
 	createAssignment(ctx.base, getRefParam(ctx, ref) + "[" + index + "]", value);
 }
 function createObjectAssign(ctx, ref, key, value) {
-	if (!isValidKey(key)) {
+	if (key === "__proto__") {
 		ctx.base.assignments.push({
 			t: 4,
 			s: getRefParam(ctx, ref),
@@ -2277,8 +2770,33 @@ function createSequenceAssign(ctx, ref, index, value) {
 * Checks if the value is in the stack. Stack here is a reference
 * structure to know if a object is to be accessed in a TDZ.
 */
+function getKeyKind(key) {
+	const first = key.charCodeAt(0);
+	if (first >= 48 && first <= 57) {
+		const check = Number(key);
+		return check >= 0 && check.toString() === key ? 2 : 0;
+	}
+	if (key === "Infinity") return 2;
+	return isValidIdentifier(key) ? 1 : 0;
+}
 function isIndexedValueInStack(ctx, node) {
 	return node.t === 4 && ctx.stack.includes(node.i);
+}
+/**
+* Checks if the node, or any node inside it, is read from more than one
+* place. Such a node must not be created inside a deferred assignment,
+* because the places that read it may run before the assignment does.
+*/
+function hasMarkedNode(ctx, node) {
+	if (Array.isArray(node)) {
+		for (let i = 0, len = node.length; i < len; i++) if (hasMarkedNode(ctx, node[i])) return true;
+		return false;
+	}
+	if (node == null || typeof node !== "object") return false;
+	const current = node;
+	if (current.t !== 4 && typeof current.i === "number" && isSerializerRefMarked(ctx, current.i)) return true;
+	for (const key in current) if (hasMarkedNode(ctx, current[key])) return true;
+	return false;
 }
 /**
 * Produces an assignment expression. `id` generates a reference
@@ -2287,7 +2805,7 @@ function isIndexedValueInStack(ctx, node) {
 * it.
 */
 function assignIndexedValue(ctx, index, value) {
-	if (ctx.mode === 1 && !isSerializerRefMarked(ctx.base, index)) return value;
+	if (!ctx.base.assignAll && !isSerializerRefMarked(ctx.base, index)) return value;
 	/**
 	* In cross-reference, we have to assume that
 	* every reference are going to be referenced
@@ -2295,12 +2813,13 @@ function assignIndexedValue(ctx, index, value) {
 	* all of it into the reference array.
 	*
 	* otherwise in vanilla, we only do this if it
-	* is actually referenced
+	* is actually referenced. `assignSharedRefsOnly` gives cross-reference
+	* output the vanilla behavior.
 	*/
 	return getRefParam(ctx, index) + "=" + value;
 }
 function serializeReference(node) {
-	return "__SEROVAL_REFS__.get(\"" + node.s + "\")";
+	return REFERENCES_KEY + ".get(\"" + node.s + "\")";
 }
 function serializeArrayItem(ctx, id, item, index) {
 	if (item) {
@@ -2334,16 +2853,15 @@ function serializeArray(ctx, node) {
 }
 function serializeProperty(ctx, source, key, val) {
 	if (typeof key === "string") {
-		const check = Number(key);
-		const isIdentifier = check >= 0 && check.toString() === key || isValidIdentifier(key);
+		const kind = getKeyKind(key);
 		if (isIndexedValueInStack(ctx.base, val)) {
 			const refParam = getRefParam(ctx, val.i);
 			markSerializerRef(ctx.base, source.i);
-			if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, refParam);
-			else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", refParam);
+			if (kind === 1) createObjectAssign(ctx, source.i, key, refParam);
+			else createArrayAssign(ctx, source.i, kind === 2 ? key : "\"" + key + "\"", refParam);
 			return "";
 		}
-		if (isValidKey(key)) return (isIdentifier ? key : "\"" + key + "\"") + ":" + serialize$1(ctx, val);
+		if (key !== "__proto__") return (kind === 0 ? "\"" + key + "\"" : key) + ":" + serialize$1(ctx, val);
 		return "[\"" + key + "\"]:" + serialize$1(ctx, val);
 	}
 	return "[" + serialize$1(ctx, key) + "]:" + serialize$1(ctx, val);
@@ -2355,7 +2873,7 @@ function serializeProperties(ctx, source, record) {
 		const values = record.v;
 		ctx.base.stack.push(source.i);
 		let result = serializeProperty(ctx, source, keys[0], values[0]);
-		for (let i = 1, item = result; i < len; i++) {
+		for (let i = 1, item; i < len; i++) {
 			item = serializeProperty(ctx, source, keys[i], values[i]);
 			result += (item && result && ",") + item;
 		}
@@ -2376,18 +2894,14 @@ function serializeWithObjectAssign(ctx, source, value, serialized) {
 function serializeStringKeyAssignment(ctx, source, mainAssignments, key, value) {
 	const base = ctx.base;
 	const serialized = serialize$1(ctx, value);
-	const check = Number(key);
-	const isIdentifier = check >= 0 && check.toString() === key || isValidIdentifier(key);
-	if (isIndexedValueInStack(base, value)) {
-		if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, serialized);
-		else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", serialized);
-	} else {
-		const parentAssignment = base.assignments;
-		base.assignments = mainAssignments;
-		if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, serialized);
-		else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", serialized);
-		base.assignments = parentAssignment;
-	}
+	const parentAssignment = base.assignments;
+	if (!isIndexedValueInStack(base, value)) base.assignments = mainAssignments;
+	createKeyAssign(ctx, source.i, getKeyKind(key), key, serialized);
+	base.assignments = parentAssignment;
+}
+function createKeyAssign(ctx, ref, kind, key, value) {
+	if (kind === 1) createObjectAssign(ctx, ref, key, value);
+	else createArrayAssign(ctx, ref, kind === 2 ? key : "\"" + key + "\"", value);
 }
 function serializeAssignment(ctx, source, mainAssignments, key, value) {
 	if (typeof key === "string") serializeStringKeyAssignment(ctx, source, mainAssignments, key, value);
@@ -2418,7 +2932,7 @@ function serializeAssignments(ctx, source, node) {
 function serializeDictionary(ctx, node, init) {
 	if (node.p) {
 		const base = ctx.base;
-		if (base.features & 8) init = serializeWithObjectAssign(ctx, node, node.p, init);
+		if (base.features & 8 && !node.p.k.includes("__proto__")) init = serializeWithObjectAssign(ctx, node, node.p, init);
 		else {
 			markSerializerRef(base, node.i);
 			const assignments = serializeAssignments(ctx, node, node.p);
@@ -2434,22 +2948,15 @@ function serializeNullConstructor(ctx, node) {
 function serializeDate(node) {
 	return "new Date(\"" + node.s + "\")";
 }
-var TEMPORAL_CONSTRUCTOR = {
-	[0]: "Temporal.Instant",
-	[1]: "Temporal.Duration",
-	[2]: "Temporal.PlainDate",
-	[3]: "Temporal.PlainDateTime",
-	[4]: "Temporal.PlainMonthDay",
-	[5]: "Temporal.PlainTime",
-	[6]: "Temporal.PlainYearMonth",
-	[7]: "Temporal.ZonedDateTime"
-};
 function serializeTemporal(ctx, node) {
-	if (ctx.base.features & 64) return TEMPORAL_CONSTRUCTOR[node.c] + ".from(\"" + node.s + "\")";
+	if (ctx.base.features & 64) return "Temporal." + TEMPORAL_TYPE_NAME[node.c] + ".from(\"" + node.s + "\")";
 	throw new SerovalUnsupportedNodeError(node);
 }
 function serializeRegExp(ctx, node) {
-	if (ctx.base.features & 32) return "/" + deserializeString(node.c) + "/" + node.m;
+	if (ctx.base.features & 32) {
+		if (node.c.includes("\\x3C")) return "new RegExp(\"" + node.c + "\",\"" + node.m + "\")";
+		return "/" + deserializeString(node.c) + "/" + node.m;
+	}
 	throw new SerovalUnsupportedNodeError(node);
 }
 function serializeSetItem(ctx, id, item) {
@@ -2469,7 +2976,7 @@ function serializeSet(ctx, node) {
 	if (size > 0) {
 		ctx.base.stack.push(id);
 		let result = serializeSetItem(ctx, id, items[0]);
-		for (let i = 1, item = result; i < size; i++) {
+		for (let i = 1, item; i < size; i++) {
 			item = serializeSetItem(ctx, id, items[i]);
 			result += (item && result && ",") + item;
 		}
@@ -2478,7 +2985,7 @@ function serializeSet(ctx, node) {
 	}
 	return serialized;
 }
-function serializeMapEntry(ctx, id, key, val, sentinel) {
+function serializeMapEntry(ctx, id, key, val, getSentinel) {
 	const base = ctx.base;
 	if (isIndexedValueInStack(base, key)) {
 		const keyRef = getRefParam(ctx, key.i);
@@ -2487,7 +2994,9 @@ function serializeMapEntry(ctx, id, key, val, sentinel) {
 			createSetAssignment(ctx, id, keyRef, getRefParam(ctx, val.i));
 			return "";
 		}
-		if (val.t !== 4 && val.i != null && isSerializerRefMarked(base, val.i)) {
+		if (val.t !== 4 && val.i != null && hasMarkedNode(base, val)) {
+			markSerializerRef(base, val.i);
+			const sentinel = getSentinel();
 			const serialized = "(" + serialize$1(ctx, val) + ",[" + sentinel + "," + sentinel + "])";
 			createSetAssignment(ctx, id, keyRef, getRefParam(ctx, val.i));
 			createDeleteAssignment(ctx, id, sentinel);
@@ -2502,7 +3011,9 @@ function serializeMapEntry(ctx, id, key, val, sentinel) {
 	if (isIndexedValueInStack(base, val)) {
 		const valueRef = getRefParam(ctx, val.i);
 		markSerializerRef(base, id);
-		if (key.t !== 4 && key.i != null && isSerializerRefMarked(base, key.i)) {
+		if (key.t !== 4 && key.i != null && hasMarkedNode(base, key)) {
+			markSerializerRef(base, key.i);
+			const sentinel = getSentinel();
 			const serialized = "(" + serialize$1(ctx, key) + ",[" + sentinel + "," + sentinel + "])";
 			createSetAssignment(ctx, id, getRefParam(ctx, key.i), valueRef);
 			createDeleteAssignment(ctx, id, sentinel);
@@ -2522,20 +3033,27 @@ function serializeMap(ctx, node) {
 	const size = keys.length;
 	const id = node.i;
 	const sentinel = node.f;
-	const sentinelId = getRefParam(ctx, sentinel.i);
+	let sentinelRef;
+	const getSentinel = () => {
+		if (sentinelRef == null) {
+			sentinelRef = getRefParam(ctx, sentinel.i);
+			if (ctx.mode === 1) ctx.state.sentinels.add(ctx.state.valid.get(sentinel.i));
+		}
+		return sentinelRef;
+	};
 	const base = ctx.base;
 	if (size > 0) {
 		const vals = node.e.v;
 		base.stack.push(id);
-		let result = serializeMapEntry(ctx, id, keys[0], vals[0], sentinelId);
-		for (let i = 1, item = result; i < size; i++) {
-			item = serializeMapEntry(ctx, id, keys[i], vals[i], sentinelId);
+		let result = serializeMapEntry(ctx, id, keys[0], vals[0], getSentinel);
+		for (let i = 1, item; i < size; i++) {
+			item = serializeMapEntry(ctx, id, keys[i], vals[i], getSentinel);
 			result += (item && result && ",") + item;
 		}
 		base.stack.pop();
 		if (result) serialized += "([" + result + "])";
 	}
-	if (sentinel.t === 26) {
+	if (ctx.mode === 2 && sentinel.t === 26) {
 		markSerializerRef(base, sentinel.i);
 		serialized = "(" + serialize$1(ctx, sentinel) + "," + serialized + ")";
 	}
@@ -2544,11 +3062,8 @@ function serializeMap(ctx, node) {
 function serializeArrayBuffer(ctx, node) {
 	return getConstructor(ctx, node.f) + "(\"" + node.s + "\")";
 }
-function serializeTypedArray(ctx, node) {
-	return "new " + node.c + "(" + serialize$1(ctx, node.f) + "," + node.b + "," + node.l + ")";
-}
-function serializeDataView(ctx, node) {
-	return "new DataView(" + serialize$1(ctx, node.f) + "," + node.b + "," + node.l + ")";
+function serializeView(ctx, node) {
+	return "new " + (node.t === 20 ? "DataView" : node.c) + "(" + serialize$1(ctx, node.f) + "," + node.b + "," + node.l + ")";
 }
 function serializeAggregateError(ctx, node) {
 	const id = node.i;
@@ -2588,11 +3103,7 @@ function serializePromiseConstructor(ctx, node) {
 	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
 	return "(" + assignIndexedValue(ctx, node.s, getConstructor(ctx, node.f) + "()") + ").p";
 }
-function serializePromiseResolve(ctx, node) {
-	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
-	return getConstructor(ctx, node.a[0]) + "(" + getRefParam(ctx, node.i) + "," + serialize$1(ctx, node.a[1]) + ")";
-}
-function serializePromiseReject(ctx, node) {
+function serializePromiseResult(ctx, node) {
 	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
 	return getConstructor(ctx, node.a[0]) + "(" + getRefParam(ctx, node.i) + "," + serialize$1(ctx, node.a[1]) + ")";
 }
@@ -2600,10 +3111,7 @@ function serializePlugin(ctx, node) {
 	const currentPlugins = ctx.base.plugins;
 	if (currentPlugins) for (let i = 0, len = currentPlugins.length; i < len; i++) {
 		const plugin = currentPlugins[i];
-		if (plugin.tag === node.c) {
-			if (ctx.child == null) ctx.child = new SerializePluginContext(ctx);
-			return plugin.serialize(node.s, ctx.child, { id: node.i });
-		}
+		if (plugin.tag === node.c) return plugin.serialize(node.s, { serialize: (current) => serialize$1(ctx, current) }, { id: node.i });
 	}
 	throw new SerovalMissingPluginError(node.c);
 }
@@ -2640,11 +3148,8 @@ function serializeAsyncIteratorFactory(ctx, node) {
 	if (result) return result + iterator + ")";
 	return iterator;
 }
-function serializeAsyncIteratorFactoryInstance(ctx, node) {
-	return getConstructor(ctx, node.a[0]) + "(" + serialize$1(ctx, node.a[1]) + ")";
-}
 function serializeStreamConstructor(ctx, node) {
-	const result = assignIndexedValue(ctx, node.i, getConstructor(ctx, node.f) + "()");
+	const result = assignIndexedValue(ctx, node.i, getConstructor(ctx, node.f) + (node.l === 1 ? "(1)" : "()"));
 	const len = node.a.length;
 	if (len) {
 		let values = serialize$1(ctx, node.a[0]);
@@ -2653,14 +3158,8 @@ function serializeStreamConstructor(ctx, node) {
 	}
 	return result;
 }
-function serializeStreamNext(ctx, node) {
-	return getRefParam(ctx, node.i) + ".next(" + serialize$1(ctx, node.f) + ")";
-}
-function serializeStreamThrow(ctx, node) {
-	return getRefParam(ctx, node.i) + ".throw(" + serialize$1(ctx, node.f) + ")";
-}
-function serializeStreamReturn(ctx, node) {
-	return getRefParam(ctx, node.i) + ".return(" + serialize$1(ctx, node.f) + ")";
+function serializeStreamCall(ctx, node, method) {
+	return getRefParam(ctx, node.i) + "." + method + "(" + serialize$1(ctx, node.f) + ")";
 }
 function serializeSequenceItem(ctx, id, index, item) {
 	const base = ctx.base;
@@ -2678,7 +3177,7 @@ function serializeSequence(ctx, node) {
 	if (size > 0) {
 		ctx.base.stack.push(id);
 		let result = serializeSequenceItem(ctx, id, 0, items[0]);
-		for (let i = 1, item = result; i < size; i++) {
+		for (let i = 1, item; i < size; i++) {
 			item = serializeSequenceItem(ctx, id, i, items[i]);
 			result += (item && result && ",") + item;
 		}
@@ -2700,8 +3199,8 @@ function serializeAssignable(ctx, node) {
 		case 8: return serializeMap(ctx, node);
 		case 19: return serializeArrayBuffer(ctx, node);
 		case 16:
-		case 15: return serializeTypedArray(ctx, node);
-		case 20: return serializeDataView(ctx, node);
+		case 15:
+		case 20: return serializeView(ctx, node);
 		case 14: return serializeAggregateError(ctx, node);
 		case 13: return serializeError(ctx, node);
 		case 12: return serializePromise(ctx, node);
@@ -2721,20 +3220,20 @@ function serialize$1(ctx, node) {
 		case 1: return "\"" + node.s + "\"";
 		case 3: return node.s + "n";
 		case 4: return getRefParam(ctx, node.i);
-		case 23: return serializePromiseResolve(ctx, node);
-		case 24: return serializePromiseReject(ctx, node);
+		case 23:
+		case 24: return serializePromiseResult(ctx, node);
 		case 27: return serializeIteratorFactory(ctx, node);
-		case 28: return serializeIteratorFactoryInstance(ctx, node);
+		case 28:
+		case 30: return serializeIteratorFactoryInstance(ctx, node);
 		case 29: return serializeAsyncIteratorFactory(ctx, node);
-		case 30: return serializeAsyncIteratorFactoryInstance(ctx, node);
 		case 31: return serializeStreamConstructor(ctx, node);
-		case 32: return serializeStreamNext(ctx, node);
-		case 33: return serializeStreamThrow(ctx, node);
-		case 34: return serializeStreamReturn(ctx, node);
+		case 32: return serializeStreamCall(ctx, node, "next");
+		case 33: return serializeStreamCall(ctx, node, "throw");
+		case 34: return serializeStreamCall(ctx, node, "return");
 		default: return assignIndexedValue(ctx, node.i, serializeAssignable(ctx, node));
 	}
 }
-function serializeTopCross(ctx, tree) {
+function serializeCross(ctx, tree) {
 	const result = serialize$1(ctx, tree);
 	const id = tree.i;
 	if (id == null) return result;
@@ -2742,7 +3241,11 @@ function serializeTopCross(ctx, tree) {
 	const ref = getRefParam(ctx, id);
 	const scopeId = ctx.state.scopeId;
 	const params = scopeId == null ? "" : "$R";
-	const body = patches ? "(" + result + "," + patches + ref + ")" : result;
+	let body = result;
+	if (patches) {
+		if (!ctx.base.assignAll && !result.startsWith(ref + "=")) body = ref + "=" + result;
+		body = "(" + body + "," + patches + ref + ")";
+	}
 	if (params === "") {
 		if (tree.t === 10 && !patches) return "(" + body + ")";
 		return body;
@@ -2750,67 +3253,20 @@ function serializeTopCross(ctx, tree) {
 	const args = scopeId == null ? "()" : "($R[\"" + serializeString(scopeId) + "\"])";
 	return "(" + createFunction([params], body) + ")" + args;
 }
-var SyncParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseSOS(this._p, this.depth, current);
-	}
-};
-var StreamParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseSOS(this._p, this.depth, current);
-	}
-	parseWithError(current) {
-		return parseWithError(this._p, this.depth, current);
-	}
-	isAlive() {
-		return this._p.state.alive;
-	}
-	pushPendingState() {
-		pushPendingState(this._p);
-	}
-	popPendingState() {
-		popPendingState(this._p);
-	}
-	onParse(node) {
-		onParse(this._p, node);
-	}
-	onError(error) {
-		onError(this._p, error);
-	}
-	addCleanup(callback) {
-		this._p.state.cleanups.push(callback);
-	}
-};
-function createStreamParserState(options) {
-	return {
-		alive: true,
-		pending: 0,
-		initial: true,
-		buffer: [],
-		onParse: options.onParse,
-		onError: options.onError,
-		onDone: options.onDone,
-		cleanups: []
-	};
+function wrapSerializationError(error) {
+	return error instanceof SerovalSerializationError ? error : new SerovalSerializationError(error);
 }
-function createStreamParserContext(options) {
-	return {
-		type: 2,
-		base: createBaseParserContext(2, options),
-		state: createStreamParserState(options)
-	};
+function serializeTopCross(ctx, tree) {
+	try {
+		return serializeCross(ctx, tree);
+	} catch (error) {
+		throw wrapSerializationError(error);
+	}
 }
 function parseItems(ctx, depth, current) {
-	const nodes = [];
-	for (let i = 0, len = current.length; i < len; i++) if (i in current) nodes[i] = parseSOS(ctx, depth, current[i]);
+	const len = current.length;
+	const nodes = new Array(len);
+	for (let i = 0; i < len; i++) if (i in current) nodes[i] = parseSOS(ctx, depth, current[i]);
 	else nodes[i] = 0;
 	return nodes;
 }
@@ -2818,20 +3274,22 @@ function parseArray(ctx, depth, id, current) {
 	return createArrayNode(id, current, parseItems(ctx, depth, current));
 }
 function parseProperties(ctx, depth, properties) {
-	const entries = Object.entries(properties);
-	const keyNodes = [];
-	const valueNodes = [];
-	for (let i = 0, len = entries.length; i < len; i++) {
-		keyNodes.push(serializeString(entries[i][0]));
-		valueNodes.push(parseSOS(ctx, depth, entries[i][1]));
+	const keys = Object.keys(properties);
+	const len = keys.length;
+	const keyNodes = new Array(len);
+	const valueNodes = new Array(len);
+	for (let i = 0, key; i < len; i++) {
+		key = keys[i];
+		keyNodes[i] = serializeString(key);
+		valueNodes[i] = parseSOS(ctx, depth, properties[key]);
 	}
 	if (SYM_ITERATOR in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ITERATOR));
-		valueNodes.push(createIteratorFactoryInstanceNode(parseIteratorFactory(ctx.base), parseSOS(ctx, depth, createSequenceFromIterable(properties))));
+		valueNodes.push(createIteratorFactoryInstanceNode(28, parseIteratorFactory(ctx.base), parseSOS(ctx, depth, createSequenceFromIterable(properties))));
 	}
 	if (SYM_ASYNC_ITERATOR in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ASYNC_ITERATOR));
-		valueNodes.push(createAsyncIteratorFactoryInstanceNode(parseAsyncIteratorFactory(ctx.base), parseSOS(ctx, depth, ctx.type === 1 ? createStream() : createStreamFromAsyncIterable(properties, ctx.state.cleanups))));
+		valueNodes.push(createIteratorFactoryInstanceNode(30, parseAsyncIteratorFactory(ctx.base), parseAsyncIterable(ctx, depth, properties)));
 	}
 	if (SYM_TO_STRING_TAG in properties) {
 		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_TO_STRING_TAG));
@@ -2846,187 +3304,131 @@ function parseProperties(ctx, depth, properties) {
 		v: valueNodes
 	};
 }
+function parseAsyncIterable(ctx, depth, current) {
+	if (ctx.type !== 2) throw new SerovalUnsupportedTypeError(current);
+	const id = createIndexForValue(ctx.base, {});
+	const result = createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), []);
+	ctx.state.iterable(ctx, depth, id, current);
+	return result;
+}
 function parsePlainObject(ctx, depth, id, current, empty) {
 	return createObjectNode(id, current, empty, parseProperties(ctx, depth, current));
 }
 function parseBoxed(ctx, depth, id, current) {
 	return createBoxedNode(id, parseSOS(ctx, depth, current.valueOf()));
 }
-function parseTypedArray(ctx, depth, id, current) {
+function parseView(ctx, depth, type, id, current) {
 	current = getArrayBufferView(ctx.base, current);
-	return createTypedArrayNode(id, current, parseSOS(ctx, depth, current.buffer));
+	return createViewNode(type, id, current, parseSOS(ctx, depth, current.buffer));
 }
-function parseBigIntTypedArray(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createBigIntTypedArrayNode(id, current, parseSOS(ctx, depth, current.buffer));
-}
-function parseDataView(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createDataViewNode(id, current, parseSOS(ctx, depth, current.buffer));
-}
-function parseError(ctx, depth, id, current) {
+function parseError(ctx, depth, type, id, current) {
 	const options = getErrorOptions(current, ctx.base.features);
-	return createErrorNode(id, current, options ? parseProperties(ctx, depth, options) : void 0);
-}
-function parseAggregateError(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createAggregateErrorNode(id, current, options ? parseProperties(ctx, depth, options) : void 0);
+	return createErrorNode(type, id, current, options ? parseProperties(ctx, depth, options) : void 0);
 }
 function parseMap(ctx, depth, id, current) {
-	const keyNodes = [];
-	const valueNodes = [];
+	const sentinel = parseMapSentinel(ctx.base);
+	const keyNodes = new Array(current.size);
+	const valueNodes = new Array(current.size);
+	let i = 0;
 	for (const [key, value] of current.entries()) {
-		keyNodes.push(parseSOS(ctx, depth, key));
-		valueNodes.push(parseSOS(ctx, depth, value));
+		keyNodes[i] = parseSOS(ctx, depth, key);
+		valueNodes[i] = parseSOS(ctx, depth, value);
+		i++;
 	}
-	return createMapNode(ctx.base, id, keyNodes, valueNodes);
+	return createMapNode(id, sentinel, keyNodes, valueNodes);
 }
 function parseSet(ctx, depth, id, current) {
-	const items = [];
-	for (const item of current.keys()) items.push(parseSOS(ctx, depth, item));
+	const items = new Array(current.size);
+	let i = 0;
+	for (const item of current.keys()) items[i++] = parseSOS(ctx, depth, item);
 	return createSetNode(id, items);
 }
+/**
+* Sends the events of a stream that has ended, so the copy gets all of them.
+* A stream that is still open throws, because the other sync modes cannot
+* send its later events.
+*/
+function parseEndedStream(ctx, depth, id, current) {
+	const events = current.endedEvents();
+	if (!events) throw new SerovalUnsupportedTypeError(current);
+	const values = events.values;
+	const last = values.length - 1;
+	const sequence = new Array(values.length);
+	if (last >= 0) markParserRef(ctx.base, id);
+	for (let i = 0; i <= last; i++) sequence[i] = createStreamEventNode(i < last ? 32 : events.success ? 34 : 33, id, parseSOS(ctx, depth, values[i]));
+	return sequence;
+}
 function parseStream(ctx, depth, id, current) {
-	const result = createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), []);
-	if (ctx.type === 1) return result;
-	pushPendingState(ctx);
-	current.on({
-		next: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamNextNode(id, parsed));
-			}
-		},
-		throw: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamThrowNode(id, parsed));
-			}
-			popPendingState(ctx);
-		},
-		return: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamReturnNode(id, parsed));
-			}
-			popPendingState(ctx);
-		}
-	});
+	const reference = parseSpecialReference(ctx.base, 4);
+	if (ctx.type === 2) {
+		const result = createStreamConstructorNode(id, reference, []);
+		ctx.state.stream(ctx, depth, id, current);
+		return result;
+	}
+	return createStreamConstructorNode(id, reference, parseEndedStream(ctx, depth, id, current));
+}
+function parseLiveStream(ctx, depth, id, current) {
+	if (ctx.type !== 2) throw new SerovalUnsupportedTypeError(current);
+	const result = createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), [], 1);
+	ctx.state.live(ctx, depth, id, current);
 	return result;
 }
-function handlePromiseSuccess(id, depth, data) {
-	if (this.state.alive) {
-		const parsed = parseWithError(this, depth, data);
-		if (parsed) onParse(this, createSerovalNode(23, id, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(this.base, 2), parsed], void 0, void 0, void 0, void 0));
-		popPendingState(this);
-	}
-}
-function handlePromiseFailure(id, depth, data) {
-	if (this.state.alive) {
-		const parsed = parseWithError(this, depth, data);
-		if (parsed) onParse(this, createSerovalNode(24, id, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(this.base, 3), parsed], void 0, void 0, void 0, void 0));
-	}
-	popPendingState(this);
-}
 function parsePromise(ctx, depth, id, current) {
+	if (ctx.type !== 2) throw new SerovalUnsupportedTypeError(current);
 	const resolver = createIndexForValue(ctx.base, {});
-	if (ctx.type === 2) {
-		pushPendingState(ctx);
-		current.then(handlePromiseSuccess.bind(ctx, resolver, depth), handlePromiseFailure.bind(ctx, resolver, depth));
-	}
+	ctx.state.promise(ctx, resolver, depth, current);
 	return createPromiseConstructorNode(ctx.base, id, resolver);
 }
 function parsePluginSync(ctx, depth, id, current, currentPlugins) {
 	for (let i = 0, len = currentPlugins.length; i < len; i++) {
 		const plugin = currentPlugins[i];
-		if (plugin.parse.sync && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.sync(current, new SyncParsePluginContext(ctx, depth), { id }));
+		if (plugin.parse.sync && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.sync(current, { parse: (value) => parseSOS(ctx, depth, value) }, { id }));
 	}
 }
-function parsePluginStream(ctx, depth, id, current, currentPlugins) {
-	for (let i = 0, len = currentPlugins.length; i < len; i++) {
-		const plugin = currentPlugins[i];
-		if (plugin.parse.stream && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.stream(current, new StreamParsePluginContext(ctx, depth), { id }));
-	}
-}
-function parsePlugin(ctx, depth, id, current) {
-	const currentPlugins = ctx.base.plugins;
-	if (currentPlugins) return ctx.type === 1 ? parsePluginSync(ctx, depth, id, current, currentPlugins) : parsePluginStream(ctx, depth, id, current, currentPlugins);
+function parsePlugin(ctx, depth, id, current, currentPlugins) {
+	if (currentPlugins) return ctx.type === 1 ? parsePluginSync(ctx, depth, id, current, currentPlugins) : ctx.state.plugin(ctx, depth, id, current, currentPlugins);
 }
 function parseSequence(ctx, depth, id, current) {
-	const nodes = [];
-	for (let i = 0, len = current.v.length; i < len; i++) nodes[i] = parseSOS(ctx, depth, current.v[i]);
+	const len = current.v.length;
+	const nodes = new Array(len);
+	for (let i = 0; i < len; i++) nodes[i] = parseSOS(ctx, depth, current.v[i]);
 	return createSequenceNode(id, nodes, current.t, current.d);
 }
 function parseObjectPhase2(ctx, depth, id, current, currentClass) {
-	switch (currentClass) {
-		case Object: return parsePlainObject(ctx, depth, id, current, false);
-		case void 0: return parsePlainObject(ctx, depth, id, current, true);
-		case Date: return createDateNode(id, current);
-		case Error:
-		case EvalError:
-		case RangeError:
-		case ReferenceError:
-		case SyntaxError:
-		case TypeError:
-		case URIError: return parseError(ctx, depth, id, current);
-		case Number:
-		case Boolean:
-		case String:
-		case BigInt: return parseBoxed(ctx, depth, id, current);
-		case ArrayBuffer: return createArrayBufferNode(ctx.base, id, current);
-		case Int8Array:
-		case Int16Array:
-		case Int32Array:
-		case Uint8Array:
-		case Uint16Array:
-		case Uint32Array:
-		case Uint8ClampedArray:
-		case Float32Array:
-		case Float64Array: return parseTypedArray(ctx, depth, id, current);
-		case DataView: return parseDataView(ctx, depth, id, current);
-		case Map: return parseMap(ctx, depth, id, current);
-		case Set: return parseSet(ctx, depth, id, current);
+	if (currentClass === Object) return parsePlainObject(ctx, depth, id, current, false);
+	switch (getObjectKind(current, currentClass, ctx.base.features)) {
+		case 2: return parsePlainObject(ctx, depth, id, current, true);
+		case 3: return createDateNode(id, current);
+		case 4: return parseError(ctx, depth, 13, id, current);
+		case 5: return parseError(ctx, depth, 14, id, current);
+		case 6: return parseBoxed(ctx, depth, id, current);
+		case 7: return createArrayBufferNode(ctx.base, id, current);
+		case 8: return parseView(ctx, depth, 15, id, current);
+		case 9: return parseView(ctx, depth, 16, id, current);
+		case 10: return parseView(ctx, depth, 20, id, current);
+		case 11: return parseMap(ctx, depth, id, current);
+		case 12: return parseSet(ctx, depth, id, current);
+		case 13: return parsePromise(ctx, depth, id, current);
+		case 14: return createRegExpNode(id, current);
+		case 15: return createTemporalNode(id, getTemporalType(currentClass), current);
+		case 16: return parsePlainObject(ctx, depth, id, current, !!currentClass);
+		default: throw new SerovalUnsupportedTypeError(current);
 	}
-	if (currentClass === Promise || current instanceof Promise) return parsePromise(ctx, depth, id, current);
-	const currentFeatures = ctx.base.features;
-	if (currentFeatures & 32 && currentClass === RegExp) return createRegExpNode(id, current);
-	if (currentFeatures & 16) switch (currentClass) {
-		case BigInt64Array:
-		case BigUint64Array: return parseBigIntTypedArray(ctx, depth, id, current);
-	}
-	if (currentFeatures & 1 && typeof AggregateError !== "undefined" && (currentClass === AggregateError || current instanceof AggregateError)) return parseAggregateError(ctx, depth, id, current);
-	if (currentFeatures & 64 && typeof Temporal !== "undefined") switch (currentClass) {
-		case Temporal.Instant: return createTemporalNode(id, 0, current);
-		case Temporal.Duration: return createTemporalNode(id, 1, current);
-		case Temporal.PlainDate: return createTemporalNode(id, 2, current);
-		case Temporal.PlainDateTime: return createTemporalNode(id, 3, current);
-		case Temporal.PlainMonthDay: return createTemporalNode(id, 4, current);
-		case Temporal.PlainTime: return createTemporalNode(id, 5, current);
-		case Temporal.PlainYearMonth: return createTemporalNode(id, 6, current);
-		case Temporal.ZonedDateTime: return createTemporalNode(id, 7, current);
-	}
-	if (current instanceof Error) return parseError(ctx, depth, id, current);
-	if (SYM_ITERATOR in current || SYM_ASYNC_ITERATOR in current) return parsePlainObject(ctx, depth, id, current, !!currentClass);
-	throw new SerovalUnsupportedTypeError(current);
 }
 function parseObject(ctx, depth, id, current) {
 	if (Array.isArray(current)) return parseArray(ctx, depth, id, current);
-	if (isStream(current)) return parseStream(ctx, depth, id, current);
+	if (isStream(current)) return isLiveStream(current) ? parseLiveStream(ctx, depth, id, current) : parseStream(ctx, depth, id, current);
 	if (isSequence(current)) return parseSequence(ctx, depth, id, current);
-	let currentClass = current.constructor;
-	if (currentClass !== void 0 && typeof currentClass !== "function") {
-		const proto = Object.getPrototypeOf(current);
-		currentClass = proto === null ? void 0 : proto.constructor;
-	}
+	const currentClass = getObjectClass(current);
 	if (currentClass === OpaqueReference) return parseSOS(ctx, depth, current.replacement);
-	const parsed = parsePlugin(ctx, depth, id, current);
+	const parsed = parsePlugin(ctx, depth, id, current, getObjectPlugins(ctx.base, current, currentClass));
 	if (parsed) return parsed;
 	return parseObjectPhase2(ctx, depth, id, current, currentClass);
 }
 function parseFunction(ctx, depth, current) {
 	const ref = getReferenceNode(ctx.base, current);
-	if (ref.type !== 0) return ref.value;
-	const plugin = parsePlugin(ctx, depth, ref.value, current);
+	if (typeof ref !== "number") return ref;
+	const plugin = parsePlugin(ctx, depth, ref, current, ctx.base.plugins);
 	if (plugin) return plugin;
 	throw new SerovalUnsupportedTypeError(current);
 }
@@ -3041,7 +3443,7 @@ function parseSOS(ctx, depth, current) {
 		case "object":
 			if (current) {
 				const ref = getReferenceNode(ctx.base, current);
-				return ref.type === 0 ? parseObject(ctx, depth + 1, ref.value, current) : ref.value;
+				return typeof ref === "number" ? parseObject(ctx, depth + 1, ref, current) : ref;
 			}
 			return NULL_NODE;
 		case "symbol": return parseWellKnownSymbol(ctx.base, current);
@@ -3049,61 +3451,427 @@ function parseSOS(ctx, depth, current) {
 		default: throw new SerovalUnsupportedTypeError(current);
 	}
 }
-function onParse(ctx, node) {
-	if (ctx.state.initial) ctx.state.buffer.push(node);
-	else onParseInternal(ctx, node, false);
-}
-function onError(ctx, error) {
-	if (ctx.state.onError) ctx.state.onError(error);
-	else throw error instanceof SerovalParserError ? error : new SerovalParserError(error);
-}
-function onDone(ctx) {
-	if (ctx.state.onDone) ctx.state.onDone();
-	for (let i = 0, len = ctx.state.cleanups.length; i < len; i++) ctx.state.cleanups[i]();
-}
-function onParseInternal(ctx, node, initial) {
-	try {
-		ctx.state.onParse(node, initial);
-	} catch (error) {
-		onError(ctx, error);
+/**
+* Streaming parse mode. Everything here is reached through the function
+* fields of the stream parser state, which only `createStreamParserContext`
+* sets, so synchronous consumers (`serialize`, `toJSON`) never bundle it.
+*/
+function createStreamParsePluginContext(ctx, depth) {
+	const state = ctx.state;
+	function parse(current) {
+		state.parsing++;
+		try {
+			return parseSOS(ctx, depth, current);
+		} finally {
+			state.parsing--;
+			if (!state.alive) releaseParserValues(ctx);
+		}
 	}
+	return {
+		parse,
+		parseStreamSource(current) {
+			state.parsing++;
+			try {
+				if (depth >= ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
+				const id = createIndexForValue(ctx.base, {});
+				const node = createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), [], 1);
+				iterateAsync(ctx, depth + 1, id, current, true);
+				return node;
+			} finally {
+				state.parsing--;
+				if (!state.alive) releaseParserValues(ctx);
+			}
+		},
+		parseWithError(current) {
+			try {
+				return parse(current);
+			} catch (error) {
+				stopStreamParse(ctx, 1, error);
+				return;
+			}
+		},
+		isAlive: () => state.alive,
+		pushPendingState: () => {
+			pushPendingState(ctx);
+		},
+		popPendingState: () => {
+			popPendingState(ctx);
+		},
+		onParse(node) {
+			if (state.alive) {
+				state.queue.push({
+					node,
+					initial: false,
+					accept: void 0
+				});
+				drainOutput(ctx);
+			}
+		},
+		onError(error) {
+			stopStreamParse(ctx, 1, error);
+		},
+		addCleanup(callback) {
+			addCleanup(ctx, callback);
+		}
+	};
+}
+function getStreamParsePluginContext(ctx, depth) {
+	const contexts = ctx.state.pluginContexts;
+	return contexts[depth] ?? (contexts[depth] = createStreamParsePluginContext(ctx, depth));
+}
+function addCleanup(ctx, callback) {
+	if (ctx.state.alive) ctx.state.cleanups.push(callback);
+	else callback();
+}
+function parsePluginStream(ctx, depth, id, current, currentPlugins) {
+	for (let i = 0, len = currentPlugins.length; i < len; i++) {
+		const plugin = currentPlugins[i];
+		if (plugin.parse.stream && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.stream(current, getStreamParsePluginContext(ctx, depth), { id }));
+	}
+}
+/**
+* One listener shape serves both `Stream.on` (no accept) and
+* `LiveStream.pump` (accept tied to record acceptance). Handlers return the
+* parse error so the pump can stop the source.
+*/
+function streamListener(ctx, depth, id, subscription) {
+	const handle = (type, terminal) => (value, accept) => {
+		let failure = void 0;
+		if (ctx.state.alive) try {
+			failure = parseEvent(ctx, depth, value, createStreamEventNode.bind(null, type, id), accept);
+		} catch (error) {
+			if (!subscription?.active) throw error;
+			subscription.failure ?? (subscription.failure = { value: error });
+			failure = error;
+		}
+		if (terminal && !accept) popPendingState(ctx);
+		return failure;
+	};
+	return {
+		next: handle(32, false),
+		throw: handle(33, true),
+		return: handle(34, true),
+		done() {
+			popPendingState(ctx);
+		},
+		error(reason) {
+			if (ctx.state.alive) stopStreamParse(ctx, 1, reason);
+		}
+	};
+}
+function subscribeStream(ctx, depth, id, current) {
+	pushPendingState(ctx);
+	const subscription = {
+		active: true,
+		failure: void 0
+	};
+	let cleanup;
+	try {
+		cleanup = current.on(streamListener(ctx, depth, id, subscription));
+	} finally {
+		subscription.active = false;
+	}
+	try {
+		addCleanup(ctx, cleanup);
+	} catch (error) {
+		subscription.failure ?? (subscription.failure = { value: error });
+	}
+	const failure = subscription.failure;
+	subscription.failure = void 0;
+	if (failure) throw failure.value;
+}
+function consumeLiveStream(ctx, depth, id, current) {
+	const cancel = current.pump(streamListener(ctx, depth, id));
+	pushPendingState(ctx);
+	addCleanup(ctx, () => {
+		cancel(ctx.state.reason);
+	});
+}
+function wrapPromiseResult(ctx, type, id, node) {
+	return createSerovalNode(type, id, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(ctx.base, type === 23 ? 2 : 3), node], void 0, void 0, void 0, void 0);
+}
+function handlePromise(type, id, depth, data) {
+	if (this.state.alive) parseEvent(this, depth, data, wrapPromiseResult.bind(null, this, type, id), void 0);
+	popPendingState(this);
+}
+function watchPromise(ctx, resolver, depth, current) {
+	pushPendingState(ctx);
+	current.then(handlePromise.bind(ctx, 23, resolver, depth), handlePromise.bind(ctx, 24, resolver, depth));
+}
+function returnIterator(iterator) {
+	Promise.resolve().then(() => iterator.return?.()).catch(() => {});
+}
+/**
+* Drives an async iterator directly. The next value is pulled only after the
+* record for the previous one has been accepted, and cancellation returns
+* the iterator once.
+*/
+function iterateAsync(ctx, depth, id, current, forwardReason) {
+	const iterator = current[SYM_ASYNC_ITERATOR]();
+	const listener = streamListener(ctx, depth, id);
+	let active = true;
+	function stop() {
+		if (active) {
+			active = false;
+			if (forwardReason) try {
+				Promise.resolve(iterator.return?.(ctx.state.reason)).catch(() => {});
+			} catch {}
+			else returnIterator(iterator);
+		}
+	}
+	function pull() {
+		if (active) iterator.next().then((result) => {
+			if (active) {
+				if (result.done) {
+					active = false;
+					listener.return(result.value, void 0);
+				} else if (listener.next(result.value, pull) !== void 0) {
+					stop();
+					listener.done();
+				}
+			}
+		}, (error) => {
+			if (active) {
+				active = false;
+				listener.throw(error, void 0);
+			}
+		});
+	}
+	pushPendingState(ctx);
+	addCleanup(ctx, stop);
+	pull();
+}
+function createStreamParserState(options) {
+	return {
+		alive: true,
+		pending: 0,
+		parsing: 0,
+		queue: [],
+		writing: false,
+		inFlight: void 0,
+		reason: void 0,
+		onParse: options.onParse,
+		onError: options.onError,
+		onDone: options.onDone,
+		cleanups: [],
+		pluginContexts: [],
+		stream: subscribeStream,
+		live: consumeLiveStream,
+		promise: watchPromise,
+		iterable: iterateAsync,
+		plugin: parsePluginStream
+	};
+}
+function createStreamParserContext(options) {
+	return {
+		type: 2,
+		base: createBaseParserContext(options),
+		state: createStreamParserState(options)
+	};
 }
 function pushPendingState(ctx) {
-	ctx.state.pending++;
+	if (ctx.state.alive) ctx.state.pending++;
 }
 function popPendingState(ctx) {
-	if (--ctx.state.pending <= 0) onDone(ctx);
-}
-function parseWithError(ctx, depth, current) {
-	try {
-		return parseSOS(ctx, depth, current);
-	} catch (err) {
-		onError(ctx, err);
-		return;
+	if (ctx.state.alive) {
+		ctx.state.pending--;
+		checkStreamParse(ctx);
 	}
+}
+/**
+* Parses a value that arrived after the root. Its record is queued before
+* parsing starts so that records discovered inside it follow it, and it is
+* dropped again if parsing fails. Returns the parse error after reporting
+* it, or `undefined`.
+*/
+function parseEvent(ctx, depth, value, wrap, accept) {
+	const state = ctx.state;
+	const record = {
+		node: void 0,
+		initial: false,
+		accept
+	};
+	let failure;
+	state.queue.push(record);
+	state.parsing++;
+	try {
+		record.node = wrap(parseSOS(ctx, depth, value));
+	} catch (error) {
+		failure = { value: error };
+	} finally {
+		state.parsing--;
+		if (!state.alive) releaseParserValues(ctx);
+	}
+	if (failure) stopStreamParse(ctx, 1, failure.value);
+	else drainOutput(ctx);
+	return failure?.value;
+}
+/**
+* Emits queued records one at a time. A callback that returns a promise
+* pauses emission until it settles; the source event behind the record is
+* accepted only after that.
+*/
+function drainOutput(ctx) {
+	const state = ctx.state;
+	if (state.writing || state.parsing > 0) return;
+	while (state.alive && state.queue.length > 0) {
+		const record = state.queue.shift();
+		if (!record.node) continue;
+		let pending;
+		state.writing = true;
+		state.inFlight = record;
+		state.parsing++;
+		try {
+			if (!state.onParse) throw new Error("Stream output callback is unavailable");
+			const result = state.onParse(record.node, record.initial);
+			if (result !== null && (typeof result === "object" || typeof result === "function")) {
+				const then = Reflect.get(result, "then");
+				if (typeof then === "function") pending = new Promise((resolve, reject) => {
+					Reflect.apply(then, result, [resolve, reject]);
+				});
+			}
+		} catch (error) {
+			releaseRecord(record);
+			stopStreamParse(ctx, 1, error);
+			return;
+		} finally {
+			state.parsing--;
+			if (!state.alive) releaseParserValues(ctx);
+		}
+		record.node = void 0;
+		if (pending) {
+			if (!state.alive) releaseRecord(record);
+			pending.then(() => {
+				state.writing = false;
+				state.inFlight = void 0;
+				if (state.alive) {
+					const accept = record.accept;
+					releaseRecord(record);
+					accept?.();
+					drainOutput(ctx);
+				}
+			}, (error) => {
+				state.writing = false;
+				state.inFlight = void 0;
+				releaseRecord(record);
+				stopStreamParse(ctx, 1, error);
+			});
+			return;
+		}
+		if (!state.alive) {
+			releaseRecord(record);
+			return;
+		}
+		state.writing = false;
+		state.inFlight = void 0;
+		const accept = record.accept;
+		releaseRecord(record);
+		accept?.();
+	}
+	checkStreamParse(ctx);
+}
+function checkStreamParse(ctx) {
+	const state = ctx.state;
+	if (state.alive && state.parsing === 0 && state.pending <= 0 && state.queue.length === 0 && !state.writing) stopStreamParse(ctx, 0);
 }
 function startStreamParse(ctx, current) {
-	const parsed = parseWithError(ctx, 0, current);
-	if (parsed) {
-		onParseInternal(ctx, parsed, true);
-		ctx.state.initial = false;
-		flushStreamParse(ctx, ctx.state);
-		if (ctx.state.pending <= 0) destroyStreamParse(ctx);
+	const state = ctx.state;
+	let parsed;
+	let failure;
+	state.parsing++;
+	try {
+		parsed = parseSOS(ctx, 0, current);
+	} catch (error) {
+		failure = { value: error };
+	} finally {
+		state.parsing--;
+		if (!state.alive) releaseParserValues(ctx);
+	}
+	if (failure) {
+		if (state.alive) stopStreamParse(ctx, 1, failure.value);
+		else throw failure.value;
+	} else if (parsed && state.alive) {
+		state.queue.unshift({
+			node: parsed,
+			initial: true,
+			accept: void 0
+		});
+		drainOutput(ctx);
 	}
 }
-function flushStreamParse(ctx, state) {
-	for (let i = 0, len = state.buffer.length; i < len; i++) onParseInternal(ctx, state.buffer[i], false);
-}
-function destroyStreamParse(ctx) {
-	if (ctx.state.alive) {
-		onDone(ctx);
-		ctx.state.alive = false;
+function runCleanups(state) {
+	const cleanups = state.cleanups;
+	let failure;
+	state.cleanups = [];
+	for (const record of state.queue) releaseRecord(record);
+	state.queue.length = 0;
+	if (state.inFlight) releaseRecord(state.inFlight);
+	state.inFlight = void 0;
+	for (let i = 0, len = cleanups.length; i < len; i++) try {
+		cleanups[i]();
+	} catch (error) {
+		failure ?? (failure = { value: error });
 	}
+	if (failure) throw failure.value;
+}
+function releaseRecord(record) {
+	record.node = void 0;
+	record.accept = void 0;
+}
+function releaseParserValues(ctx) {
+	ctx.base.refs = /* @__PURE__ */ new Map();
+	ctx.base.marked.clear();
+	ctx.base.plugins = void 0;
+	ctx.base.plainObjectPlugins = void 0;
+	ctx.state.pluginContexts = [];
+	if (ctx.state.parsing === 0) ctx.state.reason = void 0;
+}
+/**
+* Ends the parse once: `onDone` on success, `onError` on failure, and every
+* cleanup either way.
+*/
+function stopStreamParse(ctx, mode, reason) {
+	const state = ctx.state;
+	if (state.alive) {
+		state.alive = false;
+		const onError = state.onError;
+		const onDone = state.onDone;
+		if (mode === 1 && !onError && !(reason instanceof SerovalParserError)) reason = new SerovalParserError(reason);
+		state.reason = reason;
+		state.onParse = void 0;
+		state.onError = void 0;
+		state.onDone = void 0;
+		state.writing = false;
+		state.parsing++;
+		let failure;
+		try {
+			if (mode === 1) {
+				if (onError) onError(reason);
+				else throw reason;
+			} else if (mode === 0) onDone?.();
+		} catch (error) {
+			failure = { value: error };
+		}
+		try {
+			runCleanups(state);
+		} catch (error) {
+			failure ?? (failure = { value: error });
+		} finally {
+			state.parsing--;
+			releaseParserValues(ctx);
+			state.pending = 0;
+		}
+		if (failure) throw failure.value;
+	}
+}
+function destroyStreamParse(ctx, reason) {
+	stopStreamParse(ctx, 2, reason);
 }
 async function toCrossJSONAsync(source, options = {}) {
 	const plugins = resolvePlugins(options.plugins);
-	return await parseTopAsync(createAsyncParserContext(2, {
+	return await parseTopAsync(createAsyncParserContext({
 		compactArrayBufferViews: options.compactArrayBufferViews,
+		depthLimit: options.depthLimit,
 		plugins,
 		disabledFeatures: options.disabledFeatures,
 		refs: options.refs
@@ -3111,8 +3879,11 @@ async function toCrossJSONAsync(source, options = {}) {
 }
 function crossSerializeStream(source, options) {
 	const plugins = resolvePlugins(options.plugins);
+	const onSerialize = options.onSerialize;
+	const scopeId = options.scopeId;
 	const ctx = createStreamParserContext({
 		compactArrayBufferViews: options.compactArrayBufferViews,
+		depthLimit: options.depthLimit,
 		plugins,
 		refs: options.refs,
 		disabledFeatures: options.disabledFeatures,
@@ -3120,17 +3891,10 @@ function crossSerializeStream(source, options) {
 			const serial = createCrossSerializerContext({
 				plugins,
 				features: ctx.base.features,
-				scopeId: options.scopeId,
+				scopeId,
 				markedRefs: ctx.base.marked
 			});
-			let serialized;
-			try {
-				serialized = serializeTopCross(serial, node);
-			} catch (err) {
-				if (options.onError) options.onError(err);
-				return;
-			}
-			options.onSerialize(serialized, initial);
+			return onSerialize(serializeTopCross(serial, node), initial);
 		},
 		onError: options.onError,
 		onDone: options.onDone
@@ -3154,11 +3918,11 @@ function toCrossJSONStream(source, options) {
 	return destroyStreamParse.bind(null, ctx);
 }
 function fromJSON(source, options = {}) {
-	var _source$f;
 	const plugins = resolvePlugins(options.plugins);
-	const disabledFeatures = options.disabledFeatures || 0;
-	const sourceFeatures = (_source$f = source.f) !== null && _source$f !== void 0 ? _source$f : 127;
+	const disabledFeatures = options.disabledFeatures ?? 0;
+	const sourceFeatures = source.f ?? 127;
 	return deserializeTop(createVanillaDeserializerContext({
+		depthLimit: options.depthLimit,
 		maxBase64Length: options.maxBase64Length,
 		plugins,
 		markedRefs: source.m,
@@ -3166,31 +3930,7 @@ function fromJSON(source, options = {}) {
 		disabledFeatures
 	}), source.t);
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/transformer.js
-/**
-* Create a strongly-typed serialization adapter for SSR hydration.
-* Use to register custom types with the router serializer.
-*/
-function createSerializationAdapter(opts) {
-	return opts;
-}
-/** Create a Seroval plugin for server-side serialization only. */
-/* @__NO_SIDE_EFFECTS__ */
-function makeSsrSerovalPlugin(serializationAdapter, options) {
-	return /* @__PURE__ */ createPlugin({
-		tag: "$TSR/t/" + serializationAdapter.key,
-		test: serializationAdapter.test,
-		parse: { stream(value, ctx, _data) {
-			return { v: ctx.parse(serializationAdapter.toSerializable(value)) };
-		} },
-		serialize(node, ctx, _data) {
-			options.didRun = true;
-			return GLOBAL_TSR + ".t.get(\"" + serializationAdapter.key + "\")(" + ctx.serialize(node.v) + ")";
-		},
-		deserialize: void 0
-	});
-}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/makeSerovalPlugin.js
 /** Create a Seroval plugin for client/server symmetric (de)serialization. */
 /* @__NO_SIDE_EFFECTS__ */
 function makeSerovalPlugin(serializationAdapter) {
@@ -3198,27 +3938,27 @@ function makeSerovalPlugin(serializationAdapter) {
 		tag: "$TSR/t/" + serializationAdapter.key,
 		test: serializationAdapter.test,
 		parse: {
-			sync(value, ctx, _data) {
+			sync(value, ctx) {
 				return { v: ctx.parse(serializationAdapter.toSerializable(value)) };
 			},
-			async async(value, ctx, _data) {
+			async async(value, ctx) {
 				return { v: await ctx.parse(serializationAdapter.toSerializable(value)) };
 			},
-			stream(value, ctx, _data) {
+			stream(value, ctx) {
 				return { v: ctx.parse(serializationAdapter.toSerializable(value)) };
 			}
 		},
 		serialize: void 0,
-		deserialize(node, ctx, _data) {
+		deserialize(node, ctx) {
 			return serializationAdapter.fromSerializable(ctx.deserialize(node.v));
 		}
 	});
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/RawStream.js
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/RawStream.js
 /**
 * Marker class for ReadableStream<Uint8Array> that should be serialized
-* with base64 encoding (SSR) or binary framing (server functions).
+* with base64/text encoding (JSON and SSR) or binary framing
+* (server-function responses).
 *
 * Wrap your binary streams with this to get efficient serialization:
 * ```ts
@@ -3228,6 +3968,13 @@ function makeSerovalPlugin(serializationAdapter) {
 * // For text-heavy data (RSC payloads, etc.)
 * return { data: new RawStream(rscStream, { hint: 'text' }) }
 * ```
+*
+* RawStreams returned from one server function share one ordered response.
+* Arbitrary or sequential consumption can require potentially unbounded client
+* buffering for unread data. Cancelling one RawStream discards it locally;
+* abort the whole server-function call to cancel the response and server work.
+* Consume streams concurrently, cancel unused streams promptly, or use separate
+* calls when independent backpressure is required.
 */
 var RawStream = class {
 	constructor(stream, options) {
@@ -3235,255 +3982,83 @@ var RawStream = class {
 		this.hint = options?.hint ?? "binary";
 	}
 };
-var BufferCtor = globalThis.Buffer;
-var hasNodeBuffer = !!BufferCtor && typeof BufferCtor.from === "function";
-function uint8ArrayToBase64(bytes) {
-	if (bytes.length === 0) return "";
-	if (hasNodeBuffer) return BufferCtor.from(bytes).toString("base64");
-	const CHUNK_SIZE = 32768;
-	const chunks = [];
-	for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
-		const chunk = bytes.subarray(i, i + CHUNK_SIZE);
-		chunks.push(String.fromCharCode.apply(null, chunk));
-	}
-	return btoa(chunks.join(""));
+require_react();
+function settleOwner(owner, rendered) {
+	const settle = owner[1];
+	owner.length = 0;
+	settle?.(rendered);
 }
-function base64ToUint8Array(base64) {
-	if (base64.length === 0) return /* @__PURE__ */ new Uint8Array(0);
-	if (hasNodeBuffer) {
-		const buf = BufferCtor.from(base64, "base64");
-		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
-	}
-	const binary = atob(base64);
-	const bytes = new Uint8Array(binary.length);
-	for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-	return bytes;
-}
-var RAW_STREAM_FACTORY_BINARY = Object.create(null);
-var RAW_STREAM_FACTORY_TEXT = Object.create(null);
-var RAW_STREAM_FACTORY_CONSTRUCTOR_BINARY = (stream) => new ReadableStream({ start(controller) {
-	stream.on({
-		next(base64) {
-			try {
-				controller.enqueue(base64ToUint8Array(base64));
-			} catch {}
-		},
-		throw(error) {
-			controller.error(error);
-		},
-		return() {
-			try {
-				controller.close();
-			} catch {}
-		}
-	});
-} });
-var textEncoderForFactory = new TextEncoder();
-var RAW_STREAM_FACTORY_CONSTRUCTOR_TEXT = (stream) => {
-	return new ReadableStream({ start(controller) {
-		stream.on({
-			next(value) {
-				try {
-					if (typeof value === "string") controller.enqueue(textEncoderForFactory.encode(value));
-					else controller.enqueue(base64ToUint8Array(value.$b64));
-				} catch {}
-			},
-			throw(error) {
-				controller.error(error);
-			},
-			return() {
-				try {
-					controller.close();
-				} catch {}
-			}
-		});
-	} });
-};
-var FACTORY_BINARY = `(s=>new ReadableStream({start(c){s.on({next(b){try{const d=atob(b),a=new Uint8Array(d.length);for(let i=0;i<d.length;i++)a[i]=d.charCodeAt(i);c.enqueue(a)}catch(_){}},throw(e){c.error(e)},return(){try{c.close()}catch(_){}}})}}))`;
-var FACTORY_TEXT = `(s=>{const e=new TextEncoder();return new ReadableStream({start(c){s.on({next(v){try{if(typeof v==='string'){c.enqueue(e.encode(v))}else{const d=atob(v.$b64),a=new Uint8Array(d.length);for(let i=0;i<d.length;i++)a[i]=d.charCodeAt(i);c.enqueue(a)}}catch(_){}},throw(x){c.error(x)},return(){try{c.close()}catch(_){}}})}})})`;
-function toBinaryStream(readable) {
-	const stream = createStream();
-	const reader = readable.getReader();
-	(async () => {
-		try {
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) {
-					stream.return(void 0);
-					break;
-				}
-				stream.next(uint8ArrayToBase64(value));
-			}
-		} catch (error) {
-			stream.throw(error);
-		} finally {
-			reader.releaseLock();
-		}
-	})();
-	return stream;
-}
-function toTextStream(readable) {
-	const stream = createStream();
-	const reader = readable.getReader();
-	const decoder = new TextDecoder("utf-8", { fatal: true });
-	(async () => {
-		try {
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) {
-					try {
-						const remaining = decoder.decode();
-						if (remaining.length > 0) stream.next(remaining);
-					} catch {}
-					stream.return(void 0);
-					break;
-				}
-				try {
-					const text = decoder.decode(value, { stream: true });
-					if (text.length > 0) stream.next(text);
-				} catch {
-					stream.next({ $b64: uint8ArrayToBase64(value) });
-				}
-			}
-		} catch (error) {
-			stream.throw(error);
-		} finally {
-			reader.releaseLock();
-		}
-	})();
-	return stream;
-}
+// ../../node_modules/.pnpm/@tanstack+react-router@1.170.46_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@tanstack/react-router/dist/esm/Matches.js
+var import_jsx_runtime = require_jsx_runtime();
 /**
-* SSR Plugin - uses base64 or UTF-8+base64 encoding for chunks, delegates to seroval's stream mechanism.
-* Used during SSR when serializing to JavaScript code for HTML injection.
-*
-* Supports two modes based on RawStream hint:
-* - 'binary': Always base64 encode (default)
-* - 'text': Try UTF-8 first, fallback to base64 for invalid UTF-8
+* Internal component that renders the router's active match tree with
+* suspense, error, and not-found boundaries. Rendered by `RouterProvider`.
 */
-var RawStreamSSRPlugin = /* @__PURE__ */ createPlugin({
-	tag: "tss/RawStream",
-	extends: [/* @__PURE__ */ createPlugin({
-		tag: "tss/RawStreamFactory",
-		test(value) {
-			return value === RAW_STREAM_FACTORY_BINARY;
-		},
-		parse: {
-			sync(_value, _ctx, _data) {
-				return {};
-			},
-			async async(_value, _ctx, _data) {
-				return {};
-			},
-			stream(_value, _ctx, _data) {
-				return {};
-			}
-		},
-		serialize(_node, _ctx, _data) {
-			return FACTORY_BINARY;
-		},
-		deserialize(_node, _ctx, _data) {
-			return RAW_STREAM_FACTORY_BINARY;
-		}
-	}), /* @__PURE__ */ createPlugin({
-		tag: "tss/RawStreamFactoryText",
-		test(value) {
-			return value === RAW_STREAM_FACTORY_TEXT;
-		},
-		parse: {
-			sync(_value, _ctx, _data) {
-				return {};
-			},
-			async async(_value, _ctx, _data) {
-				return {};
-			},
-			stream(_value, _ctx, _data) {
-				return {};
-			}
-		},
-		serialize(_node, _ctx, _data) {
-			return FACTORY_TEXT;
-		},
-		deserialize(_node, _ctx, _data) {
-			return RAW_STREAM_FACTORY_TEXT;
-		}
-	})],
-	test(value) {
-		return value instanceof RawStream;
-	},
-	parse: {
-		sync(value, ctx, _data) {
-			const factory = value.hint === "text" ? RAW_STREAM_FACTORY_TEXT : RAW_STREAM_FACTORY_BINARY;
-			return {
-				hint: ctx.parse(value.hint),
-				factory: ctx.parse(factory),
-				stream: ctx.parse(createStream())
-			};
-		},
-		async async(value, ctx, _data) {
-			const factory = value.hint === "text" ? RAW_STREAM_FACTORY_TEXT : RAW_STREAM_FACTORY_BINARY;
-			const encodedStream = value.hint === "text" ? toTextStream(value.stream) : toBinaryStream(value.stream);
-			return {
-				hint: await ctx.parse(value.hint),
-				factory: await ctx.parse(factory),
-				stream: await ctx.parse(encodedStream)
-			};
-		},
-		stream(value, ctx, _data) {
-			const factory = value.hint === "text" ? RAW_STREAM_FACTORY_TEXT : RAW_STREAM_FACTORY_BINARY;
-			const encodedStream = value.hint === "text" ? toTextStream(value.stream) : toBinaryStream(value.stream);
-			return {
-				hint: ctx.parse(value.hint),
-				factory: ctx.parse(factory),
-				stream: ctx.parse(encodedStream)
-			};
-		}
-	},
-	serialize(node, ctx, _data) {
-		return "(" + ctx.serialize(node.factory) + ")(" + ctx.serialize(node.stream) + ")";
-	},
-	deserialize(node, ctx, _data) {
-		const stream = ctx.deserialize(node.stream);
-		return ctx.deserialize(node.hint) === "text" ? RAW_STREAM_FACTORY_CONSTRUCTOR_TEXT(stream) : RAW_STREAM_FACTORY_CONSTRUCTOR_BINARY(stream);
-	}
-});
-/**
-* Creates an RPC plugin instance that registers raw streams with a multiplexer.
-* Used for server function responses where we want binary framing.
-* Note: RPC always uses binary framing regardless of hint.
-*
-* @param onRawStream Callback invoked when a RawStream is encountered during serialization
-*/
-/* @__NO_SIDE_EFFECTS__ */
-function createRawStreamRPCPlugin(onRawStream) {
-	let nextStreamId = 1;
-	return /* @__PURE__ */ createPlugin({
-		tag: "tss/RawStream",
-		test(value) {
-			return value instanceof RawStream;
-		},
-		parse: {
-			async async(value, ctx, _data) {
-				const streamId = nextStreamId++;
-				onRawStream(streamId, value.stream);
-				return { streamId: await ctx.parse(streamId) };
-			},
-			stream(value, ctx, _data) {
-				const streamId = nextStreamId++;
-				onRawStream(streamId, value.stream);
-				return { streamId: ctx.parse(streamId) };
-			}
-		},
-		serialize() {
-			throw new Error("RawStreamRPCPlugin.serialize should not be called. RPC uses JSON serialization, not JS code generation.");
-		},
-		deserialize() {
-			throw new Error("RawStreamRPCPlugin.deserialize should not be called. Use createRawStreamDeserializePlugin on client.");
-		}
+function Matches() {
+	const router = useRouter();
+	const rootRoute = router.routesById[rootRouteId];
+	renderPending(router, rootRoute);
+	const inner = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [false, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchesInner, {})] });
+	return router.options.InnerWrap ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(router.options.InnerWrap, { children: inner }) : inner;
+}
+function MatchesInner() {
+	const router = useRouter();
+	const acknowledgement = router._rendered;
+	const matches = router.stores.matches.get();
+	const match = matches[0];
+	const routeId = match?.routeId;
+	useLayoutEffect(() => {
+		if (acknowledgement[0] === matches) settleOwner(acknowledgement, true);
+	}, [acknowledgement, matches]);
+	const matchComponent = routeId ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Match, { routeId }) : null;
+	return router.options.disableGlobalCatchBoundary ? matchComponent : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CatchBoundary, {
+		getResetKey: () => match,
+		onCatch: void 0,
+		children: matchComponent
 	});
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/ShallowErrorPlugin.js
+// ../../node_modules/.pnpm/@tanstack+react-router@1.170.46_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@tanstack/react-router/dist/esm/RouterProvider.js
+/**
+* Low-level provider that places the router into React context and optionally
+* updates router options from props. Most apps should use `RouterProvider`.
+*/
+function RouterContextProvider({ router, children, ...rest }) {
+	if (hasKeys(rest)) router.update({
+		...router.options,
+		...rest,
+		context: {
+			...router.options.context,
+			...rest.context
+		}
+	});
+	const provider = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(routerContext.Provider, {
+		value: router,
+		children
+	});
+	if (router.options.Wrap) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(router.options.Wrap, { children: provider });
+	return provider;
+}
+/**
+* Renders the current match presentation and provides the router to the React
+* tree via context.
+*
+* Accepts mutable router options via props. Configure initialization-only
+* options with `createRouter`.
+*
+* @link https://tanstack.com/router/latest/docs/framework/react/api/router/createRouterFunction
+*/
+function RouterProvider({ router, ...rest }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterContextProvider, {
+		router,
+		...rest,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Matches, {})
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+react-start-server@1.167.52_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@tanstack/react-start-server/dist/esm/StartServer.js
+function StartServer(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider, { router: props.router });
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/ShallowErrorPlugin.js
 /**
 * this plugin serializes only the `message` part of an Error
 * this helps with serializing e.g. a ZodError which has functions attached that cannot be serialized
@@ -3511,8 +4086,161 @@ var ShallowErrorPlugin = /* @__PURE__ */ createPlugin({
 		return new Error(ctx.deserialize(node.message));
 	}
 });
-//#endregion
-//#region node_modules/.pnpm/seroval-plugins@1.6.7_seroval@1.6.7/node_modules/seroval-plugins/dist/web-CWqRG00W.js
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/rawStreamCodec.js
+function toBase64(bytes) {
+	const chunks = [];
+	for (let i = 0; i < bytes.length; i += 32768) chunks.push(String.fromCharCode.apply(null, bytes.subarray(i, i + 32768)));
+	return btoa(chunks.join(""));
+}
+function fromBase64(value) {
+	const binary = atob(value);
+	const bytes = new Uint8Array(binary.length);
+	for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+	return bytes;
+}
+var textDecoder = /* @__PURE__ */ new TextDecoder("utf-8", {
+	fatal: true,
+	ignoreBOM: true
+});
+/** `'t' + utf8` for a valid UTF-8 chunk, otherwise `'b' + base64`. */
+function encodeText(value) {
+	try {
+		return "t" + textDecoder.decode(value);
+	} catch {
+		return "b" + toBase64(value);
+	}
+}
+var textEncoder$3 = /* @__PURE__ */ new TextEncoder();
+function decodeText(value) {
+	const data = value.slice(1);
+	return value[0] === "t" ? textEncoder$3.encode(data) : fromBase64(data);
+}
+/**
+* Pump a byte stream into a Seroval stream, one encoded chunk per read.
+* Returns the Seroval stream and a `stop` function that cancels the reader
+* without signalling the Seroval stream; the abort signal and read failures
+* stop the pump and throw through the Seroval stream.
+*/
+function pumpEncodedStream(readable, encode, signal) {
+	signal?.throwIfAborted();
+	const stream = createStream();
+	const reader = readable.getReader();
+	let active = true;
+	const release = () => {
+		active = false;
+		signal?.removeEventListener("abort", abort);
+		reader.releaseLock();
+	};
+	const stop = (reason) => {
+		if (!active) return false;
+		reader.cancel(reason).catch(() => {});
+		release();
+		return true;
+	};
+	const abort = () => {
+		if (stop(signal.reason)) stream.throw(signal.reason);
+	};
+	signal?.addEventListener("abort", abort);
+	(async () => {
+		try {
+			while (active) {
+				const { done, value } = await reader.read();
+				if (!active) return;
+				if (done) {
+					release();
+					stream.return(void 0);
+					return;
+				}
+				stream.next(encode(value));
+			}
+		} catch (error) {
+			if (stop(error)) stream.throw(error);
+		}
+	})();
+	return [stream, stop];
+}
+/** Rebuild a byte stream from encoded Seroval stream chunks. */
+function fromEncodedStream(source, decode) {
+	let unsubscribe;
+	let done = false;
+	return new ReadableStream({
+		start(controller) {
+			const dispose = source.on({
+				next(value) {
+					if (done) return;
+					try {
+						controller.enqueue(decode(value));
+					} catch (error) {
+						done = true;
+						const stop = unsubscribe;
+						unsubscribe = void 0;
+						stop?.();
+						controller.error(error);
+					}
+				},
+				throw(error) {
+					if (!done) {
+						done = true;
+						unsubscribe = void 0;
+						controller.error(error);
+					}
+				},
+				return() {
+					if (!done) {
+						done = true;
+						unsubscribe = void 0;
+						controller.close();
+					}
+				}
+			});
+			if (done) dispose();
+			else unsubscribe = dispose;
+		},
+		cancel() {
+			const dispose = unsubscribe;
+			unsubscribe = void 0;
+			dispose?.();
+		}
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/RawStreamJSONPlugin.js
+/**
+* Serializes a RawStream into JSON requests and static-cache responses.
+* The optional signal stops the source pump when the request is aborted.
+*/
+/* @__NO_SIDE_EFFECTS__ */
+function createRawStreamJSONPlugin(signal) {
+	return /* @__PURE__ */ createPlugin({
+		tag: "tss/RawStream",
+		test: (value) => value instanceof RawStream,
+		parse: { async: async (value, ctx) => {
+			const text = await ctx.parse(value.hint === "text");
+			const [stream] = pumpEncodedStream(value.stream, value.hint === "text" ? encodeText : toBase64, signal);
+			return {
+				text,
+				stream: await ctx.parse(stream)
+			};
+		} },
+		serialize: void 0,
+		deserialize: void 0
+	});
+}
+var RawStreamJSONPlugin = /* @__PURE__ */ createRawStreamJSONPlugin();
+/**
+* Deserializes the JSON shape above back into a `ReadableStream<Uint8Array>`.
+* `test` never matches, so this plugin is inert during serialization and can
+* share a plugin list with `RawStreamJSONPlugin`.
+*/
+var RawStreamJSONDeserializePlugin = /* @__PURE__ */ createPlugin({
+	tag: "tss/RawStream",
+	test: () => false,
+	parse: {},
+	serialize: void 0,
+	deserialize(node, ctx) {
+		return fromEncodedStream(ctx.deserialize(node.stream), ctx.deserialize(node.text) ? decodeText : fromBase64);
+	}
+});
+// ../../node_modules/.pnpm/seroval-plugins@1.7.2_seroval@1.7.2/node_modules/seroval-plugins/dist/web.js
 var READABLE_STREAM_FACTORY = {};
 var READABLE_STREAM_FACTORY_CONSTRUCTOR = (stream) => new ReadableStream({ start(controller) {
 	stream.on({
@@ -3554,605 +4282,1562 @@ var ReadableStreamFactoryPlugin = /* @__PURE__ */ createPlugin({
 		return READABLE_STREAM_FACTORY;
 	}
 });
-async function drainStream(stream, reader) {
-	try {
-		while (true) {
-			const result = await reader.read();
-			if (result.done) {
-				stream.return(result.value);
+function toAsyncIterable(value) {
+	return { [Symbol.asyncIterator]() {
+		const reader = value.getReader();
+		let active = true;
+		let reading = false;
+		const release = () => {
+			try {
 				reader.releaseLock();
-				break;
+			} catch {}
+		};
+		return {
+			async next() {
+				if (!active) return {
+					done: true,
+					value: void 0
+				};
+				reading = true;
+				let result;
+				try {
+					result = await reader.read();
+				} catch (error) {
+					reading = false;
+					release();
+					if (!active) return {
+						done: true,
+						value: void 0
+					};
+					active = false;
+					throw error;
+				}
+				reading = false;
+				if (!active || result.done) {
+					active = false;
+					release();
+					return {
+						done: true,
+						value: void 0
+					};
+				}
+				return result;
+			},
+			return(reason) {
+				if (active) {
+					active = false;
+					try {
+						reader.cancel(reason).catch(() => {});
+					} catch {}
+					if (!reading) release();
+				}
+				return Promise.resolve({
+					done: true,
+					value: void 0
+				});
 			}
-			stream.next(result.value);
+		};
+	} };
+}
+var ReadableStreamPlugin = /* @__PURE__ */ createPlugin({
+	tag: "seroval/plugins/web/ReadableStream",
+	extends: [ReadableStreamFactoryPlugin],
+	skipPlainObjects: true,
+	test(value) {
+		if (typeof ReadableStream === "undefined") return false;
+		return value instanceof ReadableStream;
+	},
+	parse: {
+		async async(value, ctx) {
+			return {
+				factory: await ctx.parse(READABLE_STREAM_FACTORY),
+				stream: await ctx.parseStreamSource(toAsyncIterable(value))
+			};
+		},
+		stream(value, ctx) {
+			return {
+				factory: ctx.parse(READABLE_STREAM_FACTORY),
+				stream: ctx.parseStreamSource(toAsyncIterable(value))
+			};
 		}
-	} catch (error) {
-		reader.releaseLock();
-		stream.throw(error);
+	},
+	serialize(node, ctx) {
+		return "(" + ctx.serialize(node.factory) + ")(" + ctx.serialize(node.stream) + ")";
+	},
+	deserialize(node, ctx) {
+		return READABLE_STREAM_FACTORY_CONSTRUCTOR(ctx.deserialize(node.stream));
+	}
+});
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/seroval-plugins.js
+/**
+* Plugins for JSON transport from a client: serializes RawStream arguments
+* and reads plain JSON responses, which never carry RawStream nodes.
+*/
+/* @__NO_SIDE_EFFECTS__ */
+function createDefaultSerovalPlugins(signal) {
+	return [
+		ShallowErrorPlugin,
+		signal ? /* @__PURE__ */ createRawStreamJSONPlugin(signal) : RawStreamJSONPlugin,
+		ReadableStreamPlugin
+	];
+}
+/**
+* `defaultSerovalPlugins` plus RawStream deserialization, for JSON that may
+* carry RawStream nodes: server-function request bodies and cached static
+* responses. Seroval deserializes by first tag match, so the deserialize half
+* precedes the serialize half; it never matches during serialization.
+*/
+var defaultSerovalDeserializerPlugins = [RawStreamJSONDeserializePlugin, .../* @__PURE__ */ createDefaultSerovalPlugins()];
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/RawStreamRPCPlugin.js
+/**
+* Server-side RawStream plugin for multiplexed server-function responses.
+* The `hint` is ignored: framed responses always carry raw bytes.
+*/
+/* @__NO_SIDE_EFFECTS__ */
+function createRawStreamRPCPlugin(onRawStream) {
+	let nextStreamId = 1;
+	return /* @__PURE__ */ createPlugin({
+		tag: "tss/RawStream",
+		test(value) {
+			return value instanceof RawStream;
+		},
+		parse: { stream(value, ctx) {
+			const streamId = nextStreamId++;
+			onRawStream(streamId, value.stream);
+			return { streamId: ctx.parse(streamId) };
+		} },
+		serialize: void 0,
+		deserialize: void 0
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/constants.js
+var GLOBAL_TSR = "$_TSR";
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/makeSsrSerovalPlugin.js
+/**
+* Create a Seroval plugin for server-side serialization only. `tracker.didRun`
+* becomes true once the plugin serialized a value.
+*/
+/* @__NO_SIDE_EFFECTS__ */
+function makeSsrSerovalPlugin(serializationAdapter, tracker) {
+	return /* @__PURE__ */ createPlugin({
+		tag: "$TSR/t/" + serializationAdapter.key,
+		test: serializationAdapter.test,
+		parse: { stream(value, ctx) {
+			return { v: ctx.parse(serializationAdapter.toSerializable(value)) };
+		} },
+		serialize(node, ctx) {
+			if (tracker) tracker.didRun = true;
+			return GLOBAL_TSR + ".t.get(\"" + serializationAdapter.key + "\")(" + ctx.serialize(node.v) + ")";
+		},
+		deserialize: void 0
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/tsrScript.js
+var tsrScript_default = "self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]}";
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/htmlBoundaryScanner.js
+var textEncoder$2 = new TextEncoder();
+var DOCUMENT_CLOSE = "</body></html>";
+var SCRIPT_CLOSE = "<\/script>";
+var DOCUMENT_CLOSE_ANCHOR_INDEX = DOCUMENT_CLOSE.indexOf("y");
+var SCRIPT_CLOSE_ANCHOR_INDEX = SCRIPT_CLOSE.indexOf("p");
+var DOCUMENT_CLOSE_BYTES = textEncoder$2.encode(DOCUMENT_CLOSE);
+var SCRIPT_CLOSE_BYTES = textEncoder$2.encode(SCRIPT_CLOSE);
+function encodeIntoBoundedChunk(source, sourceOffset, output, outputOffset = 0) {
+	return textEncoder$2.encodeInto(sourceOffset === 0 ? source : source.slice(sourceOffset), outputOffset === 0 ? output : output.subarray(outputOffset));
+}
+/** Advance matcher state and return the local offset after a complete match. */
+function advanceByteMatcher(matcher, value, startIndex = 0, findLast = false) {
+	const { pattern, anchorIndex } = matcher;
+	let matched = matcher.matched;
+	let lastMatchEnd;
+	let index = startIndex;
+	while (index < value.length) {
+		if (matched === 0) {
+			if (anchorIndex > 0 && index < value.length - anchorIndex) {
+				const anchor = value.indexOf(pattern[anchorIndex], index + anchorIndex);
+				if (anchor < 0) {
+					index = value.length - anchorIndex;
+					continue;
+				}
+				index = anchor - anchorIndex;
+			} else {
+				index = value.indexOf(pattern[0], index);
+				if (index < 0) {
+					matcher.matched = matched;
+					return lastMatchEnd;
+				}
+			}
+		}
+		const byte = value[index];
+		if (byte === pattern[matched]) matched++;
+		else matched = byte === pattern[0] ? 1 : 0;
+		index++;
+		if (matched === pattern.length) {
+			matched = 0;
+			if (!findLast) {
+				matcher.matched = matched;
+				return index;
+			}
+			lastMatchEnd = index;
+		}
+	}
+	matcher.matched = matched;
+	return lastMatchEnd;
+}
+/** Find a complete fixed sequence that is contained in one byte chunk. */
+function findExactBytes(value, pattern, startIndex = 0, anchorIndex = 0) {
+	let anchor = value.indexOf(pattern[anchorIndex], startIndex + anchorIndex);
+	while (anchor >= 0) {
+		const candidate = anchor - anchorIndex;
+		if (candidate + pattern.length > value.length) return -1;
+		let patternIndex = 0;
+		while (patternIndex < pattern.length && value[candidate + patternIndex] === pattern[patternIndex]) patternIndex++;
+		if (patternIndex === pattern.length) return candidate;
+		anchor = value.indexOf(pattern[anchorIndex], anchor + 1);
+	}
+	return -1;
+}
+/**
+* Find the longest suffix that can become the fixed sequence in the next
+* chunk. The returned index starts that suffix.
+*/
+function getExactBytesPrefixAtEnd(value, pattern, startIndex = 0) {
+	candidate: for (let length = Math.min(pattern.length - 1, value.length - startIndex); length > 0; length--) {
+		const candidateStart = value.length - length;
+		for (let index = 0; index < length; index++) if (value[candidateStart + index] !== pattern[index]) continue candidate;
+		return candidateStart;
 	}
 }
-function cleanupStream(reader) {
-	reader.cancel().catch(() => {});
-	reader.releaseLock();
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/hydrationScripts.js
+var encoder = new TextEncoder();
+var SOURCE_SEPARATOR = ";";
+var MAX_INITIAL_SOURCE_CODE_UNITS = 16384;
+var MAX_BACKLOG_CODE_UNITS = 16777216;
+var MAX_BACKLOG_SOURCES = 4096;
+var MIN_OUTPUT_BYTES = 256;
+var MAX_DIRECT_CODE_UNITS = 16384;
+var MAX_HYDRATION_OUTPUT_CHUNK_BYTES = 65536;
+var MAX_DYNAMIC_RECORD_CODE_UNITS = MAX_HYDRATION_OUTPUT_CHUNK_BYTES;
+var STREAM_PART_ATTRIBUTE = "data-tsr-stream-part";
+var INITIAL_CLEANUP_SOURCE = `{let s=document.currentScript,p;while((p=s.previousElementSibling)&&p.hasAttribute('${STREAM_PART_ATTRIBUTE}'))p.remove();s.remove()}`;
+var INITIAL_CLEANUP_SUFFIX = SOURCE_SEPARATOR + INITIAL_CLEANUP_SOURCE;
+var DYNAMIC_CLOSE_SOURCE = "document.currentScript.remove()<\/script>";
+var HYDRATION_SCRIPT_BOUNDARY_SOURCE = "document.currentScript.remove();/*$tsr-stream-boundary*/";
+var HYDRATION_SCRIPT_BOUNDARY_SUFFIX = ";/*$tsr-stream-boundary*/<\/script>";
+var HYDRATION_SCRIPT_BOUNDARY_ANCHOR_INDEX = HYDRATION_SCRIPT_BOUNDARY_SUFFIX.lastIndexOf("*");
+var HYDRATION_SCRIPT_BOUNDARY_BYTES = encoder.encode(HYDRATION_SCRIPT_BOUNDARY_SUFFIX);
+var ROUTER_PREFIX = GLOBAL_TSR + ".router=";
+var PROMISE_PREFIX = GLOBAL_TSR + ".p(()=>";
+var DEFAULT_INITIAL_SOURCES = [getCrossReferenceHeader("tsr"), tsrScript_default];
+var HydrationScriptOutputState = {
+	Waiting: 0,
+	Ready: 1,
+	Active: 2,
+	Done: 3,
+	Failed: 4
+};
+function escapeAttribute(value) {
+	return value.replace(/[&"'<>]/g, (char) => `&#${char.charCodeAt(0)};`);
 }
-function toStream(value) {
-	const stream = createStream();
-	const reader = value.getReader();
-	const cleanup = cleanupStream.bind(null, reader);
-	drainStream(stream, reader).catch(cleanup);
-	return [stream, cleanup];
+function createInitialTags(sources, nonce) {
+	const before = [];
+	for (const source of sources) {
+		if (!source) continue;
+		const previous = before[before.length - 1];
+		if (previous?.children && previous.children.length + 1 + source.length <= MAX_INITIAL_SOURCE_CODE_UNITS) previous.children += SOURCE_SEPARATOR + source;
+		else before.push({
+			tag: "script",
+			attrs: {
+				nonce,
+				[STREAM_PART_ATTRIBUTE]: ""
+			},
+			children: source
+		});
+	}
+	const lastHydrationTag = before[before.length - 1];
+	if (lastHydrationTag) {
+		const lastSource = lastHydrationTag.children;
+		if (lastSource.length + INITIAL_CLEANUP_SUFFIX.length <= MAX_INITIAL_SOURCE_CODE_UNITS) lastHydrationTag.children = lastSource + INITIAL_CLEANUP_SUFFIX;
+		else before.push({
+			tag: "script",
+			attrs: {
+				nonce,
+				[STREAM_PART_ATTRIBUTE]: ""
+			},
+			children: INITIAL_CLEANUP_SOURCE
+		});
+	}
+	return {
+		before,
+		boundary: {
+			tag: "script",
+			attrs: { nonce },
+			children: HYDRATION_SCRIPT_BOUNDARY_SOURCE
+		}
+	};
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/seroval-plugins.js
-var defaultSerovalPlugins = [
-	ShallowErrorPlugin,
-	RawStreamSSRPlugin,
-	/* @__PURE__ */ createPlugin({
-		tag: "seroval/plugins/web/ReadableStream",
-		extends: [ReadableStreamFactoryPlugin],
-		test(value) {
-			if (typeof ReadableStream === "undefined") return false;
-			return value instanceof ReadableStream;
-		},
-		parse: {
-			sync(_value, ctx) {
-				return {
-					factory: ctx.parse(READABLE_STREAM_FACTORY),
-					stream: ctx.parse(createStream())
-				};
-			},
-			async async(value, ctx) {
-				return {
-					factory: await ctx.parse(READABLE_STREAM_FACTORY),
-					stream: await ctx.parse(toStream(value)[0])
-				};
-			},
-			stream(value, ctx) {
-				const [stream, cleanup] = toStream(value);
-				ctx.addCleanup(cleanup);
-				return {
-					factory: ctx.parse(READABLE_STREAM_FACTORY),
-					stream: ctx.parse(stream)
-				};
+var HydrationScriptsOwner = class {
+	constructor(nonce, initialSources) {
+		this.nonce = nonce;
+		this.queuedSources = [];
+		this.queuedSourceHead = 0;
+		this.initialTaken = false;
+		this.barrierLifted = false;
+		this.producerDone = false;
+		this.retainedSources = 0;
+		this.regularCodeUnits = 0;
+		this.hasOversizedSource = false;
+		this.segmentIndex = 0;
+		this.closingSegmentIndex = 0;
+		this.source = "";
+		this.sourceOffset = 0;
+		this.outputCapacity = MIN_OUTPUT_BYTES;
+		this.outputState = HydrationScriptOutputState.Waiting;
+		this.takeInitialHydrationScriptTags = this.takeInitialHydrationScriptTags.bind(this);
+		const seedSources = initialSources ?? DEFAULT_INITIAL_SOURCES;
+		for (const seedSource of seedSources) {
+			if (!this.account(seedSource)) break;
+			this.queuedSources.push(seedSource);
+		}
+	}
+	get state() {
+		return this.outputState;
+	}
+	get error() {
+		return this.outputError;
+	}
+	notify() {
+		try {
+			this.listener?.();
+		} catch (listenerError) {
+			console.error("Hydration script output listener error:", listenerError);
+		}
+	}
+	refresh(notifyChange = true) {
+		const next = this.outputState === HydrationScriptOutputState.Failed ? HydrationScriptOutputState.Failed : this.active ? HydrationScriptOutputState.Active : typeof this.consumer === "object" && this.initialTaken && this.barrierLifted && !this.queueIsEmpty() ? HydrationScriptOutputState.Ready : this.producerDone && this.initialTaken && this.queueIsEmpty() ? HydrationScriptOutputState.Done : HydrationScriptOutputState.Waiting;
+		if (this.outputState !== next) {
+			this.outputState = next;
+			if (notifyChange) this.notify();
+		}
+	}
+	clearTimeoutIfSet() {
+		if (this.timeout !== void 0) {
+			clearTimeout(this.timeout);
+			this.timeout = void 0;
+		}
+	}
+	queueIsEmpty() {
+		return this.queuedSourceHead === this.queuedSources.length;
+	}
+	clearQueue() {
+		this.queuedSources = [];
+		this.queuedSourceHead = 0;
+	}
+	dropBufferedOutput() {
+		this.clearQueue();
+		this.active = void 0;
+		this.retainedSources = 0;
+		this.regularCodeUnits = 0;
+		this.hasOversizedSource = false;
+		this.segmentIndex = 0;
+		this.closingSegmentIndex = 0;
+		this.source = "";
+		this.sourceOffset = 0;
+		this.outputCapacity = MIN_OUTPUT_BYTES;
+		this.opening = void 0;
+	}
+	fail(reason) {
+		if (this.consumer === "cleaned" || this.outputState === HydrationScriptOutputState.Failed) return;
+		this.outputError = reason;
+		this.clearTimeoutIfSet();
+		this.dropBufferedOutput();
+		this.outputState = HydrationScriptOutputState.Failed;
+		this.notify();
+	}
+	rejectBacklog(kind) {
+		this.fail(/* @__PURE__ */ new Error(`SSR hydration backlog exceeded maximum ${kind} count`));
+		return false;
+	}
+	account(nextSource) {
+		if (this.retainedSources === MAX_BACKLOG_SOURCES) return this.rejectBacklog("source-part");
+		if (nextSource.length > MAX_BACKLOG_CODE_UNITS) {
+			if (this.hasOversizedSource) return this.rejectBacklog("code-unit");
+			this.hasOversizedSource = true;
+		} else if (this.regularCodeUnits + nextSource.length > MAX_BACKLOG_CODE_UNITS) return this.rejectBacklog("code-unit");
+		else this.regularCodeUnits += nextSource.length;
+		this.retainedSources++;
+		return true;
+	}
+	releaseSource(part) {
+		this.retainedSources--;
+		if (part.length > MAX_BACKLOG_CODE_UNITS) this.hasOversizedSource = false;
+		else this.regularCodeUnits -= part.length;
+	}
+	releaseAccounting(batch) {
+		for (const part of batch) if (part !== void 0) this.releaseSource(part);
+	}
+	liftBarrier() {
+		if (this.consumer !== "cleaned" && !this.barrierLifted) {
+			this.barrierLifted = true;
+			this.refresh();
+		}
+	}
+	producerCanWrite() {
+		return this.consumer !== "cleaned" && this.outputState !== HydrationScriptOutputState.Failed && !this.producerDone;
+	}
+	pushSource(nextSource) {
+		if (!this.producerCanWrite()) return false;
+		if (this.account(nextSource)) {
+			this.queuedSources.push(nextSource);
+			if (this.initialTaken) this.refresh();
+		} else return false;
+		return this.producerCanWrite();
+	}
+	takeQueuedBatch(batchLength) {
+		if (this.queuedSourceHead === 0 && batchLength === this.queuedSources.length) {
+			const batch = this.queuedSources;
+			this.clearQueue();
+			return batch;
+		}
+		const end = this.queuedSourceHead + batchLength;
+		const batch = this.queuedSources.slice(this.queuedSourceHead, end);
+		for (let index = this.queuedSourceHead; index < end; index++) this.queuedSources[index] = void 0;
+		this.queuedSourceHead = end;
+		if (this.queueIsEmpty()) this.clearQueue();
+		else if (this.queuedSourceHead >= 1024 && this.queuedSourceHead >= this.queuedSources.length - this.queuedSourceHead) {
+			this.queuedSources = this.queuedSources.slice(this.queuedSourceHead);
+			this.queuedSourceHead = 0;
+		}
+		return batch;
+	}
+	release(batch) {
+		this.releaseAccounting(batch);
+		this.active = void 0;
+		this.source = "";
+		this.sourceOffset = 0;
+		this.refresh(false);
+	}
+	advanceSource() {
+		const batch = this.active;
+		if (this.segmentIndex > 0 && this.segmentIndex < this.closingSegmentIndex) {
+			const partIndex = this.segmentIndex - 1 >> 1;
+			if (this.segmentIndex % 2 === 1) {
+				const part = batch[partIndex];
+				if (part !== void 0) {
+					this.releaseSource(part);
+					batch[partIndex] = void 0;
+				}
 			}
+		}
+		this.segmentIndex++;
+		if (this.segmentIndex < this.closingSegmentIndex) {
+			const partIndex = this.segmentIndex - 1 >> 1;
+			this.source = this.segmentIndex % 2 === 1 ? batch[partIndex] : SOURCE_SEPARATOR;
+		} else if (this.segmentIndex === this.closingSegmentIndex) this.source = DYNAMIC_CLOSE_SOURCE;
+		else this.release(batch);
+		this.sourceOffset = 0;
+	}
+	pullActive() {
+		const bytes = new Uint8Array(this.outputCapacity);
+		let offset = 0;
+		while (this.active) if (this.sourceOffset === this.source.length) this.advanceSource();
+		else if (offset === bytes.length) break;
+		else {
+			const result = encodeIntoBoundedChunk(this.source, this.sourceOffset, bytes, offset);
+			if (result.read === 0) break;
+			this.sourceOffset += result.read;
+			offset += result.written;
+		}
+		if (offset === 0) throw new Error("SSR router script record produced no output");
+		if (offset === bytes.length) return bytes;
+		return offset * 2 < bytes.length ? bytes.slice(0, offset) : bytes.subarray(0, offset);
+	}
+	pullReady() {
+		const scriptOpening = this.opening ??= this.nonce ? `<script nonce="${escapeAttribute(this.nonce)}">` : "<script>";
+		let codeUnits = scriptOpening.length + 40;
+		let batchLength = 0;
+		for (let index = this.queuedSourceHead; index < this.queuedSources.length; index++) {
+			const part = this.queuedSources[index];
+			const nextCodeUnits = codeUnits + 1 + part.length;
+			if (batchLength > 0 && nextCodeUnits > MAX_DYNAMIC_RECORD_CODE_UNITS) break;
+			codeUnits = nextCodeUnits;
+			batchLength++;
+			if (codeUnits > MAX_DYNAMIC_RECORD_CODE_UNITS) break;
+		}
+		const batch = this.takeQueuedBatch(batchLength);
+		if (codeUnits <= MAX_DIRECT_CODE_UNITS) {
+			const joined = batch.length === 1 ? batch[0] : batch.join(SOURCE_SEPARATOR);
+			const bytes = encoder.encode(scriptOpening + joined + ";document.currentScript.remove()<\/script>");
+			this.release(batch);
+			return bytes;
+		}
+		this.active = batch;
+		this.segmentIndex = 0;
+		this.closingSegmentIndex = (batch.length << 1) + 1;
+		this.source = scriptOpening;
+		this.sourceOffset = 0;
+		this.outputCapacity = Math.max(MIN_OUTPUT_BYTES, Math.min(MAX_HYDRATION_OUTPUT_CHUNK_BYTES, codeUnits));
+		this.outputState = HydrationScriptOutputState.Active;
+		return this.pullActive();
+	}
+	pullChunk() {
+		if (this.outputState !== HydrationScriptOutputState.Ready && this.outputState !== HydrationScriptOutputState.Active) throw new Error("Hydration script output is not ready");
+		try {
+			return this.outputState === HydrationScriptOutputState.Ready ? this.pullReady() : this.pullActive();
+		} catch (cause) {
+			this.fail(cause);
+			throw cause;
+		}
+	}
+	subscribe(onChange) {
+		if (this.consumer === "cleaned") return () => {};
+		if (this.listener) throw new Error("SSR hydration output already has a subscriber");
+		this.listener = onChange;
+		return () => {
+			if (this.listener === onChange) this.listener = void 0;
+		};
+	}
+	pushSerializedSource(data, initial, wrap) {
+		let serialized = initial ? ROUTER_PREFIX + data : data;
+		if (wrap) serialized = PROMISE_PREFIX + serialized + ")";
+		return this.pushSource(serialized);
+	}
+	finish() {
+		if (!this.pushSource("$_TSR.e()")) return;
+		this.producerDone = true;
+		this.clearTimeoutIfSet();
+		this.refresh();
+	}
+	takeInitialHydrationScriptTags() {
+		if (this.consumer === "cleaned" || this.outputState === HydrationScriptOutputState.Failed || this.initialTaken) return;
+		const sources = this.queuedSources;
+		const tags = createInitialTags(sources, this.nonce);
+		this.initialTaken = true;
+		this.releaseAccounting(sources);
+		sources.length = 0;
+		this.queuedSourceHead = 0;
+		this.refresh();
+		return tags;
+	}
+	/**
+	* Opt this request out of hydration output entirely (for example a
+	* `hydrate: false` page). Drops the queued bootstrap sources, marks the
+	* producer done, and makes the fast pass-through path reservable without
+	* a rendered `<Scripts>` boundary. Must run before the initial take and
+	* before serialization produces output.
+	*/
+	disableHydration() {
+		if (this.consumer === "cleaned" || this.outputState === HydrationScriptOutputState.Failed) return;
+		if (this.initialTaken || this.consumer !== void 0 || this.producerDone) invariant();
+		this.releaseAccounting(this.queuedSources);
+		this.clearQueue();
+		this.initialTaken = true;
+		this.barrierLifted = true;
+		this.producerDone = true;
+		this.refresh();
+	}
+	isInitialTaken() {
+		return this.initialTaken;
+	}
+	skipInitialTake() {
+		if (this.consumer !== "cleaned" && !this.initialTaken) {
+			this.initialTaken = true;
+			this.refresh();
+		}
+	}
+	claimOutput() {
+		if (this.consumer === "cleaned") throw new Error("SSR hydration script output is already cleaned up");
+		if (this.consumer !== void 0) throw new Error("SSR hydration script output already has a consumer");
+		this.consumer = this;
+		this.refresh(false);
+		return this;
+	}
+	reserveFastPath(output) {
+		const ownsConsumer = this.consumer === output;
+		if (this.outputState === HydrationScriptOutputState.Failed || !this.producerDone || !this.initialTaken || !this.queueIsEmpty() || this.active || !ownsConsumer) return false;
+		this.consumer = "fast-path";
+		return true;
+	}
+	startSerializationTimeout(timeoutMs) {
+		if (this.consumer === "cleaned" || this.outputState === HydrationScriptOutputState.Failed || this.producerDone || this.timeout !== void 0) return;
+		this.timeout = setTimeout(() => {
+			this.timeout = void 0;
+			if (this.consumer !== "cleaned" && this.outputState !== HydrationScriptOutputState.Failed && !this.producerDone) {
+				console.error("Serialization timeout after app render finished");
+				this.fail(/* @__PURE__ */ new Error("Serialization timeout after app render finished"));
+			}
+		}, timeoutMs);
+	}
+	cleanup() {
+		if (this.consumer === "cleaned") return;
+		this.consumer = "cleaned";
+		this.clearTimeoutIfSet();
+		this.dropBufferedOutput();
+		this.listener = void 0;
+		this.outputError = void 0;
+		this.producerDone = true;
+		this.outputState = HydrationScriptOutputState.Done;
+	}
+};
+/** Create the hydration-script owner for one server request. */
+function createHydrationScripts(nonce, initialSources) {
+	return new HydrationScriptsOwner(nonce, initialSources);
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/RawStreamSSRPlugin.js
+var nodeBuffer = globalThis.Buffer;
+var toBase64Fast = nodeBuffer ? (bytes) => nodeBuffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString("base64") : toBase64;
+var BINARY_FACTORY = () => {};
+var TEXT_FACTORY = () => {};
+var FACTORY_BINARY = `((s,u=1)=>new ReadableStream({start(c,f){f=s.on({next(b){const d=atob(b),a=new Uint8Array(d.length);for(let i=0;i<d.length;i++)a[i]=d.charCodeAt(i);c.enqueue(a)},throw(e){s=u=0;c.error(e)},return(){s=u=0;c.close()}});u=u&&f},cancel(){u&&u()}}))`;
+var FACTORY_TEXT = `((s,u=1,e=new TextEncoder)=>new ReadableStream({start(c,f){f=s.on({next(v){const x=v.slice(1);if(v[0]==='t')c.enqueue(e.encode(x));else{const d=atob(x),a=new Uint8Array(d.length);for(let i=0;i<d.length;i++)a[i]=d.charCodeAt(i);c.enqueue(a)}},throw(x){s=u=0;c.error(x)},return(){s=u=0;c.close()}});u=u&&f},cancel(){u&&u()}}))`;
+function makeFactoryPlugin(tag, sentinel, source) {
+	return createPlugin({
+		tag,
+		test(value) {
+			return value === sentinel;
 		},
+		parse: { stream() {
+			return {};
+		} },
+		serialize() {
+			return source;
+		},
+		deserialize: void 0
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/serializer/seroval-plugins.ssr.js
+/** Server-only plugins for streaming hydration data into HTML. */
+var ssrSerovalPlugins = [
+	ShallowErrorPlugin,
+	/* @__PURE__ */ createPlugin({
+		tag: "tss/RawStream",
+		extends: [/* @__PURE__ */ makeFactoryPlugin("tss/RawStreamFactory", BINARY_FACTORY, FACTORY_BINARY), /* @__PURE__ */ makeFactoryPlugin("tss/RawStreamFactoryText", TEXT_FACTORY, FACTORY_TEXT)],
+		test(value) {
+			return value instanceof RawStream;
+		},
+		parse: { stream(value, ctx) {
+			const text = value.hint === "text";
+			const factory = ctx.parse(text ? TEXT_FACTORY : BINARY_FACTORY);
+			const [stream, stop] = pumpEncodedStream(value.stream, text ? encodeText : toBase64Fast);
+			ctx.addCleanup(stop);
+			return {
+				factory,
+				stream: ctx.parse(stream)
+			};
+		} },
 		serialize(node, ctx) {
 			return "(" + ctx.serialize(node.factory) + ")(" + ctx.serialize(node.stream) + ")";
 		},
-		deserialize(node, ctx) {
-			const stream = ctx.deserialize(node.stream);
-			if (!stream || typeof stream !== "object" || !isStream(stream)) throw new Error("Expected a stream source.");
-			return READABLE_STREAM_FACTORY_CONSTRUCTOR(stream);
-		}
-	})
+		deserialize: void 0
+	}),
+	ReadableStreamPlugin
 ];
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js
-var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
-var import_jsx_runtime = require_jsx_runtime();
-var CatchBoundary = class extends import_react.Component {
-	constructor(..._args) {
-		super(..._args);
-		this.state = { error: 0 };
-		this.reset = () => {
-			this.setState({ error: 0 });
-		};
-	}
-	static getDerivedStateFromProps(props, state) {
-		const resetKey = props.getResetKey();
-		if (state.error && state.resetKey !== resetKey) return {
-			resetKey,
-			error: 0
-		};
-		return { resetKey };
-	}
-	static getDerivedStateFromError(error) {
-		return { error: [error] };
-	}
-	componentDidCatch(error, errorInfo) {
-		this.props.onCatch?.(error, errorInfo);
-	}
-	render() {
-		const error = this.state.error;
-		if (error) return import_react.createElement(this.props.errorComponent ?? ErrorComponent, {
-			error: error[0],
-			reset: this.reset
-		});
-		return this.props.children;
-	}
-};
-function ErrorComponent({ error }) {
-	const [show, setShow] = import_react.useState(false);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		style: {
-			padding: ".5rem",
-			maxWidth: "100%"
-		},
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				style: {
-					display: "flex",
-					alignItems: "center",
-					gap: ".5rem"
-				},
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-					style: { fontSize: "1rem" },
-					children: "Something went wrong!"
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-					style: {
-						appearance: "none",
-						fontSize: ".6em",
-						border: "1px solid currentColor",
-						padding: ".1rem .2rem",
-						fontWeight: "bold",
-						borderRadius: ".25rem"
-					},
-					onClick: () => setShow((d) => !d),
-					children: show ? "Hide Error" : "Show Error"
-				})]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: ".25rem" } }),
-			show ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", {
-				style: {
-					fontSize: ".7em",
-					border: "1px solid red",
-					borderRadius: ".25rem",
-					padding: ".3rem",
-					color: "red",
-					overflow: "auto"
-				},
-				children: error?.message ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: error.message }) : null
-			}) }) : null
-		]
-	});
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/ssr-server.js
+function dehydrateMatch(match) {
+	const dehydratedMatch = {
+		i: dehydrateSsrMatchId(match.id),
+		u: match.updatedAt,
+		s: match.status
+	};
+	for (const [key, shorthand] of [
+		["__beforeLoadContext", "b"],
+		["loaderData", "l"],
+		["error", "e"],
+		["ssr", "ssr"]
+	]) if (match[key] !== void 0) dehydratedMatch[shorthand] = match[key];
+	if (match._notFound) dehydratedMatch.g = true;
+	return dehydratedMatch;
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/not-found.js
-function CatchNotFound(props) {
-	const router = useRouter();
+function disposeSerializationSafely(dispose) {
+	try {
+		dispose?.();
+	} catch (err) {
+		console.error("Error disposing SSR serialization:", err);
+	}
+}
+function notifyAndClearListeners(listeners, errorMessage, arg) {
+	const pending = listeners.slice();
+	listeners.length = 0;
+	for (const listener of pending) try {
+		listener(arg);
+	} catch (error) {
+		console.error(errorMessage, error);
+	}
+}
+var MANIFEST_CACHE_SIZE = 100;
+var manifestCaches = /* @__PURE__ */ new WeakMap();
+function getManifestCache(manifest) {
+	const cache = manifestCaches.get(manifest);
+	if (cache) return cache;
+	const newCache = createSieveCache(MANIFEST_CACHE_SIZE);
+	manifestCaches.set(manifest, newCache);
+	return newCache;
+}
+function getInlineCssForPreparedRoutes(manifest, preparedRoutes) {
+	const styles = manifest.inlineCss?.styles;
+	const hrefs = preparedRoutes.inlineCssHrefs;
+	if (!styles || !hrefs?.length) return;
+	let css = "";
+	for (const href of hrefs) css += styles[href];
+	return css;
+}
+function getInlineCssAssetForPreparedRoutes(manifest, preparedRoutes) {
+	const css = getInlineCssForPreparedRoutes(manifest, preparedRoutes);
+	return css === void 0 ? void 0 : createInlineCssStyleAsset(css);
+}
+function getMatchedRoutesCacheKey(matches) {
+	let cacheKey = "";
+	for (let i = 0; i < matches.length; i++) cacheKey += (i === 0 ? "" : "\0") + matches[i].routeId;
+	return cacheKey;
+}
+function getPreparedMatchedManifestRoutes(manifest, matches, cacheKey) {
 	{
-		const resetKey = `not-found-${router.stores.location.get().pathname}-${router.stores.status.get()}`;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CatchBoundary, {
-			getResetKey: () => resetKey,
-			onCatch: (error, errorInfo) => {
-				if (isNotFound(error)) props.onCatch?.(error, errorInfo);
-				else throw error;
-			},
-			errorComponent: ({ error }) => {
-				if (isNotFound(error)) return props.fallback?.(error);
-				else throw error;
-			},
-			children: props.children
-		});
+		const cached = getManifestCache(manifest).get(cacheKey);
+		if (cached) return cached;
 	}
+	const preparedRoutes = prepareMatchedManifestRoutes(manifest, matches);
+	getManifestCache(manifest).set(cacheKey, preparedRoutes);
+	return preparedRoutes;
 }
-function DefaultGlobalNotFound() {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Not Found" });
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/ScriptOnce.js
-/**
-* Server-only helper to emit a script tag exactly once during SSR.
-*/
-function ScriptOnce({ children }) {
-	const router = useRouter();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("script", {
-		nonce: router.options.ssr?.nonce,
-		dangerouslySetInnerHTML: { __html: children + ";document.currentScript.remove()" }
-	});
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/SafeFragment.js
-function SafeFragment(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: props.children });
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/renderRouteNotFound.js
-/**
-* Renders a not found component for a route when no matching route is found.
-*
-* @param router - The router instance containing the route configuration
-* @param route - The route that triggered the not found state
-* @param data - Additional data to pass to the not found component
-* @returns The rendered not found component or a default fallback component
-*/
-function renderRouteNotFound(router, route, data) {
-	if (!route.options.notFoundComponent) {
-		if (router.options.defaultNotFoundComponent) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(router.options.defaultNotFoundComponent, { ...data });
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DefaultGlobalNotFound, {});
-	}
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(route.options.notFoundComponent, { ...data });
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/scroll-restoration-script/client.js
-function getScrollRestorationScriptForRouter(_router) {
-	return null;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/scroll-restoration.js
-function ScrollRestoration() {
-	const script = getScrollRestorationScriptForRouter(useRouter());
-	if (!script) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScriptOnce, { children: script });
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/Match.js
-function renderPending(router, route) {
-	const PendingComponent = route?.options.pendingComponent ?? router.options.defaultPendingComponent;
-	if (!PendingComponent) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PendingComponent, {});
-}
-var canWrapInSuspense = (router, route, ssr) => !route.isRoot || route.options.shellComponent || route.options.wrapInSuspense || ssr === false || ssr === "data-only" || false;
-var Match = import_react.memo(function MatchImpl({ routeId }) {
-	const router = useRouter();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchView, {
-		router,
-		match: router.stores.byRoute.get(routeId).get()
-	});
-});
-function MatchView({ router, match }) {
-	const route = router.routesById[match.routeId];
-	const pendingElement = renderPending(router, route);
-	const routeErrorComponent = route.options.errorComponent ?? router.options.defaultErrorComponent;
-	const routeOnCatch = route.options.onCatch ?? router.options.defaultOnCatch;
-	const routeNotFoundComponent = route.isRoot ? route.options.notFoundComponent ?? router.options.notFoundRoute?.options.component : route.options.notFoundComponent;
-	const resolvedNoSsr = match.ssr === false || match.ssr === "data-only";
-	const ResolvedSuspenseBoundary = canWrapInSuspense(router, route, match.ssr) && (route.options.wrapInSuspense ?? pendingElement ?? (route.options.errorComponent?.preload || resolvedNoSsr)) ? import_react.Suspense : SafeFragment;
-	const ResolvedCatchBoundary = routeErrorComponent ? CatchBoundary : SafeFragment;
-	const ResolvedNotFoundBoundary = routeNotFoundComponent ? CatchNotFound : SafeFragment;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(route.isRoot ? route.options.shellComponent ?? SafeFragment : SafeFragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(matchContext.Provider, {
-		value: match.routeId,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResolvedSuspenseBoundary, {
-			fallback: pendingElement,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResolvedCatchBoundary, {
-				getResetKey: () => match,
-				errorComponent: routeErrorComponent,
-				onCatch: (error, errorInfo) => {
-					if (isNotFound(error)) {
-						error.routeId ??= match.routeId;
-						throw error;
-					}
-					routeOnCatch?.(error, errorInfo);
-				},
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResolvedNotFoundBoundary, {
-					fallback: (error) => {
-						error.routeId ??= match.routeId;
-						if (error.routeId !== match.routeId) throw error;
-						return import_react.createElement(routeNotFoundComponent, error);
-					},
-					children: resolvedNoSsr ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClientOnly, {
-						fallback: pendingElement,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchInner, { match })
-					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchInner, { match })
-				})
-			})
-		})
-	}), route.parentRoute?.id === "__root__" && router.options.scrollRestoration ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScrollRestoration, {}) : null] });
-}
-var MatchInner = import_react.memo(function MatchInnerImpl({ match }) {
-	const router = useRouter();
-	const routeId = match.routeId;
-	const route = router.routesById[routeId];
-	const key = import_react.useMemo(() => {
-		const remountDeps = (route.options.remountDeps ?? router.options.defaultRemountDeps)?.({
-			routeId,
-			loaderDeps: match.loaderDeps,
-			params: match._strictParams,
-			search: match._strictSearch
-		});
-		return remountDeps ? JSON.stringify(remountDeps) : void 0;
-	}, [
-		routeId,
-		match.loaderDeps,
-		match._strictParams,
-		match._strictSearch,
-		route.options.remountDeps,
-		router.options.defaultRemountDeps
-	]);
-	const out = import_react.useMemo(() => {
-		const Comp = route.options.component ?? router.options.defaultComponent;
-		return Comp ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Comp, {}, key) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {});
-	}, [
-		key,
-		route.options.component,
-		router.options.defaultComponent
-	]);
-	if (match.status === "pending") {
-		if (router.ssr && !canWrapInSuspense(router, route, match.ssr)) return out;
-		if (router._tx) throw router._tx[5];
-		return renderPending(router, route);
-	}
-	if (match.status === "notFound") return renderRouteNotFound(router, route, match.error);
-	if (match.status === "error") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)((route.options.errorComponent ?? router.options.defaultErrorComponent) || ErrorComponent, {
-		error: match.error,
-		reset: void 0,
-		info: { componentStack: "" }
-	});
-	return out;
-});
-/**
-* Render the next child match in the route tree. Typically used inside
-* a route component to render nested routes.
-*
-* @link https://tanstack.com/router/latest/docs/framework/react/api/router/outletComponent
-*/
-var Outlet = import_react.memo(function OutletImpl() {
-	const router = useRouter();
-	const routeId = import_react.useContext(matchContext);
-	let parentGlobalNotFound;
-	let parentNotFoundError;
-	let childRouteId;
-	{
-		const matches = router.stores.matches.get();
-		const parentIndex = matches.findIndex((match) => match.routeId === routeId);
-		const parentMatch = matches[parentIndex];
-		parentGlobalNotFound = !!parentMatch._notFound;
-		parentNotFoundError = parentMatch.error;
-		childRouteId = matches[parentIndex + 1]?.routeId;
-	}
-	if (parentGlobalNotFound) return renderRouteNotFound(router, router.routesById[routeId], parentNotFoundError);
-	if (!childRouteId) return null;
-	const nextMatch = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Match, { routeId: childRouteId });
-	if (routeId === "__root__") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.Suspense, {
-		fallback: renderPending(router),
-		children: nextMatch
-	});
-	return nextMatch;
-});
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/Transitioner.js
-function settleOwner(owner, rendered) {
-	const settle = owner[1];
-	owner.length = 0;
-	settle?.(rendered);
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/Matches.js
-/**
-* Internal component that renders the router's active match tree with
-* suspense, error, and not-found boundaries. Rendered by `RouterProvider`.
-*/
-function Matches() {
-	const router = useRouter();
-	const rootRoute = router.routesById[rootRouteId];
-	const pendingElement = renderPending(router, rootRoute);
-	const ResolvedSuspense = SafeFragment;
-	const inner = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [false, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResolvedSuspense, {
-		fallback: pendingElement,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchesInner, {})
-	})] });
-	return router.options.InnerWrap ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(router.options.InnerWrap, { children: inner }) : inner;
-}
-function MatchesInner() {
-	const router = useRouter();
-	const acknowledgement = router._rendered;
-	const matches = router.stores.matches.get();
-	const match = matches[0];
-	const routeId = match?.routeId;
-	useLayoutEffect(() => {
-		if (acknowledgement[0] === matches) settleOwner(acknowledgement, true);
-	}, [acknowledgement, matches]);
-	const matchComponent = routeId ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Match, { routeId }) : null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(matchContext.Provider, {
-		value: routeId,
-		children: router.options.disableGlobalCatchBoundary ? matchComponent : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CatchBoundary, {
-			getResetKey: () => match,
-			onCatch: void 0,
-			children: matchComponent
-		})
-	});
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/RouterProvider.js
-/**
-* Low-level provider that places the router into React context and optionally
-* updates router options from props. Most apps should use `RouterProvider`.
-*/
-function RouterContextProvider({ router, children, ...rest }) {
-	if (hasKeys(rest)) router.update({
-		...router.options,
-		...rest,
-		context: {
-			...router.options.context,
-			...rest.context
+function prepareMatchedManifestRoutes(manifest, matches) {
+	const inlineStyles = manifest.inlineCss?.styles;
+	const routes = {};
+	if (!inlineStyles) {
+		for (const match of matches) {
+			const route = manifest.routes[match.routeId];
+			if (route) routes[match.routeId] = route;
 		}
-	});
-	const provider = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(routerContext.Provider, {
-		value: router,
-		children
-	});
-	if (router.options.Wrap) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(router.options.Wrap, { children: provider });
-	return provider;
-}
-/**
-* Renders the current match presentation and provides the router to the React
-* tree via context.
-*
-* Accepts the same options as `createRouter` via props to update the router
-* instance after creation.
-*
-* @link https://tanstack.com/router/latest/docs/framework/react/api/router/createRouterFunction
-*/
-function RouterProvider({ router, ...rest }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterContextProvider, {
-		router,
-		...rest,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Matches, {})
-	});
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-start-serve_4a3f7910cdf1e7b2a68c917f8ffb8e3b/node_modules/@tanstack/react-start-server/dist/esm/StartServer.js
-function StartServer(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterProvider, { router: props.router });
-}
-//#endregion
-//#region node_modules/.pnpm/react-dom@19.3.0_react@19.3.0/node_modules/react-dom/cjs/react-dom.production.js
-/**
-* @license React
-* react-dom.production.js
-*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-var require_react_dom_production = /* @__PURE__ */ __commonJSMin(((exports) => {
-	var React = require_react();
-	function formatProdErrorMessage(code) {
-		var url = "https://react.dev/errors/" + code;
-		if (1 < arguments.length) {
-			url += "?args[]=" + encodeURIComponent(arguments[1]);
-			for (var i = 2; i < arguments.length; i++) url += "&args[]=" + encodeURIComponent(arguments[i]);
-		}
-		return "Minified React error #" + code + "; visit " + url + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
-	}
-	function noop() {}
-	var Internals = {
-		d: {
-			f: noop,
-			r: function() {
-				throw Error(formatProdErrorMessage(522));
-			},
-			D: noop,
-			C: noop,
-			L: noop,
-			m: noop,
-			X: noop,
-			S: noop,
-			M: noop
-		},
-		p: 0,
-		findDOMNode: null
-	};
-	var REACT_PORTAL_TYPE = Symbol.for("react.portal");
-	var REACT_RECOVERABLE_TYPE = Symbol.for("react.recoverable");
-	var REACT_OPTIMISTIC_KEY = Symbol.for("react.optimistic_key");
-	function createPortal$1(children, containerInfo, implementation) {
-		var key = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null;
 		return {
-			$$typeof: REACT_PORTAL_TYPE,
-			key: null == key ? null : key === REACT_OPTIMISTIC_KEY ? REACT_OPTIMISTIC_KEY : "" + key,
-			children,
-			containerInfo,
-			implementation
+			routes,
+			hasStrippedRoutes: false
 		};
 	}
-	var ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
-	function getCrossOriginStringAs(as, input) {
-		if ("font" === as) return "";
-		if ("string" === typeof input) return "use-credentials" === input ? input : "";
+	const inlineCssHrefs = [];
+	const seenInlineCssHrefs = /* @__PURE__ */ new Set();
+	let hasStrippedRoutes = false;
+	for (const match of matches) {
+		const routeId = match.routeId;
+		const route = manifest.routes[routeId];
+		if (!route) continue;
+		const nextRoute = stripInlinedStylesheetAssetsFromRoute(inlineStyles, route, inlineCssHrefs, seenInlineCssHrefs);
+		if (nextRoute !== route) hasStrippedRoutes = true;
+		routes[routeId] = nextRoute;
 	}
-	exports.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
-	exports.browser = function(reason) {
-		return {
-			$$typeof: REACT_RECOVERABLE_TYPE,
-			_reason: reason
-		};
+	return {
+		routes,
+		hasStrippedRoutes,
+		...inlineCssHrefs.length ? { inlineCssHrefs } : {}
 	};
-	exports.createPortal = function(children, container) {
-		var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
-		if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType) throw Error(formatProdErrorMessage(299));
-		return createPortal$1(children, container, null, key);
+}
+function stripInlinedStylesheetAssetsFromRoute(inlineStyles, route, inlineCssHrefs, seenInlineCssHrefs) {
+	const css = route.css;
+	if (!css) return route;
+	if (css.length === 0) {
+		const nextRoute = { ...route };
+		delete nextRoute.css;
+		return nextRoute;
+	}
+	let cssLinks;
+	for (let i = 0; i < css.length; i++) {
+		const link = css[i];
+		const href = getStylesheetHref(link);
+		if (inlineStyles[href] === void 0) {
+			if (cssLinks) cssLinks.push(link);
+			continue;
+		}
+		if (!seenInlineCssHrefs.has(href)) {
+			seenInlineCssHrefs.add(href);
+			inlineCssHrefs.push(href);
+		}
+		if (!cssLinks) cssLinks = css.slice(0, i);
+	}
+	if (!cssLinks) return route;
+	if (cssLinks.length > 0) return {
+		...route,
+		css: cssLinks
 	};
-	exports.flushSync = function(fn) {
-		var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
-		try {
-			if (ReactSharedInternals.T = null, Internals.p = 2, fn) return fn();
-		} finally {
-			ReactSharedInternals.T = previousTransition, Internals.p = previousUpdatePriority, Internals.d.f();
+	const nextRoute = { ...route };
+	delete nextRoute.css;
+	return nextRoute;
+}
+function hasRouteAssets(route) {
+	return !!route.scripts?.length || !!route.css?.length;
+}
+function hasRequestAssets(assets) {
+	return !!assets && (!!assets.preloads?.length || hasRouteAssets(assets));
+}
+function mergeRequestAssetsIntoRootRoute(rootRoute, requestAssets) {
+	const preloads = requestAssets?.preloads?.length ? [...requestAssets.preloads, ...rootRoute?.preloads ?? []] : rootRoute?.preloads;
+	const scripts = requestAssets?.scripts?.length ? [...requestAssets.scripts, ...rootRoute?.scripts ?? []] : rootRoute?.scripts;
+	const cssLinks = requestAssets?.css?.length ? [...requestAssets.css, ...rootRoute?.css ?? []] : rootRoute?.css;
+	return {
+		...rootRoute ?? {},
+		...preloads?.length ? { preloads } : {},
+		...scripts?.length ? { scripts } : {},
+		...cssLinks?.length ? { css: cssLinks } : {}
+	};
+}
+/**
+* Compose a client-facing manifest from prepared routes, an optional inline
+* style, and optional request-scoped assets merged into the root route.
+* Shared by the `router.ssr.manifest` getter and `dehydrate()` so the two
+* compositions cannot drift.
+*/
+function composeManifest(scriptFormat, inlineStyle, routes, requestAssets) {
+	const base = {
+		...scriptFormat ? { scriptFormat } : {},
+		...inlineStyle ? { inlineStyle } : {},
+		routes
+	};
+	if (!hasRequestAssets(requestAssets)) return base;
+	return {
+		...base,
+		routes: {
+			...routes,
+			[rootRouteId]: mergeRequestAssetsIntoRootRoute(routes[rootRouteId], requestAssets)
 		}
 	};
-	exports.preconnect = function(href, options) {
-		"string" === typeof href && (options ? (options = options.crossOrigin, options = "string" === typeof options ? "use-credentials" === options ? options : "" : void 0) : options = null, Internals.d.C(href, options));
-	};
-	exports.prefetchDNS = function(href) {
-		"string" === typeof href && Internals.d.D(href);
-	};
-	exports.preinit = function(href, options) {
-		if ("string" === typeof href && options && "string" === typeof options.as) {
-			var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin), integrity = "string" === typeof options.integrity ? options.integrity : void 0, fetchPriority = "string" === typeof options.fetchPriority ? options.fetchPriority : void 0;
-			"style" === as ? Internals.d.S(href, "string" === typeof options.precedence ? options.precedence : void 0, {
-				crossOrigin,
-				integrity,
-				fetchPriority
-			}) : "script" === as && Internals.d.X(href, {
-				crossOrigin,
-				integrity,
-				fetchPriority,
-				nonce: "string" === typeof options.nonce ? options.nonce : void 0
-			});
-		}
-	};
-	exports.preinitModule = function(href, options) {
-		if ("string" === typeof href) if ("object" === typeof options && null !== options) {
-			if (null == options.as || "script" === options.as) {
-				var crossOrigin = getCrossOriginStringAs(options.as, options.crossOrigin);
-				Internals.d.M(href, {
-					crossOrigin,
-					integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-					nonce: "string" === typeof options.nonce ? options.nonce : void 0,
-					fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0
-				});
+}
+function attachRouterServerSsrUtils({ router, manifest, getRequestAssets }) {
+	let memoizedPreparedManifest;
+	router.ssr = { get manifest() {
+		if (!manifest) return manifest;
+		const requestAssets = getRequestAssets?.();
+		const hasAssets = hasRequestAssets(requestAssets);
+		if (!hasAssets && !manifest.inlineCss) return manifest;
+		let inlineCssAsset;
+		let routes = manifest.routes;
+		if (manifest.inlineCss) {
+			const matches = _getRenderedMatches(router.stores.matches.get());
+			const cacheKey = getMatchedRoutesCacheKey(matches);
+			if (memoizedPreparedManifest?.cacheKey === cacheKey) {
+				inlineCssAsset = memoizedPreparedManifest.inlineCssAsset;
+				routes = memoizedPreparedManifest.routes;
+			} else {
+				const preparedManifest = getPreparedMatchedManifestRoutes(manifest, matches, cacheKey);
+				inlineCssAsset = getInlineCssAssetForPreparedRoutes(manifest, preparedManifest);
+				if (preparedManifest.hasStrippedRoutes) routes = {
+					...manifest.routes,
+					...preparedManifest.routes
+				};
+				memoizedPreparedManifest = {
+					cacheKey,
+					inlineCssAsset,
+					routes
+				};
 			}
-		} else options ?? Internals.d.M(href);
-	};
-	exports.preload = function(href, options) {
-		if ("string" === typeof href && "object" === typeof options && null !== options && "string" === typeof options.as) {
-			var as = options.as, crossOrigin = getCrossOriginStringAs(as, options.crossOrigin);
-			Internals.d.L(href, as, {
-				crossOrigin,
-				integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-				nonce: "string" === typeof options.nonce ? options.nonce : void 0,
-				type: "string" === typeof options.type ? options.type : void 0,
-				fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0,
-				referrerPolicy: "string" === typeof options.referrerPolicy ? options.referrerPolicy : void 0,
-				imageSrcSet: "string" === typeof options.imageSrcSet ? options.imageSrcSet : void 0,
-				imageSizes: "string" === typeof options.imageSizes ? options.imageSizes : void 0,
-				media: "string" === typeof options.media ? options.media : void 0
+		}
+		return composeManifest(manifest.scriptFormat, inlineCssAsset, routes, hasAssets ? requestAssets : void 0);
+	} };
+	let dehydrationPhase = "idle";
+	let renderFinished = false;
+	const renderFinishedListeners = [];
+	const cleanupListeners = [];
+	let cleanupStarted = false;
+	let settled = false;
+	let disposeSerialization;
+	const hydrationScripts = createHydrationScripts(router.options.ssr?.nonce);
+	const serverSsr = {
+		hydrationScripts,
+		dehydrate: async (opts) => {
+			if (dehydrationPhase !== "idle") invariant();
+			opts?.signal?.throwIfAborted();
+			dehydrationPhase = "started";
+			let matchesToDehydrate = _getRenderedMatches(router.stores.matches.get());
+			if (router.isShell()) matchesToDehydrate = matchesToDehydrate.slice(0, 1);
+			const matches = matchesToDehydrate.map(dehydrateMatch);
+			let manifestToDehydrate = void 0;
+			if (manifest) {
+				const cacheKey = getMatchedRoutesCacheKey(matchesToDehydrate);
+				const preparedManifest = getPreparedMatchedManifestRoutes(manifest, matchesToDehydrate, cacheKey);
+				manifestToDehydrate = composeManifest(manifest.scriptFormat, preparedManifest.inlineCssHrefs ? createInlineCssPlaceholderAsset() : void 0, preparedManifest.routes, opts?.requestAssets);
+			}
+			const dehydratedRouter = {
+				manifest: manifestToDehydrate,
+				matches
+			};
+			const dehydrate = router.options.dehydrate;
+			const dehydratedData = dehydrate ? opts?.signal ? await waitForReason(dehydrate.call(router.options), opts.signal) : await dehydrate.call(router.options) : void 0;
+			opts?.signal?.throwIfAborted();
+			if (cleanupStarted) return;
+			if (dehydratedData !== void 0) dehydratedRouter.dehydratedData = dehydratedData;
+			const trackPlugins = { didRun: false };
+			const serializationAdapters = router.options.serializationAdapters;
+			const plugins = serializationAdapters ? [...serializationAdapters.map((adapter) => /* @__PURE__ */ makeSsrSerovalPlugin(adapter, trackPlugins)), ...ssrSerovalPlugins] : ssrSerovalPlugins;
+			let serializationCompleteSignaled = false;
+			let initialSerialized = false;
+			const completeScriptSerialization = (result) => {
+				if (serializationCompleteSignaled || cleanupStarted) return;
+				serializationCompleteSignaled = true;
+				const dispose = disposeSerialization;
+				disposeSerialization = void 0;
+				if (result === true) {
+					settled = true;
+					hydrationScripts.finish();
+				} else if (result) hydrationScripts.fail(result.error);
+				if (dispose) queueMicrotask(() => disposeSerializationSafely(dispose));
+			};
+			let synchronousFailure;
+			const dispose = crossSerializeStream(dehydratedRouter, {
+				refs: /* @__PURE__ */ new Map(),
+				plugins,
+				onSerialize: (data, initial) => {
+					if (serializationCompleteSignaled || cleanupStarted) return;
+					initialSerialized ||= initial;
+					if (!hydrationScripts.pushSerializedSource(data, initial, trackPlugins.didRun)) completeScriptSerialization(false);
+				},
+				onError: (err) => {
+					if (serializationCompleteSignaled || cleanupStarted) return;
+					console.error("Serialization error:", err);
+					synchronousFailure = { error: err };
+					completeScriptSerialization({ error: err });
+				},
+				scopeId: "tsr",
+				onDone: () => {
+					if (initialSerialized) completeScriptSerialization(true);
+				}
 			});
+			if (cleanupStarted || serializationCompleteSignaled) disposeSerializationSafely(dispose);
+			else disposeSerialization = dispose;
+			if (synchronousFailure) throw synchronousFailure.error;
+		},
+		onRenderFinished: (listener) => {
+			if (cleanupStarted) return;
+			if (renderFinished) {
+				try {
+					listener();
+				} catch (error) {
+					console.error("Error in render finished listener:", error);
+				}
+				return;
+			}
+			renderFinishedListeners.push(listener);
+		},
+		onCleanup: (listener) => {
+			if (cleanupStarted) {
+				try {
+					listener(settled);
+				} catch (error) {
+					console.error("Error in SSR cleanup listener:", error);
+				}
+				return;
+			}
+			cleanupListeners.push(listener);
+		},
+		setRenderFinished: () => {
+			if (cleanupStarted || renderFinished) return;
+			renderFinished = true;
+			hydrationScripts.liftBarrier();
+			notifyAndClearListeners(renderFinishedListeners, "Error in render finished listener:", void 0);
+		},
+		disableHydration: () => {
+			if (cleanupStarted || dehydrationPhase === "disabled") return;
+			if (dehydrationPhase !== "idle") invariant();
+			hydrationScripts.disableHydration();
+			dehydrationPhase = "disabled";
+		},
+		takeInitialHydrationScriptTags: hydrationScripts.takeInitialHydrationScriptTags,
+		cleanup() {
+			if (cleanupStarted) return;
+			cleanupStarted = true;
+			hydrationScripts.cleanup();
+			const dispose = disposeSerialization;
+			disposeSerialization = void 0;
+			disposeSerializationSafely(dispose);
+			notifyAndClearListeners(cleanupListeners, "Error in SSR cleanup listener:", settled);
+			renderFinishedListeners.length = 0;
+			router.ssr = void 0;
+			router.serverSsr = void 0;
 		}
 	};
-	exports.preloadModule = function(href, options) {
-		if ("string" === typeof href) if (options) {
-			var crossOrigin = getCrossOriginStringAs(options.as, options.crossOrigin);
-			Internals.d.m(href, {
-				as: "string" === typeof options.as && "script" !== options.as ? options.as : void 0,
-				crossOrigin,
-				integrity: "string" === typeof options.integrity ? options.integrity : void 0,
-				nonce: "string" === typeof options.nonce ? options.nonce : void 0,
-				fetchPriority: "string" === typeof options.fetchPriority ? options.fetchPriority : void 0
-			});
-		} else Internals.d.m(href);
+	router.serverSsr = serverSsr;
+	for (const listener of router.serverSsrLifecycle?.onServerSsrAttach ?? []) try {
+		listener(serverSsr);
+	} catch (err) {
+		console.error("SSR attach listener error:", err);
+	}
+}
+function getNormalizedURL(url, base) {
+	const rawUrl = typeof url === "string" ? new URL(url.replace("\\", "%5C"), base) : url;
+	const handledProtocolRelativeURL = rawUrl.pathname.startsWith("//");
+	const decodedPathname = decodePath(handledProtocolRelativeURL ? rawUrl.pathname.replace(/^\/+/, "/") : rawUrl.pathname);
+	const searchParams = new URLSearchParams(rawUrl.search);
+	const normalizedHref = decodedPathname + (searchParams.size > 0 ? "?" : "") + searchParams.toString() + rawUrl.hash;
+	return {
+		url: new URL(normalizedHref, rawUrl.origin),
+		handledProtocolRelativeURL
 	};
-	exports.requestFormReset = function(form) {
-		Internals.d.r(form);
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/handlerCallback.js
+function isSsrResponse(value) {
+	if (typeof value !== "object" || value === null || !("response" in value) || !(value.response instanceof Response) || !("serverSsrCleanup" in value)) return false;
+	if (value.serverSsrCleanup === "none") return true;
+	return value.serverSsrCleanup === "stream" && "dispose" in value && typeof value.dispose === "function";
+}
+function normalizeSsrResponse(result) {
+	if (result instanceof Response) return {
+		response: result,
+		serverSsrCleanup: "none"
 	};
-	exports.unstable_batchedUpdates = function(fn, a) {
-		return fn(a);
+	if (isSsrResponse(result)) return result;
+	throw new TypeError("Expected a Response from the SSR handler");
+}
+function cancelResponseBody(response, reason) {
+	const body = response.body;
+	if (!body) return;
+	body.cancel(reason).catch(console.error);
+}
+function disposeSsrResponse(result, reason) {
+	const response = normalizeSsrResponse(result);
+	if (response.serverSsrCleanup === "stream") response.dispose(reason);
+	else cancelResponseBody(response.response, reason);
+}
+/** The HTTP status that Router's server load selected for this render. */
+function getSsrStatus(router) {
+	return router._serverResult?.type === "render" ? router._serverResult.status : 200;
+}
+function createSsrStreamResponse(router, response) {
+	const body = response.body;
+	if (!body) throw new Error("Invariant failed: SSR stream response requires a body");
+	return {
+		response,
+		serverSsrCleanup: "stream",
+		dispose(reason) {
+			router.serverSsr?.cleanup();
+			body.cancel(reason).catch(() => {});
+		}
 	};
-	exports.useFormState = function(action, initialState, permalink) {
-		return ReactSharedInternals.H.useFormState(action, initialState, permalink);
+}
+function bindSsrResponseToRequest(router, result, signal) {
+	const ssrResponse = normalizeSsrResponse(result);
+	if (ssrResponse.serverSsrCleanup !== "stream") {
+		if (signal.aborted) disposeSsrResponse(result, signal.reason);
+		return ssrResponse;
+	}
+	const abort = () => {
+		disposeSsrResponse(ssrResponse, signal.reason);
 	};
-	exports.useFormStatus = function() {
-		return ReactSharedInternals.H.useHostTransitionStatus();
+	if (signal.aborted) {
+		abort();
+		return ssrResponse;
+	}
+	const serverSsr = router?.serverSsr;
+	if (serverSsr?.hydrationScripts.requestSignal === signal) {
+		serverSsr.onCleanup(() => {
+			if (signal.aborted) abort();
+		});
+		return ssrResponse;
+	}
+	signal.addEventListener("abort", abort, { once: true });
+	if (!serverSsr) return ssrResponse;
+	serverSsr.onCleanup(() => {
+		signal.removeEventListener("abort", abort);
+	});
+	return ssrResponse;
+}
+function stripSsrResponseBody(result, reason) {
+	const ssrResponse = normalizeSsrResponse(result);
+	disposeSsrResponse(ssrResponse, reason);
+	return {
+		response: new Response(null, ssrResponse.response),
+		serverSsrCleanup: "none"
 	};
-	exports.version = "19.3.0";
-}));
-//#endregion
-//#region node_modules/.pnpm/react-dom@19.3.0_react@19.3.0/node_modules/react-dom/index.js
-var require_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	function checkDCE() {
-		if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") return;
+}
+function defineHandlerCallback(handler) {
+	return handler;
+}
+// ../../node_modules/.pnpm/@tanstack+router-core@1.171.39/node_modules/@tanstack/router-core/dist/esm/ssr/transformStreamWithRouter.js
+var DEFAULT_SERIALIZATION_TIMEOUT_MS = 6e4;
+var MIN_APPLICATION_STRING_CHUNK_BYTES = 256;
+var MAX_APPLICATION_STRING_CHUNK_BYTES = 65536;
+var ApplicationPhase = {
+	BeforeBoundary: 0,
+	Merge: 1,
+	HeldClose: 2,
+	PassThrough: 3
+};
+function releaseReader(reader) {
+	try {
+		reader.releaseLock();
+	} catch {}
+}
+function cancelReader(reader, reason) {
+	const cancelled = reader.cancel(reason).catch(() => {});
+	releaseReader(reader);
+	return cancelled;
+}
+function finalizeSsrStream(kind, reason, controller, reader, serverSsr, onAbort) {
+	try {
+		if (kind === "complete") controller.close();
+		else if (kind === "failure") controller.error(reason);
+	} catch {}
+	const aborted = kind !== "complete";
+	if (aborted) try {
+		onAbort?.(reason);
+	} catch {}
+	const readerDone = aborted ? cancelReader(reader, reason) : releaseReader(reader);
+	serverSsr.cleanup();
+	return readerDone;
+}
+function getLifetimeMs(opts) {
+	return opts?.lifetimeMs ?? (opts?.timeoutMs ?? DEFAULT_SERIALIZATION_TIMEOUT_MS) * 2;
+}
+function createCleanupAbortError() {
+	const error = /* @__PURE__ */ new Error("SSR stream transform aborted by router SSR cleanup");
+	error.name = "AbortError";
+	return error;
+}
+function listenForAbort(signal, onAbort) {
+	if (!signal) return;
+	const listener = () => onAbort(signal.reason);
+	signal.addEventListener("abort", listener, { once: true });
+	return () => signal.removeEventListener("abort", listener);
+}
+/**
+* Create a timer that does not keep the Node.js process alive when this
+* last-resort stream backstop is the only remaining work.
+*
+* Node's global `setTimeout()` returns a `Timeout` object with `unref()`.
+* Web-standard runtimes return a numeric timer ID instead. Cloudflare Workers
+* retain that Web behavior for global timers even when `nodejs_compat` is
+* enabled. Accessing an optional property on a numeric ID is safe, so timer
+* creation can normalize the Node-only capability without allocating a
+* wrapper object. The native handle is returned unchanged for `clearTimeout`.
+*/
+function setUnrefTimeout(callback, timeoutMs) {
+	const handle = setTimeout(callback, timeoutMs);
+	handle.unref?.();
+	return handle;
+}
+/**
+* Arm the shared teardown triggers of a transform stream: the lifetime
+* backstop timer, the request-abort listener, and the external-cleanup
+* listener. Returns a disarm function that `terminate()` calls exactly once;
+* teardown ordering must stay identical between the fast and merge paths.
+*/
+function armStreamLifecycle(serverSsr, opts, isTerminal, terminate) {
+	const signal = opts?.signal;
+	let lifetimeTimeoutHandle;
+	let stopAbortListener;
+	const disarm = () => {
+		stopAbortListener?.();
+		stopAbortListener = void 0;
+		if (signal && serverSsr.hydrationScripts.requestSignal === signal) serverSsr.hydrationScripts.requestSignal = void 0;
+		if (lifetimeTimeoutHandle !== void 0) {
+			clearTimeout(lifetimeTimeoutHandle);
+			lifetimeTimeoutHandle = void 0;
+		}
+	};
+	const lifetimeMs = getLifetimeMs(opts);
+	lifetimeTimeoutHandle = setUnrefTimeout(() => {
+		if (isTerminal()) return;
+		const error = /* @__PURE__ */ new Error("Stream lifetime exceeded");
+		console.warn(`SSR stream transform exceeded maximum lifetime (${lifetimeMs}ms), forcing cleanup`);
+		terminate("failure", error);
+	}, lifetimeMs);
+	stopAbortListener = listenForAbort(signal, (reason) => {
+		terminate("failure", reason);
+	});
+	if (signal) serverSsr.hydrationScripts.requestSignal = signal;
+	serverSsr.onCleanup(() => {
+		if (!isTerminal()) terminate("failure", createCleanupAbortError());
+	});
+	return disarm;
+}
+function cleanupFailedStreamCreation(serverSsr, onAbort, error) {
+	try {
+		onAbort?.(error);
+	} catch {}
+	serverSsr.cleanup();
+}
+function encodeStringSource(value, offset) {
+	const remaining = value.length - offset;
+	const capacity = Math.min(MAX_APPLICATION_STRING_CHUNK_BYTES, Math.max(MIN_APPLICATION_STRING_CHUNK_BYTES, Math.min(value.length, remaining * 3)));
+	const output = new Uint8Array(capacity);
+	const { read, written } = encodeIntoBoundedChunk(value, offset, output);
+	return {
+		bytes: written === output.length ? output : output.subarray(0, written),
+		read
+	};
+}
+function transformReadableStreamWithRouter(router, appStream, opts) {
+	const serverSsr = router.serverSsr;
+	if (!serverSsr) throw new Error("Invariant failed: router.serverSsr is required");
+	const hydrationScripts = serverSsr.hydrationScripts;
+	let reader;
+	try {
+		reader = appStream.getReader();
+	} catch (error) {
+		cleanupFailedStreamCreation(serverSsr, opts?.onAbort, error);
+		throw error;
+	}
+	try {
+		opts?.signal?.throwIfAborted();
+		if (hydrationScripts.reserveFastPath()) return makeMergeStream(serverSsr, reader, void 0, opts);
+		const hydrationOutput = hydrationScripts.claimOutput();
+		if (hydrationOutput.state === HydrationScriptOutputState.Failed) throw hydrationOutput.error;
+		return makeMergeStream(serverSsr, reader, hydrationOutput, opts);
+	} catch (error) {
+		cancelReader(reader, error);
+		cleanupFailedStreamCreation(serverSsr, opts?.onAbort, error);
+		throw error;
+	}
+}
+function makeMergeStream(serverSsr, reader, hydrationOutput, opts) {
+	const hydrationScripts = serverSsr.hydrationScripts;
+	let controller;
+	let terminal = false;
+	let appDone = false;
+	let applicationPhase = hydrationOutput ? ApplicationPhase.BeforeBoundary : ApplicationPhase.PassThrough;
+	let insertionBoundary = false;
+	let stopHydrationOutputListener;
+	let appReadPending = false;
+	let settledAppRead;
+	let appBytes;
+	let appOffset = 0;
+	let documentCloseIndex;
+	let appString;
+	let appStringOffset = 0;
+	const useScriptCloseSafePoints = opts?.rendererSafePoint === "script-close";
+	const useRecordEndSafePoints = opts?.rendererSafePoint === "record-end";
+	let barrierMatcher;
+	let safePointMatcher;
+	let closeCarry;
+	let wakeResolve;
+	let disarmLifecycle = () => {};
+	function waitForWake() {
+		return new Promise((resolve) => {
+			wakeResolve = resolve;
+		});
+	}
+	function wakePump() {
+		const resolve = wakeResolve;
+		wakeResolve = void 0;
+		resolve?.();
+	}
+	function enqueueAppBytes(value) {
+		if (value.length === 0) return false;
+		controller.enqueue(value);
+		return true;
+	}
+	function finishAppChunk() {
+		appBytes = void 0;
+		documentCloseIndex = void 0;
+		if (appString === void 0 && useRecordEndSafePoints && closeCarry === void 0) insertionBoundary = true;
+	}
+	function emitAppRange(end, safePoint, finishCurrentChunk = end === appBytes.length) {
+		const value = appBytes;
+		const output = appOffset === 0 && end === value.length ? value : value.subarray(appOffset, end);
+		appOffset = end;
+		if (safePoint) insertionBoundary = true;
+		if (finishCurrentChunk) finishAppChunk();
+		return enqueueAppBytes(output);
+	}
+	function loadNextAppStringChunk() {
+		const value = appString;
+		const encoded = encodeStringSource(value, appStringOffset);
+		appStringOffset += encoded.read;
+		appBytes = encoded.bytes;
+		appOffset = 0;
+		if (appStringOffset === value.length) appString = void 0;
+	}
+	function processUntilBarrier() {
+		const value = appBytes;
+		if (!hydrationScripts.isInitialTaken()) return emitAppRange(value.length, false);
+		const matchEnd = advanceByteMatcher(barrierMatcher ??= {
+			pattern: HYDRATION_SCRIPT_BOUNDARY_BYTES,
+			anchorIndex: HYDRATION_SCRIPT_BOUNDARY_ANCHOR_INDEX,
+			matched: 0
+		}, value, appOffset);
+		if (matchEnd === void 0) return emitAppRange(value.length, false);
+		applicationPhase = ApplicationPhase.Merge;
+		hydrationScripts.liftBarrier();
+		return emitAppRange(matchEnd, true);
+	}
+	function enterHeldClose(consumed, prefix) {
+		appOffset = consumed;
+		applicationPhase = ApplicationPhase.HeldClose;
+		if (safePointMatcher) safePointMatcher.matched = 0;
+		insertionBoundary = true;
+		if (appOffset === appBytes.length) finishAppChunk();
+		return prefix ? enqueueAppBytes(prefix) : false;
+	}
+	function holdDocumentClose(matchStart) {
+		const value = appBytes;
+		return enterHeldClose(matchStart + DOCUMENT_CLOSE_BYTES.length, matchStart === appOffset ? void 0 : value.subarray(appOffset, matchStart));
+	}
+	function processUntilSafePoint(endIndex) {
+		const matchEnd = findSafePointEnd(appBytes, appOffset, endIndex);
+		if (matchEnd === void 0) return false;
+		return emitAppRange(matchEnd, true);
+	}
+	function findSafePointEnd(value, startIndex, endIndex) {
+		const hydrationState = hydrationOutput.state;
+		if (endIndex === startIndex || hydrationState === HydrationScriptOutputState.Done) return;
+		const scanValue = endIndex === value.length ? value : value.subarray(0, endIndex);
+		const matcher = safePointMatcher ??= {
+			pattern: SCRIPT_CLOSE_BYTES,
+			anchorIndex: SCRIPT_CLOSE_ANCHOR_INDEX,
+			matched: 0
+		};
+		const waiting = hydrationState === HydrationScriptOutputState.Waiting;
+		const matchEnd = advanceByteMatcher(matcher, scanValue, startIndex, waiting);
+		if (matchEnd === void 0) return;
+		if (waiting) matcher.matched = 0;
+		return matchEnd;
+	}
+	function processCloseCarry() {
+		const value = appBytes;
+		const carry = closeCarry;
+		const headLength = Math.min(value.length - appOffset, DOCUMENT_CLOSE_BYTES.length);
+		const combined = new Uint8Array(carry.length + headLength);
+		combined.set(carry);
+		combined.set(value.subarray(appOffset, appOffset + headLength), carry.length);
+		const matchStart = findExactBytes(combined, DOCUMENT_CLOSE_BYTES, 0, DOCUMENT_CLOSE_ANCHOR_INDEX);
+		const partial = matchStart < 0 ? getExactBytesPrefixAtEnd(combined, DOCUMENT_CLOSE_BYTES) : void 0;
+		const safeEnd = matchStart >= 0 ? matchStart : partial ?? combined.length;
+		if (useScriptCloseSafePoints) {
+			const safePointEnd = findSafePointEnd(combined, 0, safeEnd);
+			if (safePointEnd !== void 0) {
+				appOffset += safePointEnd - carry.length;
+				closeCarry = void 0;
+				insertionBoundary = true;
+				if (appOffset === value.length) finishAppChunk();
+				return enqueueAppBytes(combined.subarray(0, safePointEnd));
+			}
+		}
+		if (matchStart >= 0) {
+			closeCarry = void 0;
+			return enterHeldClose(appOffset + matchStart + DOCUMENT_CLOSE_BYTES.length - carry.length, matchStart === 0 ? void 0 : combined.subarray(0, matchStart));
+		}
+		closeCarry = partial === void 0 ? void 0 : combined.slice(partial);
+		appOffset += headLength;
+		return enqueueAppBytes(safeEnd === combined.length ? combined : combined.subarray(0, safeEnd));
+	}
+	function processUntilDocumentClose() {
+		const value = appBytes;
+		if (closeCarry) {
+			if (processCloseCarry()) return true;
+			if (applicationPhase === ApplicationPhase.HeldClose) return false;
+			if (appOffset >= value.length) {
+				finishAppChunk();
+				return false;
+			}
+		}
+		const matchStart = documentCloseIndex ??= findExactBytes(value, DOCUMENT_CLOSE_BYTES, appOffset, DOCUMENT_CLOSE_ANCHOR_INDEX);
+		if (matchStart >= 0) {
+			if (useScriptCloseSafePoints && processUntilSafePoint(matchStart)) return true;
+			return holdDocumentClose(matchStart);
+		}
+		const partial = getExactBytesPrefixAtEnd(value, DOCUMENT_CLOSE_BYTES, appOffset);
+		const safeEnd = partial ?? value.length;
+		if (useScriptCloseSafePoints && processUntilSafePoint(safeEnd)) return true;
+		closeCarry = partial === void 0 ? void 0 : value.slice(partial);
+		return emitAppRange(safeEnd, false, true);
+	}
+	function processAppChunk() {
+		if (appOffset >= appBytes.length) {
+			finishAppChunk();
+			return false;
+		}
+		insertionBoundary = false;
+		if (applicationPhase === ApplicationPhase.BeforeBoundary) return processUntilBarrier();
+		if (applicationPhase === ApplicationPhase.Merge) return processUntilDocumentClose();
+		const value = appBytes;
+		if (useScriptCloseSafePoints && processUntilSafePoint(value.length)) return true;
+		return emitAppRange(value.length, false);
+	}
+	function terminate(kind, reason) {
+		if (terminal) return;
+		terminal = true;
+		stopHydrationOutputListener?.();
+		stopHydrationOutputListener = void 0;
+		disarmLifecycle();
+		settledAppRead = void 0;
+		appBytes = void 0;
+		documentCloseIndex = void 0;
+		appString = void 0;
+		closeCarry = void 0;
+		wakePump();
+		return finalizeSsrStream(kind, reason, controller, reader, serverSsr, opts?.onAbort);
+	}
+	function startAppRead() {
+		if (appReadPending || settledAppRead || terminal) return;
+		appReadPending = true;
+		reader.read().then((result) => {
+			appReadPending = false;
+			if (!terminal) {
+				if (result.done) acceptAppRead(result);
+				else settledAppRead = result;
+				wakePump();
+			}
+		}, (error) => {
+			appReadPending = false;
+			if (!terminal) handlePumpError(error);
+		});
+	}
+	function acceptAppRead(result) {
+		if (result.done) {
+			appDone = true;
+			insertionBoundary = closeCarry === void 0;
+			hydrationScripts.startSerializationTimeout(opts?.timeoutMs ?? DEFAULT_SERIALIZATION_TIMEOUT_MS);
+			serverSsr.setRenderFinished();
+			return;
+		}
+		const value = result.value;
+		if (typeof value === "string") {
+			if (value.length === 0) return;
+			appString = value;
+			appStringOffset = 0;
+			insertionBoundary = false;
+			loadNextAppStringChunk();
+			return;
+		}
+		if (value.byteLength === 0) return;
+		appBytes = value;
+		appOffset = 0;
+		insertionBoundary = false;
+	}
+	async function loadNextAppChunk() {
+		if (appString !== void 0) {
+			loadNextAppStringChunk();
+			return;
+		}
+		if (settledAppRead) {
+			const settled = settledAppRead;
+			settledAppRead = void 0;
+			acceptAppRead(settled);
+			return;
+		}
+		if (!(applicationPhase !== ApplicationPhase.BeforeBoundary && insertionBoundary && hydrationOutput.state !== HydrationScriptOutputState.Done) && !appReadPending) {
+			const result = await reader.read();
+			if (terminal) return;
+			acceptAppRead(result);
+			return;
+		}
+		const wake = waitForWake();
+		startAppRead();
+		await wake;
+	}
+	async function pumpPassThrough() {
 		try {
-			__REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-		} catch (err) {
-			console.error(err);
+			for (;;) {
+				if (appBytes) {
+					const remainder = appOffset === 0 ? appBytes : appBytes.subarray(appOffset);
+					appBytes = void 0;
+					if (enqueueAppBytes(remainder)) return;
+					continue;
+				}
+				if (appString !== void 0) {
+					loadNextAppStringChunk();
+					continue;
+				}
+				if (appDone) {
+					terminate("complete");
+					return;
+				}
+				if (appReadPending) {
+					await waitForWake();
+					continue;
+				}
+				let result = settledAppRead;
+				if (result) settledAppRead = void 0;
+				else {
+					result = await reader.read();
+					if (terminal) return;
+				}
+				if (result.done || typeof result.value === "string") {
+					acceptAppRead(result);
+					continue;
+				}
+				if (result.value.byteLength > 0) {
+					controller.enqueue(result.value);
+					return;
+				}
+			}
+		} catch (error) {
+			handlePumpError(error);
 		}
 	}
-	checkDCE();
-	module.exports = require_react_dom_production();
-}));
-//#endregion
-//#region node_modules/.pnpm/react-dom@19.3.0_react@19.3.0/node_modules/react-dom/cjs/react-dom-server.edge.production.js
+	async function pump() {
+		const output = hydrationOutput;
+		while (!terminal) {
+			const hydrationState = output.state;
+			if (hydrationState === HydrationScriptOutputState.Active) {
+				controller.enqueue(output.pullChunk());
+				return;
+			}
+			if (applicationPhase !== ApplicationPhase.BeforeBoundary && insertionBoundary && hydrationState === HydrationScriptOutputState.Ready) {
+				if (!appDone && !appBytes && appString === void 0) startAppRead();
+				controller.enqueue(output.pullChunk());
+				return;
+			}
+			if (applicationPhase === ApplicationPhase.Merge && hydrationState === HydrationScriptOutputState.Done && closeCarry === void 0 && hydrationScripts.reserveFastPath(output)) {
+				applicationPhase = ApplicationPhase.PassThrough;
+				stopHydrationOutputListener?.();
+				stopHydrationOutputListener = void 0;
+				return pumpPassThrough();
+			}
+			if (appBytes) {
+				if (processAppChunk()) return;
+				continue;
+			}
+			if (appDone) {
+				if (applicationPhase === ApplicationPhase.BeforeBoundary) {
+					hydrationScripts.skipInitialTake();
+					applicationPhase = ApplicationPhase.Merge;
+					insertionBoundary = true;
+					continue;
+				}
+				if (closeCarry) {
+					const carry = closeCarry;
+					closeCarry = void 0;
+					insertionBoundary = true;
+					if (enqueueAppBytes(carry)) return;
+					continue;
+				}
+				if (hydrationState === HydrationScriptOutputState.Waiting) {
+					await waitForWake();
+					continue;
+				}
+				if (applicationPhase === ApplicationPhase.HeldClose) {
+					controller.enqueue(DOCUMENT_CLOSE_BYTES.slice());
+					terminate("complete");
+					return;
+				}
+				terminate("complete");
+				return;
+			}
+			await loadNextAppChunk();
+		}
+	}
+	function handlePumpError(error) {
+		if (terminal) return;
+		console.error("Error processing appStream:", error);
+		terminate("failure", error);
+	}
+	const stream = new ReadableStream({
+		start(c) {
+			controller = c;
+		},
+		pull() {
+			return applicationPhase === ApplicationPhase.PassThrough ? pumpPassThrough() : pump().catch(handlePumpError);
+		},
+		cancel(reason) {
+			return terminate("cancel", reason);
+		}
+	});
+	if (hydrationOutput) stopHydrationOutputListener = hydrationOutput.subscribe(() => {
+		if (hydrationOutput.state === HydrationScriptOutputState.Failed) {
+			terminate("failure", hydrationOutput.error);
+			return;
+		}
+		wakePump();
+	});
+	disarmLifecycle = armStreamLifecycle(serverSsr, opts, () => terminal, terminate);
+	return stream;
+}
+// ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-server.edge.production.js
 /**
 * @license React
 * react-dom-server.edge.production.js
@@ -4191,6 +5876,7 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 	}
 	var REACT_OPTIMISTIC_KEY = Symbol.for("react.optimistic_key");
 	var isArrayImpl = Array.isArray;
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	function murmurhash3_32_gc(key, seed) {
 		var remainder = key.length & 3;
 		var bytes = key.length - remainder;
@@ -4219,6 +5905,7 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 		h1 = 3266489909 * (h1 & 65535) + ((3266489909 * (h1 >>> 16) & 65535) << 16) & 4294967295;
 		return (h1 ^ h1 >>> 16) >>> 0;
 	}
+	var supportsArrayBufferDetached = hasOwnProperty.call(ArrayBuffer.prototype, "detached");
 	function handleErrorInNextTick(error) {
 		setTimeout(function() {
 			throw error;
@@ -4231,7 +5918,9 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 	var currentView = null;
 	var writtenBytes = 0;
 	function writeChunk(destination, chunk) {
-		if (0 !== chunk.byteLength) if (4096 < chunk.byteLength) 0 < writtenBytes && (destination.enqueue(new Uint8Array(currentView.buffer, 0, writtenBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), destination.enqueue(chunk);
+		if (0 === chunk.byteLength) {
+			if (supportsArrayBufferDetached && chunk.buffer.detached) throw Error("Cannot transport a detached buffer. This usually happens when trying to transport multiple buffer-spanning views on the same underyling buffer. Either reuse the exact same view by identity or copy the underlying buffer manually via `view.slice()`.");
+		} else if (4096 < chunk.byteLength) 0 < writtenBytes && (destination.enqueue(new Uint8Array(currentView.buffer, 0, writtenBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), destination.enqueue(chunk);
 		else {
 			var allowableBytes = currentView.length - writtenBytes;
 			allowableBytes < chunk.byteLength && (0 === allowableBytes ? destination.enqueue(currentView) : (currentView.set(chunk.subarray(0, allowableBytes), writtenBytes), destination.enqueue(currentView), chunk = chunk.subarray(allowableBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0);
@@ -4260,7 +5949,6 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 		"function" === typeof destination.error ? destination.error(error) : destination.close();
 	}
 	var assign = Object.assign;
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var VALID_ATTRIBUTE_NAME_REGEX = RegExp("^[:A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD][:A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD\\-.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");
 	var illegalAttributeNameCache = {};
 	var validatedAttributeNameCache = {};
@@ -8518,7 +10206,7 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 	}
 	function ensureCorrectIsomorphicReactVersion() {
 		var isomorphicReactPackageVersion = React.version;
-		if ("19.3.0" !== isomorphicReactPackageVersion) throw Error("Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\n  - react:      " + (isomorphicReactPackageVersion + "\n  - react-dom:  19.3.0\nLearn more: https://react.dev/warnings/version-mismatch"));
+		if ("19.3.1" !== isomorphicReactPackageVersion) throw Error("Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\n  - react:      " + (isomorphicReactPackageVersion + "\n  - react-dom:  19.3.1\nLearn more: https://react.dev/warnings/version-mismatch"));
 	}
 	ensureCorrectIsomorphicReactVersion();
 	ensureCorrectIsomorphicReactVersion();
@@ -8628,10 +10316,9 @@ var require_react_dom_server_edge_production = /* @__PURE__ */ __commonJSMin(((e
 			startWork(request);
 		});
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/.pnpm/react-dom@19.3.0_react@19.3.0/node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.js
+// ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.js
 /**
 * @license React
 * react-dom-server-legacy.browser.production.js
@@ -12730,10 +14417,9 @@ var require_react_dom_server_legacy_browser_production = /* @__PURE__ */ __commo
 	exports.renderToString = function(children, options) {
 		return renderToStringImpl(children, options, !1, "The server used \"renderToString\" which does not support Suspense. If you intended for this Suspense boundary to render the fallback content on the server consider throwing an Error somewhere within the Suspense boundary. If you intended to have the server wait for the suspended component please switch to \"renderToReadableStream\" which supports Suspense on the server");
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/.pnpm/react-dom@19.3.0_react@19.3.0/node_modules/react-dom/server.edge.js
+// ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/server.edge.js
 var require_server_edge = /* @__PURE__ */ __commonJSMin(((exports) => {
 	var b;
 	var l;
@@ -12745,1281 +14431,7 @@ var require_server_edge = /* @__PURE__ */ __commonJSMin(((exports) => {
 	exports.renderToStaticMarkup = l.renderToStaticMarkup;
 	exports.resume = b.resume;
 }));
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/tsrScript.js
-var tsrScript_default = "self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]}";
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/ssr-server.js
-var SCOPE_ID = "tsr";
-var TSR_PREFIX = GLOBAL_TSR + ".router=";
-var P_PREFIX = GLOBAL_TSR + ".p(()=>";
-var P_SUFFIX = ")";
-function dehydrateMatch(match) {
-	const dehydratedMatch = {
-		i: dehydrateSsrMatchId(match.id),
-		u: match.updatedAt,
-		s: match.status
-	};
-	for (const [key, shorthand] of [
-		["__beforeLoadContext", "b"],
-		["loaderData", "l"],
-		["error", "e"],
-		["ssr", "ssr"]
-	]) if (match[key] !== void 0) dehydratedMatch[shorthand] = match[key];
-	if (match._notFound) dehydratedMatch.g = true;
-	return dehydratedMatch;
-}
-var INITIAL_SCRIPTS = [getCrossReferenceHeader(SCOPE_ID), tsrScript_default];
-var ScriptBuffer = class {
-	constructor(injectScript) {
-		this._scriptBarrierLifted = false;
-		this._cleanedUp = false;
-		this._microtaskVersion = 0;
-		this._pendingMicrotaskVersion = 0;
-		this.injectScript = injectScript;
-		this._queue = INITIAL_SCRIPTS.slice();
-	}
-	enqueue(script) {
-		if (this._cleanedUp) return;
-		this._queue.push(script);
-		if (this._scriptBarrierLifted) this.scheduleInjectBufferedScripts();
-	}
-	liftBarrier() {
-		if (this._scriptBarrierLifted || this._cleanedUp) return;
-		this._scriptBarrierLifted = true;
-		if (this._queue.length > 0) this.scheduleInjectBufferedScripts();
-	}
-	scheduleInjectBufferedScripts() {
-		if (this._pendingMicrotaskVersion !== 0) return;
-		const pendingVersion = ++this._microtaskVersion;
-		this._pendingMicrotaskVersion = pendingVersion;
-		queueMicrotask(() => {
-			if (this._pendingMicrotaskVersion !== pendingVersion) return;
-			this._pendingMicrotaskVersion = 0;
-			this.injectBufferedScripts();
-		});
-	}
-	clearPendingMicrotask() {
-		if (this._pendingMicrotaskVersion === 0) return;
-		this._pendingMicrotaskVersion = 0;
-		this._microtaskVersion++;
-	}
-	/**
-	* Flushes any pending scripts synchronously.
-	* Call this before signaling serialization finished to ensure all scripts are injected.
-	*
-	* IMPORTANT: Only injects if the barrier has been lifted. Before the barrier is lifted,
-	* scripts should remain in the queue so takeBufferedScripts() can retrieve them
-	*/
-	flush() {
-		if (!this._scriptBarrierLifted) return;
-		if (this._cleanedUp) return;
-		this.clearPendingMicrotask();
-		this.injectBufferedScripts();
-	}
-	takeAll() {
-		return this.takeScripts(this._queue.length);
-	}
-	takeScripts(count) {
-		if (count <= 0) return void 0;
-		const bufferedScripts = this._queue.splice(0, count);
-		if (bufferedScripts.length === 0) return;
-		if (bufferedScripts.length === 1) return bufferedScripts[0] + ";document.currentScript.remove()";
-		return bufferedScripts.join(";") + ";document.currentScript.remove()";
-	}
-	hasPending() {
-		return this._queue.length > 0;
-	}
-	injectBufferedScripts() {
-		if (this._cleanedUp) return;
-		if (this._queue.length === 0) return;
-		const scriptsToInject = this.takeAll();
-		if (scriptsToInject) this.injectScript?.(scriptsToInject);
-	}
-	cleanup() {
-		this._cleanedUp = true;
-		this.clearPendingMicrotask();
-		this._queue = [];
-		this.injectScript = void 0;
-	}
-};
-var MANIFEST_CACHE_SIZE = 100;
-var manifestCaches = /* @__PURE__ */ new WeakMap();
-function getManifestCache(manifest) {
-	const cache = manifestCaches.get(manifest);
-	if (cache) return cache;
-	const newCache = createSieveCache(MANIFEST_CACHE_SIZE);
-	manifestCaches.set(manifest, newCache);
-	return newCache;
-}
-function getInlineCssForPreparedRoutes(manifest, preparedRoutes) {
-	if (preparedRoutes.inlineCss !== void 0) return preparedRoutes.inlineCss;
-	const styles = manifest.inlineCss?.styles;
-	const hrefs = preparedRoutes.inlineCssHrefs;
-	if (!styles || !hrefs?.length) return void 0;
-	let css = "";
-	for (const href of hrefs) css += styles[href];
-	preparedRoutes.inlineCss = css;
-	return css;
-}
-function getInlineCssAssetForPreparedRoutes(manifest, preparedRoutes) {
-	const css = getInlineCssForPreparedRoutes(manifest, preparedRoutes);
-	return css === void 0 ? void 0 : createInlineCssStyleAsset(css);
-}
-function getMatchedRoutesCacheKey(matches) {
-	let cacheKey = "";
-	for (let i = 0; i < matches.length; i++) cacheKey += (i === 0 ? "" : "\0") + matches[i].routeId;
-	return cacheKey;
-}
-function getPreparedMatchedManifestRoutes(manifest, matches, cacheKey) {
-	{
-		const cached = getManifestCache(manifest).get(cacheKey);
-		if (cached) return cached;
-	}
-	const preparedRoutes = prepareMatchedManifestRoutes(manifest, matches);
-	getManifestCache(manifest).set(cacheKey, preparedRoutes);
-	return preparedRoutes;
-}
-function prepareMatchedManifestRoutes(manifest, matches) {
-	const inlineStyles = manifest.inlineCss?.styles;
-	const routes = {};
-	if (!inlineStyles) {
-		for (const match of matches) {
-			const route = manifest.routes[match.routeId];
-			if (route) routes[match.routeId] = route;
-		}
-		return {
-			routes,
-			hasStrippedRoutes: false
-		};
-	}
-	const inlineCssHrefs = [];
-	const seenInlineCssHrefs = /* @__PURE__ */ new Set();
-	let hasStrippedRoutes = false;
-	for (const match of matches) {
-		const routeId = match.routeId;
-		const route = manifest.routes[routeId];
-		if (!route) continue;
-		const nextRoute = stripInlinedStylesheetAssetsFromRoute(inlineStyles, route, inlineCssHrefs, seenInlineCssHrefs);
-		if (nextRoute !== route) hasStrippedRoutes = true;
-		routes[routeId] = nextRoute;
-	}
-	return {
-		routes,
-		hasStrippedRoutes,
-		...inlineCssHrefs.length ? { inlineCssHrefs } : {}
-	};
-}
-function stripInlinedStylesheetAssetsFromRoute(inlineStyles, route, inlineCssHrefs, seenInlineCssHrefs) {
-	const css = route.css;
-	if (!css) return route;
-	if (css.length === 0) {
-		const nextRoute = { ...route };
-		delete nextRoute.css;
-		return nextRoute;
-	}
-	let cssLinks;
-	for (let i = 0; i < css.length; i++) {
-		const link = css[i];
-		const href = getStylesheetHref(link);
-		if (inlineStyles[href] === void 0) {
-			if (cssLinks) cssLinks.push(link);
-			continue;
-		}
-		if (!seenInlineCssHrefs.has(href)) {
-			seenInlineCssHrefs.add(href);
-			inlineCssHrefs.push(href);
-		}
-		if (!cssLinks) cssLinks = css.slice(0, i);
-	}
-	if (!cssLinks) return route;
-	if (cssLinks.length > 0) return {
-		...route,
-		css: cssLinks
-	};
-	const nextRoute = { ...route };
-	delete nextRoute.css;
-	return nextRoute;
-}
-function hasRouteAssets(route) {
-	return !!route.scripts?.length || !!route.css?.length;
-}
-function hasRequestAssets(assets) {
-	return !!assets && (!!assets.preloads?.length || hasRouteAssets(assets));
-}
-function mergeRequestAssetsIntoRootRoute(rootRoute, requestAssets) {
-	const preloads = requestAssets?.preloads?.length ? [...requestAssets.preloads, ...rootRoute?.preloads ?? []] : rootRoute?.preloads;
-	const scripts = requestAssets?.scripts?.length ? [...requestAssets.scripts, ...rootRoute?.scripts ?? []] : rootRoute?.scripts;
-	const cssLinks = requestAssets?.css?.length ? [...requestAssets.css, ...rootRoute?.css ?? []] : rootRoute?.css;
-	return {
-		...rootRoute ?? {},
-		...preloads?.length ? { preloads } : {},
-		...scripts?.length ? { scripts } : {},
-		...cssLinks?.length ? { css: cssLinks } : {}
-	};
-}
-function attachRouterServerSsrUtils({ router, manifest, getRequestAssets }) {
-	router.ssr = { get manifest() {
-		if (!manifest) return manifest;
-		const requestAssets = getRequestAssets?.();
-		const matches = _getRenderedMatches(router.stores.matches.get());
-		const hasAssets = hasRequestAssets(requestAssets);
-		if (!hasAssets && !manifest.inlineCss) return manifest;
-		let inlineCssAsset;
-		let routes = manifest.routes;
-		if (manifest.inlineCss) {
-			const preparedManifest = getPreparedMatchedManifestRoutes(manifest, matches, getMatchedRoutesCacheKey(matches));
-			inlineCssAsset = getInlineCssAssetForPreparedRoutes(manifest, preparedManifest);
-			if (preparedManifest.hasStrippedRoutes) routes = {
-				...manifest.routes,
-				...preparedManifest.routes
-			};
-		}
-		if (!hasAssets) return {
-			...manifest.scriptFormat ? { scriptFormat: manifest.scriptFormat } : {},
-			...inlineCssAsset ? { inlineStyle: inlineCssAsset } : {},
-			routes
-		};
-		const rootRoute = routes[rootRouteId];
-		return {
-			...manifest.scriptFormat ? { scriptFormat: manifest.scriptFormat } : {},
-			...inlineCssAsset ? { inlineStyle: inlineCssAsset } : {},
-			routes: {
-				...routes,
-				[rootRouteId]: mergeRequestAssetsIntoRootRoute(rootRoute, requestAssets)
-			}
-		};
-	} };
-	let _dehydrated = false;
-	let _serializationFinished = false;
-	let streamFastPathReserved = false;
-	const renderFinishedListeners = [];
-	const injectedHtmlListeners = [];
-	const serializationFinishedListeners = [];
-	const cleanupListeners = [];
-	let cleanupStarted = false;
-	let injectedHtmlBuffer = "";
-	const callListeners = (listeners, errorPrefix) => {
-		const snapshot = listeners.slice();
-		for (const l of snapshot) try {
-			l();
-		} catch (err) {
-			console.error(`${errorPrefix}:`, err);
-		}
-	};
-	const removeListener = (listeners, listener) => {
-		const index = listeners.indexOf(listener);
-		if (index >= 0) listeners.splice(index, 1);
-	};
-	const scriptBuffer = new ScriptBuffer((script) => {
-		serverSsr.injectScript(script);
-	});
-	const serverSsr = {
-		injectHtml: (html) => {
-			if (!html || cleanupStarted) return;
-			injectedHtmlBuffer += html;
-			callListeners(injectedHtmlListeners, "SSR injected HTML listener error");
-		},
-		injectScript: (script) => {
-			if (!script || cleanupStarted) return;
-			const html = `<script${router.options.ssr?.nonce ? ` nonce='${router.options.ssr.nonce}'` : ""}>${script}<\/script>`;
-			serverSsr.injectHtml(html);
-		},
-		dehydrate: async (opts) => {
-			if (_dehydrated) invariant();
-			let matchesToDehydrate = _getRenderedMatches(router.stores.matches.get());
-			if (router.isShell()) matchesToDehydrate = matchesToDehydrate.slice(0, 1);
-			const matches = matchesToDehydrate.map(dehydrateMatch);
-			let manifestToDehydrate = void 0;
-			if (manifest) {
-				const cacheKey = getMatchedRoutesCacheKey(matchesToDehydrate);
-				const preparedManifest = getPreparedMatchedManifestRoutes(manifest, matchesToDehydrate, cacheKey);
-				manifestToDehydrate = {
-					...manifest.scriptFormat ? { scriptFormat: manifest.scriptFormat } : {},
-					...preparedManifest.inlineCssHrefs ? { inlineStyle: createInlineCssPlaceholderAsset() } : {},
-					routes: preparedManifest.routes
-				};
-				const requestAssets = opts?.requestAssets;
-				if (hasRequestAssets(requestAssets)) {
-					const existingRoot = manifestToDehydrate.routes[rootRouteId];
-					manifestToDehydrate.routes = {
-						...manifestToDehydrate.routes,
-						[rootRouteId]: mergeRequestAssetsIntoRootRoute(existingRoot, requestAssets)
-					};
-				}
-			}
-			const dehydratedRouter = {
-				manifest: manifestToDehydrate,
-				matches
-			};
-			const dehydratedData = await router.options.dehydrate?.();
-			if (cleanupStarted) return;
-			if (dehydratedData) dehydratedRouter.dehydratedData = dehydratedData;
-			_dehydrated = true;
-			const trackPlugins = { didRun: false };
-			const serializationAdapters = router.options.serializationAdapters;
-			const plugins = serializationAdapters ? serializationAdapters.map((t) => /* @__PURE__ */ makeSsrSerovalPlugin(t, trackPlugins)).concat(defaultSerovalPlugins) : defaultSerovalPlugins;
-			let serializationCompleteSignaled = false;
-			const signalSerializationComplete = () => {
-				if (serializationCompleteSignaled || cleanupStarted) return;
-				serializationCompleteSignaled = true;
-				_serializationFinished = true;
-				const listeners = serializationFinishedListeners.slice();
-				serializationFinishedListeners.length = 0;
-				for (const l of listeners) try {
-					l();
-				} catch (err) {
-					console.error("Serialization listener error:", err);
-				}
-			};
-			const finishScriptSerialization = () => {
-				if (serializationCompleteSignaled || cleanupStarted) return;
-				scriptBuffer.enqueue(GLOBAL_TSR + ".e()");
-				scriptBuffer.flush();
-				signalSerializationComplete();
-			};
-			crossSerializeStream(dehydratedRouter, {
-				refs: /* @__PURE__ */ new Map(),
-				plugins,
-				onSerialize: (data, initial) => {
-					let serialized = initial ? TSR_PREFIX + data : data;
-					if (trackPlugins.didRun) serialized = P_PREFIX + serialized + P_SUFFIX;
-					scriptBuffer.enqueue(serialized);
-				},
-				onError: (err) => {
-					console.error("Serialization error:", err);
-					if (err && err.stack) console.error(err.stack);
-					finishScriptSerialization();
-				},
-				scopeId: SCOPE_ID,
-				onDone: () => {
-					finishScriptSerialization();
-				}
-			});
-		},
-		isDehydrated() {
-			return _dehydrated;
-		},
-		isSerializationFinished() {
-			return _serializationFinished;
-		},
-		reserveStreamFastPath() {
-			if (!cleanupStarted && _serializationFinished && !streamFastPathReserved && renderFinishedListeners.length === 0 && !injectedHtmlBuffer && !scriptBuffer.hasPending()) {
-				streamFastPathReserved = true;
-				return true;
-			}
-			return false;
-		},
-		onInjectedHtml: (listener) => {
-			if (cleanupStarted) return () => {};
-			injectedHtmlListeners.push(listener);
-			return () => removeListener(injectedHtmlListeners, listener);
-		},
-		onRenderFinished: (listener) => {
-			if (cleanupStarted || streamFastPathReserved) return;
-			renderFinishedListeners.push(listener);
-		},
-		onSerializationFinished: (listener) => {
-			if (cleanupStarted) return () => {};
-			if (_serializationFinished && !cleanupStarted) {
-				try {
-					listener();
-				} catch (err) {
-					console.error("Serialization listener error:", err);
-				}
-				return () => {};
-			}
-			serializationFinishedListeners.push(listener);
-			return () => removeListener(serializationFinishedListeners, listener);
-		},
-		onCleanup: (listener) => {
-			if (cleanupStarted) return;
-			cleanupListeners.push(listener);
-		},
-		setRenderFinished: () => {
-			if (cleanupStarted) return;
-			scriptBuffer.liftBarrier();
-			const listeners = renderFinishedListeners.slice();
-			renderFinishedListeners.length = 0;
-			for (const l of listeners) try {
-				l();
-			} catch (err) {
-				console.error("Error in render finished listener:", err);
-			}
-			if (_serializationFinished) scriptBuffer.flush();
-		},
-		takeBufferedScripts() {
-			const scripts = scriptBuffer.takeAll();
-			if (!scripts) return void 0;
-			return {
-				tag: "script",
-				attrs: {
-					nonce: router.options.ssr?.nonce,
-					className: "$tsr",
-					id: TSR_SCRIPT_BARRIER_ID
-				},
-				children: scripts
-			};
-		},
-		liftScriptBarrier() {
-			scriptBuffer.liftBarrier();
-		},
-		takeBufferedHtml() {
-			if (!injectedHtmlBuffer) return;
-			const buffered = injectedHtmlBuffer;
-			injectedHtmlBuffer = "";
-			return buffered;
-		},
-		cleanup() {
-			if (cleanupStarted) return;
-			cleanupStarted = true;
-			const listeners = cleanupListeners.slice();
-			cleanupListeners.length = 0;
-			for (const l of listeners) try {
-				l();
-			} catch (err) {
-				console.error("Error in SSR cleanup listener:", err);
-			}
-			renderFinishedListeners.length = 0;
-			injectedHtmlListeners.length = 0;
-			serializationFinishedListeners.length = 0;
-			injectedHtmlBuffer = "";
-			scriptBuffer.cleanup();
-			router.serverSsr = void 0;
-		}
-	};
-	router.serverSsr = serverSsr;
-	for (const listener of router.serverSsrLifecycle?.onServerSsrAttach ?? []) try {
-		listener(serverSsr);
-	} catch (err) {
-		console.error("SSR attach listener error:", err);
-	}
-}
-/**
-* Get the origin for the request.
-*
-* SECURITY: We intentionally do NOT trust the Origin header for determining
-* the router's origin. The Origin header can be spoofed by attackers, which
-* could lead to SSRF-like vulnerabilities where redirects are constructed
-* using a malicious origin (CVE-2024-34351).
-*
-* Instead, we derive the origin from request.url, which is typically set by
-* the server infrastructure (not client-controlled headers).
-*
-* For applications behind proxies that need to trust forwarded headers,
-* use the router's `origin` option to explicitly configure a trusted origin.
-*/
-function getOrigin(request) {
-	try {
-		return new URL(request.url).origin;
-	} catch {}
-	return "http://localhost";
-}
-function getNormalizedURL(url, base) {
-	if (typeof url === "string") url = url.replace("\\", "%5C");
-	const rawUrl = new URL(url, base);
-	const handledProtocolRelativeURL = rawUrl.pathname.startsWith("//");
-	const decodedPathname = decodePath(handledProtocolRelativeURL ? rawUrl.pathname.replace(/^\/+/, "/") : rawUrl.pathname);
-	const searchParams = new URLSearchParams(rawUrl.search);
-	const normalizedHref = decodedPathname + (searchParams.size > 0 ? "?" : "") + searchParams.toString() + rawUrl.hash;
-	return {
-		url: new URL(normalizedHref, rawUrl.origin),
-		handledProtocolRelativeURL
-	};
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/handlerCallback.js
-function isSsrResponse(value) {
-	return typeof value === "object" && value !== null && "response" in value && "serverSsrCleanup" in value;
-}
-function normalizeSsrResponse(result) {
-	return isSsrResponse(result) ? result : {
-		response: result,
-		serverSsrCleanup: "none"
-	};
-}
-function disposeSsrResponse(response, reason) {
-	if (response.serverSsrCleanup !== "stream") return Promise.resolve();
-	try {
-		return Promise.resolve(response.dispose(reason));
-	} catch (error) {
-		return Promise.reject(error);
-	}
-}
-function disposeSsrResponseDetached(result, reason, onError = console.error) {
-	const ssrResponse = normalizeSsrResponse(result);
-	if (ssrResponse.serverSsrCleanup === "stream") {
-		disposeSsrResponse(ssrResponse, reason).catch(onError);
-		return;
-	}
-	if (ssrResponse.response.body) try {
-		ssrResponse.response.body.cancel(reason).catch(onError);
-	} catch (error) {
-		onError(error);
-	}
-}
-function createSsrStreamResponse(router, response) {
-	if (!response.body) throw new Error("Invariant failed: SSR stream response requires a body");
-	let disposed = false;
-	return {
-		response,
-		serverSsrCleanup: "stream",
-		async dispose(reason) {
-			if (disposed) return;
-			disposed = true;
-			router.serverSsr?.cleanup();
-			try {
-				await response.body.cancel(reason);
-			} catch {}
-		}
-	};
-}
-function bindSsrResponseToRequest(router, result, signal) {
-	const ssrResponse = normalizeSsrResponse(result);
-	if (ssrResponse.serverSsrCleanup !== "stream") {
-		if (signal.aborted) disposeSsrResponseDetached(result, signal.reason);
-		return ssrResponse;
-	}
-	const failed = (error) => {
-		router?.serverSsr?.cleanup();
-		console.error(error);
-	};
-	const abort = () => {
-		disposeSsrResponseDetached(ssrResponse, signal.reason, failed);
-	};
-	if (signal.aborted) {
-		abort();
-		return ssrResponse;
-	}
-	signal.addEventListener("abort", abort, { once: true });
-	router?.serverSsr?.onCleanup(() => {
-		signal.removeEventListener("abort", abort);
-	});
-	return ssrResponse;
-}
-async function replaceSsrResponse(result, response, reason) {
-	await disposeSsrResponse(normalizeSsrResponse(result), reason);
-	return {
-		response,
-		serverSsrCleanup: "none"
-	};
-}
-async function stripSsrResponseBody(result, reason) {
-	const ssrResponse = normalizeSsrResponse(result);
-	await disposeSsrResponse(ssrResponse, reason);
-	return {
-		response: new Response(null, ssrResponse.response),
-		serverSsrCleanup: "none"
-	};
-}
-function defineHandlerCallback(handler) {
-	return handler;
-}
-//#endregion
-//#region node_modules/.pnpm/cookie-es@3.1.1/node_modules/cookie-es/dist/index.mjs
-function splitSetCookieString(cookiesString) {
-	if (Array.isArray(cookiesString)) return cookiesString.flatMap((c) => splitSetCookieString(c));
-	if (typeof cookiesString !== "string") return [];
-	const cookiesStrings = [];
-	let pos = 0;
-	let start;
-	let ch;
-	let lastComma;
-	let nextStart;
-	let cookiesSeparatorFound;
-	const skipWhitespace = () => {
-		while (pos < cookiesString.length && /\s/.test(cookiesString.charAt(pos))) pos += 1;
-		return pos < cookiesString.length;
-	};
-	const notSpecialChar = () => {
-		ch = cookiesString.charAt(pos);
-		return ch !== "=" && ch !== ";" && ch !== ",";
-	};
-	while (pos < cookiesString.length) {
-		start = pos;
-		cookiesSeparatorFound = false;
-		while (skipWhitespace()) {
-			ch = cookiesString.charAt(pos);
-			if (ch === ",") {
-				lastComma = pos;
-				pos += 1;
-				skipWhitespace();
-				nextStart = pos;
-				while (pos < cookiesString.length && notSpecialChar()) pos += 1;
-				if (pos < cookiesString.length && cookiesString.charAt(pos) === "=") {
-					cookiesSeparatorFound = true;
-					pos = nextStart;
-					cookiesStrings.push(cookiesString.slice(start, lastComma));
-					start = pos;
-				} else pos = lastComma + 1;
-			} else pos += 1;
-		}
-		if (!cookiesSeparatorFound || pos >= cookiesString.length) cookiesStrings.push(cookiesString.slice(start));
-	}
-	return cookiesStrings;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/headers.js
-function toHeadersInstance(init) {
-	if (init instanceof Headers) return init;
-	else if (Array.isArray(init)) return new Headers(init);
-	else if (typeof init === "object") return new Headers(init);
-	else return null;
-}
-function mergeHeaders(...headers) {
-	return headers.reduce((acc, header) => {
-		const headersInstance = toHeadersInstance(header);
-		if (!headersInstance) return acc;
-		for (const [key, value] of headersInstance.entries()) if (key === "set-cookie") splitSetCookieString(value).forEach((cookie) => acc.append("set-cookie", cookie));
-		else acc.set(key, value);
-		return acc;
-	}, new Headers());
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/createRequestHandler.js
-var requestWaiters = /* @__PURE__ */ new WeakMap();
-function removeRequestWaiter(waiters, index, reject) {
-	if (waiters[index] !== reject) return;
-	if (index !== waiters.length - 1) {
-		waiters[index] = void 0;
-		return;
-	}
-	waiters.pop();
-	while (waiters.length && waiters[waiters.length - 1] === void 0) waiters.pop();
-}
-function waitForRequest(value, signal, onLate) {
-	const promise = Promise.resolve(value);
-	if (signal.aborted) {
-		promise.then(onLate, () => {});
-		return Promise.reject(signal.reason);
-	}
-	return new Promise((resolve, reject) => {
-		let waiters = requestWaiters.get(signal);
-		let index;
-		if (waiters) index = waiters.push(reject) - 1;
-		else {
-			const newWaiters = [reject];
-			waiters = newWaiters;
-			index = 0;
-			requestWaiters.set(signal, newWaiters);
-			signal.addEventListener("abort", () => {
-				requestWaiters.delete(signal);
-				for (const rejectWaiter of newWaiters) rejectWaiter?.(signal.reason);
-				newWaiters.length = 0;
-			}, { once: true });
-		}
-		promise.then((result) => {
-			removeRequestWaiter(waiters, index, reject);
-			if (signal.aborted) onLate?.(result);
-			else resolve(result);
-		}, (error) => {
-			removeRequestWaiter(waiters, index, reject);
-			reject(error);
-		});
-	});
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+router-core@1.171.29/node_modules/@tanstack/router-core/dist/esm/ssr/transformStreamWithRouter.js
-function transformReadableStreamWithRouter(router, routerStream, opts) {
-	return transformStreamWithRouter(router, routerStream, opts);
-}
-function transformPipeableStreamWithRouter(router, routerStream, opts) {
-	return Readable.fromWeb(transformStreamWithRouter(router, Readable.toWeb(routerStream), opts));
-}
-var MIN_CLOSING_TAG_LENGTH = 4;
-var DEFAULT_SERIALIZATION_TIMEOUT_MS = 6e4;
-var DEFAULT_LIFETIME_TIMEOUT_MS = DEFAULT_SERIALIZATION_TIMEOUT_MS * 2;
-var MAX_LEFTOVER_CHARS = 2048;
-var MAX_TAIL_CHARS = 65536;
-var MAX_ROUTER_HTML_CHARS = 16777216;
-var MAX_PENDING_WRITE_CHARS = 16777216;
-var MergeState = {
-	ReadingBody: 0,
-	HoldingTail: 1,
-	AppDone: 2,
-	Draining: 3,
-	Done: 4
-};
-var textEncoder$1 = new TextEncoder();
-var noop$1 = () => {};
-var resolvedPromise = Promise.resolve();
-function findHtmlBoundary(str) {
-	let lastClosingTagEnd = -1;
-	let searchFrom = str.length - MIN_CLOSING_TAG_LENGTH;
-	while (searchFrom >= 0) {
-		const openSlash = str.lastIndexOf("</", searchFrom);
-		if (openSlash === -1) break;
-		if ((str.charCodeAt(openSlash + 2) | 32) === 98 && (str.charCodeAt(openSlash + 3) | 32) === 111 && (str.charCodeAt(openSlash + 4) | 32) === 100 && (str.charCodeAt(openSlash + 5) | 32) === 121 && str.charCodeAt(openSlash + 6) === 62) return -openSlash - 2;
-		if (lastClosingTagEnd === -1) {
-			let i = openSlash + 2;
-			const startCode = str.charCodeAt(i);
-			if (startCode >= 97 && startCode <= 122 || startCode >= 65 && startCode <= 90) {
-				i++;
-				while (i < str.length) {
-					const code = str.charCodeAt(i);
-					if (code >= 97 && code <= 122 || code >= 65 && code <= 90 || code >= 48 && code <= 57 || code === 95 || code === 58 || code === 46 || code === 45) i++;
-					else break;
-				}
-				if (str.charCodeAt(i) === 62) lastClosingTagEnd = i + 1;
-			}
-		}
-		searchFrom = openSlash - 1;
-	}
-	return lastClosingTagEnd;
-}
-function safeReleaseReader(reader) {
-	try {
-		reader.releaseLock();
-		return true;
-	} catch {
-		return false;
-	}
-}
-/**
-* Cancel a reader without producing an unhandled rejection. `reader.cancel()`
-* can reject (e.g. when the underlying source's cancel() throws), and
-* downstream cancel() should still wait for upstream teardown when possible.
-*/
-function safeCancelReader(reader, reason) {
-	let cancelPromise;
-	try {
-		cancelPromise = reader.cancel(reason);
-	} catch {}
-	if (!safeReleaseReader(reader) && cancelPromise) return cancelPromise.then(noop$1, noop$1).then(() => {
-		safeReleaseReader(reader);
-	});
-	return cancelPromise ? cancelPromise.then(noop$1, noop$1) : resolvedPromise;
-}
-function createReaderState(appStream) {
-	const reader = appStream.getReader();
-	let released = false;
-	return {
-		reader,
-		cancel: (reason) => {
-			if (released) return resolvedPromise;
-			released = true;
-			return safeCancelReader(reader, reason);
-		},
-		release: () => {
-			if (released) return;
-			released = true;
-			safeReleaseReader(reader);
-		}
-	};
-}
-function createAbortNotifier(opts) {
-	let abortNotified = false;
-	return (reason) => {
-		if (abortNotified) return;
-		abortNotified = true;
-		try {
-			opts?.onAbort?.(reason);
-		} catch {}
-	};
-}
-function listenToAbort(signal, onAbort) {
-	if (!signal) return;
-	if (signal.aborted) {
-		onAbort(signal.reason);
-		return;
-	}
-	const listener = () => onAbort(signal.reason);
-	signal.addEventListener("abort", listener, { once: true });
-	return () => signal.removeEventListener("abort", listener);
-}
-function transformStreamWithRouter(router, appStream, opts) {
-	const serverSsr = router.serverSsr;
-	if (!serverSsr) throw new Error("Invariant failed: router.serverSsr is required");
-	if (serverSsr.reserveStreamFastPath()) return makeFastPathStream(appStream, opts, serverSsr);
-	return makeMainStream(serverSsr, appStream, opts);
-}
-function makeFastPathStream(appStream, opts, serverSsr) {
-	let cleanedUp = false;
-	let controller;
-	let state = MergeState.ReadingBody;
-	let lifetimeTimeoutHandle;
-	let stopListeningToAbort;
-	let stopListeningToInjectedHtml;
-	const readerState = createReaderState(appStream);
-	const notifyAbort = createAbortNotifier(opts);
-	const isDone = () => state === MergeState.Done;
-	let renderFinished = false;
-	const finishSsrRendering = () => {
-		if (!serverSsr || renderFinished) return true;
-		renderFinished = true;
-		try {
-			serverSsr.setRenderFinished();
-			return true;
-		} catch (error) {
-			safeError(error);
-			cleanup(error);
-			return false;
-		}
-	};
-	const cleanup = (reason, cancelReader = true) => {
-		if (cleanedUp) return resolvedPromise;
-		cleanedUp = true;
-		if (lifetimeTimeoutHandle !== void 0) {
-			clearTimeout(lifetimeTimeoutHandle);
-			lifetimeTimeoutHandle = void 0;
-		}
-		stopListeningToAbort?.();
-		stopListeningToAbort = void 0;
-		try {
-			stopListeningToInjectedHtml?.();
-		} catch {}
-		stopListeningToInjectedHtml = void 0;
-		if (cancelReader) notifyAbort(reason);
-		const readerDone = cancelReader ? readerState.cancel(reason) : (readerState.release(), resolvedPromise);
-		if (serverSsr) try {
-			serverSsr.cleanup();
-		} catch (error) {
-			console.error("Error in SSR cleanup:", error);
-		}
-		return readerDone;
-	};
-	const safeClose = () => {
-		if (isDone()) return;
-		state = MergeState.Done;
-		try {
-			controller?.close();
-		} catch {}
-	};
-	const safeError = (error) => {
-		if (isDone()) return;
-		state = MergeState.Done;
-		try {
-			controller?.error(error);
-		} catch {}
-	};
-	if (serverSsr) stopListeningToInjectedHtml = serverSsr.onInjectedHtml(() => {
-		const err = /* @__PURE__ */ new Error("SSR router HTML injected during fast path");
-		safeError(err);
-		cleanup(err);
-	});
-	const lifetimeMs = opts?.lifetimeMs ?? DEFAULT_LIFETIME_TIMEOUT_MS;
-	lifetimeTimeoutHandle = setTimeout(() => {
-		if (!cleanedUp && !isDone()) {
-			const err = /* @__PURE__ */ new Error("Stream lifetime exceeded");
-			console.warn(`SSR stream transform exceeded maximum lifetime (${lifetimeMs}ms), forcing cleanup`);
-			safeError(err);
-			cleanup(err);
-		}
-	}, lifetimeMs);
-	const stream = new ReadableStream$1({
-		start(c) {
-			controller = c;
-		},
-		async pull(c) {
-			if (cleanedUp || isDone()) return;
-			try {
-				const { done, value } = await readerState.reader.read();
-				if (!done) {
-					if (!cleanedUp && !isDone()) c.enqueue(value);
-					return;
-				}
-				if (cleanedUp || isDone()) return;
-				if (!finishSsrRendering()) return;
-				safeClose();
-				return cleanup(void 0, false);
-			} catch (error) {
-				if (cleanedUp) return;
-				console.error("Error reading appStream:", error);
-				if (state < MergeState.AppDone) try {
-					serverSsr?.setRenderFinished();
-				} catch {}
-				safeError(error);
-				return cleanup(error);
-			} finally {
-				if (cleanedUp || isDone()) readerState.release();
-			}
-		},
-		cancel(reason) {
-			state = MergeState.Done;
-			return cleanup(reason);
-		}
-	});
-	stopListeningToAbort = listenToAbort(opts?.signal, (reason) => {
-		safeError(reason);
-		cleanup(reason);
-	});
-	return stream;
-}
-function makeMainStream(serverSsr, appStream, opts) {
-	let stopListeningToInjectedHtml;
-	let stopListeningToSerializationFinished;
-	let serializationTimeoutHandle;
-	let lifetimeTimeoutHandle;
-	let stopListeningToAbort;
-	let cleanedUp = false;
-	let controller;
-	let closeWhenDrained = false;
-	let state = MergeState.ReadingBody;
-	const readerState = createReaderState(appStream);
-	const notifyAbort = createAbortNotifier(opts);
-	const pendingWrites = [];
-	let pendingWriteHead = 0;
-	let pendingWriteChars = 0;
-	function clearPending() {
-		pendingWrites.length = 0;
-		pendingWriteHead = 0;
-		pendingWriteChars = 0;
-	}
-	let drainResolve = null;
-	const waitForDrain = () => new Promise((r) => {
-		drainResolve = r;
-	});
-	const signalDrain = () => {
-		if (drainResolve) {
-			const r = drainResolve;
-			drainResolve = null;
-			r();
-		}
-	};
-	const isDone = () => state === MergeState.Done;
-	function drainPending() {
-		if (!controller || isDone()) return;
-		while (pendingWriteHead < pendingWrites.length) {
-			const ds = controller.desiredSize;
-			if (ds !== null && ds <= 0) return;
-			const next = pendingWrites[pendingWriteHead];
-			pendingWrites[pendingWriteHead] = "";
-			pendingWriteHead++;
-			pendingWriteChars -= next.length;
-			try {
-				controller.enqueue(textEncoder$1.encode(next));
-			} catch (error) {
-				safeError(error);
-				cleanup(error);
-				return;
-			}
-		}
-		if (pendingWriteHead >= pendingWrites.length) {
-			pendingWrites.length = 0;
-			pendingWriteHead = 0;
-		}
-		if (closeWhenDrained && pendingWriteHead >= pendingWrites.length) {
-			closeWhenDrained = false;
-			safeClose();
-			cleanup(void 0, false);
-		}
-	}
-	/**
-	* Enqueue a string chunk through the backpressure queue. Stored as a
-	* string and encoded only when the downstream actually accepts the chunk
-	* — keeps native-memory pressure inside the controller's queue (which
-	* honors desiredSize) rather than ours.
-	*/
-	function writeChunk(chunk) {
-		if (cleanedUp || isDone()) return;
-		if (!chunk.length) return;
-		if (pendingWriteChars + chunk.length > MAX_PENDING_WRITE_CHARS) {
-			const err = /* @__PURE__ */ new Error("SSR stream pending output exceeded maximum buffer");
-			safeError(err);
-			cleanup(err);
-			return;
-		}
-		pendingWrites.push(chunk);
-		pendingWriteChars += chunk.length;
-		drainPending();
-	}
-	function safeClose() {
-		if (isDone()) return;
-		state = MergeState.Done;
-		try {
-			controller?.close();
-		} catch {}
-	}
-	function safeError(error) {
-		if (isDone()) return;
-		state = MergeState.Done;
-		try {
-			controller?.error(error);
-		} catch {}
-	}
-	/**
-	* Cleanup with guards; must be idempotent.
-	*/
-	function cleanup(reason, cancelReader = true) {
-		if (cleanedUp) return resolvedPromise;
-		cleanedUp = true;
-		try {
-			stopListeningToInjectedHtml?.();
-			stopListeningToSerializationFinished?.();
-		} catch {}
-		stopListeningToInjectedHtml = void 0;
-		stopListeningToSerializationFinished = void 0;
-		stopListeningToAbort?.();
-		stopListeningToAbort = void 0;
-		if (serializationTimeoutHandle !== void 0) {
-			clearTimeout(serializationTimeoutHandle);
-			serializationTimeoutHandle = void 0;
-		}
-		if (lifetimeTimeoutHandle !== void 0) {
-			clearTimeout(lifetimeTimeoutHandle);
-			lifetimeTimeoutHandle = void 0;
-		}
-		clearPendingRouterHtml();
-		leftover = "";
-		pendingTail = "";
-		clearPending();
-		if (cancelReader) notifyAbort(reason);
-		const readerDone = cancelReader ? readerState.cancel(reason) : (readerState.release(), resolvedPromise);
-		signalDrain();
-		try {
-			serverSsr.cleanup();
-		} catch (error) {
-			console.error("Error in SSR cleanup:", error);
-		}
-		return readerDone;
-	}
-	const textDecoder = new TextDecoder();
-	const pendingRouterHtml = [];
-	let pendingRouterHtmlChars = 0;
-	let leftover = "";
-	let pendingTail = "";
-	let streamBarrierLifted = false;
-	let streamBarrierMarkerSeen = false;
-	let serializationFinished = false;
-	function noteBarrierMarker(chunk) {
-		if (streamBarrierMarkerSeen) return;
-		if (chunk.includes("$tsr-stream-barrier")) streamBarrierMarkerSeen = true;
-	}
-	function liftBarrierAfterBoundary() {
-		if (streamBarrierLifted) return;
-		if (!streamBarrierMarkerSeen) return;
-		streamBarrierLifted = true;
-		serverSsr.liftScriptBarrier();
-	}
-	const stream = new ReadableStream$1({
-		start(c) {
-			controller = c;
-			drainPending();
-		},
-		pull() {
-			drainPending();
-			signalDrain();
-		},
-		cancel(reason) {
-			state = MergeState.Done;
-			return cleanup(reason);
-		}
-	});
-	function drainRouterHtml() {
-		if (cleanedUp || isDone()) return;
-		let html;
-		try {
-			html = serverSsr.takeBufferedHtml();
-		} catch (error) {
-			safeError(error);
-			cleanup(error);
-			return;
-		}
-		if (!html) return;
-		if (state >= MergeState.Draining) {
-			const err = /* @__PURE__ */ new Error("SSR router HTML injected after stream finalization");
-			safeError(err);
-			cleanup(err);
-			return;
-		}
-		if (state === MergeState.HoldingTail) {
-			flushPendingRouterHtml();
-			writeChunk(html);
-		} else {
-			if (pendingRouterHtmlChars + html.length > MAX_ROUTER_HTML_CHARS) {
-				const err = /* @__PURE__ */ new Error("SSR router HTML exceeded maximum buffer");
-				safeError(err);
-				cleanup(err);
-				return;
-			}
-			pendingRouterHtml.push(html);
-			pendingRouterHtmlChars += html.length;
-		}
-	}
-	function flushPendingRouterHtml() {
-		if (!pendingRouterHtml.length) return;
-		for (const html of pendingRouterHtml) writeChunk(html);
-		clearPendingRouterHtml();
-	}
-	function clearPendingRouterHtml() {
-		pendingRouterHtml.length = 0;
-		pendingRouterHtmlChars = 0;
-	}
-	function appendTail(chunk) {
-		pendingTail += chunk;
-		if (pendingTail.length > MAX_TAIL_CHARS) throw new Error("SSR stream tail exceeded maximum buffer");
-	}
-	function waitForBackpressure() {
-		return !!(controller && controller.desiredSize !== null && controller.desiredSize <= 0);
-	}
-	function startSerializationTimeout() {
-		if (cleanedUp || isDone()) return;
-		if (serializationTimeoutHandle !== void 0) return;
-		const timeoutMs = opts?.timeoutMs ?? DEFAULT_SERIALIZATION_TIMEOUT_MS;
-		serializationTimeoutHandle = setTimeout(() => {
-			if (!cleanedUp && !isDone()) {
-				const err = /* @__PURE__ */ new Error("Serialization timeout after app render finished");
-				console.error("Serialization timeout after app render finished");
-				safeError(err);
-				cleanup(err);
-			}
-		}, timeoutMs);
-	}
-	/**
-	* Finish only when app done and serialization complete. Queues final
-	* output and requests close-when-drained so we don't close ahead of
-	* pending writes still waiting on downstream capacity.
-	*/
-	function tryFinish() {
-		if (state !== MergeState.AppDone || !serializationFinished) return;
-		if (cleanedUp || isDone()) return;
-		if (serializationTimeoutHandle !== void 0) {
-			clearTimeout(serializationTimeoutHandle);
-			serializationTimeoutHandle = void 0;
-		}
-		drainRouterHtml();
-		if (cleanedUp || isDone()) return;
-		const decoderRemainder = textDecoder.decode();
-		if (leftover) writeChunk(leftover);
-		if (cleanedUp || isDone()) return;
-		if (decoderRemainder) writeChunk(decoderRemainder);
-		if (cleanedUp || isDone()) return;
-		flushPendingRouterHtml();
-		if (cleanedUp || isDone()) return;
-		if (pendingTail) writeChunk(pendingTail);
-		if (cleanedUp || isDone()) return;
-		leftover = "";
-		pendingTail = "";
-		state = MergeState.Draining;
-		closeWhenDrained = true;
-		drainPending();
-	}
-	function finishAppRendering() {
-		if (state >= MergeState.AppDone) return;
-		state = MergeState.AppDone;
-		try {
-			serverSsr.setRenderFinished();
-		} catch (error) {
-			safeError(error);
-			cleanup(error);
-			return;
-		}
-		drainRouterHtml();
-		if (cleanedUp || isDone()) return;
-		serializationFinished = serializationFinished || serverSsr.isSerializationFinished();
-		if (serializationFinished) tryFinish();
-		else startSerializationTimeout();
-	}
-	const timeoutMs = opts?.timeoutMs ?? DEFAULT_SERIALIZATION_TIMEOUT_MS;
-	const lifetimeMs = opts?.lifetimeMs ?? timeoutMs * 2;
-	lifetimeTimeoutHandle = setTimeout(() => {
-		if (!cleanedUp && !isDone()) {
-			const err = /* @__PURE__ */ new Error("Stream lifetime exceeded");
-			console.warn(`SSR stream transform exceeded maximum lifetime (${lifetimeMs}ms), forcing cleanup`);
-			safeError(err);
-			cleanup(err);
-		}
-	}, lifetimeMs);
-	stopListeningToInjectedHtml = serverSsr.onInjectedHtml(() => {
-		drainRouterHtml();
-	});
-	stopListeningToSerializationFinished = serverSsr.onSerializationFinished(() => {
-		serializationFinished = true;
-		drainRouterHtml();
-		tryFinish();
-	});
-	drainRouterHtml();
-	if (cleanedUp || isDone()) return stream;
-	serializationFinished = serializationFinished || serverSsr.isSerializationFinished();
-	if (serializationFinished) {
-		drainRouterHtml();
-		if (cleanedUp || isDone()) return stream;
-	}
-	stopListeningToAbort = listenToAbort(opts?.signal, (reason) => {
-		safeError(reason);
-		cleanup(reason);
-	});
-	if (cleanedUp || isDone()) return stream;
-	(async () => {
-		try {
-			while (true) {
-				if (waitForBackpressure()) {
-					await waitForDrain();
-					if (cleanedUp || isDone()) return;
-				}
-				const { done, value } = await readerState.reader.read();
-				if (done) break;
-				if (cleanedUp || isDone()) return;
-				const text = typeof value === "string" ? value : textDecoder.decode(value, { stream: true });
-				const chunkString = leftover ? leftover + text : text;
-				if (state >= MergeState.HoldingTail) {
-					appendTail(chunkString);
-					leftover = "";
-					continue;
-				}
-				const boundary = findHtmlBoundary(chunkString);
-				if (boundary < -1) {
-					const bodyEndIndex = -boundary - 2;
-					state = MergeState.HoldingTail;
-					appendTail(chunkString.slice(bodyEndIndex));
-					const bodyChunk = chunkString.slice(0, bodyEndIndex);
-					writeChunk(bodyChunk);
-					if (cleanedUp || isDone()) return;
-					noteBarrierMarker(bodyChunk);
-					liftBarrierAfterBoundary();
-					if (cleanedUp || isDone()) return;
-					flushPendingRouterHtml();
-					leftover = "";
-					continue;
-				}
-				const lastClosingTagEnd = boundary;
-				if (lastClosingTagEnd > 0) {
-					const safeChunk = chunkString.slice(0, lastClosingTagEnd);
-					writeChunk(safeChunk);
-					if (cleanedUp || isDone()) return;
-					noteBarrierMarker(safeChunk);
-					liftBarrierAfterBoundary();
-					if (cleanedUp || isDone()) return;
-					flushPendingRouterHtml();
-					leftover = chunkString.slice(lastClosingTagEnd);
-					if (leftover.length > MAX_LEFTOVER_CHARS) {
-						noteBarrierMarker(leftover);
-						writeChunk(leftover.slice(0, leftover.length - MAX_LEFTOVER_CHARS));
-						leftover = leftover.slice(-2048);
-					}
-				} else {
-					const combined = chunkString;
-					if (combined.length > MAX_LEFTOVER_CHARS) {
-						noteBarrierMarker(combined);
-						const flushUpto = combined.length - MAX_LEFTOVER_CHARS;
-						writeChunk(combined.slice(0, flushUpto));
-						leftover = combined.slice(flushUpto);
-					} else leftover = combined;
-				}
-			}
-			if (cleanedUp || isDone()) return;
-			finishAppRendering();
-		} catch (error) {
-			if (cleanedUp) return;
-			console.error("Error reading appStream:", error);
-			if (state < MergeState.AppDone) try {
-				serverSsr.setRenderFinished();
-			} catch {}
-			safeError(error);
-			cleanup(error);
-		} finally {
-			readerState.release();
-		}
-	})().catch((error) => {
-		if (cleanedUp) return;
-		console.error("Error in stream transform:", error);
-		safeError(error);
-		cleanup(error);
-	});
-	return stream;
-}
-//#endregion
-//#region node_modules/.pnpm/isbot@5.2.2/node_modules/isbot/index.mjs
+// ../../node_modules/.pnpm/isbot@5.2.2/node_modules/isbot/index.mjs
 var fullPattern = " daum[ /]| deusu/|(?:^|[^g])news(?!sapphire)|(?<! channel/|google/)google(?!(?:wv|app|/google| pixel))|(?<! cu)bots?(?:\\b|_)|(?<!cam)scan|(?<!lib)http|24x7|;\\s\\w+;$|@[a-z][\\w-]+\\.|\\(\\)|\\.com\\b|\\b\\w+/1\\.0;|\\bbw/|\\bdlc\\b|\\bort/|\\bperl\\b|\\btime/|\\||^[<\\(;]|^[\\w \\.\\-\\(?:\\):%]+(?:/v?\\d+(?:\\.\\d+)?(?:\\.\\d{1,10})*?)?(?:,|$)|^[\\w\\-]+/[\\w]+$|^[^ ]{50,}$|^\\d+\\b|^\\w*search\\b|^\\w+/[\\w\\(\\)]*$|^\\w+/\\d\\.\\d\\s\\([\\w@]+\\)$|^active|^ad muncher|^amaya|^apache/|^avsdevicesdk/|^azure|^biglotron|^blackbox exporter|^bot|^clamav[ /]|^claude-code/|^client/|^cobweb/|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^email|^exodusmovement|^facebook|^getright/|^gozilla/|^hobbit|^hotzonu|^hwcdn/|^igetter/|^jeode/|^jetty/|^jigsaw|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d\\s[\\w\\.-]+$|^mozilla/\\d\\.\\d\\s\\((?:compatible;)?(?:\\s?[\\w\\d-.]+\\/\\d+\\.\\d+)?\\)$|^navermailapp|^netsurf|^offline|^openai/|^owler|^php|^postman|^ps_daily/|^python|^rank|^read|^reed|^remove\\.bg/|^rest|^rss|^snapchat|^sora |^space bison|^stape/|^svn|^swcd |^taringa|^thumbor/|^track|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^wordpress|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|abuse|advisor|agent\\b|analyzer|archive|ask jeeves/teoma|attracta|audit|bluecoat drtr|browsex|burpcollaborator|capture|catch|check\\b|checker|chrome-lighthouse|chromeframe|classifier|cloudflare|collapsify\\b|convertify|cookiehubverify/|crawl|cursor/|cypress/|dareboost|datanyze|dejaclick|detect|discovery|dmbrowser|download|exaleadcloudview|feed|firephp|foregenix|functionize|grab|hardenize\\b|headless|hotjar|httrack|hubspot marketing grader|ibisbrowser|infrawatch|insight|inspect|iplabel|java(?!;)|library|linkcheck|linktiger|mail\\.ru/|manager|manus-user/|marketgoo/|measure|monitor\\b|neustar wpm|node\\b|nutch|offbyone|openvas|optimize|pageburst|pagespeed|parser|phantomjs|pingdom|playwright|powermarks|preview|productfinder|prospectingstudio|proxy|ptst[ /]\\d|radar|readable/|retriever|rexx;|rigor|rss\\b|scrape|securityheaders|selenium|server|silktide|sindup/|sogou|sparkler/|speedcurve|spider|splash|statuscake|supercleaner|synapse|synthetic|testlocally|tools|torrent|transcoder|url|validator|virtuoso|wappalyzer|watchtowr|webglance|webkit2png|whatcms/|xtate/";
 var naivePattern = /bot|crawl|http|lighthouse|scan|search|spider/i;
 var pattern;
@@ -14037,701 +14449,98 @@ function isBot(userAgent) {
 	return isNonEmptyString(userAgent) && getPattern().test(userAgent);
 }
 var isbot = isBot;
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-router@1.17_7bd39545016babc5a234d1c8f2b9a5c0/node_modules/@tanstack/react-router/dist/esm/ssr/renderRouterToStream.js
+// ../../node_modules/.pnpm/@tanstack+react-router@1.170.46_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@tanstack/react-router/dist/esm/ssr/renderRouterToStream.js
 var import_server_edge = /* @__PURE__ */ __toESM(require_server_edge(), 1);
-var noop = () => {};
-async function waitForReadyOrAbort(ready, signal) {
-	let cleanup = noop;
-	try {
-		await Promise.race([ready, new Promise((resolve) => {
-			const onAbort = () => resolve();
-			cleanup = () => signal.removeEventListener("abort", onAbort);
-			signal.addEventListener("abort", onAbort, { once: true });
-			if (signal.aborted) resolve();
-		})]);
-	} finally {
-		cleanup();
-	}
-}
-var isAbortError = (request, error) => request.signal.aborted && error === request.signal.reason || error instanceof Error && error.name === "AbortError";
 var renderRouterToStream = async ({ request, router, responseHeaders, children }) => {
-	if (typeof import_server_edge.renderToReadableStream === "function") {
-		const stream = await import_server_edge.renderToReadableStream(children, {
-			signal: request.signal,
-			nonce: router.options.ssr?.nonce,
-			progressiveChunkSize: Number.POSITIVE_INFINITY,
-			onError: (error, info) => {
-				if (!isAbortError(request, error)) console.error("Error in renderToReadableStream:", error, info);
-			}
-		});
-		if (isbot(request.headers.get("User-Agent"))) await waitForReadyOrAbort(stream.allReady, request.signal);
-		const responseStream = transformReadableStreamWithRouter(router, stream, {
-			signal: request.signal,
-			onAbort: () => stream.cancel().catch(() => {})
-		});
-		return createSsrStreamResponse(router, new Response(responseStream, {
-			status: router._serverResult?.type === "render" ? router._serverResult.status : 200,
-			headers: responseHeaders
-		}));
+	const signal = request.signal;
+	if (signal.aborted) {
+		router.serverSsr?.cleanup();
+		throw signal.reason;
 	}
-	if (typeof import_server_edge.default.renderToPipeableStream === "function") {
-		const reactAppPassthrough = new PassThrough();
-		let pipeable;
-		let responseAttached = false;
-		let aborted = false;
-		let endedBeforeAttach = false;
-		let pendingAbortReason;
-		const toError = (reason) => reason instanceof Error ? reason : new Error(String(reason ?? "SSR aborted"));
-		const destroyError = (reason) => reason === void 0 ? void 0 : toError(reason);
-		const pendingDestroyError = () => pendingAbortReason === void 0 ? toError(pendingAbortReason) : destroyError(pendingAbortReason);
-		const finishPassThrough = (reason, opts) => {
-			if (reactAppPassthrough.destroyed) return;
-			if (responseAttached) reactAppPassthrough.destroy(opts?.defaultError ? toError(reason) : destroyError(reason));
-			else endedBeforeAttach = true;
-		};
-		const abortPipeable = (reason, opts) => {
-			if (aborted) return;
-			aborted = true;
-			pendingAbortReason = reason;
-			const err = toError(reason);
-			try {
-				pipeable?.abort(err);
-			} catch {}
-			finishPassThrough(reason, opts);
-		};
-		if (request.signal.aborted) abortPipeable(request.signal.reason);
-		else {
-			const onRequestAbort = () => abortPipeable(request.signal.reason);
-			request.signal.addEventListener("abort", onRequestAbort, { once: true });
-			router.serverSsr?.onCleanup(() => {
-				request.signal.removeEventListener("abort", onRequestAbort);
-			});
-		}
-		try {
-			pipeable = import_server_edge.default.renderToPipeableStream(children, {
+	let rendererTeardown = false;
+	const bot = isbot(request.headers.get("User-Agent"));
+	const onError = (renderer) => (error, info) => {
+		if (!rendererTeardown && !signal.aborted) console.error(`Error in ${renderer}:`, error, info);
+	};
+	try {
+		if (typeof import_server_edge.renderToReadableStream === "function") {
+			const stream = await import_server_edge.renderToReadableStream(children, {
+				signal,
 				nonce: router.options.ssr?.nonce,
 				progressiveChunkSize: Number.POSITIVE_INFINITY,
-				...isbot(request.headers.get("User-Agent")) ? { onAllReady() {
-					pipeable.pipe(reactAppPassthrough);
-				} } : { onShellReady() {
-					pipeable.pipe(reactAppPassthrough);
-				} },
-				onError: (error, info) => {
-					if (!isAbortError(request, error)) console.error("Error in renderToPipeableStream:", error, info);
-					abortPipeable(error, { defaultError: true });
+				onError: onError("renderToReadableStream")
+			});
+			const rendererAbort = bot ? new AbortController() : void 0;
+			const responseStream = transformReadableStreamWithRouter(router, stream, {
+				rendererSafePoint: "script-close",
+				signal,
+				onAbort: (reason) => {
+					rendererTeardown = true;
+					rendererAbort?.abort(reason);
 				}
 			});
-		} catch (e) {
-			console.error("Error in renderToPipeableStream:", e);
-			router.serverSsr?.cleanup();
-			throw e;
+			if (rendererAbort) await waitForReason(stream.allReady, rendererAbort.signal);
+			return createSsrStreamResponse(router, new Response(responseStream, {
+				status: getSsrStatus(router),
+				headers: responseHeaders
+			}));
 		}
-		const responseStream = transformPipeableStreamWithRouter(router, reactAppPassthrough, {
-			signal: request.signal,
-			onAbort: abortPipeable
-		});
-		responseAttached = true;
-		if (endedBeforeAttach) reactAppPassthrough.destroy(pendingDestroyError());
-		if (aborted && pipeable) try {
-			pipeable.abort(toError(pendingAbortReason));
-		} catch {}
-		return createSsrStreamResponse(router, new Response(responseStream, {
-			status: router._serverResult?.type === "render" ? router._serverResult.status : 200,
-			headers: responseHeaders
-		}));
+		if (typeof import_server_edge.default.renderToPipeableStream === "function") {
+			const reactAppPassthrough = new PassThrough();
+			let pipeable;
+			let resolveReady;
+			const ready = new Promise((resolve) => {
+				resolveReady = resolve;
+			});
+			const rendererAbort = new AbortController();
+			const abortPipeable = (reason) => {
+				if (rendererTeardown) return;
+				rendererTeardown = true;
+				rendererAbort.abort(reason);
+				try {
+					pipeable?.abort(reason);
+				} catch {}
+			};
+			try {
+				pipeable = import_server_edge.default.renderToPipeableStream(children, {
+					nonce: router.options.ssr?.nonce,
+					progressiveChunkSize: Number.POSITIVE_INFINITY,
+					...bot ? { onAllReady: resolveReady } : { onShellReady: resolveReady },
+					onError: onError("renderToPipeableStream"),
+					onShellError: (error) => rendererAbort.abort(error)
+				});
+				const responseStream = transformReadableStreamWithRouter(router, Readable.toWeb(reactAppPassthrough), {
+					rendererSafePoint: "script-close",
+					signal,
+					onAbort: abortPipeable
+				});
+				await waitForReason(ready, rendererAbort.signal);
+				pipeable.pipe(reactAppPassthrough);
+				return createSsrStreamResponse(router, new Response(responseStream, {
+					status: getSsrStatus(router),
+					headers: responseHeaders
+				}));
+			} catch (error) {
+				abortPipeable(error);
+				throw error;
+			}
+		}
+		throw new Error("No renderToReadableStream or renderToPipeableStream found in react-dom/server. Ensure you are using a version of react-dom that supports streaming.");
+	} catch (error) {
+		router.serverSsr?.cleanup();
+		throw error;
 	}
-	throw new Error("No renderToReadableStream or renderToPipeableStream found in react-dom/server. Ensure you are using a version of react-dom that supports streaming.");
 };
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-start-serve_4a3f7910cdf1e7b2a68c917f8ffb8e3b/node_modules/@tanstack/react-start-server/dist/esm/defaultStreamHandler.js
+// ../../node_modules/.pnpm/@tanstack+react-start-server@1.167.52_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/@tanstack/react-start-server/dist/esm/defaultStreamHandler.js
 var defaultStreamHandler = defineHandlerCallback(({ request, router, responseHeaders }) => renderRouterToStream({
 	request,
 	router,
 	responseHeaders,
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StartServer, { router })
 }));
-//#endregion
-//#region node_modules/.pnpm/rou3@0.8.1/node_modules/rou3/dist/index.mjs
-var NullProtoObj = /* @__PURE__ */ (() => {
-	const e = function() {};
-	return e.prototype = Object.create(null), Object.freeze(e.prototype), e;
-})();
-//#endregion
-//#region node_modules/.pnpm/srvx@0.11.22/node_modules/srvx/dist/adapters/cloudflare.mjs
-var FastURL = URL;
-var FastResponse = Response;
-//#endregion
-//#region node_modules/.pnpm/h3@2.0.1-rc.20/node_modules/h3/dist/h3-Bz4OPZv_.mjs
-function decodePathname(pathname) {
-	return decodeURI(pathname.includes("%25") ? pathname.replace(/%25/g, "%2525") : pathname);
-}
-var kEventNS = "h3.internal.event.";
-var kEventRes = /* @__PURE__ */ Symbol.for(`${kEventNS}res`);
-var kEventResHeaders = /* @__PURE__ */ Symbol.for(`${kEventNS}res.headers`);
-var kEventResErrHeaders = /* @__PURE__ */ Symbol.for(`${kEventNS}res.err.headers`);
-var H3Event = class {
-	app;
-	req;
-	url;
-	context;
-	static __is_event__ = true;
-	constructor(req, context, app) {
-		this.context = context || req.context || new NullProtoObj();
-		this.req = req;
-		this.app = app;
-		const _url = req._url;
-		const url = _url && _url instanceof URL ? _url : new FastURL(req.url);
-		if (url.pathname.includes("%")) url.pathname = decodePathname(url.pathname);
-		this.url = url;
-	}
-	get res() {
-		return this[kEventRes] ||= new H3EventResponse();
-	}
-	get runtime() {
-		return this.req.runtime;
-	}
-	waitUntil(promise) {
-		this.req.waitUntil?.(promise);
-	}
-	toString() {
-		return `[${this.req.method}] ${this.req.url}`;
-	}
-	toJSON() {
-		return this.toString();
-	}
-	get node() {
-		return this.req.runtime?.node;
-	}
-	get headers() {
-		return this.req.headers;
-	}
-	get path() {
-		return this.url.pathname + this.url.search;
-	}
-	get method() {
-		return this.req.method;
-	}
-};
-var H3EventResponse = class {
-	status;
-	statusText;
-	get headers() {
-		return this[kEventResHeaders] ||= new Headers();
-	}
-	get errHeaders() {
-		return this[kEventResErrHeaders] ||= new Headers();
-	}
-};
-var DISALLOWED_STATUS_CHARS = /[^\u0009\u0020-\u007E]/g;
-function sanitizeStatusMessage(statusMessage = "") {
-	return statusMessage.replace(DISALLOWED_STATUS_CHARS, "");
-}
-function sanitizeStatusCode(statusCode, defaultStatusCode = 200) {
-	if (!statusCode) return defaultStatusCode;
-	if (typeof statusCode === "string") statusCode = +statusCode;
-	if (statusCode < 100 || statusCode > 599) return defaultStatusCode;
-	return statusCode;
-}
-var HTTPError = class HTTPError extends Error {
-	get name() {
-		return "HTTPError";
-	}
-	status;
-	statusText;
-	headers;
-	cause;
-	data;
-	body;
-	unhandled;
-	static isError(input) {
-		return input instanceof Error && input?.name === "HTTPError";
-	}
-	static status(status, statusText, details) {
-		return new HTTPError({
-			...details,
-			statusText,
-			status
-		});
-	}
-	constructor(arg1, arg2) {
-		let messageInput;
-		let details;
-		if (typeof arg1 === "string") {
-			messageInput = arg1;
-			details = arg2;
-		} else details = arg1;
-		const status = sanitizeStatusCode(details?.status || details?.statusCode || (details?.cause)?.status || (details?.cause)?.statusCode, 500);
-		const statusText = sanitizeStatusMessage(details?.statusText || details?.statusMessage || (details?.cause)?.statusText || (details?.cause)?.statusMessage);
-		const message = messageInput || details?.message || (details?.cause)?.message || details?.statusText || details?.statusMessage || [
-			"HTTPError",
-			status,
-			statusText
-		].filter(Boolean).join(" ");
-		super(message, { cause: details });
-		this.cause = details;
-		this.status = status;
-		this.statusText = statusText || void 0;
-		const rawHeaders = details?.headers || (details?.cause)?.headers;
-		this.headers = rawHeaders ? new Headers(rawHeaders) : void 0;
-		this.unhandled = details?.unhandled ?? (details?.cause)?.unhandled ?? void 0;
-		this.data = details?.data;
-		this.body = details?.body;
-	}
-	get statusCode() {
-		return this.status;
-	}
-	get statusMessage() {
-		return this.statusText;
-	}
-	toJSON() {
-		const unhandled = this.unhandled;
-		return {
-			status: this.status,
-			statusText: this.statusText,
-			unhandled,
-			message: unhandled ? "HTTPError" : this.message,
-			data: unhandled ? void 0 : this.data,
-			...unhandled ? void 0 : this.body
-		};
-	}
-};
-function isJSONSerializable(value, _type) {
-	if (value === null || value === void 0) return true;
-	if (_type !== "object") return _type === "boolean" || _type === "number" || _type === "string";
-	if (typeof value.toJSON === "function") return true;
-	if (Array.isArray(value)) return true;
-	if (typeof value.pipe === "function" || typeof value.pipeTo === "function") return false;
-	if (value instanceof NullProtoObj) return true;
-	const proto = Object.getPrototypeOf(value);
-	return proto === Object.prototype || proto === null;
-}
-var kNotFound = /* @__PURE__ */ Symbol.for("h3.notFound");
-var kHandled = /* @__PURE__ */ Symbol.for("h3.handled");
-function toResponse(val, event, config = {}) {
-	if (typeof val?.then === "function") return (val.catch?.((error) => error) || Promise.resolve(val)).then((resolvedVal) => toResponse(resolvedVal, event, config));
-	const response = prepareResponse(val, event, config);
-	if (typeof response?.then === "function") return toResponse(response, event, config);
-	const { onResponse } = config;
-	return onResponse ? Promise.resolve(onResponse(response, event)).then(() => response) : response;
-}
-var HTTPResponse = class {
-	#headers;
-	#init;
-	body;
-	constructor(body, init) {
-		this.body = body;
-		this.#init = init;
-	}
-	get status() {
-		return this.#init?.status || 200;
-	}
-	get statusText() {
-		return this.#init?.statusText || "OK";
-	}
-	get headers() {
-		return this.#headers ||= new Headers(this.#init?.headers);
-	}
-};
-function prepareResponse(val, event, config, nested) {
-	if (val === kHandled) return new FastResponse(null);
-	if (val === kNotFound) val = new HTTPError({
-		status: 404,
-		message: `Cannot find any route matching [${event.req.method}] ${event.url}`
-	});
-	if (val && val instanceof Error) {
-		const isHTTPError = HTTPError.isError(val);
-		const error = isHTTPError ? val : new HTTPError(val);
-		if (!isHTTPError) {
-			error.unhandled = true;
-			if (val?.stack) error.stack = val.stack;
-		}
-		if (error.unhandled && !config.silent) console.error(error);
-		const { onError } = config;
-		const errHeaders = event[kEventRes]?.[kEventResErrHeaders];
-		return onError && !nested ? Promise.resolve(onError(error, event)).catch((error) => error).then((newVal) => prepareResponse(newVal ?? val, event, config, true)) : errorResponse(error, config.debug, errHeaders);
-	}
-	const preparedRes = event[kEventRes];
-	const preparedHeaders = preparedRes?.[kEventResHeaders];
-	event[kEventRes] = void 0;
-	if (!(val instanceof Response)) {
-		const res = prepareResponseBody(val, event, config);
-		const status = res.status || preparedRes?.status;
-		return new FastResponse(nullBody(event.req.method, status) ? null : res.body, {
-			status,
-			statusText: res.statusText || preparedRes?.statusText,
-			headers: res.headers && preparedHeaders ? mergeHeaders$1(res.headers, preparedHeaders) : res.headers || preparedHeaders
-		});
-	}
-	if (!preparedHeaders || nested || !val.ok) return val;
-	try {
-		mergeHeaders$1(val.headers, preparedHeaders, val.headers);
-		return val;
-	} catch {
-		return new FastResponse(nullBody(event.req.method, val.status) ? null : val.body, {
-			status: val.status,
-			statusText: val.statusText,
-			headers: mergeHeaders$1(val.headers, preparedHeaders)
-		});
-	}
-}
-function mergeHeaders$1(base, overrides, target = new Headers(base)) {
-	for (const [name, value] of overrides) if (name === "set-cookie") target.append(name, value);
-	else target.set(name, value);
-	return target;
-}
-var frozen = (name) => (...args) => {
-	throw new Error(`Headers are frozen (${name} ${args.join(", ")})`);
-};
-var FrozenHeaders = class extends Headers {
-	set = frozen("set");
-	append = frozen("append");
-	delete = frozen("delete");
-};
-var emptyHeaders = /* @__PURE__ */ new FrozenHeaders({ "content-length": "0" });
-var jsonHeaders = /* @__PURE__ */ new FrozenHeaders({ "content-type": "application/json;charset=UTF-8" });
-function prepareResponseBody(val, event, config) {
-	if (val === null || val === void 0) return {
-		body: "",
-		headers: emptyHeaders
-	};
-	const valType = typeof val;
-	if (valType === "string") return { body: val };
-	if (val instanceof Uint8Array) {
-		event.res.headers.set("content-length", val.byteLength.toString());
-		return { body: val };
-	}
-	if (val instanceof HTTPResponse || val?.constructor?.name === "HTTPResponse") return val;
-	if (isJSONSerializable(val, valType)) return {
-		body: JSON.stringify(val, void 0, config.debug ? 2 : void 0),
-		headers: jsonHeaders
-	};
-	if (valType === "bigint") return {
-		body: val.toString(),
-		headers: jsonHeaders
-	};
-	if (val instanceof Blob) {
-		const headers = new Headers({
-			"content-type": val.type,
-			"content-length": val.size.toString()
-		});
-		let filename = val.name;
-		if (filename) {
-			filename = encodeURIComponent(filename);
-			headers.set("content-disposition", `filename="${filename}"; filename*=UTF-8''${filename}`);
-		}
-		return {
-			body: val.stream(),
-			headers
-		};
-	}
-	if (valType === "symbol") return { body: val.toString() };
-	if (valType === "function") return { body: `${val.name}()` };
-	return { body: val };
-}
-function nullBody(method, status) {
-	return method === "HEAD" || status === 100 || status === 101 || status === 102 || status === 204 || status === 205 || status === 304;
-}
-function errorResponse(error, debug, errHeaders) {
-	let headers = error.headers ? mergeHeaders$1(jsonHeaders, error.headers) : new Headers(jsonHeaders);
-	if (errHeaders) headers = mergeHeaders$1(headers, errHeaders);
-	return new FastResponse(JSON.stringify({
-		...error.toJSON(),
-		stack: debug && error.stack ? error.stack.split("\n").map((l) => l.trim()) : void 0
-	}, void 0, debug ? 2 : void 0), {
-		status: error.status,
-		statusText: error.statusText,
-		headers
-	});
-}
-var COOKIE_MAX_AGE_LIMIT = 3456e4;
-var cookieNameRegExp = /^[\u0021-\u003A\u003C\u003E-\u007E]+$/;
-var cookieValueRegExp = /^[\u0021-\u003A\u003C-\u007E]*$/;
-var domainValueRegExp = /^([.]?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
-var pathValueRegExp = /^[\u0020-\u003A\u003C-\u007E]*$/;
-var __toString = Object.prototype.toString;
-function serialize(_a0, _a1, _a2) {
-	const isObj = typeof _a0 === "object" && _a0 !== null;
-	const options = isObj ? _a1 : _a2;
-	const stringify = options?.stringify || JSON.stringify;
-	const cookie = isObj ? _a0 : {
-		..._a2,
-		name: _a0,
-		value: _a1 == void 0 ? "" : typeof _a1 === "string" ? _a1 : stringify(_a1)
-	};
-	const enc = options?.encode || encodeURIComponent;
-	if (!cookieNameRegExp.test(cookie.name)) throw new TypeError(`argument name is invalid: ${cookie.name}`);
-	const value = cookie.value ? enc(cookie.value) : "";
-	if (!cookieValueRegExp.test(value)) throw new TypeError(`argument val is invalid: ${cookie.value}`);
-	if (!cookie.secure) {
-		if (cookie.partitioned) throw new TypeError(`Partitioned cookies must have the Secure attribute`);
-		if (cookie.sameSite && String(cookie.sameSite).toLowerCase() === "none") throw new TypeError(`SameSite=None cookies must have the Secure attribute`);
-		if (cookie.name.length > 9 && cookie.name.charCodeAt(0) === 95 && cookie.name.charCodeAt(1) === 95) {
-			const nameLower = cookie.name.toLowerCase();
-			if (nameLower.startsWith("__secure-") || nameLower.startsWith("__host-")) throw new TypeError(`${cookie.name} cookies must have the Secure attribute`);
-		}
-	}
-	if (cookie.name.length > 7 && cookie.name.charCodeAt(0) === 95 && cookie.name.charCodeAt(1) === 95 && cookie.name.toLowerCase().startsWith("__host-")) {
-		if (cookie.path !== "/") throw new TypeError(`__Host- cookies must have Path=/`);
-		if (cookie.domain) throw new TypeError(`__Host- cookies must not have a Domain attribute`);
-	}
-	let str = cookie.name + "=" + value;
-	if (cookie.maxAge !== void 0) {
-		if (!Number.isInteger(cookie.maxAge)) throw new TypeError(`option maxAge is invalid: ${cookie.maxAge}`);
-		str += "; Max-Age=" + Math.max(0, Math.min(cookie.maxAge, COOKIE_MAX_AGE_LIMIT));
-	}
-	if (cookie.domain) {
-		if (!domainValueRegExp.test(cookie.domain)) throw new TypeError(`option domain is invalid: ${cookie.domain}`);
-		str += "; Domain=" + cookie.domain;
-	}
-	if (cookie.path) {
-		if (!pathValueRegExp.test(cookie.path)) throw new TypeError(`option path is invalid: ${cookie.path}`);
-		str += "; Path=" + cookie.path;
-	}
-	if (cookie.expires) {
-		if (!isDate(cookie.expires) || !Number.isFinite(cookie.expires.valueOf())) throw new TypeError(`option expires is invalid: ${cookie.expires}`);
-		str += "; Expires=" + cookie.expires.toUTCString();
-	}
-	if (cookie.httpOnly) str += "; HttpOnly";
-	if (cookie.secure) str += "; Secure";
-	if (cookie.partitioned) str += "; Partitioned";
-	if (cookie.priority) switch (typeof cookie.priority === "string" ? cookie.priority.toLowerCase() : void 0) {
-		case "low":
-			str += "; Priority=Low";
-			break;
-		case "medium":
-			str += "; Priority=Medium";
-			break;
-		case "high":
-			str += "; Priority=High";
-			break;
-		default: throw new TypeError(`option priority is invalid: ${cookie.priority}`);
-	}
-	if (cookie.sameSite) switch (typeof cookie.sameSite === "string" ? cookie.sameSite.toLowerCase() : cookie.sameSite) {
-		case true:
-		case "strict":
-			str += "; SameSite=Strict";
-			break;
-		case "lax":
-			str += "; SameSite=Lax";
-			break;
-		case "none":
-			str += "; SameSite=None";
-			break;
-		default: throw new TypeError(`option sameSite is invalid: ${cookie.sameSite}`);
-	}
-	return str;
-}
-function isDate(val) {
-	return __toString.call(val) === "[object Date]";
-}
-var maxAgeRegExp = /^-?\d+$/;
-var _nullProto = /* @__PURE__ */ Object.getPrototypeOf({});
-function parseSetCookie(str, options) {
-	const len = str.length;
-	let _endIdx = len;
-	let eqIdx = -1;
-	for (let i = 0; i < len; i++) {
-		const c = str.charCodeAt(i);
-		if (c === 59) {
-			_endIdx = i;
-			break;
-		}
-		if (c === 61 && eqIdx === -1) eqIdx = i;
-	}
-	if (eqIdx >= _endIdx) eqIdx = -1;
-	const name = eqIdx === -1 ? "" : _trim(str, 0, eqIdx);
-	if (name && name in _nullProto) return void 0;
-	let value = eqIdx === -1 ? _trim(str, 0, _endIdx) : _trim(str, eqIdx + 1, _endIdx);
-	if (!name && !value) return void 0;
-	if (name.length + value.length > 4096) return void 0;
-	if (options?.decode !== false) value = _decode(value, options?.decode);
-	const setCookie = {
-		name,
-		value
-	};
-	let index = _endIdx + 1;
-	while (index < len) {
-		let endIdx = len;
-		let attrEqIdx = -1;
-		for (let i = index; i < len; i++) {
-			const c = str.charCodeAt(i);
-			if (c === 59) {
-				endIdx = i;
-				break;
-			}
-			if (c === 61 && attrEqIdx === -1) attrEqIdx = i;
-		}
-		if (attrEqIdx >= endIdx) attrEqIdx = -1;
-		const attr = attrEqIdx === -1 ? _trim(str, index, endIdx) : _trim(str, index, attrEqIdx);
-		const val = attrEqIdx === -1 ? void 0 : _trim(str, attrEqIdx + 1, endIdx);
-		if (val === void 0 || val.length <= 1024) switch (attr.toLowerCase()) {
-			case "httponly":
-				setCookie.httpOnly = true;
-				break;
-			case "secure":
-				setCookie.secure = true;
-				break;
-			case "partitioned":
-				setCookie.partitioned = true;
-				break;
-			case "domain":
-				if (val) setCookie.domain = (val.charCodeAt(0) === 46 ? val.slice(1) : val).toLowerCase();
-				break;
-			case "path":
-				setCookie.path = val;
-				break;
-			case "max-age":
-				if (val && maxAgeRegExp.test(val)) setCookie.maxAge = Math.min(Number(val), COOKIE_MAX_AGE_LIMIT);
-				break;
-			case "expires": {
-				if (!val) break;
-				const date = new Date(val);
-				if (Number.isFinite(date.valueOf())) {
-					const maxDate = new Date(Date.now() + COOKIE_MAX_AGE_LIMIT * 1e3);
-					setCookie.expires = date > maxDate ? maxDate : date;
-				}
-				break;
-			}
-			case "priority": {
-				if (!val) break;
-				const priority = val.toLowerCase();
-				if (priority === "low" || priority === "medium" || priority === "high") setCookie.priority = priority;
-				break;
-			}
-			case "samesite": {
-				if (!val) break;
-				const sameSite = val.toLowerCase();
-				if (sameSite === "lax" || sameSite === "strict" || sameSite === "none") setCookie.sameSite = sameSite;
-				else setCookie.sameSite = "lax";
-				break;
-			}
-			default: {
-				const attrLower = attr.toLowerCase();
-				if (attrLower && !(attrLower in _nullProto)) setCookie[attrLower] = val;
-			}
-		}
-		index = endIdx + 1;
-	}
-	return setCookie;
-}
-function _trim(str, start, end) {
-	if (start === end) return "";
-	let s = start;
-	let e = end;
-	while (s < e && (str.charCodeAt(s) === 32 || str.charCodeAt(s) === 9)) s++;
-	while (e > s && (str.charCodeAt(e - 1) === 32 || str.charCodeAt(e - 1) === 9)) e--;
-	return str.slice(s, e);
-}
-function _decode(value, decode) {
-	if (!decode && !value.includes("%")) return value;
-	try {
-		return (decode || decodeURIComponent)(value);
-	} catch {
-		return value;
-	}
-}
-function setCookie$1(event, name, value, options) {
-	const newCookie = serialize({
-		name,
-		value,
-		path: "/",
-		...options
-	});
-	const currentCookies = event.res.headers.getSetCookie();
-	if (currentCookies.length === 0) {
-		event.res.headers.set("set-cookie", newCookie);
-		return;
-	}
-	const newCookieKey = _getDistinctCookieKey(name, options || {});
-	event.res.headers.delete("set-cookie");
-	for (const cookie of currentCookies) {
-		const parsed = parseSetCookie(cookie);
-		if (!parsed) continue;
-		if (_getDistinctCookieKey(cookie.split("=")?.[0], parsed) === newCookieKey) continue;
-		event.res.headers.append("set-cookie", cookie);
-	}
-	event.res.headers.append("set-cookie", newCookie);
-}
-function _getDistinctCookieKey(name, options) {
-	return [
-		name,
-		options.domain || "",
-		options.path || "/"
-	].join(";");
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/request-response.js
-var GLOBAL_EVENT_STORAGE_KEY = Symbol.for("tanstack-start:event-storage");
-var globalObj$1 = globalThis;
-if (!globalObj$1[GLOBAL_EVENT_STORAGE_KEY]) globalObj$1[GLOBAL_EVENT_STORAGE_KEY] = new AsyncLocalStorage$1();
-var eventStorage = globalObj$1[GLOBAL_EVENT_STORAGE_KEY];
-function isPromiseLike(value) {
-	return typeof value.then === "function";
-}
-function getSetCookieValues(headers) {
-	const headersWithSetCookie = headers;
-	if (typeof headersWithSetCookie.getSetCookie === "function") return headersWithSetCookie.getSetCookie();
-	const value = headers.get("set-cookie");
-	return value ? [value] : [];
-}
-function mergeEventResponseHeaders(response, event) {
-	if (response.ok) return;
-	const eventSetCookies = getSetCookieValues(event.res.headers);
-	if (eventSetCookies.length === 0) return;
-	const responseSetCookies = getSetCookieValues(response.headers);
-	response.headers.delete("set-cookie");
-	for (const cookie of responseSetCookies) response.headers.append("set-cookie", cookie);
-	for (const cookie of eventSetCookies) response.headers.append("set-cookie", cookie);
-}
-function attachResponseHeaders(value, event) {
-	if (isPromiseLike(value)) return value.then((resolved) => {
-		if (resolved instanceof Response) mergeEventResponseHeaders(resolved, event);
-		return resolved;
-	});
-	if (value instanceof Response) mergeEventResponseHeaders(value, event);
-	return value;
-}
-function requestHandler(handler) {
-	return (request, requestOpts) => {
-		let h3Event;
-		try {
-			h3Event = new H3Event(request);
-		} catch (error) {
-			if (error instanceof URIError) return new Response(null, {
-				status: 400,
-				statusText: "Bad Request"
-			});
-			throw error;
-		}
-		return toResponse(attachResponseHeaders(eventStorage.run({ h3Event }, () => handler(request, requestOpts)), h3Event), h3Event);
-	};
-}
-function getH3Event() {
-	const event = eventStorage.getStore();
-	if (!event) throw new Error(`No StartEvent found in AsyncLocalStorage. Make sure you are using the function within the server runtime.`);
-	return event.h3Event;
-}
-/**
-* Set a cookie value by name.
-* @param name Name of the cookie to set
-* @param value Value of the cookie to set
-* @param options {CookieSerializeOptions} Options for serializing the cookie
-* ```ts
-* setCookie('Authorization', '1234567')
-* ```
-*/
-function setCookie(name, value, options) {
-	setCookie$1(getH3Event(), name, value, options);
-}
-function getResponse() {
-	return getH3Event().res;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/constants.js
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/constants.js
 var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/router-manifest.js
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/router-manifest.js
 /**
 * @description Returns the router manifest data that should be sent to the client.
 * This includes only the assets and preloads for the current route and any
@@ -14742,7 +14551,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("./assets/_tanstack-start-manifest_v-DSKY1GJs.js");
+	const { tsrStartManifest } = await import("./assets/_tanstack-start-manifest_v-BbJWVChU.js");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -14761,147 +14570,239 @@ async function getStartManifest(matchedRoutes) {
 		routes: manifestRoutes
 	};
 }
-//#endregion
-//#region \0%23tanstack-start-server-fn-resolver
-var manifest = {};
-async function getServerFnById(id, access) {
-	const serverFnInfo = manifest[id];
-	if (!serverFnInfo) throw new Error("Server function info not found for " + id);
-	const fnModule = serverFnInfo.module ?? await serverFnInfo.importer();
-	if (!fnModule) throw new Error("Server function module not resolved for " + id);
-	const action = fnModule[serverFnInfo.functionName];
-	if (!action) throw new Error("Server function module export not resolved for serverFn ID: " + id);
-	return action;
+// ../../node_modules/.pnpm/@tanstack+start-client-core@1.170.39/node_modules/@tanstack/start-client-core/dist/esm/getDefaultSerovalPlugins.js
+/** Start's serialization adapters followed by `routerPlugins`. */
+function getSerovalPlugins(routerPlugins) {
+	return [...(getStartOptions()?.serializationAdapters)?.map(makeSerovalPlugin) ?? [], ...routerPlugins];
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/constants.js
-var TSS_FORMDATA_CONTEXT = "__TSS_CONTEXT";
-var TSS_SERVER_FUNCTION = Symbol.for("TSS_SERVER_FUNCTION");
-var X_TSS_SERIALIZED = "x-tss-serialized";
-var X_TSS_RAW_RESPONSE = "x-tss-raw";
-/** Content-Type for multiplexed framed responses (RawStream support) */
-var TSS_CONTENT_TYPE_FRAMED = "application/x-tss-framed";
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/frame-protocol.js
 /**
-* Frame types for binary multiplexing protocol.
+* Binary frame protocol for multiplexing JSON and raw streams over HTTP.
+*
+* Frame format: [type:1][streamId:4][length:4][payload:length]
+* - type: 1 byte - frame type (JSON, CHUNK, END, ERROR)
+* - streamId: 4 bytes big-endian uint32 - stream identifier
+* - length: 4 bytes big-endian uint32 - payload length
+* - payload: variable length bytes
 */
-var FrameType = {
-	/** Seroval JSON chunk (NDJSON line) */
-	JSON: 0,
-	/** Raw stream data chunk */
-	CHUNK: 1,
-	/** Raw stream end (EOF) */
-	END: 2,
-	/** Raw stream error */
-	ERROR: 3
-};
-/** Full Content-Type header value with version parameter */
-var TSS_CONTENT_TYPE_FRAMED_VERSIONED = `${TSS_CONTENT_TYPE_FRAMED}; v=1`;
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/safeObjectMerge.js
-function isSafeKey(key) {
-	return key !== "__proto__" && key !== "constructor" && key !== "prototype";
+/** Cached TextEncoder for frame encoding */
+var textEncoder$1 = new TextEncoder();
+/** Shared empty payload for END frames - avoids allocation per call */
+var EMPTY_PAYLOAD = /* @__PURE__ */ new Uint8Array(0);
+var MAX_ERROR_MESSAGE_CODE_UNITS = 4096;
+/**
+* Encodes a single frame with header and payload.
+*/
+function encodeFrame(type, streamId, payload) {
+	if (payload.byteLength > 16777216) throw new RangeError(`Frame payload exceeds ${MAX_FRAME_PAYLOAD_SIZE} bytes`);
+	const frame = new Uint8Array(9 + payload.length);
+	frame[0] = type;
+	frame[1] = streamId >>> 24 & 255;
+	frame[2] = streamId >>> 16 & 255;
+	frame[3] = streamId >>> 8 & 255;
+	frame[4] = streamId & 255;
+	frame[5] = payload.length >>> 24 & 255;
+	frame[6] = payload.length >>> 16 & 255;
+	frame[7] = payload.length >>> 8 & 255;
+	frame[8] = payload.length & 255;
+	frame.set(payload, 9);
+	return frame;
 }
-/**
-* Merge target and source into a new null-proto object, filtering dangerous keys.
-*/
-function safeObjectMerge(target, source) {
-	const result = Object.create(null);
-	if (target) {
-		for (const key of Object.keys(target)) if (isSafeKey(key)) result[key] = target[key];
-	}
-	if (source && typeof source === "object") {
-		for (const key of Object.keys(source)) if (isSafeKey(key)) result[key] = source[key];
-	}
-	return result;
+/** Encodes an error message payload, truncated to a bounded length. */
+function encodeErrorPayload(error) {
+	const originalMessage = error instanceof Error ? error.message : String(error ?? "Unknown error");
+	const message = originalMessage.length > MAX_ERROR_MESSAGE_CODE_UNITS ? `${originalMessage.slice(0, MAX_ERROR_MESSAGE_CODE_UNITS)}…` : originalMessage;
+	return textEncoder$1.encode(message);
 }
 /**
-* Create a null-prototype object, optionally copying from source.
+* Creates a multiplexed ReadableStream from serialized response records.
+*
+* A record's JSON frame is admitted before any raw stream referenced by that
+* record starts. Raw streams from admitted records are pumped concurrently.
+* The caller bounds the stream count before records reach this function.
 */
-function createNullProtoObject(source) {
-	if (!source) return Object.create(null);
-	const obj = Object.create(null);
-	for (const key of Object.keys(source)) if (isSafeKey(key)) obj[key] = source[key];
-	return obj;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-storage-context@1.167.31/node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js
-var GLOBAL_STORAGE_KEY = Symbol.for("tanstack-start:start-storage-context");
-var globalObj = globalThis;
-if (!globalObj[GLOBAL_STORAGE_KEY]) globalObj[GLOBAL_STORAGE_KEY] = new AsyncLocalStorage$1();
-var startStorage = globalObj[GLOBAL_STORAGE_KEY];
-async function runWithStartContext(context, fn) {
-	return startStorage.run(context, fn);
-}
-function getStartContext(opts) {
-	const context = startStorage.getStore();
-	if (!context && opts?.throwIfNotFound !== false) throw new Error(`No Start context found in AsyncLocalStorage. Make sure you are using the function within the server runtime.`);
-	return context;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/getStartOptions.js
-var getStartOptions = () => getStartContext().startOptions;
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/createServerFn.js
-function flattenMiddlewares(middlewares, maxDepth = 100) {
-	const seen = /* @__PURE__ */ new Set();
-	const flattened = [];
-	const recurse = (middleware, depth) => {
-		if (depth > maxDepth) throw new Error(`Middleware nesting depth exceeded maximum of ${maxDepth}. Check for circular references.`);
-		middleware.forEach((m) => {
-			if (m.options.middleware) recurse(m.options.middleware, depth + 1);
-			if (!seen.has(m)) {
-				seen.add(m);
-				flattened.push(m);
-			}
+function createMultiplexedStream(recordStream, options = {}) {
+	let controller;
+	let stopped = false;
+	let activePumps = 0;
+	let wakeDemand;
+	let admission;
+	const readers = /* @__PURE__ */ new Set();
+	const pendingRawStreams = /* @__PURE__ */ new Set();
+	const abortOutput = () => errorOutput(options.signal?.reason);
+	const wakeAdmission = () => {
+		const wake = wakeDemand;
+		wakeDemand = void 0;
+		wake?.();
+	};
+	const cancelReader = (reader, reason) => {
+		reader.cancel(reason).catch(() => {});
+	};
+	const cancelStream = (stream, reason) => {
+		stream.cancel(reason).catch(() => {});
+	};
+	const stop = (reason) => {
+		if (stopped) return false;
+		stopped = [reason];
+		options.signal?.removeEventListener("abort", abortOutput);
+		wakeAdmission();
+		for (const reader of readers) cancelReader(reader, reason);
+		for (const stream of pendingRawStreams) cancelStream(stream, reason);
+		pendingRawStreams.clear();
+		return true;
+	};
+	const errorOutput = (error) => {
+		if (!stop(error)) return;
+		try {
+			controller.error(error);
+		} catch {}
+	};
+	const waitForDemand = async () => {
+		while (!stopped && (controller.desiredSize ?? 0) <= 0) await new Promise((resolve) => {
+			wakeDemand = resolve;
+		});
+		return !stopped;
+	};
+	const admitFrame = (type, streamId, payload) => {
+		if (stopped) return false;
+		if (!admission && (controller.desiredSize ?? 0) > 0) {
+			controller.enqueue(encodeFrame(type, streamId, payload));
+			return true;
+		}
+		const runAdmission = async () => {
+			if (!await waitForDemand()) return false;
+			controller.enqueue(encodeFrame(type, streamId, payload));
+			return true;
+		};
+		const result = admission ? admission.then(runAdmission) : runAdmission();
+		const clearAdmission = () => {
+			if (admission === tail) admission = void 0;
+		};
+		const tail = result.then(clearAdmission, clearAdmission);
+		admission = tail;
+		return result;
+	};
+	const maybeClose = () => {
+		if (activePumps !== 0 || !stop()) return;
+		try {
+			controller.close();
+		} catch {}
+	};
+	const startPump = (pump) => {
+		activePumps++;
+		pump().then(() => {
+			activePumps--;
+			maybeClose();
+		}, (error) => {
+			activePumps--;
+			errorOutput(error);
 		});
 	};
-	recurse(middlewares, 0);
-	return flattened;
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/createMiddleware.js
-var createMiddleware = (options, __opts) => {
-	const resolvedOptions = {
-		type: "request",
-		...__opts || options
-	};
-	const setValidator = (validator) => {
-		return createMiddleware({}, Object.assign(resolvedOptions, {
-			validator,
-			inputValidator: validator
-		}));
-	};
-	return {
-		options: resolvedOptions,
-		middleware: (middleware) => {
-			return createMiddleware({}, Object.assign(resolvedOptions, { middleware }));
-		},
-		validator: setValidator,
-		inputValidator: setValidator,
-		client: (client) => {
-			return createMiddleware({}, Object.assign(resolvedOptions, { client }));
-		},
-		server: (server) => {
-			return createMiddleware({}, Object.assign(resolvedOptions, { server }));
+	async function pumpRawStream(streamId, stream) {
+		const reader = stream.getReader();
+		readers.add(reader);
+		try {
+			while (!stopped) {
+				const { done, value } = await reader.read();
+				if (stopped) return;
+				if (done) {
+					const frameAdmission = admitFrame(2, streamId, EMPTY_PAYLOAD);
+					if (frameAdmission !== true) await frameAdmission;
+					return;
+				}
+				if (!(value instanceof Uint8Array)) throw new TypeError("RawStream chunks must be Uint8Array");
+				let offset = 0;
+				do {
+					const chunk = value.byteLength <= 16777216 ? value : value.subarray(offset, offset + MAX_FRAME_PAYLOAD_SIZE);
+					const frameAdmission = admitFrame(1, streamId, chunk);
+					if (frameAdmission !== true && (frameAdmission === false || !await frameAdmission)) return;
+					offset += MAX_FRAME_PAYLOAD_SIZE;
+				} while (offset < value.byteLength);
+			}
+		} catch (error) {
+			if (!stopped) {
+				const frameAdmission = admitFrame(3, streamId, encodeErrorPayload(error));
+				if (frameAdmission !== true) await frameAdmission;
+			}
+		} finally {
+			readers.delete(reader);
+			reader.releaseLock();
 		}
-	};
-};
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/createCsrfMiddleware.js
+	}
+	async function pumpRecords() {
+		const reader = recordStream.getReader();
+		readers.add(reader);
+		try {
+			while (!stopped) {
+				const { done, value } = await reader.read();
+				if (stopped) {
+					if (!done) for (const registration of value.rawStreams) cancelStream(registration.stream, stopped[0]);
+					return;
+				}
+				if (done) return;
+				for (const registration of value.rawStreams) pendingRawStreams.add(registration.stream);
+				const frameAdmission = admitFrame(0, 0, value.json);
+				if (frameAdmission !== true && (frameAdmission === false || !await frameAdmission)) return;
+				for (const registration of value.rawStreams) {
+					pendingRawStreams.delete(registration.stream);
+					startPump(pumpRawStream.bind(void 0, registration.id, registration.stream));
+				}
+			}
+		} catch (error) {
+			if (!stopped) errorOutput(error);
+		} finally {
+			readers.delete(reader);
+			reader.releaseLock();
+		}
+	}
+	return new ReadableStream({
+		start(ctrl) {
+			controller = ctrl;
+			if (options.signal?.aborted) {
+				cancelStream(recordStream, options.signal.reason);
+				errorOutput(options.signal.reason);
+				return;
+			}
+			options.signal?.addEventListener("abort", abortOutput, { once: true });
+			startPump(pumpRecords);
+		},
+		pull() {
+			wakeAdmission();
+		},
+		cancel(reason) {
+			if (stop(reason)) options.onCancel?.(reason);
+		}
+	});
+}
+// ../../node_modules/.pnpm/@tanstack+start-client-core@1.170.39/node_modules/@tanstack/start-client-core/dist/esm/createCsrfMiddleware.js
 var innerCreateCsrfMiddleware = (opts = {}) => {
-	return createMiddleware().server(async (ctx) => {
+	const continueRequest = (result, ctx) => {
+		return isValidationResultAllowed(result, opts) ? ctx.next() : getFailureResponse(opts, ctx);
+	};
+	const validateRequest = (ctx) => {
+		const result = validateCsrfRequest(opts, ctx);
+		if (isPromise(result)) return result.then((result) => continueRequest(result, ctx));
+		return continueRequest(result, ctx);
+	};
+	return createMiddleware().server((ctx) => {
 		const csrfCtx = ctx;
-		if (opts.filter && !await opts.filter(csrfCtx)) return ctx.next();
-		if (await isCsrfRequestAllowed(opts, csrfCtx)) return ctx.next();
-		return getFailureResponse(opts, csrfCtx);
+		try {
+			if (opts.filter) {
+				const shouldValidate = opts.filter(csrfCtx);
+				if (isPromise(shouldValidate)) return shouldValidate.then((shouldValidate) => shouldValidate ? validateRequest(csrfCtx) : ctx.next());
+				if (!shouldValidate) return ctx.next();
+			}
+			return validateRequest(csrfCtx);
+		} catch (error) {
+			return Promise.reject(error);
+		}
 	});
 };
 var createCsrfMiddleware = innerCreateCsrfMiddleware;
-async function isCsrfRequestAllowed(opts, ctx) {
-	const result = await getCsrfRequestValidationResult(opts, ctx);
+function isValidationResultAllowed(result, opts) {
 	return result === true || result === void 0 && opts.allowRequestsWithoutOriginCheck === true;
 }
-async function getCsrfRequestValidationResult(opts, ctx) {
+function validateCsrfRequest(opts, ctx) {
 	const fetchSite = ctx.request.headers.get("Sec-Fetch-Site");
 	if (fetchSite !== null) return matchValue(opts.secFetchSite ?? "same-origin", fetchSite, ctx);
 	const origin = ctx.request.headers.get("Origin");
@@ -14918,7 +14819,7 @@ async function getCsrfRequestValidationResult(opts, ctx) {
 	}
 	return isRefererSameOrigin(referer, new URL(ctx.request.url).origin);
 }
-async function matchValue(matcher, value, ctx) {
+function matchValue(matcher, value, ctx) {
 	if (typeof matcher === "function") return matcher(value, ctx);
 	if (Array.isArray(matcher)) return matcher.includes(value);
 	return value === matcher;
@@ -14937,381 +14838,361 @@ function isRefererSameOrigin(referer, requestOrigin) {
 	const code = referer.charCodeAt(requestOrigin.length);
 	return code === 47 || code === 63 || code === 35;
 }
-async function getFailureResponse(opts, ctx) {
+function getFailureResponse(opts, ctx) {
 	if (typeof opts.failureResponse === "function") return opts.failureResponse(ctx);
 	return opts.failureResponse?.clone() ?? new Response("Forbidden", { status: 403 });
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-client-core@1.170.29/node_modules/@tanstack/start-client-core/dist/esm/getDefaultSerovalPlugins.js
-function getDefaultSerovalPlugins() {
-	return [...(getStartOptions()?.serializationAdapters)?.map(makeSerovalPlugin) ?? [], ...defaultSerovalPlugins];
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/frame-protocol.js
-/**
-* Binary frame protocol for multiplexing JSON and raw streams over HTTP.
-*
-* Frame format: [type:1][streamId:4][length:4][payload:length]
-* - type: 1 byte - frame type (JSON, CHUNK, END, ERROR)
-* - streamId: 4 bytes big-endian uint32 - stream identifier
-* - length: 4 bytes big-endian uint32 - payload length
-* - payload: variable length bytes
-*/
-/** Cached TextEncoder for frame encoding */
-var textEncoder = new TextEncoder();
-/** Shared empty payload for END frames - avoids allocation per call */
-var EMPTY_PAYLOAD = /* @__PURE__ */ new Uint8Array(0);
-/**
-* Encodes a single frame with header and payload.
-*/
-function encodeFrame(type, streamId, payload) {
-	const frame = new Uint8Array(9 + payload.length);
-	frame[0] = type;
-	frame[1] = streamId >>> 24 & 255;
-	frame[2] = streamId >>> 16 & 255;
-	frame[3] = streamId >>> 8 & 255;
-	frame[4] = streamId & 255;
-	frame[5] = payload.length >>> 24 & 255;
-	frame[6] = payload.length >>> 16 & 255;
-	frame[7] = payload.length >>> 8 & 255;
-	frame[8] = payload.length & 255;
-	frame.set(payload, 9);
-	return frame;
-}
-/**
-* Encodes a JSON frame (type 0, streamId 0).
-*/
-function encodeJSONFrame(json) {
-	return encodeFrame(FrameType.JSON, 0, textEncoder.encode(json));
-}
-/**
-* Encodes a raw stream chunk frame.
-*/
-function encodeChunkFrame(streamId, chunk) {
-	return encodeFrame(FrameType.CHUNK, streamId, chunk);
-}
-/**
-* Encodes a raw stream end frame.
-*/
-function encodeEndFrame(streamId) {
-	return encodeFrame(FrameType.END, streamId, EMPTY_PAYLOAD);
-}
-/**
-* Encodes a raw stream error frame.
-*/
-function encodeErrorFrame(streamId, error) {
-	const message = error instanceof Error ? error.message : String(error ?? "Unknown error");
-	return encodeFrame(FrameType.ERROR, streamId, textEncoder.encode(message));
-}
-/**
-* Creates a multiplexed ReadableStream from JSON stream and raw streams.
-*
-* The JSON stream emits NDJSON lines (from seroval's toCrossJSONStream).
-* Raw streams are pumped concurrently, interleaved with JSON frames.
-*
-* Supports late stream registration for RawStreams discovered after initial
-* serialization (e.g., from resolved Promises).
-*
-* @param jsonStream Stream of JSON strings (each string is one NDJSON line)
-* @param rawStreams Map of stream IDs to raw binary streams (known at start)
-* @param lateStreamSource Optional stream of late registrations for streams discovered later
-*/
-function createMultiplexedStream(jsonStream, rawStreams, lateStreamSource) {
-	let controller;
-	let cancelled = false;
-	const readers = [];
-	const enqueue = (frame) => {
-		if (cancelled) return false;
-		try {
-			controller.enqueue(frame);
-			return true;
-		} catch {
-			return false;
-		}
-	};
-	const errorOutput = (error) => {
-		if (cancelled) return;
-		cancelled = true;
-		try {
-			controller.error(error);
-		} catch {}
-		for (const reader of readers) reader.cancel().catch(() => {});
-	};
-	async function pumpRawStream(streamId, stream) {
-		const reader = stream.getReader();
-		readers.push(reader);
-		try {
-			while (!cancelled) {
-				const { done, value } = await reader.read();
-				if (done) {
-					enqueue(encodeEndFrame(streamId));
-					return;
-				}
-				if (!enqueue(encodeChunkFrame(streamId, value))) return;
-			}
-		} catch (error) {
-			enqueue(encodeErrorFrame(streamId, error));
-		} finally {
-			reader.releaseLock();
-		}
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/server-functions-handler.js
+var SERIALIZED_JSON_HEADERS = /* @__PURE__ */ new Map([
+	["content-type", "application/json"],
+	[X_TSS_SERIALIZED, "true"],
+	[X_TSS_RAW_RESPONSE, null],
+	["location", null]
+]);
+var SERIALIZED_JSON_HEADER_INIT = new Headers({
+	"content-type": "application/json",
+	[X_TSS_SERIALIZED]: "true"
+});
+/** Completed bytes own no stream until the request pipeline accepts them. */
+var DeferredResponse = class {
+	constructor(body) {
+		this.body = body;
 	}
-	async function pumpJSON() {
-		const reader = jsonStream.getReader();
-		readers.push(reader);
-		try {
-			while (!cancelled) {
-				const { done, value } = await reader.read();
-				if (done) return;
-				if (!enqueue(encodeJSONFrame(value))) return;
-			}
-		} catch (error) {
-			errorOutput(error);
-			throw error;
-		} finally {
-			reader.releaseLock();
-		}
+	createResponse(event) {
+		return createFinalizedResponse(this.body, SERIALIZED_JSON_HEADER_INIT, SERIALIZED_JSON_HEADERS, event);
 	}
-	async function pumpLateStreams() {
-		if (!lateStreamSource) return [];
-		const lateStreamPumps = [];
-		const reader = lateStreamSource.getReader();
-		readers.push(reader);
-		try {
-			while (!cancelled) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				lateStreamPumps.push(pumpRawStream(value.id, value.stream));
-			}
-		} finally {
-			reader.releaseLock();
-		}
-		return lateStreamPumps;
-	}
-	return new ReadableStream({
-		async start(ctrl) {
-			controller = ctrl;
-			const pumps = [pumpJSON()];
-			for (const [streamId, stream] of rawStreams) pumps.push(pumpRawStream(streamId, stream));
-			if (lateStreamSource) pumps.push(pumpLateStreams());
-			try {
-				const latePumps = (await Promise.all(pumps)).find(Array.isArray);
-				if (latePumps && latePumps.length > 0) await Promise.all(latePumps);
-				if (!cancelled) try {
-					controller.close();
-				} catch {}
-			} catch {}
-		},
-		cancel() {
-			cancelled = true;
-			for (const reader of readers) reader.cancel().catch(() => {});
-			readers.length = 0;
-		}
-	});
-}
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/server-functions-handler.js
-var serovalPlugins = void 0;
-var FORM_DATA_CONTENT_TYPES = ["multipart/form-data", "application/x-www-form-urlencoded"];
+};
+var SERIALIZED_FRAMED_HEADERS = /* @__PURE__ */ new Map([
+	["content-type", TSS_CONTENT_TYPE_FRAMED_VERSIONED],
+	[X_TSS_SERIALIZED, "true"],
+	[X_TSS_RAW_RESPONSE, null],
+	["location", null]
+]);
+var NOT_FOUND_HEADERS = /* @__PURE__ */ new Map([
+	["content-type", "application/json"],
+	[X_TSS_SERIALIZED, null],
+	[X_TSS_RAW_RESPONSE, null],
+	["location", null]
+]);
+var RAW_RESPONSE_HEADERS = /* @__PURE__ */ new Map([[X_TSS_RAW_RESPONSE, "true"]]);
+var THROWN_RESPONSE_HEADERS = /* @__PURE__ */ new Map([[X_TSS_RAW_RESPONSE, "thrown"]]);
 var MAX_PAYLOAD_SIZE = 1e6;
-var handleServerAction = async ({ request, context, serverFnId }) => {
+var MAX_PENDING_SERIALIZATION_RECORDS = 1024;
+var MAX_PENDING_SERIALIZATION_BYTES = 33554432;
+var textEncoder = new TextEncoder();
+function encodeSerializationRecord(value) {
+	return textEncoder.encode(JSON.stringify(value));
+}
+function exceedsPendingSerializationLimit(record, recordCount, pendingBytes) {
+	return recordCount >= MAX_PENDING_SERIALIZATION_RECORDS || pendingBytes + record.byteLength > MAX_PENDING_SERIALIZATION_BYTES;
+}
+function runSerializationCleanup(dispose) {
+	try {
+		dispose();
+	} catch {}
+}
+function cancelRawStream(stream, reason) {
+	stream.cancel(reason).catch(() => {});
+}
+/**
+* Marks a Response thrown during a server-function request so the client
+* rejects the call with it. Redirects keep their own protocol.
+*/
+function toThrownServerFnResponse(response) {
+	return isRedirect(response) ? response : setProtectedResponseHeaders(response, THROWN_RESPONSE_HEADERS);
+}
+/**
+* Builds the reply for a server-function request that failed outside the
+* function, such as in request middleware. Like a failed call, it carries
+* only the thrown value under an `error` key, so the client rethrows it.
+*/
+async function createServerFnErrorResponse(error, serovalPlugins) {
+	if (isNotFound(error)) return isNotFoundResponse(error);
+	const headers = getErrorHeaders(error) ?? new Headers();
+	const { status, statusText } = resolveErrorResponseStatus(error);
+	headers.set("Content-Type", "application/json");
+	headers.set(X_TSS_SERIALIZED, "true");
+	headers.delete(X_TSS_RAW_RESPONSE);
+	headers.delete("location");
+	const plugins = serovalPlugins ?? getSerovalPlugins(defaultSerovalDeserializerPlugins);
+	let serializedError;
+	try {
+		serializedError = JSON.stringify(await toCrossJSONAsync({ error }, {
+			refs: /* @__PURE__ */ new Map(),
+			plugins
+		}));
+	} catch (serializationError) {
+		serializedError = JSON.stringify(await toCrossJSONAsync({ error: serializationError }, {
+			refs: /* @__PURE__ */ new Map(),
+			plugins
+		}));
+	}
+	const errorResponse = new Response(serializedError, {
+		status,
+		statusText,
+		headers
+	});
+	protectResponseHeaders(errorResponse, SERIALIZED_JSON_HEADERS);
+	return errorResponse;
+}
+var handleServerAction = async ({ request, serverFnId }) => {
 	const methodUpper = request.method.toUpperCase();
-	const url = new URL(request.url);
 	const action = await getServerFnById(serverFnId, { origin: "client" });
 	if (action.method && methodUpper !== action.method) return new Response(`expected ${action.method} method. Got ${methodUpper}`, {
 		status: 405,
 		headers: { Allow: action.method }
 	});
-	const isServerFn = request.headers.get("x-tsr-serverFn") === "true";
-	if (!serovalPlugins) serovalPlugins = getDefaultSerovalPlugins();
-	const contentType = request.headers.get("Content-Type");
-	function parsePayload(payload) {
-		return fromJSON(payload, { plugins: serovalPlugins });
-	}
-	return await (async () => {
-		try {
-			let res = await (async () => {
-				if (FORM_DATA_CONTENT_TYPES.some((type) => contentType && contentType.includes(type))) {
-					if (methodUpper === "GET") invariant();
-					const formData = await request.formData();
-					const serializedContext = formData.get(TSS_FORMDATA_CONTEXT);
-					formData.delete(TSS_FORMDATA_CONTEXT);
-					const params = {
-						context,
-						data: formData,
-						method: methodUpper
-					};
-					if (typeof serializedContext === "string") try {
-						const deserializedContext = fromJSON(JSON.parse(serializedContext), { plugins: serovalPlugins });
-						if (typeof deserializedContext === "object" && deserializedContext) params.context = safeObjectMerge(deserializedContext, context);
-					} catch (e) {}
-					return await action(params);
-				}
-				if (methodUpper === "GET") {
-					const payloadParam = url.searchParams.get("payload");
-					if (payloadParam && payloadParam.length > MAX_PAYLOAD_SIZE) throw new Error("Payload too large");
-					const payload = payloadParam ? parsePayload(JSON.parse(payloadParam)) : {};
-					payload.context = safeObjectMerge(payload.context, context);
-					payload.method = methodUpper;
-					return await action(payload);
-				}
-				let jsonPayload;
-				if (contentType?.includes("application/json")) jsonPayload = await request.json();
-				const payload = jsonPayload ? parsePayload(jsonPayload) : {};
-				payload.context = safeObjectMerge(payload.context, context);
-				payload.method = methodUpper;
-				return await action(payload);
-			})();
-			const unwrapped = res.result || res.error;
-			if (isNotFound(res)) res = isNotFoundResponse(res);
-			if (!isServerFn) return unwrapped;
-			if (unwrapped instanceof Response) {
-				if (isRedirect(unwrapped)) return unwrapped;
-				unwrapped.headers.set(X_TSS_RAW_RESPONSE, "true");
-				return unwrapped;
-			}
-			return serializeResult(res);
-			function serializeResult(res) {
-				let nonStreamingBody = void 0;
-				const alsResponse = getResponse();
-				if (res !== void 0) {
-					const rawStreams = /* @__PURE__ */ new Map();
-					let initialPhase = true;
-					let lateStreamWriter;
-					let lateStreamReadable = void 0;
-					const pendingLateStreams = [];
-					const plugins = [/* @__PURE__ */ createRawStreamRPCPlugin((id, stream) => {
-						if (initialPhase) {
-							rawStreams.set(id, stream);
-							return;
-						}
-						if (lateStreamWriter) {
-							lateStreamWriter.write({
-								id,
-								stream
-							}).catch(() => {});
-							return;
-						}
-						pendingLateStreams.push({
-							id,
-							stream
-						});
-					}), ...serovalPlugins || []];
-					let done = false;
-					const callbacks = {
-						onParse: (value) => {
-							nonStreamingBody = value;
-						},
-						onDone: () => {
-							done = true;
-						},
-						onError: (error) => {
-							throw error;
-						}
-					};
-					toCrossJSONStream(res, {
-						refs: /* @__PURE__ */ new Map(),
-						plugins,
-						onParse(value) {
-							callbacks.onParse(value);
-						},
-						onDone() {
-							callbacks.onDone();
-						},
-						onError: (error) => {
-							callbacks.onError(error);
-						}
-					});
-					initialPhase = false;
-					if (done && rawStreams.size === 0) return new Response(nonStreamingBody ? JSON.stringify(nonStreamingBody) : void 0, {
-						status: alsResponse.status,
-						statusText: alsResponse.statusText,
-						headers: {
-							"Content-Type": "application/json",
-							[X_TSS_SERIALIZED]: "true"
-						}
-					});
-					const { readable, writable } = new TransformStream();
-					lateStreamReadable = readable;
-					lateStreamWriter = writable.getWriter();
-					for (const registration of pendingLateStreams) lateStreamWriter.write(registration).catch(() => {});
-					pendingLateStreams.length = 0;
-					const multiplexedStream = createMultiplexedStream(new ReadableStream({
-						start(controller) {
-							callbacks.onParse = (value) => {
-								controller.enqueue(JSON.stringify(value) + "\n");
-							};
-							callbacks.onDone = () => {
-								try {
-									controller.close();
-								} catch {}
-								lateStreamWriter?.close().catch(() => {}).finally(() => {
-									lateStreamWriter = void 0;
-								});
-							};
-							callbacks.onError = (error) => {
-								controller.error(error);
-								lateStreamWriter?.abort(error).catch(() => {}).finally(() => {
-									lateStreamWriter = void 0;
-								});
-							};
-							if (nonStreamingBody !== void 0) callbacks.onParse(nonStreamingBody);
-							if (done) callbacks.onDone();
-						},
-						cancel() {
-							lateStreamWriter?.abort().catch(() => {});
-							lateStreamWriter = void 0;
-						}
-					}), rawStreams, lateStreamReadable);
-					return new Response(multiplexedStream, {
-						status: alsResponse.status,
-						statusText: alsResponse.statusText,
-						headers: {
-							"Content-Type": TSS_CONTENT_TYPE_FRAMED_VERSIONED,
-							[X_TSS_SERIALIZED]: "true"
-						}
-					});
-				}
-				return new Response(void 0, {
-					status: alsResponse.status,
-					statusText: alsResponse.statusText
-				});
-			}
-		} catch (error) {
-			if (error instanceof Response) return error;
-			if (isNotFound(error)) return isNotFoundResponse(error);
-			console.info();
-			console.info("Server Fn Error!");
-			console.info();
-			console.error(error);
-			console.info();
-			const serializedError = JSON.stringify(await Promise.resolve(toCrossJSONAsync(error, {
-				refs: /* @__PURE__ */ new Map(),
-				plugins: serovalPlugins
-			})));
-			const response = getResponse();
-			return new Response(serializedError, {
-				status: response.status ?? 500,
-				statusText: response.statusText,
-				headers: {
-					"Content-Type": "application/json",
-					[X_TSS_SERIALIZED]: "true"
-				}
+	const headers = request.headers;
+	const isServerFn = headers.get("x-tsr-serverfn") === "true";
+	let serovalPlugins;
+	const getRequestSerovalPlugins = () => {
+		return serovalPlugins ??= getSerovalPlugins(defaultSerovalDeserializerPlugins);
+	};
+	const contentType = headers.get("content-type");
+	try {
+		let res;
+		if (contentType && (contentType.includes("multipart/form-data") || contentType.includes("application/x-www-form-urlencoded"))) {
+			if (methodUpper === "GET") invariant();
+			const formData = await request.formData();
+			const serializedContext = formData.get(TSS_FORMDATA_CONTEXT);
+			formData.delete(TSS_FORMDATA_CONTEXT);
+			const params = {
+				data: formData,
+				method: methodUpper
+			};
+			if (typeof serializedContext === "string") try {
+				const deserializedContext = fromJSON(JSON.parse(serializedContext), { plugins: getRequestSerovalPlugins() });
+				if (typeof deserializedContext === "object" && deserializedContext) params.context = deserializedContext;
+			} catch (e) {}
+			res = await action(params);
+		} else {
+			let json;
+			if (methodUpper === "GET") {
+				const payloadParam = getParsedRequestUrl(request).searchParams.get("payload");
+				if (payloadParam && payloadParam.length > MAX_PAYLOAD_SIZE) throw new Error("Payload too large");
+				json = payloadParam ? JSON.parse(payloadParam) : void 0;
+			} else if (contentType?.includes("application/json")) json = await request.json();
+			const payload = json === void 0 ? void 0 : fromJSON(json, { plugins: getRequestSerovalPlugins() });
+			res = await action({
+				data: payload?.data,
+				context: payload?.context,
+				method: methodUpper
 			});
 		}
-	})();
+		const failed = "error" in res;
+		const unwrapped = failed ? res.error : res.result;
+		if (!isServerFn && (unwrapped instanceof Response || unwrapped === null || typeof unwrapped !== "object")) return unwrapped;
+		if (unwrapped instanceof Response) {
+			if (failed) return toThrownServerFnResponse(unwrapped);
+			if (isRedirect(unwrapped)) return unwrapped;
+			return setProtectedResponseHeaders(unwrapped, RAW_RESPONSE_HEADERS);
+		}
+		return serializeResult(res, request, getRequestSerovalPlugins());
+	} catch (error) {
+		if (error instanceof Response) return error;
+		return createServerFnErrorResponse(error, serovalPlugins);
+	}
 };
-function isNotFoundResponse(error) {
-	const { headers, ...rest } = error;
-	return new Response(JSON.stringify(rest), {
-		status: 404,
-		headers: {
-			"Content-Type": "application/json",
-			...headers || {}
+/**
+* Serializes a server-function result. A result that Seroval completes
+* synchronously without RawStreams becomes plain JSON; everything else is a
+* framed response whose records and raw streams are multiplexed in order.
+*/
+function serializeResult(res, request, plugins) {
+	const initialRecords = [];
+	let initialBytes = 0;
+	const pendingRawStreams = [];
+	let done = false;
+	let initialParsed = false;
+	let serializationFailure;
+	let disposeSerialization;
+	let onParse = (value, initial) => {
+		if (serializationFailure) return;
+		initialParsed ||= initial;
+		const record = encodeSerializationRecord(value);
+		if (exceedsPendingSerializationLimit(record, initialRecords.length, initialBytes)) {
+			serializationFailure = [/* @__PURE__ */ new Error("Server function serialization exceeded its pending output limit")];
+			return;
+		}
+		initialRecords.push(record);
+		initialBytes += record.byteLength;
+	};
+	let onDone = () => {
+		if (initialParsed) done = true;
+	};
+	let onError = (error) => {
+		serializationFailure ??= [error];
+	};
+	const dispose = toCrossJSONStream(res, {
+		refs: /* @__PURE__ */ new Map(),
+		plugins: [/* @__PURE__ */ createRawStreamRPCPlugin((id, stream) => {
+			if (serializationFailure) {
+				cancelRawStream(stream, serializationFailure[0]);
+				return;
+			}
+			if (id > 1024) {
+				const error = /* @__PURE__ */ new Error(`Too many raw streams in framed response (max ${MAX_FRAMED_STREAMS})`);
+				cancelRawStream(stream, error);
+				onError(error);
+				return;
+			}
+			pendingRawStreams.push({
+				id,
+				stream
+			});
+		}), ...plugins],
+		onParse(value, initial) {
+			onParse(value, initial);
+		},
+		onDone() {
+			onDone();
+		},
+		onError: (error) => {
+			onError(error);
 		}
 	});
+	if (serializationFailure) {
+		runSerializationCleanup(dispose);
+		for (const registration of pendingRawStreams) cancelRawStream(registration.stream, serializationFailure[0]);
+		throw serializationFailure[0];
+	}
+	if (!done) disposeSerialization = dispose;
+	if (done && pendingRawStreams.length === 0 && initialRecords.length === 1) return new DeferredResponse(initialRecords[0]);
+	if (done && initialRecords.length === 1) {
+		const json = initialRecords[0];
+		if (json.byteLength > 16777216) {
+			const error = /* @__PURE__ */ new Error("Server function serialization exceeded its pending output limit");
+			for (const registration of pendingRawStreams) cancelRawStream(registration.stream, error);
+			throw error;
+		}
+		const rawStreams = pendingRawStreams.splice(0);
+		initialRecords.length = 0;
+		return createFramedResponse(new ReadableStream({
+			start(controller) {
+				controller.enqueue({
+					json,
+					rawStreams
+				});
+				controller.close();
+			},
+			cancel(reason) {
+				for (const registration of rawStreams) cancelRawStream(registration.stream, reason);
+			}
+		}), { signal: request.signal });
+	}
+	const { readable, writable } = new TransformStream();
+	const writer = writable.getWriter();
+	const recordAbortController = new AbortController();
+	let pendingBytes = 0;
+	const pendingRecords = /* @__PURE__ */ new Set();
+	const abortRecordStream = (error) => {
+		if (serializationFailure) return;
+		serializationFailure = [error];
+		const disposeCurrentSerialization = disposeSerialization;
+		disposeSerialization = void 0;
+		for (const registration of pendingRawStreams.splice(0)) cancelRawStream(registration.stream, error);
+		for (const record of pendingRecords) for (const registration of record.rawStreams) cancelRawStream(registration.stream, error);
+		pendingRecords.clear();
+		recordAbortController.abort(error);
+		writer.abort(error).catch(() => {});
+		if (disposeCurrentSerialization) runSerializationCleanup(disposeCurrentSerialization);
+	};
+	const writeRecord = (json, rawStreams) => {
+		if (serializationFailure) {
+			for (const registration of rawStreams) cancelRawStream(registration.stream, serializationFailure[0]);
+			return false;
+		}
+		if (json.byteLength > 16777216 || exceedsPendingSerializationLimit(json, pendingRecords.size, pendingBytes)) {
+			const error = /* @__PURE__ */ new Error("Server function serialization exceeded its pending output limit");
+			for (const registration of rawStreams) cancelRawStream(registration.stream, error);
+			onError(error);
+			return false;
+		}
+		pendingBytes += json.byteLength;
+		const record = {
+			json,
+			rawStreams
+		};
+		pendingRecords.add(record);
+		writer.write(record).then(() => {
+			pendingRecords.delete(record);
+			pendingBytes -= json.byteLength;
+		}, (error) => {
+			const stillOwned = pendingRecords.delete(record);
+			pendingBytes -= json.byteLength;
+			if (stillOwned) for (const registration of rawStreams) cancelRawStream(registration.stream, error);
+		});
+		return true;
+	};
+	onParse = (value) => {
+		if (serializationFailure) return;
+		writeRecord(encodeSerializationRecord(value), pendingRawStreams.splice(0));
+	};
+	onDone = () => {
+		if (serializationFailure) return;
+		disposeSerialization = void 0;
+		writer.close().catch(() => {});
+	};
+	onError = (error) => {
+		abortRecordStream(error);
+	};
+	const initialRawStreams = pendingRawStreams.splice(0);
+	for (let index = 0; index < initialRecords.length; index++) {
+		const isLast = index === initialRecords.length - 1;
+		if (!writeRecord(initialRecords[index], isLast ? initialRawStreams : [])) {
+			if (!isLast) for (const registration of initialRawStreams) cancelRawStream(registration.stream, serializationFailure[0]);
+			initialRecords.length = 0;
+			throw serializationFailure[0];
+		}
+	}
+	initialRecords.length = 0;
+	if (done) onDone();
+	writer.closed.catch((error) => {
+		abortRecordStream(error);
+	});
+	return createFramedResponse(readable, {
+		signal: AbortSignal.any([recordAbortController.signal, request.signal]),
+		onCancel: abortRecordStream
+	});
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/early-hints.js
+function createFramedResponse(records, options) {
+	const multiplexedStream = createMultiplexedStream(records, options);
+	const { status, statusText } = getSerializedResponseState();
+	try {
+		const response = new Response(multiplexedStream, {
+			status,
+			statusText,
+			headers: {
+				"Content-Type": TSS_CONTENT_TYPE_FRAMED_VERSIONED,
+				[X_TSS_SERIALIZED]: "true"
+			}
+		});
+		protectResponseHeaders(response, SERIALIZED_FRAMED_HEADERS);
+		return response;
+	} catch (error) {
+		cancelRawStream(multiplexedStream, error);
+		throw error;
+	}
+}
+function isNotFoundResponse(error) {
+	const { headers, ...rest } = error;
+	let responseHeaders;
+	if (headers) {
+		const copiedHeaders = new Headers(headers);
+		copiedHeaders.set("Content-Type", "application/json");
+		copiedHeaders.delete(X_TSS_SERIALIZED);
+		copiedHeaders.delete(X_TSS_RAW_RESPONSE);
+		copiedHeaders.delete("location");
+		responseHeaders = copiedHeaders;
+	} else responseHeaders = { "Content-Type": "application/json" };
+	const response = new Response(JSON.stringify(rest), {
+		status: 404,
+		headers: responseHeaders
+	});
+	protectResponseHeaders(response, NOT_FOUND_HEADERS);
+	return response;
+}
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/early-hints.js
 var LINK_PARAM_TOKEN_RE = /^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$/;
 var PRELOAD_AS_VALUES = /* @__PURE__ */ new Set([
 	"fetch",
@@ -15401,7 +15282,7 @@ function collectStaticHintsFromManifest(manifest, matchedRoutes) {
 				rel: attrs.rel,
 				as: "script"
 			};
-			if (attrs.crossOrigin !== void 0) hint.crossOrigin = attrs.crossOrigin;
+			addEarlyHintFetchAttrs(hint, attrs);
 			hints.push(hint);
 		}
 		for (const link of routeManifest.css ?? []) {
@@ -15560,8 +15441,7 @@ function createEarlyHintsCollector(opts) {
 		}
 	};
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/transformAssetUrls.js
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/transformAssetUrls.js
 function normalizeTransformAssetResult(result) {
 	if (typeof result === "string") return { href: result };
 	return result;
@@ -15676,7 +15556,8 @@ async function transformManifestAssets(source, transformFn, _opts) {
 	else if (manifest.inlineCss) manifest.inlineCss = await transformInlineCssStyles(manifest.inlineCss, transformFn);
 	for (const route of Object.values(manifest.routes)) {
 		if (route.preloads?.length) route.preloads = await Promise.all(route.preloads.map(async (link) => {
-			const result = await transformScript(resolveManifestAssetLink(link).href);
+			const resolved = resolveManifestAssetLink(link);
+			const result = await transformScript(resolved.href);
 			return assignManifestLink(link, {
 				href: result.href,
 				crossOrigin: result.crossOrigin
@@ -15719,19 +15600,23 @@ function buildManifest(source, opts) {
 		routes: { ...source.routes }
 	};
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/inlineCss.js
-function getStaticHandlerInlineCssDefault(handlerInlineCss) {
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/inlineCss.js
+/**
+* The inline-CSS choice that needs no handler callback: a request override
+* wins, then a static handler option, then the default. Undefined when a
+* handler callback has to decide.
+*/
+function getStaticInlineCss(requestInlineCss, handlerInlineCss) {
+	if (requestInlineCss !== void 0) return requestInlineCss;
 	if (typeof handlerInlineCss === "function") return;
 	return handlerInlineCss ?? true;
 }
 async function resolveInlineCssForRequest(opts) {
-	if (opts.requestInlineCss !== void 0) return opts.requestInlineCss;
-	if (typeof opts.handlerInlineCss === "function") return await opts.handlerInlineCss({ request: opts.request });
-	return opts.handlerInlineCss ?? true;
+	const inlineCss = getStaticInlineCss(opts.requestInlineCss, opts.handlerInlineCss);
+	if (inlineCss !== void 0) return inlineCss;
+	return await opts.handlerInlineCss({ request: opts.request });
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/finalManifest.js
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/finalManifest.js
 function createCachedBaseManifestLoader(loadBaseManifest) {
 	let baseManifestPromise;
 	return () => {
@@ -15769,7 +15654,7 @@ function createFinalManifestTransformResolver(transformAssets, opts) {
 function createFinalManifestResolver(opts) {
 	const finalManifestCache = /* @__PURE__ */ new Map();
 	const transformResolver = createFinalManifestTransformResolver(opts.transformAssets, { cacheCreateTransform: opts.cacheCreateTransform });
-	const handlerDefaultInlineCss = getStaticHandlerInlineCssDefault(opts.inlineCss);
+	const handlerDefaultInlineCss = getStaticInlineCss(void 0, opts.inlineCss);
 	const getRequestManifestOptions = async (requestOpts) => {
 		const transformFn = await transformResolver.getTransformFn({
 			warmup: false,
@@ -15803,25 +15688,35 @@ function createFinalManifestResolver(opts) {
 			getTransformFn: () => transformResolver.getTransformFn({ warmup: true }),
 			onError: transformResolver.clearCachedCreateTransform
 		}),
-		resolveCached: (requestOpts) => resolveRequest(requestOpts, finalManifestCache),
+		resolveCached: (requestOpts) => {
+			const inlineCss = getStaticInlineCss(requestOpts.requestInlineCss, opts.inlineCss);
+			if (transformResolver.cache && inlineCss !== void 0) {
+				const cached = finalManifestCache.get(getFinalManifestCacheKey(inlineCss));
+				if (cached) return cached;
+			}
+			return resolveRequest(requestOpts, finalManifestCache);
+		},
 		resolveUncached: (requestOpts) => resolveRequest(requestOpts, void 0)
 	};
 }
 function getFinalManifestCacheKey(inlineCss) {
 	return inlineCss ? "inline-css" : "linked-css";
 }
-function cacheFinalManifestPromise(cachedFinalManifestPromises, cacheKey, promise) {
-	const cachedFinalManifestPromise = promise.catch((error) => {
-		if (cachedFinalManifestPromises.get(cacheKey) === cachedFinalManifestPromise) cachedFinalManifestPromises.delete(cacheKey);
+function cacheFinalManifestPromise(finalManifestCache, cacheKey, promise) {
+	const cachedPromise = promise.then((manifest) => {
+		if (finalManifestCache.get(cacheKey) === cachedPromise) finalManifestCache.set(cacheKey, manifest);
+		return manifest;
+	}, (error) => {
+		if (finalManifestCache.get(cacheKey) === cachedPromise) finalManifestCache.delete(cacheKey);
 		throw error;
 	});
-	cachedFinalManifestPromises.set(cacheKey, cachedFinalManifestPromise);
-	return cachedFinalManifestPromise;
+	finalManifestCache.set(cacheKey, cachedPromise);
+	return cachedPromise;
 }
-function getOrCreateCachedFinalManifestPromise(cachedFinalManifestPromises, cacheKey, computeFinalManifest) {
-	const cachedFinalManifestPromise = cachedFinalManifestPromises.get(cacheKey);
-	if (cachedFinalManifestPromise) return cachedFinalManifestPromise;
-	return cacheFinalManifestPromise(cachedFinalManifestPromises, cacheKey, Promise.resolve().then(computeFinalManifest));
+function getOrCreateCachedFinalManifest(finalManifestCache, cacheKey, computeFinalManifest) {
+	const cached = finalManifestCache.get(cacheKey);
+	if (cached) return cached;
+	return cacheFinalManifestPromise(finalManifestCache, cacheKey, Promise.resolve().then(computeFinalManifest));
 }
 async function buildFinalManifest(opts) {
 	return opts.transformFn ? await transformManifestAssets(opts.base, opts.transformFn, { inlineCss: opts.inlineCss }) : buildManifest(opts.base, { inlineCss: opts.inlineCss });
@@ -15834,25 +15729,24 @@ async function resolveFinalManifest(opts) {
 			inlineCss: opts.inlineCss
 		});
 	};
-	if (opts.finalManifestCache && (!opts.transformFn || opts.cache)) return getOrCreateCachedFinalManifestPromise(opts.finalManifestCache, getFinalManifestCacheKey(opts.inlineCss), computeFinalManifest);
+	if (opts.finalManifestCache && (!opts.transformFn || opts.cache)) return getOrCreateCachedFinalManifest(opts.finalManifestCache, getFinalManifestCacheKey(opts.inlineCss), computeFinalManifest);
 	return computeFinalManifest();
 }
 function warmupFinalManifest(opts) {
 	if (!opts.enabled || opts.handlerDefaultInlineCss === void 0 || !opts.cache) return;
 	const inlineCss = opts.handlerDefaultInlineCss;
-	const warmupPromise = getOrCreateCachedFinalManifestPromise(opts.finalManifestCache, getFinalManifestCacheKey(inlineCss), async () => {
+	const warmupPromise = cacheFinalManifestPromise(opts.finalManifestCache, getFinalManifestCacheKey(inlineCss), Promise.resolve().then(async () => {
 		const [base, transformFn] = await Promise.all([opts.getBaseManifest(), opts.getTransformFn()]);
 		return buildFinalManifest({
 			base,
 			transformFn,
 			inlineCss
 		});
-	});
+	}));
 	if (opts.onError) warmupPromise.catch(opts.onError);
 	return warmupPromise;
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/serializer/ServerFunctionSerializationAdapter.js
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/serializer/ServerFunctionSerializationAdapter.js
 var ServerFunctionSerializationAdapter = createSerializationAdapter({
 	key: "$TSS/serverfn",
 	test: (v) => {
@@ -15863,19 +15757,25 @@ var ServerFunctionSerializationAdapter = createSerializationAdapter({
 	toSerializable: ({ serverFnMeta }) => ({ functionId: serverFnMeta.id }),
 	fromSerializable: ({ functionId }) => {
 		const fn = async (opts, signal) => {
-			return (await (await getServerFnById(functionId, { origin: "client" }))(opts ?? {}, signal)).result;
+			const serverFn = await getServerFnById(functionId, { origin: "client" });
+			const result = await serverFn({
+				data: opts?.data,
+				context: opts?.context,
+				method: serverFn.method ?? "GET"
+			}, signal);
+			if ("error" in result) throw result.error;
+			return result.result;
 		};
 		return fn;
 	}
 });
-//#endregion
-//#region node_modules/.pnpm/@tanstack+start-server-core@1.169.34/node_modules/@tanstack/start-server-core/dist/esm/createStartHandler.js
-function getStartResponseHeaders(opts) {
-	return mergeHeaders({ "Content-Type": "text/html; charset=utf-8" }, ..._getRenderedMatches(opts.router.stores.matches.get()).map((match) => {
-		return match.headers;
-	}));
+// ../../node_modules/.pnpm/@tanstack+start-server-core@1.169.45/node_modules/@tanstack/start-server-core/dist/esm/createStartHandler.js
+function getStartResponseHeaders(router) {
+	const headers = new Headers({ "content-type": "text/html; charset=utf-8" });
+	const matches = _getRenderedMatches(router.stores.matches.get());
+	return matches.some((match) => match.headers) ? mergeHeaders(headers, ...matches.map((match) => match.headers)) : headers;
 }
-var entriesPromise;
+var cachedEntries;
 var defaultCsrfMiddleware = createCsrfMiddleware({ filter: (ctx) => ctx.handlerType === "serverFn" });
 var getCachedBaseManifest = createCachedBaseManifestLoader(() => getStartManifest());
 var getProdBaseManifest = () => getCachedBaseManifest();
@@ -15883,9 +15783,9 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./assets/router-DrhuBRk7.js").then((n) => n.t),
-		import("./assets/start-92UxEnsM.js"),
-		import("./assets/empty-plugin-adapters-7vg-90SR.js")
+		import("./assets/router-xDXaFf9W.js"),
+		import("./assets/start-D7l6Y3Rs.js"),
+		import("./assets/empty-plugin-adapters-BsRz-CQL.js")
 	]);
 	return {
 		routerEntry,
@@ -15894,8 +15794,11 @@ async function loadEntries() {
 	};
 }
 function getEntries() {
-	if (!entriesPromise) entriesPromise = loadEntries();
-	return entriesPromise;
+	if (!cachedEntries) cachedEntries = loadEntries().then((entries) => {
+		cachedEntries = entries;
+		return entries;
+	});
+	return cachedEntries;
 }
 var ROUTER_BASEPATH = "/";
 var SERVER_FN_BASE = "/_serverFn/";
@@ -15910,151 +15813,195 @@ function throwRouteHandlerError() {
 function throwIfMayNotDefer() {
 	throw new Error(ERR_NO_DEFER);
 }
-/**
-* Check if a value is a special response (Response or Redirect)
-*/
-function isSpecialResponse(value) {
-	return value instanceof Response || isRedirect(value);
+function getResponseFromResult(result) {
+	return isSsrResponse(result) || result instanceof Response ? result : result?.response;
+}
+function disposeResponseResult(result, reason) {
+	const response = getResponseFromResult(result);
+	if (isSsrResponse(response) || response instanceof Response) disposeSsrResponse(response, reason);
 }
 /**
-* Normalize middleware result to context shape
+* A new body continues the owned one when it is the same stream, or when the
+* owned body is already being read, as by a pipe, a tee, or a `Response` that
+* copies a body by reading it (Bun, or a wrapped global `Response`). Start
+* cannot tell such a reader from one that stops early, so it disposes only an
+* unread body. A stream whose reader stops early ends with the request's abort
+* or the SSR stream's lifetime limit.
 */
-function handleCtxResult(result) {
-	if (isSsrResponse(result) || isSpecialResponse(result)) return { response: result };
-	return result;
+function inheritsResponseOwnership(ownership, body) {
+	const ownedBody = ownership.response.body;
+	return body === ownedBody || ownedBody.locked;
 }
-function disposeLateResponse(result, signal) {
-	const response = handleCtxResult(result)?.response;
-	if (isSsrResponse(response) || isSpecialResponse(response)) disposeSsrResponseDetached(response, signal.reason);
+function disposeResponseOwnership(ownership, reason) {
+	const { response, sourceBody, streamResponse } = ownership;
+	streamResponse?.dispose(reason);
+	if (!streamResponse || response.body !== sourceBody) response.body.cancel(reason).catch(() => {});
 }
-function isSignalAborted(signal) {
-	return signal.aborted;
+function getOwnedResponse(ownership) {
+	const { response, sourceBody, streamResponse } = ownership;
+	if (!streamResponse) return response;
+	if (streamResponse.response === response && response.body === sourceBody) return streamResponse;
+	if (response.body === sourceBody) return {
+		...streamResponse,
+		response
+	};
+	return {
+		...streamResponse,
+		response,
+		dispose(reason) {
+			disposeResponseOwnership(ownership, reason);
+		}
+	};
+}
+function createLateResponseDisposer(signal) {
+	return (result) => disposeResponseResult(result, signal.reason);
 }
 /**
-* Execute a middleware chain
+* Compose middleware around a terminal response handler. With no middleware
+* the terminal runs directly.
 */
-async function executeMiddleware(middlewares, ctx, signal) {
+async function executeMiddleware(middlewares, terminal, ctx, signal, event, terminalNext) {
 	let index = -1;
-	let streamResponse;
-	let retiredStreamIdentities;
-	const isResponseAlias = (candidate, response) => candidate === response || candidate instanceof Response && response.body !== null && candidate.body === response.body;
-	const setResponse = (response) => {
-		if (isSsrResponse(response)) {
-			if (response.serverSsrCleanup === "stream") streamResponse = response;
-			ctx.response = response.response;
+	let responseOwnership;
+	let returnedDepth = Infinity;
+	const disposeAbandonedResult = createLateResponseDisposer(signal);
+	const adoptResponse = (exposed, streamResponse) => {
+		const current = responseOwnership;
+		const body = exposed instanceof Response ? exposed.body : null;
+		const response = exposed;
+		if (streamResponse && !body && streamResponse !== current?.streamResponse) streamResponse.dispose("Response body dropped by Start reconciliation");
+		if (current && current.response === exposed) current.streamResponse ??= streamResponse;
+		else if (current && body && inheritsResponseOwnership(current, body)) {
+			if (body === current.response.body) transferResponseProtocol(current.response, response);
+			current.response = response;
+			current.streamResponse ??= streamResponse;
+		} else {
+			if (current) {
+				responseOwnership = void 0;
+				disposeResponseOwnership(current, "middleware response replaced");
+			}
+			responseOwnership = body ? {
+				response,
+				sourceBody: body,
+				streamResponse
+			} : void 0;
+		}
+		ctx.response = exposed;
+	};
+	const disposeCurrentBody = (reason) => {
+		const current = responseOwnership;
+		responseOwnership = void 0;
+		if (current) disposeResponseOwnership(current, reason);
+	};
+	const setResponse = (response, caller) => {
+		const owned = response !== void 0 && response === responseOwnership?.response;
+		const ssrResponse = !owned && isSsrResponse(response) ? response : void 0;
+		const exposed = ssrResponse ? ssrResponse.response : response;
+		if (returnedDepth <= caller) {
+			if (exposed !== ctx.response) disposeResponseResult(response, "late middleware response");
 			return;
 		}
-		ctx.response = response;
-	};
-	const disposeStreamResponse = async (reason) => {
-		const response = streamResponse;
-		if (!response) return;
-		streamResponse = void 0;
-		retiredStreamIdentities ??= /* @__PURE__ */ new WeakSet();
-		retiredStreamIdentities.add(response.response);
-		if (response.response.body) retiredStreamIdentities.add(response.response.body);
-		const currentResponse = ctx.response;
-		if (isResponseAlias(currentResponse, response.response)) ctx.response = void 0;
-		await response.dispose(reason);
-	};
-	const disposeAbandonedResult = (result) => {
-		const exposed = handleCtxResult(result)?.response;
-		const response = isSsrResponse(exposed) ? exposed.response : exposed;
-		if (streamResponse && isResponseAlias(response, streamResponse.response)) {
-			disposeStreamResponse(signal.reason).catch(console.error);
-			return;
+		if (!owned) adoptResponse(exposed, ssrResponse?.serverSsrCleanup === "stream" ? ssrResponse : void 0);
+		if (exposed instanceof Response) {
+			const reconciled = reconcileResponse(exposed, event, disposeCurrentBody);
+			if (reconciled !== exposed) adoptRebuilt(exposed, reconciled);
 		}
-		if (response instanceof Response && retiredStreamIdentities && (retiredStreamIdentities.has(response) || response.body !== null && retiredStreamIdentities.has(response.body))) return;
-		disposeLateResponse(result, signal);
 	};
-	const getFinalResponse = async () => {
-		const response = ctx.response;
-		if (!response) throwRouteHandlerError();
-		if (!streamResponse) return response;
-		if (response === streamResponse.response) return streamResponse;
-		if (streamResponse.response.body !== null && response.body === streamResponse.response.body) return {
-			...streamResponse,
-			response
-		};
-		await disposeStreamResponse("middleware response replaced");
-		return response;
+	const adoptRebuilt = (exposed, rebuilt) => {
+		const current = responseOwnership;
+		if (current?.response === exposed && rebuilt.body) {
+			current.response = rebuilt;
+			ctx.response = rebuilt;
+		} else adoptResponse(rebuilt);
 	};
 	let nextPromise;
 	function next(nextCtx) {
-		const result = runNext(nextCtx);
+		const result = runNext(index, nextCtx);
 		nextPromise = result;
 		return result;
 	}
-	async function runNext(nextCtx) {
-		if (signal.aborted) throw signal.reason;
+	async function runNext(caller, nextCtx) {
+		signal.throwIfAborted();
 		if (nextCtx) {
 			if (nextCtx.context) ctx.context = safeObjectMerge(ctx.context, nextCtx.context);
-			for (const key of Object.keys(nextCtx)) if (key === "response") setResponse(nextCtx.response);
-			else if (key !== "context") ctx[key] = nextCtx[key];
+			const keys = Object.keys(nextCtx);
+			for (let i = 0; i < keys.length; i++) {
+				const key = keys[i];
+				if (key === "response") setResponse(nextCtx.response, caller);
+				else if (key !== "context") ctx[key] = nextCtx[key];
+			}
 		}
-		index++;
-		const middleware = middlewares[index];
+		const depth = ++index;
+		const isTerminal = depth === middlewares.length;
+		const middleware = depth < middlewares.length ? middlewares[depth] : isTerminal ? terminal : void 0;
+		const middlewareNext = isTerminal && terminalNext ? terminalNext : next;
 		if (!middleware) return ctx;
 		let result;
 		try {
 			const pending = middleware({
 				...ctx,
-				next
+				next: middlewareNext
 			});
-			if (pending === nextPromise) {
+			if (nextPromise && pending === nextPromise) {
 				nextPromise = void 0;
 				result = await pending;
-				if (isSignalAborted(signal)) {
-					disposeAbandonedResult(result);
-					throw signal.reason;
-				}
-			} else result = await waitForRequest(pending, signal, disposeAbandonedResult);
+				signal.throwIfAborted();
+			} else if (!isPromise(pending)) {
+				result = pending;
+				signal.throwIfAborted();
+			} else result = await waitForReason(pending, signal, disposeAbandonedResult, disposeAbandonedResult);
 		} catch (err) {
-			if (isSignalAborted(signal)) throw signal.reason;
-			if (isSpecialResponse(err)) {
-				setResponse(err);
+			if (depth < returnedDepth) returnedDepth = depth;
+			if (returnedDepth > caller) adoptResponse(ctx.response);
+			if (signal.aborted) {
+				if (result !== void 0) disposeAbandonedResult(result);
+				if (err !== signal.reason) disposeAbandonedResult(err);
+				throw signal.reason;
+			}
+			if (err instanceof Response) {
+				setResponse(ctx.handlerType === "serverFn" ? toThrownServerFnResponse(err) : err, caller);
 				return ctx;
 			}
 			throw err;
 		}
-		const normalized = handleCtxResult(result);
-		if (normalized) {
-			if (normalized.response !== void 0) setResponse(normalized.response);
-			if (normalized.context) ctx.context = safeObjectMerge(ctx.context, normalized.context);
+		if (depth < returnedDepth) returnedDepth = depth;
+		if (isTerminal && terminalNext && !result) throwRouteHandlerError();
+		if (isTerminal && !terminalNext && result instanceof DeferredResponse) {
+			if (returnedDepth > caller) {
+				adoptResponse(void 0);
+				adoptResponse(result.createResponse(event));
+			}
+			return ctx;
 		}
+		if (result && result !== ctx) {
+			const response = getResponseFromResult(result);
+			if (response !== void 0) {
+				if (ctx.response !== responseOwnership?.response && ctx.response !== response && returnedDepth > caller) adoptResponse(ctx.response);
+				setResponse(response, caller);
+			} else setResponse(ctx.response, caller);
+			if (returnedDepth > caller && response !== result && result.context && result.context !== ctx.context) ctx.context = safeObjectMerge(ctx.context, result.context);
+		} else setResponse(ctx.response, caller);
 		return ctx;
 	}
 	try {
-		await runNext();
-		const response = await waitForRequest(getFinalResponse(), signal, disposeAbandonedResult);
-		if (signal.aborted) {
-			disposeAbandonedResult(response);
-			throw signal.reason;
+		await runNext(-1);
+		let response = ctx.response;
+		if (!response) throwRouteHandlerError();
+		if (signal.aborted) throw signal.reason;
+		returnedDepth = -1;
+		if (middlewares.length && ctx.handlerType === "serverFn") {
+			const restored = restoreResponseProtocol(response, event);
+			if (restored !== response) {
+				adoptRebuilt(response, restored);
+				response = restored;
+			}
 		}
-		return {
-			ctx,
-			response
-		};
+		return responseOwnership ? getOwnedResponse(responseOwnership) : response;
 	} catch (err) {
-		const disposal = disposeStreamResponse(signal.aborted ? signal.reason : err);
-		if (signal.aborted) disposal.catch(console.error);
-		else await disposal;
+		returnedDepth = -1;
+		if (responseOwnership) disposeResponseOwnership(responseOwnership, signal.aborted ? signal.reason : err);
 		throw err;
 	}
-}
-/**
-* Wrap a route handler as middleware
-*/
-function handlerToMiddleware(handler, mayDefer = false) {
-	if (mayDefer) return handler;
-	return async (ctx) => {
-		const response = await handler({
-			...ctx,
-			next: throwIfMayNotDefer
-		});
-		if (!response) throwRouteHandlerError();
-		return response;
-	};
 }
 /**
 * Creates the TanStack Start request handler.
@@ -16095,18 +16042,32 @@ function createStartHandler(cbOrOptions) {
 	});
 	const resolveManifestForRequest = finalManifestResolver.resolveCached;
 	finalManifestResolver.warmup({ getBaseManifest: () => getBaseManifest(void 0) });
-	const startRequestResolver = async (request, requestOpts) => {
-		let router = null;
+	const startRequestResolver = async (request, requestOpts, event) => {
+		const signal = request.signal;
+		let router;
+		let routerPromise;
 		let responseOwnsCleanup = false;
+		let response;
 		try {
-			request.signal.throwIfAborted();
-			const { url, handledProtocolRelativeURL } = getNormalizedURL(request.url);
-			const href = url.pathname + url.search + url.hash;
-			const origin = getOrigin(request);
-			if (handledProtocolRelativeURL) return Response.redirect(url, 308);
-			const entries = await waitForRequest(getEntries(), request.signal);
-			const hasStartInstance = !!entries.startEntry.startInstance;
-			const startOptions = await waitForRequest(entries.startEntry.startInstance?.getOptions(), request.signal) || {};
+			signal.throwIfAborted();
+			const requestUrl = event.requestUrl;
+			let url = requestUrl;
+			const pathname = url.pathname;
+			if (!SERVER_FN_BASE || !pathname.startsWith(SERVER_FN_BASE) || pathname.includes("%") || pathname.startsWith("//")) {
+				const normalized = getNormalizedURL(requestUrl);
+				url = normalized.url;
+				if (normalized.handledProtocolRelativeURL) return finalizeResponse(Response.redirect(url, 308), event);
+			}
+			const pendingEntries = getEntries();
+			const entries = isPromise(pendingEntries) ? await waitForReason(pendingEntries, signal) : pendingEntries;
+			const isServerFnRequest = !!SERVER_FN_BASE && url.pathname.startsWith(SERVER_FN_BASE);
+			const startInstance = entries.startEntry.startInstance;
+			let startOptions;
+			if (startInstance) {
+				const pendingStartOptions = startInstance.getOptions();
+				startOptions = isPromise(pendingStartOptions) ? await waitForReason(pendingStartOptions, signal) : pendingStartOptions;
+				signal.throwIfAborted();
+			} else startOptions = {};
 			const { hasPluginAdapters, pluginSerializationAdapters } = entries.pluginAdapters;
 			const serializationAdapters = [
 				...startOptions.serializationAdapters || [],
@@ -16115,145 +16076,176 @@ function createStartHandler(cbOrOptions) {
 			];
 			const requestStartOptions = {
 				...startOptions,
-				requestMiddleware: hasStartInstance ? startOptions.requestMiddleware : [defaultCsrfMiddleware],
+				requestMiddleware: startInstance ? startOptions.requestMiddleware : isServerFnRequest ? [defaultCsrfMiddleware] : void 0,
 				serializationAdapters
 			};
-			const flattenedRequestMiddlewares = requestStartOptions.requestMiddleware ? flattenMiddlewares(requestStartOptions.requestMiddleware) : [];
-			const executedRequestMiddlewares = new Set(flattenedRequestMiddlewares);
-			const getRouter = async () => {
-				if (router) return router;
-				router = await waitForRequest(entries.routerEntry.getRouter(), request.signal);
-				let isShell = IS_SHELL_ENV;
-				if (IS_PRERENDERING && !isShell) isShell = request.headers.get(HEADERS.TSS_SHELL) === "true";
-				const history = createMemoryHistory({ initialEntries: [href] });
-				router.update({
-					history,
-					isShell,
-					isPrerendering: IS_PRERENDERING,
-					origin: router.options.origin ?? origin,
-					defaultSsr: requestStartOptions.defaultSsr,
-					serializationAdapters: [...requestStartOptions.serializationAdapters, ...router.options.serializationAdapters || []],
-					basepath: ROUTER_BASEPATH
-				});
-				return router;
+			const requestMiddleware = requestStartOptions.requestMiddleware;
+			let executedRequestMiddlewares;
+			let flattenedRequestMiddlewares = [];
+			if (requestMiddleware?.length) {
+				executedRequestMiddlewares = /* @__PURE__ */ new Set();
+				flattenedRequestMiddlewares = flattenMiddlewares(requestMiddleware, void 0, executedRequestMiddlewares);
+			}
+			const getRouter = () => {
+				routerPromise ??= (async () => {
+					signal.throwIfAborted();
+					const routerUrl = url === requestUrl ? getNormalizedURL(url).url : url;
+					const pendingRouter = entries.routerEntry.getRouter();
+					const requestRouter = isPromise(pendingRouter) ? await waitForReason(pendingRouter, signal) : pendingRouter;
+					let isShell = IS_SHELL_ENV;
+					if (IS_PRERENDERING && !isShell) isShell = request.headers.get(HEADERS.TSS_SHELL) === "true";
+					const history = createServerHistory(routerUrl.pathname + routerUrl.search + routerUrl.hash);
+					requestRouter.update({
+						history,
+						isShell,
+						isPrerendering: IS_PRERENDERING,
+						origin: requestRouter.options.origin ?? routerUrl.origin,
+						defaultSsr: requestStartOptions.defaultSsr,
+						serializationAdapters: requestRouter.options.serializationAdapters?.length ? [...requestStartOptions.serializationAdapters, ...requestRouter.options.serializationAdapters] : requestStartOptions.serializationAdapters,
+						basepath: ROUTER_BASEPATH
+					});
+					router = requestRouter;
+					return requestRouter;
+				})();
+				return routerPromise;
 			};
-			if (SERVER_FN_BASE && url.pathname.startsWith(SERVER_FN_BASE)) {
+			const handlerType = isServerFnRequest ? "serverFn" : "router";
+			const startContext = {
+				getRouter,
+				startOptions: requestStartOptions,
+				request,
+				executedRequestMiddlewares,
+				handlerType
+			};
+			let terminal;
+			if (isServerFnRequest) {
 				const serverFnId = url.pathname.slice(SERVER_FN_BASE.length).split("/")[0];
 				if (!serverFnId) throw new Error("Invalid server action param for serverFnId");
-				const serverFnHandler = async ({ context }) => {
-					return runWithStartContext({
-						getRouter,
-						startOptions: requestStartOptions,
-						contextAfterGlobalMiddlewares: context,
+				terminal = ({ context }) => runWithStartContext({
+					...startContext,
+					contextAfterGlobalMiddlewares: context
+				}, () => handleServerAction({
+					request,
+					serverFnId
+				}));
+			} else {
+				const executeRouter = async (serverContext, matchedRoutes, routerInstance) => {
+					if (!/(^|,)\s*(\*\/\*|text\/html)/.test(request.headers.get("Accept") || "*/*")) return normalizeSsrResponse(Response.json({ error: "Only HTML requests are supported here" }, { status: 406 }));
+					const pendingManifest = resolveManifestForRequest({
 						request,
-						executedRequestMiddlewares,
-						handlerType: "serverFn"
-					}, () => handleServerAction({
+						requestInlineCss: requestOpts?.inlineCss,
+						getBaseManifest: () => getBaseManifest(matchedRoutes)
+					});
+					const manifest = isPromise(pendingManifest) ? await waitForReason(pendingManifest, signal) : pendingManifest;
+					const earlyHints = createEarlyHintsForRequest(requestOpts);
+					earlyHints?.collectStatic({
+						manifest,
+						matchedRoutes
+					});
+					const storedStartContext = getStartContext({ throwIfNotFound: false });
+					attachRouterServerSsrUtils({
+						router: routerInstance,
+						manifest,
+						getRequestAssets: () => storedStartContext?.requestAssets
+					});
+					routerInstance.options.additionalContext = { serverContext };
+					await routerInstance.load({
+						_signal: signal,
+						_skipLocationUpdate: true
+					});
+					signal.throwIfAborted();
+					if (routerInstance._serverResult?.type === "redirect") return normalizeSsrResponse(routerInstance._serverResult.redirect);
+					earlyHints?.collectDynamic(_getRenderedMatches(routerInstance.stores.matches.get()));
+					await routerInstance.serverSsr.dehydrate({
+						requestAssets: storedStartContext?.requestAssets,
+						signal
+					});
+					signal.throwIfAborted();
+					const responseHeaders = getStartResponseHeaders(routerInstance);
+					earlyHints?.appendResponseHeaders(responseHeaders);
+					signal.throwIfAborted();
+					return normalizeSsrResponse(await cb({
 						request,
-						context: requestOpts?.context,
-						serverFnId
+						router: routerInstance,
+						responseHeaders
 					}));
 				};
-				const { response: middlewareResponse } = await executeMiddleware([...flattenedRequestMiddlewares.map((d) => d.options.server), serverFnHandler], {
-					request,
-					pathname: url.pathname,
-					handlerType: "serverFn",
-					context: createNullProtoObject(requestOpts?.context)
-				}, request.signal);
-				const result = await handleRedirectResponse(middlewareResponse, getRouter, request.signal, request.headers.get("x-tsr-serverFn") === "true");
-				bindSsrResponseToRequest(router ?? void 0, result, request.signal);
-				request.signal.throwIfAborted();
-				responseOwnsCleanup = result.serverSsrCleanup === "stream";
-				return result.response;
-			}
-			const executeRouter = async (serverContext, matchedRoutes) => {
-				const acceptParts = (request.headers.get("Accept") || "*/*").split(",");
-				if (!["*/*", "text/html"].some((mimeType) => acceptParts.some((part) => part.trim().startsWith(mimeType)))) return normalizeSsrResponse(Response.json({ error: "Only HTML requests are supported here" }, { status: 500 }));
-				const manifest = await waitForRequest(resolveManifestForRequest({
-					request,
-					requestInlineCss: requestOpts?.inlineCss,
-					getBaseManifest: () => getBaseManifest(matchedRoutes)
-				}), request.signal);
-				const earlyHints = createEarlyHintsForRequest({
-					onEarlyHints: requestOpts?.onEarlyHints,
-					responseLinkHeader: requestOpts?.responseLinkHeader
-				});
-				earlyHints?.collectStatic({
-					manifest,
-					matchedRoutes
-				});
-				const routerInstance = await getRouter();
-				attachRouterServerSsrUtils({
-					router: routerInstance,
-					manifest,
-					getRequestAssets: () => getStartContext({ throwIfNotFound: false })?.requestAssets
-				});
-				routerInstance.options.additionalContext = { serverContext };
-				await routerInstance.load({ _signal: request.signal });
-				request.signal.throwIfAborted();
-				if (routerInstance._serverResult?.type === "redirect") return normalizeSsrResponse(routerInstance._serverResult.redirect);
-				earlyHints?.collectDynamic(_getRenderedMatches(routerInstance.stores.matches.get()));
-				const ctx = getStartContext({ throwIfNotFound: false });
-				await waitForRequest(routerInstance.serverSsr.dehydrate({ requestAssets: ctx?.requestAssets }), request.signal);
-				request.signal.throwIfAborted();
-				const responseHeaders = getStartResponseHeaders({ router: routerInstance });
-				earlyHints?.appendResponseHeaders(responseHeaders);
-				request.signal.throwIfAborted();
-				return normalizeSsrResponse(await waitForRequest(cb({
-					request,
-					router: routerInstance,
-					responseHeaders
-				}), request.signal, (late) => disposeLateResponse(late, request.signal)));
-			};
-			const requestHandlerMiddleware = async ({ context }) => {
-				return runWithStartContext({
+				terminal = ({ context }) => runWithStartContext({
+					...startContext,
+					contextAfterGlobalMiddlewares: context
+				}, () => handleServerRoutes({
 					getRouter,
-					startOptions: requestStartOptions,
-					contextAfterGlobalMiddlewares: context,
 					request,
+					executeRouter,
+					context,
 					executedRequestMiddlewares,
-					handlerType: "router"
-				}, async () => {
-					try {
-						return await handleServerRoutes({
-							getRouter,
-							request,
-							url,
-							executeRouter,
-							context,
-							executedRequestMiddlewares
-						});
-					} catch (err) {
-						if (err instanceof Response) return err;
-						throw err;
-					}
-				});
-			};
-			const { response: middlewareResponse } = await executeMiddleware([...flattenedRequestMiddlewares.map((d) => d.options.server), requestHandlerMiddleware], {
+					signal,
+					event
+				}));
+			}
+			const middlewareCtx = {
 				request,
 				pathname: url.pathname,
-				handlerType: "router",
+				handlerType,
 				context: createNullProtoObject(requestOpts?.context)
-			}, request.signal);
-			const response = await handleRedirectResponse(middlewareResponse, getRouter, request.signal, false);
-			bindSsrResponseToRequest(router ?? void 0, response, request.signal);
-			request.signal.throwIfAborted();
-			responseOwnsCleanup = response.serverSsrCleanup === "stream";
-			return response.response;
+			};
+			let middlewareResponse;
+			try {
+				if (!isServerFnRequest && flattenedRequestMiddlewares.length === 0) middlewareResponse = await terminal(middlewareCtx);
+				else middlewareResponse = await executeMiddleware(flattenedRequestMiddlewares.map((d) => d.options.server), terminal, middlewareCtx, signal, event);
+			} catch (error) {
+				if (signal.aborted) throw error;
+				if (error instanceof Response) middlewareResponse = reconcileResponse(error, event);
+				else if (!isServerFnRequest) throw error;
+				else {
+					const disposeLate = createLateResponseDisposer(signal);
+					middlewareResponse = await waitForReason(runWithStartContext({
+						...startContext,
+						contextAfterGlobalMiddlewares: middlewareCtx.context
+					}, () => createServerFnErrorResponse(error)), signal, disposeLate, disposeLate);
+					middlewareResponse = reconcileResponse(middlewareResponse, event);
+				}
+			}
+			let result;
+			try {
+				result = normalizeSsrResponse(middlewareResponse);
+				if (isRedirect(result.response)) result = await handleRedirectResponse(result, getRouter, signal, isServerFnRequest && request.headers.get("x-tsr-serverFn") === "true", event);
+				if (request.method === "HEAD" && result.response.body !== null) {
+					const source = result.response;
+					result = stripSsrResponseBody(result, "HEAD body stripped");
+					transferResponseMetadata(source, result.response);
+				}
+			} catch (error) {
+				disposeResponseResult(middlewareResponse, signal.aborted ? signal.reason : error);
+				throw error;
+			}
+			bindSsrResponseToRequest(router, result, signal);
+			signal.throwIfAborted();
+			responseOwnsCleanup = result.serverSsrCleanup === "stream";
+			response = result.response;
 		} finally {
-			if (router?.serverSsr && !responseOwnsCleanup) router.serverSsr.cleanup();
-			router = null;
+			if (router?.serverSsr && !responseOwnsCleanup) {
+				router.serverSsr.cleanup();
+				if (response) response = finalizeResponse(response, event);
+			}
 		}
+		return response;
 	};
-	return requestHandler(startRequestResolver);
+	return withStartRequest(startRequestResolver);
 }
 var relativeRedirectProtocols = /* @__PURE__ */ new Set();
-async function handleRedirectResponse(response, getRouter, signal, serializeRedirect) {
+var SERIALIZED_REDIRECT_HEADERS = /* @__PURE__ */ new Map([
+	["content-type", "application/json"],
+	["location", null],
+	[X_TSS_RAW_RESPONSE, null],
+	[X_TSS_SERIALIZED, null]
+]);
+async function handleRedirectResponse(ssrResponse, getRouter, signal, serializeRedirect, event) {
 	signal.throwIfAborted();
-	const ssrResponse = normalizeSsrResponse(response);
-	if (!isRedirect(ssrResponse.response)) return ssrResponse;
-	const opts = ssrResponse.response.options;
-	const href = ssrResponse.response.headers.get("Location") || opts.href;
+	const redirect = ssrResponse.response;
+	if (!isRedirect(redirect)) return ssrResponse;
+	const opts = redirect.options;
+	const href = redirect.headers.get("Location") || opts.href;
 	if (!href && opts.to && typeof opts.to === "string" && !opts.to.startsWith("/")) throw new Error(`Server side redirects must use absolute paths via the 'href' or 'to' options. The redirect() method's "to" property accepts an internal path only. Use the "href" property to provide an external URL. Received: ${JSON.stringify(opts)}`);
 	if (!href && [
 		"params",
@@ -16261,86 +16253,99 @@ async function handleRedirectResponse(response, getRouter, signal, serializeRedi
 		"hash"
 	].some((d) => typeof opts[d] === "function")) throw new Error(`Server side redirects must use static search, params, and hash values and do not support functional values. Received functional values for: ${Object.keys(opts).filter((d) => typeof opts[d] === "function").map((d) => `"${d}"`).join(", ")}`);
 	signal.throwIfAborted();
-	let redirect = ssrResponse.response;
 	if (href && !isDangerousProtocol(href, relativeRedirectProtocols)) {
-		redirect.options.href = href;
+		opts.href = href;
 		redirect.headers.set("Location", href);
 	} else {
-		const router = await waitForRequest(getRouter(), signal);
+		const router = await getRouter();
 		signal.throwIfAborted();
-		redirect = router.resolveRedirect(redirect);
+		router.resolveRedirect(redirect);
 	}
 	if (serializeRedirect) {
-		const redirectOptions = { ...redirect.options };
+		const redirectOptions = { ...opts };
 		delete redirectOptions.headers;
+		redirectOptions.isSerializedRedirect = true;
 		const responseHeaders = new Headers(redirect.headers);
 		responseHeaders.set("content-type", "application/json");
-		return waitForRequest(replaceSsrResponse(ssrResponse, Response.json({
-			...redirectOptions,
-			isSerializedRedirect: true
-		}, { headers: responseHeaders }), "redirect response replaced"), signal);
+		responseHeaders.delete("location");
+		responseHeaders.delete(X_TSS_RAW_RESPONSE);
+		responseHeaders.delete(X_TSS_SERIALIZED);
+		const body = JSON.stringify(redirectOptions);
+		if (body === void 0) throw new TypeError("Value is not JSON serializable");
+		disposeSsrResponse(ssrResponse, "redirect response replaced");
+		return {
+			response: createFinalizedResponse(body, responseHeaders, SERIALIZED_REDIRECT_HEADERS, event),
+			serverSsrCleanup: "none"
+		};
 	}
-	return waitForRequest(replaceSsrResponse(ssrResponse, redirect, "redirect response replaced"), signal);
+	ssrResponse.response = finalizeResponse(redirect, event);
+	return ssrResponse;
 }
-async function handleServerRoutes({ getRouter, request, url, executeRouter, context, executedRequestMiddlewares }) {
+function withParsedParams(handler, matchedRoutes) {
+	if (!matchedRoutes.some((route) => route.options.params?.parse ?? route.options.parseParams)) return handler;
+	return (ctx) => {
+		const params = Object.assign(Object.create(null), ctx.params);
+		for (const route of matchedRoutes) {
+			const parse = route.options.params?.parse ?? route.options.parseParams;
+			if (parse) Object.assign(params, parse(params));
+		}
+		return handler({
+			...ctx,
+			params
+		});
+	};
+}
+async function handleServerRoutes({ getRouter, request, executeRouter, context, executedRequestMiddlewares, signal, event }) {
 	const router = await getRouter();
-	const pathname = executeRewriteInput(router.rewrite, url).pathname;
+	const { pathname } = router.latestLocation;
 	const [matchedRoutes, rawParams, foundRoute] = router.getMatchedRoutes(pathname);
 	const isExactMatch = foundRoute && rawParams["**"] === void 0;
 	const routeMiddlewares = [];
+	let terminalHandler = (ctx) => executeRouter(ctx.context, matchedRoutes, router);
+	let terminalNext;
 	for (const route of matchedRoutes) {
 		const serverMiddleware = route.options.server?.middleware;
 		if (serverMiddleware) {
 			const flattened = flattenMiddlewares(serverMiddleware);
-			for (const m of flattened) if (!executedRequestMiddlewares.has(m)) routeMiddlewares.push(m.options.server);
+			for (const m of flattened) if (!executedRequestMiddlewares?.has(m)) routeMiddlewares.push(m.options.server);
 		}
 	}
 	const server = foundRoute?.options.server;
-	let isHeadFallback = false;
 	if (server?.handlers && isExactMatch) {
 		const handlers = typeof server.handlers === "function" ? server.handlers({ createHandlers: (d) => d }) : server.handlers;
 		const requestMethod = request.method.toUpperCase();
 		const handler = requestMethod === "HEAD" ? handlers["HEAD"] ?? handlers["GET"] ?? handlers["ANY"] : handlers[requestMethod] ?? handlers["ANY"];
-		isHeadFallback = requestMethod === "HEAD" && handler !== void 0 && !handlers["HEAD"];
 		if (handler) {
 			const mayDefer = !!foundRoute.options.component;
-			if (typeof handler === "function") routeMiddlewares.push(handlerToMiddleware(handler, mayDefer));
-			else {
+			if (typeof handler !== "function") {
 				if (handler.middleware?.length) {
 					const handlerMiddlewares = flattenMiddlewares(handler.middleware);
 					for (const m of handlerMiddlewares) routeMiddlewares.push(m.options.server);
 				}
-				if (handler.handler) routeMiddlewares.push(handlerToMiddleware(handler.handler, mayDefer));
+			}
+			const routeHandler = typeof handler === "function" ? handler : handler.handler;
+			if (routeHandler) {
+				const parsedHandler = withParsedParams(routeHandler, matchedRoutes);
+				if (!mayDefer) {
+					terminalHandler = parsedHandler;
+					terminalNext = throwIfMayNotDefer;
+				} else routeMiddlewares.push(parsedHandler);
 			}
 		}
 	}
-	routeMiddlewares.push(((ctx) => executeRouter(ctx.context, matchedRoutes)));
-	const { ctx, response } = await executeMiddleware(routeMiddlewares, {
+	return normalizeSsrResponse(await executeMiddleware(routeMiddlewares, terminalHandler, {
 		request,
 		context,
 		params: rawParams,
 		pathname,
 		handlerType: "router"
-	}, request.signal);
-	if (isHeadFallback) {
-		if (!ctx.response) throwRouteHandlerError();
-		return waitForRequest(stripSsrResponseBody(await handleRedirectResponse(response, getRouter, request.signal, false), "HEAD body stripped"), request.signal);
-	}
-	return normalizeSsrResponse(response);
+	}, signal, event, terminalNext));
 }
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-start@1.168_5c35e36d1cfc231685e2ad9f1f1efbe1/node_modules/@tanstack/react-start/dist/esm/server.js
-var server_exports = /* @__PURE__ */ __exportAll({ setCookie: () => setCookie });
-//#endregion
-//#region node_modules/.pnpm/@tanstack+react-start@1.168_5c35e36d1cfc231685e2ad9f1f1efbe1/node_modules/@tanstack/react-start/dist/default-entry/esm/server.js
-var fetch$1 = createStartHandler(defaultStreamHandler);
-function createServerEntry(entry) {
-	return { async fetch(...args) {
-		return await entry.fetch(...args);
-	} };
-}
-//#endregion
-//#region \0virtual:cloudflare/worker-entry
-var worker_entry_default = createServerEntry({ fetch: fetch$1 }) ?? {};
-//#endregion
-export { createServerEntry, worker_entry_default as default, server_exports as t };
+// ../../node_modules/.pnpm/@tanstack+react-start@1.169.4_esbuild@0.28.2_react-dom@19.3.1_react@19.3.1__react@19.3._b81d2a4d0250c0b50224755eeb4eed15/node_modules/@tanstack/react-start/dist/default-entry/esm/server.js
+var fetch = createStartHandler(defaultStreamHandler);
+var createServerEntry = createServerEntry$1;
+// \0virtual:cloudflare/worker-entry
+var worker_entry_default = createServerEntry({ fetch }) ?? {};
+export { createServerEntry, worker_entry_default as default };
+
+//# sourceMappingURL=index.js.map
