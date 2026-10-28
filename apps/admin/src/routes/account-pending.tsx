@@ -88,24 +88,3 @@ function AccountPendingPage() {
 		</div>
 	);
 }
-
-// import { createFileRoute } from "@tanstack/react-router";
-//
-// export const Route = createFileRoute("/account-pending")({
-// 	component: AccountPendingPage,
-// });
-//
-// function AccountPendingPage() {
-// 	return (
-// 		<div className="flex min-h-screen items-center justify-center p-6">
-// 			<div className="max-w-md text-center">
-// 				<h1 className="text-2xl font-semibold">Account Pending Approval</h1>
-//
-// 				<p className="mt-3 text-muted-foreground">
-// 					Your account is awaiting administrator approval. You will be able to
-// 					access the dashboard once your account has been approved.
-// 				</p>
-// 			</div>
-// 		</div>
-// 	);
-// }

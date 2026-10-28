@@ -1,3 +1,4 @@
+import { user } from "@repo/db/schema/auth.ts";
 import {
 	bookings,
 	bookingTravellers,
@@ -120,6 +121,17 @@ export const getBookingDetails = createServerFn({ method: "GET" })
 			.from(tours)
 			.where(eq(tours.id, booking.tourId));
 
+		let userData;
+
+		if (booking.userId) {
+			userData = await db
+				.select({
+					userId: user.id,
+				})
+				.from(user)
+				.where(eq(user.id, booking.userId));
+		}
+
 		const [departure] = await db
 			.select({
 				id: departures.id,
@@ -136,7 +148,7 @@ export const getBookingDetails = createServerFn({ method: "GET" })
 			.where(eq(bookingTravellers.bookingId, booking.id))
 			.orderBy(desc(bookingTravellers.isPrimary));
 
-		return { booking, tour, departure, travellers };
+		return { booking, tour, departure, travellers, userId: userData };
 	});
 
 /* ---------------------------- mutations ---------------------------- */

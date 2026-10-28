@@ -12,6 +12,7 @@ import {
 	MessageCircle,
 	Phone,
 	RefreshCw,
+	User2,
 	XCircle,
 } from "lucide-react";
 import { useState } from "react";
@@ -394,6 +395,14 @@ function BookingDetailsPage() {
 				</div>
 
 				<div className="flex flex-wrap gap-2">
+					{b.userId && (
+						<Link to="/users/$userId" params={{ userId: b.userId }}>
+							<Button variant={"outline"}>
+								<User2 />
+								View User
+							</Button>
+						</Link>
+					)}
 					{canConfirm && (
 						<Button
 							disabled={statusMutation.isPending}

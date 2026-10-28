@@ -1,10 +1,44 @@
-import { departurePricing, departures } from "@repo/db/schema/domestic.js";
+import {
+	departurePricing,
+	departures,
+	destinations,
+	tours,
+} from "@repo/db/schema/domestic.js";
 import { createServerFn } from "@tanstack/react-start";
 import { asc, eq, min } from "drizzle-orm";
 import { z } from "zod";
 import { adminMiddleware } from "#/lib/auth-middleware";
 import { db } from "#/lib/db-config";
 import { departureInsertSchema } from "#/lib/schema/departures";
+
+export const getDashboardDepartures = createServerFn({ method: "GET" })
+	.middleware([adminMiddleware])
+	.handler(async () => {
+		try {
+			const result = await db
+				.select({
+					id: departures.id,
+					tourId: departures.tourId,
+					tourTitle: tours.title,
+					destination: destinations.name,
+					code: departures.code,
+					startDate: departures.startDate,
+					endDate: departures.endDate,
+					totalSeats: departures.totalSeats,
+					availableSeats: departures.availableSeats,
+					status: departures.status,
+					isGuaranteed: departures.isGuaranteed,
+					isActive: departures.isActive,
+				})
+				.from(departures)
+				.leftJoin(tours, eq(tours.id, departures.tourId))
+				.leftJoin(destinations, eq(destinations.id, tours.destinationId));
+			return result;
+		} catch (err) {
+			console.log("Error fetching departures: ", err);
+			throw err;
+		}
+	});
 
 export const getDeparture = createServerFn({ method: "GET" })
 	.middleware([adminMiddleware])

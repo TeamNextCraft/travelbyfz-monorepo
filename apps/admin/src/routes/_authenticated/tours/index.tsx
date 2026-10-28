@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { ToursPendingComponent } from "#/components/pending-components/tours-pending-component";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent } from "#/components/ui/card";
@@ -31,6 +30,7 @@ import {
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { Input } from "#/components/ui/input";
+import { Skeleton } from "#/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -188,10 +188,6 @@ function ToursPage() {
 		}
 	};
 
-	if (isPending) {
-		return <ToursPendingComponent />;
-	}
-
 	return (
 		<main className="min-w-0 space-y-6 p-4 md:p-6 lg:p-8">
 			{/* Page header */}
@@ -222,6 +218,7 @@ function ToursPage() {
 					description="Across all categories"
 					icon={Compass}
 					iconClass="bg-blue-50 text-blue-600"
+					isLoading={isPending}
 				/>
 
 				<TourStatCard
@@ -230,6 +227,7 @@ function ToursPage() {
 					description="Active and visible"
 					icon={CheckCircle2}
 					iconClass="bg-emerald-50 text-emerald-600"
+					isLoading={isPending}
 				/>
 
 				<TourStatCard
@@ -238,6 +236,7 @@ function ToursPage() {
 					description="Not yet published"
 					icon={Pencil}
 					iconClass="bg-amber-50 text-amber-600"
+					isLoading={isPending}
 				/>
 
 				<TourStatCard
@@ -246,6 +245,7 @@ function ToursPage() {
 					description="Currently disabled"
 					icon={XCircle}
 					iconClass="bg-slate-100 text-slate-600"
+					isLoading={isPending}
 				/>
 			</section>
 
@@ -353,174 +353,243 @@ function ToursPage() {
 						</TableRow>
 					</TableHeader>
 
-					<TableBody>
-						{filteredTours.map((tour) => {
-							const tourStatus = getTourStatus(tour);
-
-							return (
-								<TableRow key={tour.id}>
+					{isPending ? (
+						<TableBody>
+							{Array.from({ length: 5 }).map((_, index) => (
+								<TableRow key={index}>
 									{/* Tour information */}
 									<TableCell className="px-5 py-4">
 										<div className="flex items-center gap-3">
-											{tour.coverImage ? (
-												<img
-													src={tour.coverImage}
-													alt={tour.title}
-													className="size-11 rounded-lg"
-												/>
-											) : (
-												<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border bg-muted/30">
-													<Compass className="size-5 text-muted-foreground" />
-												</div>
-											)}
+											{/* Image placeholder */}
+											<Skeleton className="size-11 shrink-0 rounded-lg" />
 
-											<div className="min-w-0">
-												<div className="flex items-center gap-2">
-													<span className="font-medium">{tour.title}</span>
-
-													{tour.isFeatured && (
-														<Star
-															className="size-3.5 shrink-0 fill-amber-400 text-amber-400"
-															aria-label="Featured tour"
-														/>
-													)}
-												</div>
-
-												<div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-													<MapPin className="size-3 shrink-0" />
-													<span>{tour.destination}</span>
-												</div>
-
-												<p className="mt-1 text-xs text-muted-foreground">
-													{tour.code}
-												</p>
+											<div className="min-w-0 space-y-1.5">
+												{/* Title placeholder */}
+												<Skeleton className="h-4 w-40" />
+												{/* Destination placeholder */}
+												<Skeleton className="h-3 w-28" />
+												{/* Code placeholder */}
+												<Skeleton className="h-3 w-16" />
 											</div>
 										</div>
 									</TableCell>
+
 									{/* Category */}
 									<TableCell className="px-5 py-4">
-										<Badge variant="secondary">{tour.category}</Badge>
-										<p className="mt-1 text-xs text-muted-foreground">
-											{tour.type}
-										</p>
+										<div className="space-y-2">
+											<Skeleton className="h-5 w-20 rounded-full" />
+											<Skeleton className="h-3 w-24" />
+										</div>
 									</TableCell>
+
 									{/* Duration */}
 									<TableCell className="px-5 py-4">
-										<div className="font-medium">{tour.durationDays} days</div>
-										<p className="mt-1 text-xs text-muted-foreground">
-											{tour.durationNights} nights
-										</p>
+										<div className="space-y-2">
+											<Skeleton className="h-4 w-16" />
+											<Skeleton className="h-3 w-16" />
+										</div>
 									</TableCell>
+
 									{/* Performance */}
 									<TableCell className="px-5 py-4">
-										<div className="flex items-center gap-1 font-medium">
-											<Star className="size-3.5 fill-amber-400 text-amber-400" />
-											{tour.reviewCount > 0 ? tour.avgRating.toFixed(1) : "—"}
+										<div className="space-y-2">
+											<Skeleton className="h-4 w-12" />
+											<Skeleton className="h-3 w-20" />
 										</div>
-										<p className="mt-1 text-xs text-muted-foreground">
-											{tour.bookingCount} bookings
-										</p>
 									</TableCell>
+
 									{/* Status */}
 									<TableCell className="px-5 py-4">
-										<Badge
-											variant="outline"
-											className={getStatusClass(tourStatus)}
-										>
-											{tourStatus}
-										</Badge>
+										<Skeleton className="h-5 w-24 rounded-full" />
 									</TableCell>
+
 									{/* Actions */}
 									<TableCell className="px-5 py-4 text-right">
-										<DropdownMenu>
-											<DropdownMenuTrigger asChild>
-												<Button
-													variant="ghost"
-													size="icon"
-													aria-label={`Actions for ${tour.title}`}
-												>
-													<MoreHorizontal className="size-4" />
-												</Button>
-											</DropdownMenuTrigger>
-
-											<DropdownMenuContent align="end">
-												<DropdownMenuItem asChild>
-													<Link
-														to="/tours/$tourId"
-														params={{ tourId: tour.id }}
-													>
-														<Eye className="mr-2 size-4" />
-														View details
-													</Link>
-												</DropdownMenuItem>
-
-												<DropdownMenuItem asChild>
-													<Link
-														to="/tours/$tourId/edit"
-														params={{ tourId: tour.id }}
-													>
-														<Pencil className="mr-2 size-4" />
-														Edit tour
-													</Link>
-												</DropdownMenuItem>
-												<DropdownMenuSeparator />
-												<AlertDialog open={deleteAlertDialogOpen}>
-													<AlertDialogTrigger
-														onClick={() => setDeleteAlertDialogOpen(true)}
-													>
-														<DropdownMenuItem
-															disabled
-															className="text-destructive focus:text-destructive"
-															variant="destructive"
-														>
-															<Trash2 className="mr-2 size-4" />
-															Delete tour
-														</DropdownMenuItem>
-													</AlertDialogTrigger>
-													<AlertDialogContent>
-														<AlertDialogHeader>
-															<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
-																<Trash2 />
-															</AlertDialogMedia>
-															<AlertDialogTitle>
-																Are you absolutely sure?
-															</AlertDialogTitle>
-															<AlertDialogDescription>
-																This action cannot be undone. This will
-																permanently delete{" "}
-																<span className="text-destructive font-bold">
-																	{tour.title}
-																</span>{" "}
-																from data-base.
-															</AlertDialogDescription>
-														</AlertDialogHeader>
-														<AlertDialogFooter>
-															<AlertDialogCancel
-																variant={"outline"}
-																onClick={() => setDeleteAlertDialogOpen(false)}
-															>
-																Cancel
-															</AlertDialogCancel>
-															<AlertDialogAction
-																variant={"destructive"}
-																onClick={() => handleDeleteTour(tour.id)}
-															>
-																{deleting ? (
-																	<Loader2 className="animate-spin" />
-																) : (
-																	"Continue"
-																)}
-															</AlertDialogAction>
-														</AlertDialogFooter>
-													</AlertDialogContent>
-												</AlertDialog>
-											</DropdownMenuContent>
-										</DropdownMenu>
+										<Skeleton className="ml-auto size-8 rounded-md" />
 									</TableCell>
 								</TableRow>
-							);
-						})}
-					</TableBody>
+							))}
+						</TableBody>
+					) : (
+						<TableBody>
+							{filteredTours.map((tour) => {
+								const tourStatus = getTourStatus(tour);
+
+								return (
+									<TableRow key={tour.id}>
+										{/* Tour information */}
+										<TableCell className="px-5 py-4">
+											<div className="flex items-center gap-3">
+												{tour.coverImage ? (
+													<img
+														src={tour.coverImage}
+														alt={tour.title}
+														className="size-11 rounded-lg"
+													/>
+												) : (
+													<div className="flex size-11 shrink-0 items-center justify-center rounded-lg border bg-muted/30">
+														<Compass className="size-5 text-muted-foreground" />
+													</div>
+												)}
+
+												<div className="min-w-0">
+													<div className="flex items-center gap-2">
+														<Link
+															to="/tours/$tourId"
+															params={{ tourId: tour.id }}
+															className="hover:underline"
+														>
+															<span className="font-medium">{tour.title}</span>
+														</Link>
+
+														{tour.isFeatured && (
+															<Star
+																className="size-3.5 shrink-0 fill-amber-400 text-amber-400"
+																aria-label="Featured tour"
+															/>
+														)}
+													</div>
+
+													<div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+														<MapPin className="size-3 shrink-0" />
+														<span>{tour.destination}</span>
+													</div>
+
+													<p className="mt-1 text-xs text-muted-foreground">
+														{tour.code}
+													</p>
+												</div>
+											</div>
+										</TableCell>
+										{/* Category */}
+										<TableCell className="px-5 py-4">
+											<Badge variant="secondary">{tour.category}</Badge>
+											<p className="mt-1 text-xs text-muted-foreground">
+												{tour.type}
+											</p>
+										</TableCell>
+										{/* Duration */}
+										<TableCell className="px-5 py-4">
+											<div className="font-medium">
+												{tour.durationDays} days
+											</div>
+											<p className="mt-1 text-xs text-muted-foreground">
+												{tour.durationNights} nights
+											</p>
+										</TableCell>
+										{/* Performance */}
+										<TableCell className="px-5 py-4">
+											<div className="flex items-center gap-1 font-medium">
+												<Star className="size-3.5 fill-amber-400 text-amber-400" />
+												{tour.reviewCount > 0 ? tour.avgRating.toFixed(1) : "—"}
+											</div>
+											<p className="mt-1 text-xs text-muted-foreground">
+												{tour.bookingCount} bookings
+											</p>
+										</TableCell>
+										{/* Status */}
+										<TableCell className="px-5 py-4">
+											<Badge
+												variant="outline"
+												className={getStatusClass(tourStatus)}
+											>
+												{tourStatus}
+											</Badge>
+										</TableCell>
+										{/* Actions */}
+										<TableCell className="px-5 py-4 text-right">
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<Button
+														variant="ghost"
+														size="icon"
+														aria-label={`Actions for ${tour.title}`}
+													>
+														<MoreHorizontal className="size-4" />
+													</Button>
+												</DropdownMenuTrigger>
+
+												<DropdownMenuContent align="end">
+													<DropdownMenuItem asChild>
+														<Link
+															to="/tours/$tourId"
+															params={{ tourId: tour.id }}
+														>
+															<Eye className="mr-2 size-4" />
+															View details
+														</Link>
+													</DropdownMenuItem>
+
+													<DropdownMenuItem asChild>
+														<Link
+															to="/tours/$tourId/edit"
+															params={{ tourId: tour.id }}
+														>
+															<Pencil className="mr-2 size-4" />
+															Edit tour
+														</Link>
+													</DropdownMenuItem>
+													<DropdownMenuSeparator />
+													<AlertDialog open={deleteAlertDialogOpen}>
+														<AlertDialogTrigger
+															onClick={() => setDeleteAlertDialogOpen(true)}
+														>
+															<DropdownMenuItem
+																disabled
+																className="text-destructive focus:text-destructive"
+																variant="destructive"
+															>
+																<Trash2 className="mr-2 size-4" />
+																Delete tour
+															</DropdownMenuItem>
+														</AlertDialogTrigger>
+														<AlertDialogContent>
+															<AlertDialogHeader>
+																<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+																	<Trash2 />
+																</AlertDialogMedia>
+																<AlertDialogTitle>
+																	Are you absolutely sure?
+																</AlertDialogTitle>
+																<AlertDialogDescription>
+																	This action cannot be undone. This will
+																	permanently delete{" "}
+																	<span className="text-destructive font-bold">
+																		{tour.title}
+																	</span>{" "}
+																	from data-base.
+																</AlertDialogDescription>
+															</AlertDialogHeader>
+															<AlertDialogFooter>
+																<AlertDialogCancel
+																	variant={"outline"}
+																	onClick={() =>
+																		setDeleteAlertDialogOpen(false)
+																	}
+																>
+																	Cancel
+																</AlertDialogCancel>
+																<AlertDialogAction
+																	variant={"destructive"}
+																	onClick={() => handleDeleteTour(tour.id)}
+																>
+																	{deleting ? (
+																		<Loader2 className="animate-spin" />
+																	) : (
+																		"Continue"
+																	)}
+																</AlertDialogAction>
+															</AlertDialogFooter>
+														</AlertDialogContent>
+													</AlertDialog>
+												</DropdownMenuContent>
+											</DropdownMenu>
+										</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+					)}
 				</Table>
 
 				{/* Empty state */}
@@ -564,12 +633,14 @@ function TourStatCard({
 	description,
 	icon: Icon,
 	iconClass,
+	isLoading,
 }: {
 	title: string;
 	value: number;
 	description: string;
 	icon: typeof Compass;
 	iconClass: string;
+	isLoading: boolean;
 }) {
 	return (
 		<Card className="gap-4 py-5">
@@ -583,10 +654,13 @@ function TourStatCard({
 						<Icon className="size-5" />
 					</div>
 				</div>
-
-				<div className="text-2xl font-semibold tracking-tight">
-					{value.toLocaleString("en-IN")}
-				</div>
+				{isLoading ? (
+					<Skeleton className="h-10 w-20" />
+				) : (
+					<div className="text-2xl font-semibold tracking-tight">
+						{value.toLocaleString("en-IN")}
+					</div>
+				)}
 
 				<p className="text-xs text-muted-foreground">{description}</p>
 			</CardContent>
