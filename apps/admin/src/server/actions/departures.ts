@@ -128,3 +128,24 @@ export const getTourDepartures = createServerFn({ method: "GET" })
 			.groupBy(departures.id)
 			.orderBy(asc(departures.startDate));
 	});
+
+export const removeDepature = createServerFn({ method: "POST" })
+	.middleware([adminMiddleware])
+	.validator(
+		z.object({
+			departureId: z.string(),
+		}),
+	)
+	.handler(async ({ data: { departureId } }) => {
+		try {
+			const result = await db
+				.delete(departures)
+				.where(eq(departures.id, departureId))
+				.returning({ id: tours.id });
+
+			return { ids: result.map((t) => t.id) };
+		} catch (err) {
+			console.error("Error deleting departure: ", departureId, err);
+			throw err;
+		}
+	});

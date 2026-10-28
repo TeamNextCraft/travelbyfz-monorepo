@@ -7,17 +7,30 @@ import {
 	CheckCircle2,
 	Clock3,
 	Eye,
+	LoaderCircle,
 	MapPin,
 	PlaneTakeoff,
 	RefreshCw,
 	Search,
+	Trash2,
 	Users,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Input } from "#/components/ui/input";
+import { Progress } from "#/components/ui/progress";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui/select";
 import { Skeleton } from "#/components/ui/skeleton";
 import {
 	Table,
@@ -28,7 +41,22 @@ import {
 	TableRow,
 } from "#/components/ui/table";
 import { cn } from "#/lib/utils";
-import { getDashboardDepartures } from "#/server/actions/departures";
+import {
+	getDashboardDepartures,
+	removeDepature,
+} from "#/server/actions/departures";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogMedia,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/_authenticated/departures/")({
 	component: DeparturesPage,
@@ -84,8 +112,12 @@ function DeparturesPage() {
 	const [sortByDate, setSortByDate] = useState<"earliest" | "latest">(
 		"earliest",
 	);
+	const [deleting, setDeleting] = useState<boolean>(false);
+	const [deleteAlertDialogOpen, setDeleteAlertDialogOpen] =
+		useState<boolean>(false);
 
 	const fetchDepartures = useServerFn(getDashboardDepartures);
+	const deleteDepature = useServerFn(removeDepature);
 
 	const {
 		data: departures = [],
@@ -148,6 +180,24 @@ function DeparturesPage() {
 		setSearch("");
 		setStatusFilter("all");
 	}
+
+	const handleDeleteDeparture = async (id: string) => {
+		try {
+			setDeleting(true);
+			setDeleteAlertDialogOpen(true);
+			const result = await deleteDepature({ data: { departureId: id } });
+			if (!result) {
+				toast.error(`Error removing departure: ${id}`);
+			}
+			toast.success(`successfully removed departure: ${id}`);
+			refetch();
+		} catch (err) {
+			console.error(`Error removing departure: ${id}`, err);
+		} finally {
+			setDeleting(false);
+			setDeleteAlertDialogOpen(false);
+		}
+	};
 
 	return (
 		<main className="min-w-0 space-y-6 p-4 md:p-6 lg:p-8">
@@ -236,21 +286,30 @@ function DeparturesPage() {
 					</div>
 
 					<div className="flex gap-3">
-						<select
+						<Select
+							defaultValue="all"
 							value={statusFilter}
-							onChange={(event) =>
-								setStatusFilter(event.target.value as StatusFilter)
-							}
-							aria-label="Filter departures by status"
-							className="h-9 min-w-0 flex-1 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-none"
+							onValueChange={(value) => setStatusFilter(value as StatusFilter)}
 						>
-							<option value="all">All statuses</option>
-							<option value="scheduled">Scheduled</option>
-							<option value="full">Full</option>
-							<option value="closed">Closed</option>
-							<option value="cancelled">Cancelled</option>
-							<option value="completed">Completed</option>
-						</select>
+							<SelectTrigger
+								className="w-[180px]"
+								aria-label="Filter departures by status"
+							>
+								<SelectValue placeholder="Filter by status" />
+							</SelectTrigger>
+
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Status filter</SelectLabel>
+									<SelectItem value="all">All statuses</SelectItem>
+									<SelectItem value="scheduled">Scheduled</SelectItem>
+									<SelectItem value="full">Full</SelectItem>
+									<SelectItem value="closed">Closed</SelectItem>
+									<SelectItem value="cancelled">Cancelled</SelectItem>
+									<SelectItem value="completed">Completed</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
 
 						<Button
 							variant="outline"
@@ -388,28 +447,21 @@ function DeparturesPage() {
 													<span className="font-medium">
 														{departure.availableSeats} available
 													</span>
+
 													<span className="text-muted-foreground">
 														{departure.totalSeats} total
 													</span>
 												</div>
 
-												<div
-													className="h-1.5 overflow-hidden rounded-full bg-muted"
-													role="progressbar"
+												<Progress
+													value={occupiedPercentage}
 													aria-label={`${departure.tourTitle} seats occupied`}
-													aria-valuemin={0}
-													aria-valuemax={departure.totalSeats}
-													aria-valuenow={bookedSeats}
-												>
-													<div
-														className={`h-full rounded-full ${
-															occupiedPercentage >= 90
-																? "bg-amber-500"
-																: "bg-primary"
-														}`}
-														style={{ width: `${occupiedPercentage}%` }}
-													/>
-												</div>
+													className={`h-1.5 ${
+														occupiedPercentage >= 90
+															? "[&>div]:bg-amber-500"
+															: ""
+													}`}
+												/>
 
 												<p className="text-xs text-muted-foreground">
 													{bookedSeats} booked · {occupiedPercentage}% occupied
@@ -446,15 +498,64 @@ function DeparturesPage() {
 
 										{/* Actions */}
 										<TableCell className="px-5 py-4 text-right">
-											<Button variant="outline" size="sm" asChild>
-												<Link
-													to="/tours/$tourId"
-													params={{ tourId: departure.tourId }}
-												>
-													<Eye className="mr-2 size-4" />
-													View tour
-												</Link>
-											</Button>
+											<div className="flex gap-2 items-center justify-center">
+												<Button variant="outline" size="sm" asChild>
+													<Link
+														to="/tours/$tourId"
+														params={{ tourId: departure.tourId }}
+													>
+														<Eye className="mr-2 size-4" />
+														View tour
+													</Link>
+												</Button>
+												<AlertDialog open={deleteAlertDialogOpen}>
+													<AlertDialogTrigger
+														onClick={() => setDeleteAlertDialogOpen(true)}
+													>
+														<Button size={"icon"}>
+															<Trash2 />
+														</Button>
+													</AlertDialogTrigger>
+													<AlertDialogContent>
+														<AlertDialogHeader>
+															<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+																<Trash2 />
+															</AlertDialogMedia>
+															<AlertDialogTitle>
+																Are you absolutely sure?
+															</AlertDialogTitle>
+															<AlertDialogDescription>
+																This action cannot be undone. This will
+																permanently delete{" "}
+																<span className="text-destructive font-bold">
+																	{departure.code}
+																</span>{" "}
+																from data-base.
+															</AlertDialogDescription>
+														</AlertDialogHeader>
+														<AlertDialogFooter>
+															<AlertDialogCancel
+																variant={"outline"}
+																onClick={() => setDeleteAlertDialogOpen(false)}
+															>
+																Cancel
+															</AlertDialogCancel>
+															<AlertDialogAction
+																variant={"destructive"}
+																onClick={() =>
+																	handleDeleteDeparture(departure.id)
+																}
+															>
+																{deleting ? (
+																	<LoaderCircle className="animate-spin" />
+																) : (
+																	"Continue"
+																)}
+															</AlertDialogAction>
+														</AlertDialogFooter>
+													</AlertDialogContent>
+												</AlertDialog>
+											</div>
 										</TableCell>
 									</TableRow>
 								);

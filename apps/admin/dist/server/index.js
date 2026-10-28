@@ -9,7 +9,7 @@ import "./assets/useSelector-Dx97wFO_.js";
 import { _ as setProtectedResponseHeaders, a as finalizeResponse, b as withStartRequest, c as getParsedRequestUrl, d as getSerializedResponseState, f as protectResponseHeaders, h as restoreResponseProtocol, m as resolveErrorResponseStatus, n as createFinalizedResponse, p as reconcileResponse, r as createServerEntry$1, s as getErrorHeaders, v as transferResponseMetadata, y as transferResponseProtocol } from "./assets/server-CmSQoZhc.js";
 import { a as getStartOptions, c as MAX_FRAMED_STREAMS, d as TSS_FORMDATA_CONTEXT, f as TSS_SERVER_FUNCTION, h as mergeHeaders, i as safeObjectMerge, l as MAX_FRAME_PAYLOAD_SIZE, m as X_TSS_SERIALIZED, n as flattenMiddlewares, o as getStartContext, p as X_TSS_RAW_RESPONSE, r as createNullProtoObject, s as runWithStartContext, u as TSS_CONTENT_TYPE_FRAMED_VERSIONED } from "./assets/createServerFn-C78wSqf7.js";
 import { t as require_react_dom } from "./assets/react-dom-BAHw6fhi.js";
-import { t as getServerFnById } from "./assets/__23tanstack-start-server-fn-resolver-DatX3wOj.js";
+import { t as getServerFnById } from "./assets/__23tanstack-start-server-fn-resolver-kbWXsPzb.js";
 import { t as createMiddleware } from "./assets/createMiddleware-Bk-A5Dm5.js";
 import { EventEmitter } from "node:events";
 import { PassThrough, Readable, Writable } from "node:stream";
@@ -14551,7 +14551,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("./assets/_tanstack-start-manifest_v-DXTvFOGH.js");
+	const { tsrStartManifest } = await import("./assets/_tanstack-start-manifest_v-CVfP2nd6.js");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -15783,7 +15783,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./assets/router-BKBXlHOe.js"),
+		import("./assets/router-CsFx2UjE.js"),
 		import("./assets/start-D7l6Y3Rs.js"),
 		import("./assets/empty-plugin-adapters-BsRz-CQL.js")
 	]);

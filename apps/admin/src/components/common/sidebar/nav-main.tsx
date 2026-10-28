@@ -1,5 +1,6 @@
 // src/components/sidebar/nav-main.tsx
 import { Link, type LinkProps, useRouterState } from "@tanstack/react-router";
+import { cn } from "cn";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -133,7 +134,7 @@ function NavGroup({
 										: "text-foreground"
 								}
 							>
-								<Link to={toRoute(sub.url)}>{sub.title}</Link>
+								''<Link to={toRoute(sub.url)}>{sub.title}</Link>
 							</DropdownMenuItem>
 						))}
 					</DropdownMenuContent>
@@ -165,7 +166,13 @@ function NavGroup({
 									asChild
 									isActive={isUrlActive(pathname, sub.url)}
 								>
-									<Link to={toRoute(sub.url)} onClick={onNavigate}>
+									<Link
+										to={toRoute(sub.url)}
+										onClick={onNavigate}
+										className={cn(
+											isUrlActive(pathname, sub.url) ? "bg-red-600" : "",
+										)}
+									>
 										<span>{sub.title}</span>
 									</Link>
 								</SidebarMenuSubButton>

@@ -30,6 +30,15 @@ import {
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { Input } from "#/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui/select";
 import { Skeleton } from "#/components/ui/skeleton";
 import {
 	Table,
@@ -281,34 +290,49 @@ function ToursPage() {
 					</div>
 
 					<div className="grid grid-cols-2 gap-3 sm:flex">
-						<select
+						<Select
 							value={category}
-							onChange={(event) => setCategory(event.target.value)}
+							onValueChange={(cat) => setCategory(cat)}
 							aria-label="Filter by category"
-							className="h-9 min-w-0 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							defaultValue="all"
 						>
-							<option value="all">All categories</option>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Categories</SelectLabel>
+									<SelectItem key="all" value="all">
+										All categories
+									</SelectItem>
+									{categories.map((item) => (
+										<SelectItem key={item} value={item}>
+											{item}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
 
-							{categories.map((item) => (
-								<option key={item} value={item}>
-									{item}
-								</option>
-							))}
-						</select>
-
-						<select
+						<Select
 							value={status}
-							onChange={(event) =>
-								setStatus(event.target.value as StatusFilter)
-							}
+							onValueChange={(value) => setStatus(value as StatusFilter)}
 							aria-label="Filter by status"
-							className="h-9 min-w-0 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
 						>
-							<option value="all">All statuses</option>
-							<option value="published">Published</option>
-							<option value="draft">Drafts</option>
-							<option value="inactive">Inactive</option>
-						</select>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Status</SelectLabel>
+									{["all", "published", "drafts", "inactive"].map((item) => (
+										<SelectItem key={item} value={item}>
+											{item[0].toUpperCase() + item.slice(1)}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
 
 						<Button
 							variant="outline"
