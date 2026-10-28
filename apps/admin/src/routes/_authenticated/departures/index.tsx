@@ -187,12 +187,12 @@ function DeparturesPage() {
 			setDeleteAlertDialogOpen(true);
 			const result = await deleteDepature({ data: { departureId: id } });
 			if (!result) {
-				toast.error(`Error removing departure: ${id}`);
+				toast.error(`Error removing tour: ${id}`);
 			}
-			toast.success(`successfully removed departure: ${id}`);
+			toast.success(`successfully removed tour: ${id}`);
 			refetch();
 		} catch (err) {
-			console.error(`Error removing departure: ${id}`, err);
+			console.error(`Error removing tour: ${id}`, err);
 		} finally {
 			setDeleting(false);
 			setDeleteAlertDialogOpen(false);

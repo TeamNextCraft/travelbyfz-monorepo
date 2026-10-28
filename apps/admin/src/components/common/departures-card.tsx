@@ -3,12 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import {
 	CalendarDays,
+	LoaderCircle,
 	Pencil,
 	Plus,
 	RefreshCw,
 	ShieldCheck,
+	Trash2,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import {
@@ -18,7 +21,20 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
-import { getTourDepartures } from "#/server/actions/departures";
+import { getTourDepartures, removeDepature } from "#/server/actions/departures";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogMedia,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Progress } from "../ui/progress";
 
 type Filter = "upcoming" | "past" | "all";
 
@@ -65,12 +81,12 @@ function SeatsBar({ total, available }: { total: number; available: number }) {
 
 	return (
 		<div className="min-w-[110px] space-y-1">
-			<div className="h-1.5 overflow-hidden rounded-full bg-muted">
-				<div
-					className={`h-full rounded-full ${available === 0 ? "bg-amber-500" : "bg-primary"}`}
-					style={{ width: `${percent}%` }}
-				/>
-			</div>
+			<Progress
+				value={percent}
+				aria-label={`${booked} of ${total} seats booked`}
+				className={`h-1.5 ${available === 0 ? "[&>div]:bg-amber-500" : ""}`}
+			/>
+
 			<p className="text-xs text-muted-foreground">
 				{available} of {total} left
 			</p>
@@ -81,12 +97,16 @@ function SeatsBar({ total, available }: { total: number; available: number }) {
 export function DeparturesCard({ tourId }: { tourId: string }) {
 	const fetchDepartures = useServerFn(getTourDepartures);
 	const [filter, setFilter] = useState<Filter>("upcoming");
+	const [deleting, setDeleting] = useState<boolean>(false);
+	const [deleteAlertDialogOpen, setDeleteAlertDialogOpen] =
+		useState<boolean>(false);
 
 	const { data, isPending, isError, refetch } = useQuery({
 		queryKey: ["tour-departures", tourId],
 		queryFn: () => fetchDepartures({ data: { tourId } }),
 	});
 
+	const deleteDepature = useServerFn(removeDepature);
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
@@ -107,6 +127,24 @@ export function DeparturesCard({ tourId }: { tourId: string }) {
 		</Button>
 	);
 
+	const handleDeleteDeparture = async (id: string) => {
+		try {
+			setDeleting(true);
+			setDeleteAlertDialogOpen(true);
+			const result = await deleteDepature({ data: { departureId: id } });
+			if (!result) {
+				toast.error(`Error removing departure: ${id}`);
+			}
+			toast.success(`successfully removed departure: ${id}`);
+			refetch();
+		} catch (err) {
+			console.error(`Error removing departure: ${id}`, err);
+		} finally {
+			setDeleting(false);
+			setDeleteAlertDialogOpen(false);
+		}
+	};
+
 	return (
 		<Card>
 			<CardHeader className="flex-row items-start justify-between gap-3">
@@ -121,20 +159,16 @@ export function DeparturesCard({ tourId }: { tourId: string }) {
 
 			<CardContent className="space-y-4">
 				{/* Filter */}
-				<div className="inline-flex rounded-lg border p-0.5">
+				<div className="inline-flex border p-0.5">
 					{FILTERS.map((f) => (
-						<button
+						<Button
 							key={f.value}
 							type="button"
+							variant={filter === f.value ? "default" : "ghost"}
 							onClick={() => setFilter(f.value)}
-							className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-								filter === f.value
-									? "bg-muted text-foreground"
-									: "text-muted-foreground hover:text-foreground"
-							}`}
 						>
 							{f.label}
-						</button>
+						</Button>
 					))}
 				</div>
 
@@ -232,7 +266,7 @@ export function DeparturesCard({ tourId }: { tourId: string }) {
 												{formatLabel(d.status)}
 											</Badge>
 										</td>
-										<td className="px-4 py-3 text-right">
+										<td className="px-4 py-3 text-right inline-flex gap-2 items-center w-fit">
 											<Button variant="ghost" size="sm" asChild>
 												<Link
 													to="/tours/$tourId/departures/$departureId/edit"
@@ -242,6 +276,52 @@ export function DeparturesCard({ tourId }: { tourId: string }) {
 													Edit
 												</Link>
 											</Button>
+
+											<AlertDialog open={deleteAlertDialogOpen}>
+												<AlertDialogTrigger
+													onClick={() => setDeleteAlertDialogOpen(true)}
+												>
+													<Button size={"icon"}>
+														<Trash2 />
+													</Button>
+												</AlertDialogTrigger>
+												<AlertDialogContent>
+													<AlertDialogHeader>
+														<AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+															<Trash2 />
+														</AlertDialogMedia>
+														<AlertDialogTitle>
+															Are you absolutely sure?
+														</AlertDialogTitle>
+														<AlertDialogDescription>
+															This action cannot be undone. This will
+															permanently delete{" "}
+															<span className="text-destructive font-bold">
+																{d.code}
+															</span>{" "}
+															from data-base.
+														</AlertDialogDescription>
+													</AlertDialogHeader>
+													<AlertDialogFooter>
+														<AlertDialogCancel
+															variant={"outline"}
+															onClick={() => setDeleteAlertDialogOpen(false)}
+														>
+															Cancel
+														</AlertDialogCancel>
+														<AlertDialogAction
+															variant={"destructive"}
+															onClick={() => handleDeleteDeparture(d.id)}
+														>
+															{deleting ? (
+																<LoaderCircle className="animate-spin" />
+															) : (
+																"Continue"
+															)}
+														</AlertDialogAction>
+													</AlertDialogFooter>
+												</AlertDialogContent>
+											</AlertDialog>
 										</td>
 									</tr>
 								))}

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "#/components/theme/provider";
 import { TooltipProvider } from "#/components/ui/tooltip";
 import appCss from "../styles.css?url";
 
@@ -43,9 +44,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<QueryClientProvider client={queryClient}>
-					<TooltipProvider>{children}</TooltipProvider>
-				</QueryClientProvider>
+				<ThemeProvider defaultTheme="system" storageKey="tanstack-theme">
+					<QueryClientProvider client={queryClient}>
+						<TooltipProvider>{children}</TooltipProvider>
+					</QueryClientProvider>
+				</ThemeProvider>
 				<Toaster position="top-right" richColors />
 				<TanStackDevtools
 					config={{

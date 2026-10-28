@@ -617,7 +617,7 @@ function ToursPage() {
 				</Table>
 
 				{/* Empty state */}
-				{filteredTours.length === 0 && (
+				{isPending === false && filteredTours.length === 0 && (
 					<div className="flex flex-col items-center justify-center px-6 py-16 text-center">
 						<div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
 							<Search className="size-5 text-muted-foreground" />

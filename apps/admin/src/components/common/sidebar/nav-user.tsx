@@ -4,12 +4,18 @@ import { useNavigate } from "@tanstack/react-router";
 import { ChevronsUpDown, Loader2, LogOut } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTheme } from "#/components/theme/provider";
 import { Avatar, AvatarFallback, AvatarImage } from "#/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuPortal,
+	DropdownMenuSeparator,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import {
@@ -58,6 +64,7 @@ export function NavUser({ user }: { user: AuthUser }) {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const [isSigningOut, setIsSigningOut] = useState(false);
+	const { setTheme } = useTheme();
 
 	const handleSignOut = async () => {
 		setIsSigningOut(true);
@@ -102,6 +109,24 @@ export function NavUser({ user }: { user: AuthUser }) {
 								<UserInfo user={user} />
 							</div>
 						</DropdownMenuLabel>
+						<DropdownMenuSub>
+							<DropdownMenuSubTrigger>Themes</DropdownMenuSubTrigger>
+							<DropdownMenuPortal>
+								<DropdownMenuSubContent>
+									<DropdownMenuItem onClick={() => setTheme("light")}>
+										Light
+									</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => setTheme("dark")}>
+										Dark
+									</DropdownMenuItem>
+									<DropdownMenuSeparator />
+									<DropdownMenuItem onClick={() => setTheme("system")}>
+										System
+									</DropdownMenuItem>
+								</DropdownMenuSubContent>
+							</DropdownMenuPortal>
+						</DropdownMenuSub>
+						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={handleSignOut} disabled={isSigningOut}>
 							{isSigningOut ? <Loader2 className="animate-spin" /> : <LogOut />}
 							Sign out
