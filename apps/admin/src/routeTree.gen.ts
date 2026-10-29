@@ -17,9 +17,12 @@ import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedBookingsIndexRouteImport } from './routes/_authenticated/bookings/index'
+import { Route as AuthenticatedCouponsIndexRouteImport } from './routes/_authenticated/coupons/index'
+import { Route as AuthenticatedCouponsNewRouteImport } from './routes/_authenticated/coupons/new'
 import { Route as AuthenticatedDeparturesIndexRouteImport } from './routes/_authenticated/departures/index'
 import { Route as AuthenticatedDestinationsIndexRouteImport } from './routes/_authenticated/destinations/index'
 import { Route as AuthenticatedDestinationsNewRouteImport } from './routes/_authenticated/destinations/new'
+import { Route as AuthenticatedEnquiriesIndexRouteImport } from './routes/_authenticated/enquiries/index'
 import { Route as AuthenticatedPaymentsIndexRouteImport } from './routes/_authenticated/payments/index'
 import { Route as AuthenticatedRefundsIndexRouteImport } from './routes/_authenticated/refunds/index'
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
@@ -29,6 +32,7 @@ import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authentic
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiImagesSplatRouteImport } from './routes/api/images/$'
 import { Route as AuthenticatedBookingsBookingIdIndexRouteImport } from './routes/_authenticated/bookings/$bookingId/index'
+import { Route as AuthenticatedCouponsCouponIdEditRouteImport } from './routes/_authenticated/coupons/$couponId/edit'
 import { Route as AuthenticatedDestinationsDestinationIdIndexRouteImport } from './routes/_authenticated/destinations/$destinationId/index'
 import { Route as AuthenticatedDestinationsDestinationIdEditRouteImport } from './routes/_authenticated/destinations/$destinationId/edit'
 import { Route as AuthenticatedPaymentsPaymentIdIndexRouteImport } from './routes/_authenticated/payments/$paymentId/index'
@@ -78,6 +82,17 @@ const AuthenticatedBookingsIndexRoute =
     path: '/bookings/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCouponsIndexRoute =
+  AuthenticatedCouponsIndexRouteImport.update({
+    id: '/coupons/',
+    path: '/coupons/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCouponsNewRoute = AuthenticatedCouponsNewRouteImport.update({
+  id: '/coupons/new',
+  path: '/coupons/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDeparturesIndexRoute =
   AuthenticatedDeparturesIndexRouteImport.update({
     id: '/departures/',
@@ -94,6 +109,12 @@ const AuthenticatedDestinationsNewRoute =
   AuthenticatedDestinationsNewRouteImport.update({
     id: '/destinations/new',
     path: '/destinations/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEnquiriesIndexRoute =
+  AuthenticatedEnquiriesIndexRouteImport.update({
+    id: '/enquiries/',
+    path: '/enquiries/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedPaymentsIndexRoute =
@@ -143,6 +164,12 @@ const AuthenticatedBookingsBookingIdIndexRoute =
   AuthenticatedBookingsBookingIdIndexRouteImport.update({
     id: '/bookings/$bookingId/',
     path: '/bookings/$bookingId/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCouponsCouponIdEditRoute =
+  AuthenticatedCouponsCouponIdEditRouteImport.update({
+    id: '/coupons/$couponId/edit',
+    path: '/coupons/$couponId/edit',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDestinationsDestinationIdIndexRoute =
@@ -201,18 +228,22 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/coupons/new': typeof AuthenticatedCouponsNewRoute
   '/destinations/new': typeof AuthenticatedDestinationsNewRoute
   '/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/images/$': typeof ApiImagesSplatRoute
   '/bookings/': typeof AuthenticatedBookingsIndexRoute
+  '/coupons/': typeof AuthenticatedCouponsIndexRoute
   '/departures/': typeof AuthenticatedDeparturesIndexRoute
   '/destinations/': typeof AuthenticatedDestinationsIndexRoute
+  '/enquiries/': typeof AuthenticatedEnquiriesIndexRoute
   '/payments/': typeof AuthenticatedPaymentsIndexRoute
   '/refunds/': typeof AuthenticatedRefundsIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/tours/': typeof AuthenticatedToursIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
+  '/coupons/$couponId/edit': typeof AuthenticatedCouponsCouponIdEditRoute
   '/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
   '/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
   '/bookings/$bookingId/': typeof AuthenticatedBookingsBookingIdIndexRoute
@@ -230,18 +261,22 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/': typeof AuthenticatedIndexRoute
+  '/coupons/new': typeof AuthenticatedCouponsNewRoute
   '/destinations/new': typeof AuthenticatedDestinationsNewRoute
   '/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/images/$': typeof ApiImagesSplatRoute
   '/bookings': typeof AuthenticatedBookingsIndexRoute
+  '/coupons': typeof AuthenticatedCouponsIndexRoute
   '/departures': typeof AuthenticatedDeparturesIndexRoute
   '/destinations': typeof AuthenticatedDestinationsIndexRoute
+  '/enquiries': typeof AuthenticatedEnquiriesIndexRoute
   '/payments': typeof AuthenticatedPaymentsIndexRoute
   '/refunds': typeof AuthenticatedRefundsIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/tours': typeof AuthenticatedToursIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/coupons/$couponId/edit': typeof AuthenticatedCouponsCouponIdEditRoute
   '/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
   '/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
   '/bookings/$bookingId': typeof AuthenticatedBookingsBookingIdIndexRoute
@@ -261,18 +296,22 @@ export interface FileRoutesById {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/coupons/new': typeof AuthenticatedCouponsNewRoute
   '/_authenticated/destinations/new': typeof AuthenticatedDestinationsNewRoute
   '/_authenticated/tours/new': typeof AuthenticatedToursNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/images/$': typeof ApiImagesSplatRoute
   '/_authenticated/bookings/': typeof AuthenticatedBookingsIndexRoute
+  '/_authenticated/coupons/': typeof AuthenticatedCouponsIndexRoute
   '/_authenticated/departures/': typeof AuthenticatedDeparturesIndexRoute
   '/_authenticated/destinations/': typeof AuthenticatedDestinationsIndexRoute
+  '/_authenticated/enquiries/': typeof AuthenticatedEnquiriesIndexRoute
   '/_authenticated/payments/': typeof AuthenticatedPaymentsIndexRoute
   '/_authenticated/refunds/': typeof AuthenticatedRefundsIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/_authenticated/tours/': typeof AuthenticatedToursIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/coupons/$couponId/edit': typeof AuthenticatedCouponsCouponIdEditRoute
   '/_authenticated/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
   '/_authenticated/tours/$tourId/edit': typeof AuthenticatedToursTourIdEditRoute
   '/_authenticated/bookings/$bookingId/': typeof AuthenticatedBookingsBookingIdIndexRoute
@@ -292,18 +331,22 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
+    | '/coupons/new'
     | '/destinations/new'
     | '/tours/new'
     | '/api/auth/$'
     | '/api/images/$'
     | '/bookings/'
+    | '/coupons/'
     | '/departures/'
     | '/destinations/'
+    | '/enquiries/'
     | '/payments/'
     | '/refunds/'
     | '/reviews/'
     | '/tours/'
     | '/users/'
+    | '/coupons/$couponId/edit'
     | '/destinations/$destinationId/edit'
     | '/tours/$tourId/edit'
     | '/bookings/$bookingId/'
@@ -321,18 +364,22 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/'
+    | '/coupons/new'
     | '/destinations/new'
     | '/tours/new'
     | '/api/auth/$'
     | '/api/images/$'
     | '/bookings'
+    | '/coupons'
     | '/departures'
     | '/destinations'
+    | '/enquiries'
     | '/payments'
     | '/refunds'
     | '/reviews'
     | '/tours'
     | '/users'
+    | '/coupons/$couponId/edit'
     | '/destinations/$destinationId/edit'
     | '/tours/$tourId/edit'
     | '/bookings/$bookingId'
@@ -351,18 +398,22 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/_authenticated/'
+    | '/_authenticated/coupons/new'
     | '/_authenticated/destinations/new'
     | '/_authenticated/tours/new'
     | '/api/auth/$'
     | '/api/images/$'
     | '/_authenticated/bookings/'
+    | '/_authenticated/coupons/'
     | '/_authenticated/departures/'
     | '/_authenticated/destinations/'
+    | '/_authenticated/enquiries/'
     | '/_authenticated/payments/'
     | '/_authenticated/refunds/'
     | '/_authenticated/reviews/'
     | '/_authenticated/tours/'
     | '/_authenticated/users/'
+    | '/_authenticated/coupons/$couponId/edit'
     | '/_authenticated/destinations/$destinationId/edit'
     | '/_authenticated/tours/$tourId/edit'
     | '/_authenticated/bookings/$bookingId/'
@@ -443,6 +494,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBookingsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/coupons/': {
+      id: '/_authenticated/coupons/'
+      path: '/coupons'
+      fullPath: '/coupons/'
+      preLoaderRoute: typeof AuthenticatedCouponsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/coupons/new': {
+      id: '/_authenticated/coupons/new'
+      path: '/coupons/new'
+      fullPath: '/coupons/new'
+      preLoaderRoute: typeof AuthenticatedCouponsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/departures/': {
       id: '/_authenticated/departures/'
       path: '/departures'
@@ -462,6 +527,13 @@ declare module '@tanstack/react-router' {
       path: '/destinations/new'
       fullPath: '/destinations/new'
       preLoaderRoute: typeof AuthenticatedDestinationsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/enquiries/': {
+      id: '/_authenticated/enquiries/'
+      path: '/enquiries'
+      fullPath: '/enquiries/'
+      preLoaderRoute: typeof AuthenticatedEnquiriesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/payments/': {
@@ -527,6 +599,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBookingsBookingIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/coupons/$couponId/edit': {
+      id: '/_authenticated/coupons/$couponId/edit'
+      path: '/coupons/$couponId/edit'
+      fullPath: '/coupons/$couponId/edit'
+      preLoaderRoute: typeof AuthenticatedCouponsCouponIdEditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/destinations/$destinationId/': {
       id: '/_authenticated/destinations/$destinationId/'
       path: '/destinations/$destinationId'
@@ -588,16 +667,20 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedCouponsNewRoute: typeof AuthenticatedCouponsNewRoute
   AuthenticatedDestinationsNewRoute: typeof AuthenticatedDestinationsNewRoute
   AuthenticatedToursNewRoute: typeof AuthenticatedToursNewRoute
   AuthenticatedBookingsIndexRoute: typeof AuthenticatedBookingsIndexRoute
+  AuthenticatedCouponsIndexRoute: typeof AuthenticatedCouponsIndexRoute
   AuthenticatedDeparturesIndexRoute: typeof AuthenticatedDeparturesIndexRoute
   AuthenticatedDestinationsIndexRoute: typeof AuthenticatedDestinationsIndexRoute
+  AuthenticatedEnquiriesIndexRoute: typeof AuthenticatedEnquiriesIndexRoute
   AuthenticatedPaymentsIndexRoute: typeof AuthenticatedPaymentsIndexRoute
   AuthenticatedRefundsIndexRoute: typeof AuthenticatedRefundsIndexRoute
   AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
   AuthenticatedToursIndexRoute: typeof AuthenticatedToursIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+  AuthenticatedCouponsCouponIdEditRoute: typeof AuthenticatedCouponsCouponIdEditRoute
   AuthenticatedDestinationsDestinationIdEditRoute: typeof AuthenticatedDestinationsDestinationIdEditRoute
   AuthenticatedToursTourIdEditRoute: typeof AuthenticatedToursTourIdEditRoute
   AuthenticatedBookingsBookingIdIndexRoute: typeof AuthenticatedBookingsBookingIdIndexRoute
@@ -611,16 +694,20 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedCouponsNewRoute: AuthenticatedCouponsNewRoute,
   AuthenticatedDestinationsNewRoute: AuthenticatedDestinationsNewRoute,
   AuthenticatedToursNewRoute: AuthenticatedToursNewRoute,
   AuthenticatedBookingsIndexRoute: AuthenticatedBookingsIndexRoute,
+  AuthenticatedCouponsIndexRoute: AuthenticatedCouponsIndexRoute,
   AuthenticatedDeparturesIndexRoute: AuthenticatedDeparturesIndexRoute,
   AuthenticatedDestinationsIndexRoute: AuthenticatedDestinationsIndexRoute,
+  AuthenticatedEnquiriesIndexRoute: AuthenticatedEnquiriesIndexRoute,
   AuthenticatedPaymentsIndexRoute: AuthenticatedPaymentsIndexRoute,
   AuthenticatedRefundsIndexRoute: AuthenticatedRefundsIndexRoute,
   AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
   AuthenticatedToursIndexRoute: AuthenticatedToursIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedCouponsCouponIdEditRoute: AuthenticatedCouponsCouponIdEditRoute,
   AuthenticatedDestinationsDestinationIdEditRoute:
     AuthenticatedDestinationsDestinationIdEditRoute,
   AuthenticatedToursTourIdEditRoute: AuthenticatedToursTourIdEditRoute,

@@ -1,3 +1,4 @@
+import { ProgressProvider } from "@bprogress/react";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
@@ -44,11 +45,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<ThemeProvider defaultTheme="system" storageKey="tanstack-theme">
-					<QueryClientProvider client={queryClient}>
-						<TooltipProvider>{children}</TooltipProvider>
-					</QueryClientProvider>
-				</ThemeProvider>
+				<ProgressProvider color="var(--primary)">
+					<ThemeProvider defaultTheme="system" storageKey="tanstack-theme">
+						<QueryClientProvider client={queryClient}>
+							<TooltipProvider>{children}</TooltipProvider>
+						</QueryClientProvider>
+					</ThemeProvider>
+				</ProgressProvider>
 				<Toaster position="top-right" richColors />
 				<TanStackDevtools
 					config={{

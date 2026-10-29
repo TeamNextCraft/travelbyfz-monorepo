@@ -1,9 +1,18 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { NavigationProgress } from "#/components/common/navigation-progress";
 import { AppSidebar } from "#/components/common/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { getSession } from "#/server/actions/users";
 
 export const Route = createFileRoute("/_authenticated")({
+	head: () => ({
+		links: [
+			{
+				rel: "icon",
+				href: "/favicon.ico",
+			},
+		],
+	}),
 	beforeLoad: async ({ location }) => {
 		const session = await getSession();
 		if (!session) {
@@ -35,6 +44,7 @@ export const Route = createFileRoute("/_authenticated")({
 function RouteComponent() {
 	return (
 		<SidebarProvider>
+			<NavigationProgress />
 			<AppSidebar />
 			<SidebarInset>
 				<Outlet />
