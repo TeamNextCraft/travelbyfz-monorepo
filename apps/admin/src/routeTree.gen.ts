@@ -21,6 +21,8 @@ import { Route as AuthenticatedDeparturesIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedDestinationsIndexRouteImport } from './routes/_authenticated/destinations/index'
 import { Route as AuthenticatedDestinationsNewRouteImport } from './routes/_authenticated/destinations/new'
 import { Route as AuthenticatedPaymentsIndexRouteImport } from './routes/_authenticated/payments/index'
+import { Route as AuthenticatedRefundsIndexRouteImport } from './routes/_authenticated/refunds/index'
+import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedToursIndexRouteImport } from './routes/_authenticated/tours/index'
 import { Route as AuthenticatedToursNewRouteImport } from './routes/_authenticated/tours/new'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
@@ -98,6 +100,18 @@ const AuthenticatedPaymentsIndexRoute =
   AuthenticatedPaymentsIndexRouteImport.update({
     id: '/payments/',
     path: '/payments/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRefundsIndexRoute =
+  AuthenticatedRefundsIndexRouteImport.update({
+    id: '/refunds/',
+    path: '/refunds/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReviewsIndexRoute =
+  AuthenticatedReviewsIndexRouteImport.update({
+    id: '/reviews/',
+    path: '/reviews/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedToursIndexRoute = AuthenticatedToursIndexRouteImport.update({
@@ -195,6 +209,8 @@ export interface FileRoutesByFullPath {
   '/departures/': typeof AuthenticatedDeparturesIndexRoute
   '/destinations/': typeof AuthenticatedDestinationsIndexRoute
   '/payments/': typeof AuthenticatedPaymentsIndexRoute
+  '/refunds/': typeof AuthenticatedRefundsIndexRoute
+  '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/tours/': typeof AuthenticatedToursIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
   '/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
@@ -222,6 +238,8 @@ export interface FileRoutesByTo {
   '/departures': typeof AuthenticatedDeparturesIndexRoute
   '/destinations': typeof AuthenticatedDestinationsIndexRoute
   '/payments': typeof AuthenticatedPaymentsIndexRoute
+  '/refunds': typeof AuthenticatedRefundsIndexRoute
+  '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/tours': typeof AuthenticatedToursIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
@@ -251,6 +269,8 @@ export interface FileRoutesById {
   '/_authenticated/departures/': typeof AuthenticatedDeparturesIndexRoute
   '/_authenticated/destinations/': typeof AuthenticatedDestinationsIndexRoute
   '/_authenticated/payments/': typeof AuthenticatedPaymentsIndexRoute
+  '/_authenticated/refunds/': typeof AuthenticatedRefundsIndexRoute
+  '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/_authenticated/tours/': typeof AuthenticatedToursIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/destinations/$destinationId/edit': typeof AuthenticatedDestinationsDestinationIdEditRoute
@@ -280,6 +300,8 @@ export interface FileRouteTypes {
     | '/departures/'
     | '/destinations/'
     | '/payments/'
+    | '/refunds/'
+    | '/reviews/'
     | '/tours/'
     | '/users/'
     | '/destinations/$destinationId/edit'
@@ -307,6 +329,8 @@ export interface FileRouteTypes {
     | '/departures'
     | '/destinations'
     | '/payments'
+    | '/refunds'
+    | '/reviews'
     | '/tours'
     | '/users'
     | '/destinations/$destinationId/edit'
@@ -335,6 +359,8 @@ export interface FileRouteTypes {
     | '/_authenticated/departures/'
     | '/_authenticated/destinations/'
     | '/_authenticated/payments/'
+    | '/_authenticated/refunds/'
+    | '/_authenticated/reviews/'
     | '/_authenticated/tours/'
     | '/_authenticated/users/'
     | '/_authenticated/destinations/$destinationId/edit'
@@ -443,6 +469,20 @@ declare module '@tanstack/react-router' {
       path: '/payments'
       fullPath: '/payments/'
       preLoaderRoute: typeof AuthenticatedPaymentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/refunds/': {
+      id: '/_authenticated/refunds/'
+      path: '/refunds'
+      fullPath: '/refunds/'
+      preLoaderRoute: typeof AuthenticatedRefundsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reviews/': {
+      id: '/_authenticated/reviews/'
+      path: '/reviews'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof AuthenticatedReviewsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tours/': {
@@ -554,6 +594,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDeparturesIndexRoute: typeof AuthenticatedDeparturesIndexRoute
   AuthenticatedDestinationsIndexRoute: typeof AuthenticatedDestinationsIndexRoute
   AuthenticatedPaymentsIndexRoute: typeof AuthenticatedPaymentsIndexRoute
+  AuthenticatedRefundsIndexRoute: typeof AuthenticatedRefundsIndexRoute
+  AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
   AuthenticatedToursIndexRoute: typeof AuthenticatedToursIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedDestinationsDestinationIdEditRoute: typeof AuthenticatedDestinationsDestinationIdEditRoute
@@ -575,6 +617,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDeparturesIndexRoute: AuthenticatedDeparturesIndexRoute,
   AuthenticatedDestinationsIndexRoute: AuthenticatedDestinationsIndexRoute,
   AuthenticatedPaymentsIndexRoute: AuthenticatedPaymentsIndexRoute,
+  AuthenticatedRefundsIndexRoute: AuthenticatedRefundsIndexRoute,
+  AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
   AuthenticatedToursIndexRoute: AuthenticatedToursIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
   AuthenticatedDestinationsDestinationIdEditRoute:

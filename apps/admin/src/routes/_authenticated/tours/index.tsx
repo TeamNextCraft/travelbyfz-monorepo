@@ -21,7 +21,12 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
-import { Card, CardContent } from "#/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardTitle,
+} from "#/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -263,10 +268,10 @@ function ToursPage() {
 				{/* Table heading */}
 				<div className="flex flex-col justify-between gap-3 p-5 sm:flex-row sm:items-center">
 					<div>
-						<h2 className="font-semibold">All tours</h2>
-						<p className="mt-1 text-sm text-muted-foreground">
+						<CardTitle>All tours</CardTitle>
+						<CardDescription className="mt-1">
 							Browse and manage your tour packages.
-						</p>
+						</CardDescription>
 					</div>
 
 					<Badge variant="secondary" className="w-fit">
@@ -352,8 +357,8 @@ function ToursPage() {
 						variant="outline"
 						onClick={() => refetch()}
 						disabled={isFetching}
-						aria-label="Refresh destinations"
-						title="Refresh destinations"
+						aria-label="Refresh tours"
+						title="Refresh tours"
 					>
 						<RefreshCw
 							className={`size-4 ${isFetching ? "animate-spin" : ""}`}

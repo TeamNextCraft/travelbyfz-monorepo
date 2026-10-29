@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import {
 	AlertCircle,
 	Eye,
+	Filter,
 	Globe,
 	Loader2,
 	Map,
@@ -16,6 +17,7 @@ import {
 	Star,
 	Trash2,
 	TrendingUp,
+	X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -37,6 +39,13 @@ import {
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { Input } from "#/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui/select";
 import { Skeleton } from "#/components/ui/skeleton";
 import {
 	Table,
@@ -69,6 +78,20 @@ export const Route = createFileRoute("/_authenticated/destinations/")({
 
 export function DestinationsIndexPage() {
 	const [search, setSearch] = useState("");
+	const [statusFilter, setStatusFilter] = useState<
+		"all" | "active" | "inactive"
+	>("all");
+	const [featuredFilter, setFeaturedFilter] = useState<
+		"all" | "featured" | "not-featured"
+	>("all");
+	const [countryFilter, setCountryFilter] = useState("all");
+	const [regionFilter, setRegionFilter] = useState("all");
+	const [tourFilter, setTourFilter] = useState<
+		"all" | "with-tours" | "without-tours"
+	>("all");
+	const [sortBy, setSortBy] = useState<
+		"name-asc" | "name-desc" | "tours-desc" | "tours-asc"
+	>("name-asc");
 	const [deleting, setDeleting] = useState<boolean>(false);
 	const [deleteAlertDialogOpen, setDeleteAlertDialogOpen] =
 		useState<boolean>(false);
@@ -90,14 +113,34 @@ export function DestinationsIndexPage() {
 
 	const destinationList = destinations ?? [];
 
+	const countries = useMemo(
+		() =>
+			Array.from(
+				new Set(
+					destinationList
+						.map((destination) => destination.country?.trim())
+						.filter((country): country is string => Boolean(country)),
+				),
+			).sort((a, b) => a.localeCompare(b)),
+		[destinationList],
+	);
+
+	const regions = useMemo(
+		() =>
+			Array.from(
+				new Set(
+					destinationList
+						.map((destination) => destination.region?.trim())
+						.filter((region): region is string => Boolean(region)),
+				),
+			).sort((a, b) => a.localeCompare(b)),
+		[destinationList],
+	);
+
 	const filteredDestinations = useMemo(() => {
 		const query = search.trim().toLowerCase();
 
-		if (!query) {
-			return destinationList;
-		}
-
-		return destinationList.filter((destination) => {
+		const filtered = destinationList.filter((destination) => {
 			const searchableText = [
 				destination.name,
 				destination.slug,
@@ -109,9 +152,77 @@ export function DestinationsIndexPage() {
 				.join(" ")
 				.toLowerCase();
 
-			return searchableText.includes(query);
+			const matchesSearch = !query || searchableText.includes(query);
+			const matchesStatus =
+				statusFilter === "all" ||
+				(statusFilter === "active" && destination.isActive) ||
+				(statusFilter === "inactive" && !destination.isActive);
+			const matchesFeatured =
+				featuredFilter === "all" ||
+				(featuredFilter === "featured" && destination.isFeatured) ||
+				(featuredFilter === "not-featured" && !destination.isFeatured);
+			const matchesCountry =
+				countryFilter === "all" ||
+				destination.country?.trim() === countryFilter;
+			const matchesRegion =
+				regionFilter === "all" || destination.region?.trim() === regionFilter;
+			const tourCount = destination.tourCount ?? 0;
+			const matchesTours =
+				tourFilter === "all" ||
+				(tourFilter === "with-tours" && tourCount > 0) ||
+				(tourFilter === "without-tours" && tourCount === 0);
+
+			return (
+				matchesSearch &&
+				matchesStatus &&
+				matchesFeatured &&
+				matchesCountry &&
+				matchesRegion &&
+				matchesTours
+			);
 		});
-	}, [destinationList, search]);
+
+		return filtered.sort((a, b) => {
+			switch (sortBy) {
+				case "name-desc":
+					return b.name.localeCompare(a.name);
+				case "tours-desc":
+					return (b.tourCount ?? 0) - (a.tourCount ?? 0);
+				case "tours-asc":
+					return (a.tourCount ?? 0) - (b.tourCount ?? 0);
+				default:
+					return a.name.localeCompare(b.name);
+			}
+		});
+	}, [
+		destinationList,
+		search,
+		statusFilter,
+		featuredFilter,
+		countryFilter,
+		regionFilter,
+		tourFilter,
+		sortBy,
+	]);
+
+	const hasActiveFilters =
+		search.trim() !== "" ||
+		statusFilter !== "all" ||
+		featuredFilter !== "all" ||
+		countryFilter !== "all" ||
+		regionFilter !== "all" ||
+		tourFilter !== "all" ||
+		sortBy !== "name-asc";
+
+	const clearFilters = () => {
+		setSearch("");
+		setStatusFilter("all");
+		setFeaturedFilter("all");
+		setCountryFilter("all");
+		setRegionFilter("all");
+		setTourFilter("all");
+		setSortBy("name-asc");
+	};
 
 	const totalDestinations = destinationList.length;
 
@@ -324,41 +435,166 @@ export function DestinationsIndexPage() {
 						</CardDescription>
 					</div>
 
-					<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-						<div className="relative w-full sm:max-w-sm">
-							<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+					<div className="space-y-3">
+						<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+							<div className="relative w-full sm:max-w-sm">
+								<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
 
-							<Input
-								type="search"
-								placeholder="Search by name, location, or slug..."
-								value={search}
-								onChange={(event) => setSearch(event.target.value)}
-								className="pl-9"
-								aria-label="Search destinations"
-							/>
+								<Input
+									type="search"
+									placeholder="Search by name, location, or slug..."
+									value={search}
+									onChange={(event) => setSearch(event.target.value)}
+									className="pl-9"
+									aria-label="Search destinations"
+								/>
+							</div>
+
+							<div className="flex items-center justify-between gap-3">
+								<p className="text-sm text-muted-foreground" aria-live="polite">
+									{showInitialLoading
+										? "Loading destinations..."
+										: isError && !destinations
+											? "Unable to load destinations"
+											: `${filteredDestinations.length} of ${totalDestinations} destinations`}
+								</p>
+
+								<Button
+									variant="outline"
+									size="icon"
+									onClick={() => refetch()}
+									disabled={isFetching}
+									aria-label="Refresh destinations"
+									title="Refresh destinations"
+								>
+									<RefreshCw
+										className={`size-4 ${isFetching ? "animate-spin" : ""}`}
+									/>
+								</Button>
+							</div>
 						</div>
 
-						<div className="flex items-center justify-between gap-3">
-							<p className="text-sm text-muted-foreground" aria-live="polite">
-								{showInitialLoading
-									? "Loading destinations..."
-									: isError && !destinations
-										? "Unable to load destinations"
-										: `${filteredDestinations.length} of ${totalDestinations} destinations`}
-							</p>
+						<div className="flex flex-wrap items-center gap-2">
+							<div className="flex items-center gap-2 pr-1 text-sm text-muted-foreground">
+								<Filter className="size-4" />
+								<span>Filters</span>
+							</div>
 
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={() => refetch()}
-								disabled={isFetching}
-								aria-label="Refresh destinations"
-								title="Refresh destinations"
+							<Select
+								value={statusFilter}
+								onValueChange={(value) =>
+									setStatusFilter(value as typeof statusFilter)
+								}
 							>
-								<RefreshCw
-									className={`size-4 ${isFetching ? "animate-spin" : ""}`}
-								/>
-							</Button>
+								<SelectTrigger
+									className="w-[145px]"
+									aria-label="Filter by status"
+								>
+									<SelectValue placeholder="Status" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All statuses</SelectItem>
+									<SelectItem value="active">Active</SelectItem>
+									<SelectItem value="inactive">Inactive</SelectItem>
+								</SelectContent>
+							</Select>
+
+							<Select
+								value={featuredFilter}
+								onValueChange={(value) =>
+									setFeaturedFilter(value as typeof featuredFilter)
+								}
+							>
+								<SelectTrigger
+									className="w-[155px]"
+									aria-label="Filter featured destinations"
+								>
+									<SelectValue placeholder="Featured" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All destinations</SelectItem>
+									<SelectItem value="featured">Featured only</SelectItem>
+									<SelectItem value="not-featured">Not featured</SelectItem>
+								</SelectContent>
+							</Select>
+
+							<Select value={countryFilter} onValueChange={setCountryFilter}>
+								<SelectTrigger
+									className="w-[155px]"
+									aria-label="Filter by country"
+								>
+									<SelectValue placeholder="Country" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All countries</SelectItem>
+									{countries.map((country) => (
+										<SelectItem key={country} value={country}>
+											{country}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+
+							<Select value={regionFilter} onValueChange={setRegionFilter}>
+								<SelectTrigger
+									className="w-[150px]"
+									aria-label="Filter by region"
+								>
+									<SelectValue placeholder="Region" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All regions</SelectItem>
+									{regions.map((region) => (
+										<SelectItem key={region} value={region}>
+											{region}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+
+							<Select
+								value={tourFilter}
+								onValueChange={(value) =>
+									setTourFilter(value as typeof tourFilter)
+								}
+							>
+								<SelectTrigger
+									className="w-[150px]"
+									aria-label="Filter by tour availability"
+								>
+									<SelectValue placeholder="Tours" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">Any tour count</SelectItem>
+									<SelectItem value="with-tours">Has tours</SelectItem>
+									<SelectItem value="without-tours">No tours</SelectItem>
+								</SelectContent>
+							</Select>
+
+							<Select
+								value={sortBy}
+								onValueChange={(value) => setSortBy(value as typeof sortBy)}
+							>
+								<SelectTrigger
+									className="w-[175px]"
+									aria-label="Sort destinations"
+								>
+									<SelectValue placeholder="Sort by" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="name-asc">Name: A to Z</SelectItem>
+									<SelectItem value="name-desc">Name: Z to A</SelectItem>
+									<SelectItem value="tours-desc">Most tours</SelectItem>
+									<SelectItem value="tours-asc">Fewest tours</SelectItem>
+								</SelectContent>
+							</Select>
+
+							{hasActiveFilters && (
+								<Button variant="ghost" size="sm" onClick={clearFilters}>
+									<X className="mr-1.5 size-4" />
+									Clear filters
+								</Button>
+							)}
 						</div>
 					</div>
 				</CardHeader>
@@ -368,7 +604,7 @@ export function DestinationsIndexPage() {
 						/* Initial error state */
 						<div
 							role="alert"
-							className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed px-4 py-12 text-center"
+							className="flex flex-col items-center justify-center gap-4  border border-dashed px-4 py-12 text-center"
 						>
 							<div className="flex size-12 items-center justify-center rounded-full bg-destructive/10">
 								<AlertCircle className="size-6 text-destructive" />
@@ -396,7 +632,7 @@ export function DestinationsIndexPage() {
 							</Button>
 						</div>
 					) : (
-						<div className="overflow-x-auto rounded-md border">
+						<div className="overflow-x-auto border">
 							<Table className="min-w-[760px]">
 								<TableHeader>
 									<TableRow>
@@ -452,7 +688,7 @@ export function DestinationsIndexPage() {
 											<TableCell colSpan={5} className="h-64">
 												<div className="flex flex-col items-center justify-center gap-3 text-center">
 													<div className="flex size-12 items-center justify-center rounded-full bg-muted">
-														{search.trim() ? (
+														{hasActiveFilters ? (
 															<Search className="size-5 text-muted-foreground" />
 														) : (
 															<MapPin className="size-5 text-muted-foreground" />
@@ -461,25 +697,25 @@ export function DestinationsIndexPage() {
 
 													<div className="space-y-1">
 														<h3 className="font-medium">
-															{search.trim()
+															{hasActiveFilters
 																? "No matching destinations"
 																: "No destinations yet"}
 														</h3>
 
 														<p className="text-sm text-muted-foreground">
-															{search.trim()
-																? "Try another search term or clear your search."
+															{hasActiveFilters
+																? "Try changing your search or filters."
 																: "Add your first destination to start building your travel catalog."}
 														</p>
 													</div>
 
-													{search.trim() ? (
+													{hasActiveFilters ? (
 														<Button
 															variant="outline"
 															size="sm"
-															onClick={() => setSearch("")}
+															onClick={clearFilters}
 														>
-															Clear search
+															Clear filters
 														</Button>
 													) : (
 														<Button asChild size="sm">
