@@ -19,7 +19,7 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: "Admin | FZ Tours & Travels",
 			},
 		],
 		links: [
@@ -29,6 +29,7 @@ export const Route = createRootRoute({
 			},
 			{
 				rel: "icon",
+				type: "image/x-icon",
 				href: "/favicon.ico",
 			},
 		],

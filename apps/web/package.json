@@ -22,6 +22,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@bprogress/react": "^1.2.7",
     "@cloudflare/vite-plugin": "^1.57.3",
     "@cloudflare/workers-types": "^5.20260721.1",
     "@hookform/resolvers": "^5.4.0",
